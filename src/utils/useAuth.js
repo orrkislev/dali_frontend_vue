@@ -1,0 +1,48 @@
+import { defineStore } from 'pinia'
+import useAPI from './useAPI';
+
+const useAuth = defineStore('auth', {
+    state: () => ({
+        username: null,
+        csrfToken:null
+    }),
+    actions: {
+        async getCsrfToken(){
+            const api = useAPI()
+            let response = await api.get('students/get_csrf_token/')
+            response = await response.json()
+            console.log(response)
+            this.csrfToken = response.token
+            return response
+        },
+        async pre_login() {
+            const api = useAPI()
+            let response = await api.get('students/pre_login/')
+            return response
+        },
+        async login() {
+            const api = useAPI()
+            let response = await api.post_form('students/pre_login/', {
+                csrfmiddlewaretoken:this.csrfToken,
+                go_normal: 1,
+                username: 'אורכסלו',
+                password: 'Ok061187',
+                next: '/',
+            })
+            console.log('login', response)
+            this.username = 'אורכסלו'
+            return response
+        },
+        logout() {
+
+        },
+        register() {
+
+        },
+        refreshToken() {
+
+        }
+    }
+})
+
+export default useAuth
