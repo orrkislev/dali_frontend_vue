@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue-demi';
 import useAPI from "../utils/useAPI";
 import useGameManager from "../utils/useGameManager";
 import PlayedGamesList from "./PlayedGamesList.vue";
@@ -7,7 +8,7 @@ const api = useAPI();
 const gameManager = useGameManager();
 const game = gameManager.game;
 
-let isPublished = false;
+let isPublished = ref(false);
 
 function restartGame() {
   gameManager.startGame(null, true);
@@ -16,7 +17,7 @@ async function publish() {
   let res = await api.post("/statistics/publish/", {
     id: gameManager.question.publishID[0],
   });
-  isPublished = true;
+  isPublished.value = true;
 }
 </script>
 
