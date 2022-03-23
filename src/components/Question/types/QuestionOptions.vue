@@ -46,6 +46,13 @@ emitter.on("CHECK_QUESTION", () => {
 
   gameManager.submitQuestion({ result, answerlist });
 });
+
+function select(answerIndex, val) {
+    let newAnswers = [...answers.value]
+    newAnswers.forEach(a => a.selected = 0)
+    newAnswers[answerIndex].selected = val
+    answers.value = newAnswers
+}
 </script>
 
 

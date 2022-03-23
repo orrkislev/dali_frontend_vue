@@ -26,7 +26,7 @@ function SelectUserOption(key) {
           <router-link to="/allgames">מאגר משימות</router-link>
         </NButton>
         <NButton round secondary color="#ffffff">
-          <router-link to="/">משימות לכיתות</router-link>
+          <router-link to="/login">משימות לכיתות</router-link>
         </NButton>
         <NButton round secondary color="#ffffff">
           <router-link to="/">בחנים לכיתות</router-link>

@@ -1,19 +1,62 @@
 <script setup>
+import useGameManager from '../../utils/useGameManager';
+
+const gameManager = useGameManager()
+const progress = gameManager.progress;
+
 </script>
 
 
 <template>
-<div>
-</div>
+  <div v-if="progress" class="flex gap05">
+    <div
+      v-for="(p,i) in progress.progress"
+      :key=i
+      class="task-progress-part"
+      v-bind:class="{
+        'task-progress-part-curr': p == 'curr',
+        'task-progress-part-success': p == 1,
+        'task-progress-part-fail': p == 0,
+        'task-progress-part-partial': p > 0 && p < 1,
+      }"
+    ></div>
+  </div>
 </template>
 
 
 <script>
 export default {
-name:'GameProgress'
+  name: "GameProgress",
 };
 </script>
 
 
 <style>
+.game-progress-part {
+  height: 5px;
+  flex: 1;
+  background-color: lightgray;
+}
+.game-progress-part-curr {
+  background-color: orange;
+}
+.game-progress-part-success {
+  background-color: aquamarine;
+}
+.game-progress-part-fail {
+  background-color: salmon;
+}
+.game-progress-part-partial {
+  background-image: linear-gradient(
+    45deg,
+    #eb8888 25%,
+    #72d2db 25%,
+    #72d2db 50%,
+    #eb8888 50%,
+    #eb8888 75%,
+    #72d2db 75%,
+    #72d2db 100%
+  );
+  background-size: 15px 15px;
+}
 </style>

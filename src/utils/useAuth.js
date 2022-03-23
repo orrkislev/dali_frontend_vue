@@ -7,6 +7,11 @@ const useAuth = defineStore('auth', {
         csrfToken:null
     }),
     actions: {
+        async auto_login(){
+            const api = useAPI()
+            await api.get('students/vue_login')
+            return true
+        },
         async getCsrfToken(){
             const api = useAPI()
             let response = await api.get('students/get_csrf_token/')
