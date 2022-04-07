@@ -1,25 +1,28 @@
 <script setup>
+import { ref } from 'vue-demi';
 import useAuth from '../utils/useAuth';
 
 const auth = useAuth()
-auth.auto_login()
 
+const name = ref("")
+const password = ref("")
+
+function login(){
+    auth.login(name,password)
+}
 </script>
 
 
 <template>
-<form method="post" action="/students/pre_login/">
-    {% csrf_token %}
-    <input type="hidden" name="onlyData" value="true" />
-    <input type="hidden" name="next" value="/" />
+<form @submit.prevent="login">
     <div style='display:flex;flex-direction: column; gap:1em; align-items: center; margin-bottom: 1em;'>
         <div>
             <div class='inputLable'>שם משתמש</div>
-            <input type='text' id='id_username' maxlength='30' name='username' aria-label='שם משתמש' />
+            <input type='text' id='id_username' maxlength='30' name='username' aria-label='שם משתמש' v-model="name"/>
         </div>
         <div>
             <div class='inputLable'>סיסמא</div>
-            <input type='password' id='id_password' maxlength='30' name='password' aria-label='סיסמה' />
+            <input type='password' id='id_password' maxlength='30' name='password' aria-label='סיסמה' v-model="password"/>
         </div>
         <input id='submit' type="submit" value='כניסה' />
     </div>

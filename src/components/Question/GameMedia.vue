@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue-demi";
+import $ from 'jquery'
 import useGameManager from "../../utils/useGameManager";
 import useEmitter from "../../utils/useEmmiter";
 

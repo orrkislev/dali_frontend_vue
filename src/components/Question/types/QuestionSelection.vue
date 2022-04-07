@@ -42,7 +42,7 @@ emitter.on('LIFELINE_5050',()=>{
         )
     })
     answers.value = newAnswers
-    option.value = newOptions
+    options.value = newOptions
 })
 
 emitter.on('CHECK_QUESTION',()=>{
@@ -90,8 +90,8 @@ function select(answerIndex, val) {
             class="flex1"
             @click="select(answerIndex, option.num)"
           >
-            [[ option.text ]]
-            <small v-if="answer.stats">&nbsp; ([[ answer.stats[index] ]])</small>
+            {{ option.text }}
+            <small v-if="answer.stats">&nbsp; ({{ answer.stats[index] }})</small>
           </button>
         </div>
         <div v-if="answer.result"

@@ -42,8 +42,7 @@ function SelectUserOption(key) {
           :options="options"
         >
           <NButton round secondary color="#ffffff">
-            Hi
-            <!-- {{ auth.username }} -->
+            <router-link to="/login">LOGIN</router-link>
           </NButton>
         </n-dropdown>
       </div>

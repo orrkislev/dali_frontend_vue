@@ -3,8 +3,6 @@ import useAuth from '../utils/useAuth';
 
 const auth = useAuth()
 const auto_login = ()=>auth.auto_login();
-const pre_login = ()=>auth.pre_login();
-const getCsrfToken = ()=>auth.getCsrfToken();
 
 </script>
 
@@ -12,8 +10,6 @@ const getCsrfToken = ()=>auth.getCsrfToken();
 <template>
     <div id="sidebar">
         <button @click=auto_login>auto_login</button>
-        <button @click=pre_login>pre_login</button>
-        <button @click=getCsrfToken>getCsrfToken</button>
     </div>
 </template>
 

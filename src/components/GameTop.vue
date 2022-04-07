@@ -13,10 +13,10 @@ const progress = gameManager.progress;
   <div class='mobile-top mobile-top-question'>
         <div class='flex space-between'>
             <div>
-                <div class='text-white'>[[ game.game.name ]]</div>
+                <div class='text-white'>{{ game.game.name }}</div>
                 <div id='score'>
                     <span v-if='progress.bonus' style="color:orange;"><i class="fa fa-sm fa-gift"></i>10+</span>
-                    [[ progress?.score ]] נקודות
+                    {{ progress?.score }} נקודות
                 </div>
             </div>
         </div>

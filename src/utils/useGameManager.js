@@ -28,6 +28,14 @@ const useGameManager = defineStore('game', {
         },
     },
     actions: {
+        async loadGameData({ taskID, extra }) {
+            const api = useAPI()
+            let res = await api.post('tasks/task_page/', { 'game_id': taskID })
+            console.log(res)
+            res.extra = extra
+            this.game = res
+            if (res.game.gameType != 'trivia') console.log('SPECIAL GAMETYPE:', res.game.gameType)
+        },
         async startGame(level = null, restart = false) {
             this.question = null
             let newProgress = {

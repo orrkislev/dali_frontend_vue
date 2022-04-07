@@ -67,7 +67,7 @@ function select(answerIndex, val) {
           @click="select(answerIndex, 1)"
         >
           <span v-append="answer.text"></span>
-          <small v-if="answer.stats">&nbsp; ([[ answer.stats ]])</small>
+          <small v-if="answer.stats">&nbsp; ({{ answer.stats }})</small>
         </button>
       </div>
     </div>

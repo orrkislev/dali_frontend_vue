@@ -25,13 +25,16 @@ const useAuth = defineStore('auth', {
             let response = await api.get('students/pre_login/')
             return response
         },
-        async login() {
+        async login(username, password) {
+            if (username == '') {
+                username = 'אורכסלו'
+                password = 'Ok061187'
+            }
             const api = useAPI()
             let response = await api.post_form('students/pre_login/', {
-                csrfmiddlewaretoken:this.csrfToken,
                 go_normal: 1,
-                username: 'אורכסלו',
-                password: 'Ok061187',
+                username: username,
+                password: password,
                 next: '/',
             })
             console.log('login', response)

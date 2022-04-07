@@ -1,25 +1,18 @@
 <script setup>
-import useAPI from "../utils/useAPI";
-// import useAuth from '../utils/useAuth';
-const api = useAPI();
-// const auth = useAuth();
-
-console.log('all games')
-// if (auth.username)
-  api.post("tasks/subjects_list/", {}).then(async p => {
-    p = await p.json()
-    console.log(p)
-  });
+import GameTree from '../components/GameTree/GameTree.vue';
 </script>
 
 
 <template>
-  <div>allgames</div>
+  <div>
+    <game-tree />
+  </div>
 </template>
 
 
 <script>
 export default {
+  components: { GameTree },
   name: "allgames",
 };
 </script>

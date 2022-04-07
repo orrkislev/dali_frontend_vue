@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.26.0",
     "core-js": "^3.6.5",
+    "jquery": "^3.6.0",
     "mitt": "^3.0.0",
     "naive-ui": "^2.25.2",
     "pinia": "^2.0.11",

@@ -25,9 +25,9 @@ async function publish() {
 <template>
   <div id="task-main">
     <div id="task-main-top" style="padding: 1em">
-      <h3>[[ game.game.name ]]</h3>
+      <h3>{{ game.game.name }}</h3>
       <div class="flex-column gap1">
-        [[ question.reason ]]
+        {{ question.reason }}
         <div style="display: grid; place-items: center">
           <div
             style="
@@ -37,13 +37,13 @@ async function publish() {
               font-family: SecularOne;
             "
           >
-            <span style="font-size: 5em">[[ question.score ]]</span>
+            <span style="font-size: 5em">{{ question.score }}</span>
             <span style="font-size: 2em; transform: scaleY(2)">/</span>
-            <span style="font-size: larger">[[ question.target ]]</span>
+            <span style="font-size: larger">{{ question.target }}</span>
           </div>
         </div>
         <button v-if="!game.extra.exam" disabled="isPublished" @click="publish">
-          [[ isPublished ? 'פורסם' : 'פרסם' ]]
+          {{ isPublished ? 'פורסם' : 'פרסם' }}
         </button>
       </div>
 

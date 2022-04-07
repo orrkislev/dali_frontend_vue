@@ -14,3 +14,5 @@ app.use(router)
 
 app.mount('#app');
 
+window.$ = window.jQuery = require('jquery');
+

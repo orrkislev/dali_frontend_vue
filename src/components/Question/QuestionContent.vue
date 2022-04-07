@@ -8,7 +8,7 @@ const question = gameManager.question
 
 <template>
   <div v-if="question">
-    <small v-if="question.q?.id">שאלה [[ question.q.id ]]</small>
+    <small v-if="question.q?.id">שאלה {{ question.q.id }}</small>
 
     <div v-if="question?.q.type == 'wordselect'">
       <div v-html="question.q.text_before"></div>

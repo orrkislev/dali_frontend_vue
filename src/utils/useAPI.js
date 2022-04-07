@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 
-const base_url = 'https://localhost'
+export const base_url = 'https://localhost/'
+export const real_url = 'https://da-li.co.il/'
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -22,6 +23,7 @@ const useAPI = defineStore('api', {
                 },
                 body: JSON.stringify(data)
             })
+            response = await response.json();
             return response
         },
         async get(url) {
