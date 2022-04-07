@@ -8,7 +8,7 @@ const name = ref("")
 const password = ref("")
 
 function login(){
-    auth.login(name,password)
+    auth.login(name.value,password.value);
 }
 </script>
 
