@@ -2,7 +2,6 @@
 import useAuth from '../utils/useAuth';
 
 const auth = useAuth()
-// auth.pre_login()
 auth.auto_login()
 
 </script>

@@ -46,7 +46,7 @@ const useAuth = defineStore('auth', {
         },
         refreshToken() {
 
-        }
+        },
     }
 })
 
