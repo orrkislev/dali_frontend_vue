@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const base_url = 'http://localhost:8200/'
+export const base_url = 'http://localhost:9200/'
 export const real_url = 'https://da-li.co.il/'
 
 function getCookie(name) {
@@ -40,13 +40,11 @@ const useAPI = defineStore('api', {
         async post_form(url, data) {
             const postData = new URLSearchParams();
             Object.entries(data).forEach(pair => postData.append(pair[0], pair[1]))
-            const token = getCookie('csrftoken')
             let response = await fetch(base_url + url, {
                 method: 'post', credentials: 'include',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    'Access-Control-Allow-Credentials': true,
-                    'x-csrftoken': token,
+                    'Access-Control-Allow-Credentials': true
                 },
                 body: postData,
             })

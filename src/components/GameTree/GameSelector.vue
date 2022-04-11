@@ -8,13 +8,18 @@ const browseManager = useBrowseManager();
 const api = useAPI();
 
 const gameData = ref(null)
+getGamesData(browseManager.curr_subject)
 
 browseManager.$subscribe((mutation, state) => {
     if (mutation.events.key == 'curr_subject' && state.curr_subject != -1)
-        api.post("tasks/tasks_list/", {parent_id: state.curr_subject}).then(async (p) => {
+        getGamesData(state.curr_subject)
+});
+
+function getGamesData(subjectID){
+    api.post("tasks/tasks_list/", {parent_id: subjectID}).then(async (p) => {
             gameData.value = p
         });
-});
+}
 </script>
 
 <template>

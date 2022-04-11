@@ -27,8 +27,8 @@ const useAuth = defineStore('auth', {
         },
         async login(username, password) {
             if (username == '') {
-                username = 'orit'
-                password = 'orit1234'
+                username = 'אורכסלו'
+                password = 'Ok061187'
             }
             const api = useAPI()
             console.log('username =' + username);
