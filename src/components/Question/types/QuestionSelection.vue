@@ -4,31 +4,32 @@ import useGameManager from '../../../utils/useGameManager';
 import useEmitter from '../../../utils/useEmmiter';
 import useAPI from '../../../utils/useAPI';
 
-const gameManager = useGameManager()
-const question = gameManager.question
-
-let answers = ref([])
-let options = ref([])
-
-if (question.answers) answers.value = [...question.answers]
-if (question.options) options.value = [...question.options]
-
-const emitter = useEmitter()
 const api = useAPI()
+const gameManager = useGameManager()
+const emitter = useEmitter()
 
-emitter.on('LIFELINE_STATS',async ()=>{
-    let newAnswers = [...answers.value]
-    const res = await api.post("/quest/action/", { 'action': 'statistics', 'question_id': question.q.id, })
+let answers = ref([...gameManager.question.answers])
+let options = ref([...gameManager.question.options])
+
+
+emitter.subscribe('LIFELINE_STATS',lifeline_stats)
+emitter.subscribe('LIFELINE_5050',lifeline_5050)
+emitter.subscribe('CHECK_QUESTION',check)
+
+async function lifeline_stats(){
+  let newAnswers = [...answers.value]
+    const res = await api.post("/quest/action/", { 'action': 'statistics', 'question_id': gameManager.question.q.id, })
     newAnswers.forEach(a=>a.stats = Array(options.value.length).fill(''))
     res.forEach(stat => {
         const optionIndex = options.value.findIndex((o, i) => o.num == stat.select)
         newAnswers.find((a, i) => a.id == stat.answer_id).stats[optionIndex] = stat.count
     })
     answers.value = newAnswers
-})
+}
 
-emitter.on('LIFELINE_5050',()=>{
-    let newAnswers = [...answers.value]
+
+function lifeline_5050(){
+  let newAnswers = [...answers.value]
     let newOptions = [...options.value]
     newAnswers.forEach(a=>{
         a.inactive = Array(newOptions.length).fill(null)
@@ -43,9 +44,9 @@ emitter.on('LIFELINE_5050',()=>{
     })
     answers.value = newAnswers
     options.value = newOptions
-})
+}
 
-emitter.on('CHECK_QUESTION',()=>{
+function check(){
     let newAnswers = [...answers.value]
     let result = 0
     newAnswers.forEach((a, i) => {
@@ -69,7 +70,7 @@ emitter.on('CHECK_QUESTION',()=>{
     })
 
     gameManager.submitQuestion({result,answerlist})
-})
+}
 
 function select(answerIndex, val) {
     let newAnswers = [...answers.value]

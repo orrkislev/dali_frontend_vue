@@ -1,17 +1,18 @@
 <script setup>
 import useAPI from "../../utils/useAPI";
 import useBrowseManager from "../../utils/useBrowseManager";
+import useStoreSubscribe from '../../utils/useStoreSubscribe';
 
 const browseManager = useBrowseManager();
 const api = useAPI();
 
-browseManager.$subscribe((mutation, state) => {
-    if (mutation.events.key == 'curr_level' && state.curr_level != -1)
-        api.post("tasks/subjects_list/", {parent_id: state.curr_level}).then(async (p) => {
+useStoreSubscribe(browseManager,'curr_level',(state)=>{
+  if (state.curr_level != -1)
+        api.post_json("tasks/subjects_list/", {parent_id: state.curr_level}).then(async (p) => {
             browseManager.subject_list = p.list
             browseManager.curr_subject = p.selected_id
         });
-});
+})
 
 function chooseSubject(id){
     browseManager.curr_subject = id

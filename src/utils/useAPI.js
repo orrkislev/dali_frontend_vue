@@ -12,7 +12,7 @@ function getCookie(name) {
 const useAPI = defineStore('api', {
     state: () => ({}),
     actions: {
-        async post(url, data) {
+        async post_json(url, data) {
             data['onlyData'] = true
             const token = getCookie('csrftoken')
             let response = await fetch(base_url + url, {
@@ -37,18 +37,22 @@ const useAPI = defineStore('api', {
             })
             return response
         },
-        async post_form(url, data) {
+        async post(url, data) {
+            data['onlyData'] = true
             const postData = new URLSearchParams();
+            const token = getCookie('csrftoken')
             Object.entries(data).forEach(pair => postData.append(pair[0], pair[1]))
             let response = await fetch(base_url + url, {
                 method: 'post', credentials: 'include',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
-                    'Access-Control-Allow-Credentials': true
+                    'x-csrftoken': token,
                 },
                 body: postData,
             })
-            return response
+            const contentType = response.headers.get("content-type");
+            if (contentType && contentType.indexOf("application/json") !== -1) return response.json();
+            else return response.text()
         }
     }
 })

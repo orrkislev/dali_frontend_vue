@@ -1,32 +1,43 @@
 <script setup>
 import useGameManager from "../../../utils/useGameManager";
 import useEmitter from "../../../utils/useEmmiter";
-import { ref } from 'vue-demi';
+// import { ref } from 'vue-demi';
+// import useStoreSubscribe from '../../../utils/useStoreSubscribe';
+import ActionButton from "../../ActionButton.vue";
 
 const gameManager = useGameManager();
-const emitter = useEmitter();
+const emitter = useEmitter()
 
-let answers = ref([...gameManager.question.answers])
+// useStoreSubscribe( gameManager, 'question' , (state) => {
+//   console.log('update answers')
+//   answers.value = state.question.answers
+// })
 
-emitter.on("LIFELINE_STATS", () => {
-  let newAnswers = [...answers.value];
+// let answers = ref([...gameManager.question.answers])
+
+emitter.subscribe("LIFELINE_STATS", lifeline_stats)
+emitter.subscribe("LIFELINE_5050", lifeline_5050)
+emitter.subscribe("CHECK_QUESTION", check);
+
+function lifeline_stats(){
+  let newAnswers = [...gameManager.question.answers];
   newAnswers.forEach((answer) => (answer.stats = answer.chosen));
-  answers.value = newAnswers;
-});
+  gameManager.question.answers = newAnswers;
+}
 
-emitter.on("LIFELINE_5050", () => {
-  let newAnswers = [...answers.value];
+function lifeline_5050(){
+  let newAnswers = [...gameManager.question.answers];
   let grayableAnswers = newAnswers
     .filter((a) => a.correct != 1)
     .sort(() => Math.random() - 0.5);
   grayableAnswers
     .slice(0, Math.floor(newAnswers.length / 2))
     .forEach((a) => (a.inactive = true));
-  answers.value = newAnswers;
-});
+  gameManager.question.answers = newAnswers;
+}
 
-emitter.on("CHECK_QUESTION", () => {
-  let newAnswers = [...answers.value];
+function check(){
+  let newAnswers = [...gameManager.question.answers];
   let result = 0;
   newAnswers.forEach((a, i) => {
     if (a.selected == a.correct) {
@@ -37,39 +48,38 @@ emitter.on("CHECK_QUESTION", () => {
     }
     a.inactive = true;
   });
-  answers.value = newAnswers;
-  result = result == answers.value.length ? 1 : 0;
+  gameManager.question.answers = newAnswers;
+  result = result == gameManager.question.answers.length ? 1 : 0;
 
   let answerlist = [];
-  let selectedAnswer = answers.value.find((a) => a.selected == 1);
+  let selectedAnswer = gameManager.question.answers.find((a) => a.selected == 1);
   if (selectedAnswer) answerlist = [{ id: selectedAnswer.id, res: result }];
 
   gameManager.submitQuestion({ result, answerlist });
-});
+}
 
 function select(answerIndex, val) {
-    let newAnswers = [...answers.value]
+    let newAnswers = [...gameManager.question.answers]
     newAnswers.forEach(a => a.selected = 0)
     newAnswers[answerIndex].selected = val
-    answers.value = newAnswers
+    gameManager.question.answers = newAnswers
 }
 </script>
 
 
 <template>
   <div class="flex-column gap05">
-    <div v-for="(answer, answerIndex) in answers" :key="answerIndex">
-      <div class="flex1">
-        <button
+    <div v-for="(answer, answerIndex) in gameManager.question.answers" :key="answerIndex" class="flex">
+        <action-button
+          :border="true"
           :indicator="answer.selected == 1 ? answer.result : null"
-          disabled="answer.inactive"
+          :disabled="answer.inactive"
           :selected="answer.selected == 1"
           @click="select(answerIndex, 1)"
         >
-          <span v-append="answer.text"></span>
+          <span v-append="answer.text">{{ answer.text }}</span>
           <small v-if="answer.stats">&nbsp; ({{ answer.stats }})</small>
-        </button>
-      </div>
+        </action-button>
     </div>
   </div>
 </template>
@@ -77,6 +87,7 @@ function select(answerIndex, val) {
 
 <script>
 export default {
+  components: { ActionButton },
   name: "QuestionOptions",
 };
 </script>

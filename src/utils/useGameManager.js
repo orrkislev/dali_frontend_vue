@@ -12,9 +12,10 @@ const useGameManager = defineStore('game', {
     }),
     getters: {
         getPostDataForSubmitAndNext: state => {
+            if (!state.questionResult) return false
             return {
                 in_question: 1,
-                correct: state.questionResult.result ?? 0,
+                correct: state.questionResult?.result ?? 0,
                 timer: 1,
                 fifty: state.questionResult.used5050 ? 1 : 0,
                 statistics: state.questionResult.usedStats ? 1 : 0,
@@ -30,11 +31,11 @@ const useGameManager = defineStore('game', {
     actions: {
         async loadGameData({ taskID, extra }) {
             const api = useAPI()
-            let res = await api.post('tasks/task_page/', { 'game_id': taskID })
-            console.log(res)
+            let res = await api.post_json('tasks/task_page/', { 'game_id': taskID })
             res.extra = extra
             this.game = res
             if (res.game.gameType != 'trivia') console.log('SPECIAL GAMETYPE:', res.game.gameType)
+            this.view = 'title'
         },
         async startGame(level = null, restart = false) {
             this.question = null
@@ -103,10 +104,10 @@ const useGameManager = defineStore('game', {
             }
 
             // START GAME
-            res = await api.post("/quest/gamehead/", { 'master': 1 })
+            res = await api.post("quest/gamehead/", { 'master': 1 })
             postdata.purpose = '';
             postdata.gametype = 'start_normal';
-            res = await api.post("/quest/gamehead/", postdata)
+            res = await api.post("quest/gamehead/", postdata)
 
             // SHOW MEDIA BEFORE QUESTION?
             if ('media' in res) {
@@ -115,10 +116,12 @@ const useGameManager = defineStore('game', {
 
                 // SHOW QUESTION
             } else {
-                res = await api.post("/quest/game_description/", {})
-                res = await api.post("/quest/buttons/", postdata)
-                res = await api.post("/quest/play/", { onlyData: true })
+                res = await api.post("quest/game_description/", {})
+                res = await api.post("quest/buttons/", postdata)
+                res = await api.post("quest/play/", { onlyData: true })
+                console.log(res)
                 this.question = res
+                this.questionResult = {}
                 if (res.action == 'game ended') this.view = 'title'
                 else if (res.action == 'next question') this.view = 'question'
             }
@@ -137,22 +140,24 @@ const useGameManager = defineStore('game', {
             }
             this.progress = newProgress
             const api = useAPI()
-            await api.post("/quest/gamehead/", data)
+            await api.post("quest/gamehead/", data)
         },
         async nextQuestion() {
             const api = useAPI()
             if (this.progress.progress[0] == 'admin') window.location.reload();
 
             const data = this.getPostDataForSubmitAndNext
-            const res = await api.post("/quest/play/", data)
-            this.question = res
+            const res = await api.post("quest/play/", data)
+            console.log(res)
             if (res.action == 'game ended') this.view = 'title'
             else if (res.action == 'next question') this.view = 'question'
             else if (res.action == 'media start') {
                 this.view = 'media'
                 this.media = res.media
             }
-            // EventBus.$emit('NEXT_QUESTION') TODO Pinia Events
+            this.question = res
+            this.questionResult = {}
+            // EventBus.$emit('NEXT_QUESTION') TODO emitter event
 
             if (res.question_num) this.progress[res.question_num - 1] = 'curr'
         },
@@ -163,9 +168,10 @@ const useGameManager = defineStore('game', {
             newProgress.progress[this.question.question_num - 1] = 'curr'
             this.progress = newProgress
 
-            let res = await api.post("/quest/action/", { action: 'retry', onlyData: true })
-            res = await api.post("/quest/action/", { action: 'reshow', question_id: this.question.q.id, onlyData: true })
+            let res = await api.post("quest/action/", { action: 'retry', onlyData: true })
+            res = await api.post("quest/action/", { action: 'reshow', question_id: this.question.q.id, onlyData: true })
             this.question = res
+            this.questionResult = {}
         },
         async lifeline_skip() {
             const api = useAPI()
@@ -177,13 +183,15 @@ const useGameManager = defineStore('game', {
             let data = this.getPostDataForSubmitAndNext
             data.timer = -1
             data.action = 'skip'
-            const res = await api.post("/quest/action/", data)
+            const res = await api.post("quest/action/", data)
             this.question = res
+            this.questionResult = {}
         },
         async lifeline_replace() {
             const api = useAPI()
-            const res = await api.post("/quest/action/", { action: 'replace', onlyData: true })
+            const res = await api.post("quest/action/", { action: 'replace', onlyData: true })
             this.question = res
+            this.questionResult = {}
         }
     }
 })

@@ -3,6 +3,7 @@ import SingleTask from './SingleTask.vue'
 import { ref } from 'vue-demi';
 import useAPI from "../../utils/useAPI";
 import useBrowseManager from "../../utils/useBrowseManager";
+import useStoreSubscribe from "../../utils/useStoreSubscribe";
 
 const browseManager = useBrowseManager();
 const api = useAPI();
@@ -10,13 +11,12 @@ const api = useAPI();
 const gameData = ref(null)
 getGamesData(browseManager.curr_subject)
 
-browseManager.$subscribe((mutation, state) => {
-    if (mutation.events.key == 'curr_subject' && state.curr_subject != -1)
-        getGamesData(state.curr_subject)
-});
+useStoreSubscribe(browseManager,'curr_subject',(state)=>{
+    if (state.curr_subject != -1) getGamesData(state.curr_subject)
+})
 
 function getGamesData(subjectID){
-    api.post("tasks/tasks_list/", {parent_id: subjectID}).then(async (p) => {
+    api.post_json("tasks/tasks_list/", {parent_id: subjectID}).then(async (p) => {
             gameData.value = p
         });
 }

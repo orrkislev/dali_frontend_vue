@@ -5,28 +5,20 @@ import useGameManager from "../../utils/useGameManager";
 import useEmitter from "../../utils/useEmmiter";
 
 const gameManager = useGameManager();
-const question = gameManager.question;
-const media = gameManager.media;
+
+const emitter = useEmitter()
+emitter.subscribe("SHOW_MEDIA", showMedia);
 
 let open = ref(false);
-let mediaToShow = ref(media);
 
-function openMedia() {
-  open.value = true;
-}
 function closeMedia() {
-  if (open) {
-    open.value = false;
-    mediaToShow.value = media;
-  }
+  open.value = false;
 }
 
-const emitter = useEmitter();
-emitter.on("SHOW_MEDIA", (feedback) => {
-  mediaToShow.value = this.media;
+function showMedia(feedback){
   let scroll_to = null;
 
-  openMedia();
+  open.value = true;
   setTimeout(() => {
     if ("sentences" in feedback) {
       feedback.sentences.forEach((sentence) => {
@@ -43,30 +35,26 @@ emitter.on("SHOW_MEDIA", (feedback) => {
       );
     }
   }, 300);
-});
+}
+
+function editMediaForDevelopment(media){
+  return media.split('/static/').join('http://da-li.co.il/static/')
+}
 </script>
 
 
 <template>
   <div>
-    <div v-if="media" id="gameMedia">
+    <div v-if="gameManager.media" id="gameMedia">
       <div v-if="open">
-        <div class="disableButtons" v-append="mediaToShow"></div>
-        <button @click="closeMedia" >
-          סגירה
-        </button>
+        <div v-append="editMediaForDevelopment(gameManager.media)"></div>
+        <button @click="closeMedia">סגירה</button>
       </div>
-      <button v-else @click="openMedia">
-        לצפייה חוזרת בטקסט
-      </button>
+      <button v-else @click="openMedia">לצפייה חוזרת בטקסט</button>
     </div>
 
-    <div v-if="question.q.type != 'mouseselect'">
-      <div
-        v-for="(qmedia, i) in question?.medias"
-        :key="i"
-        v-append="qmedia"
-      ></div>
+    <div v-if="gameManager.question.q.type != 'mouseselect'">
+      <div v-for="(qmedia, i) in gameManager.question?.medias" :key="i" v-html="editMediaForDevelopment(qmedia)"></div>
     </div>
   </div>
 </template>
@@ -80,4 +68,34 @@ export default {
 
 
 <style>
+    .localimg{
+        font-size: small;
+        width: 100% !important;
+    }
+    .youtube{
+        width: 100% !important;
+        aspect-ratio: 16 / 9;
+        height: unset !important;
+    }
+
+    #gameMedia{
+        border-bottom: dashed 1px gray; 
+        padding-bottom: 0.5em; 
+        margin-bottom: 0.5em;
+    }
+    #showcase-caption-description-0{
+        display: none !important;
+    }
+    .popcorn_footnote{
+        width: unset !important;
+        height: unset !important;
+        font-weight: initial !important;
+        font-size: initial !important;
+        background-color: unset !important;
+        font-style: italic;
+        border: 1px dashed orange;
+    }
+    .disableButtons a{
+        pointer-events: none;
+    }
 </style>

@@ -19,6 +19,7 @@ export default {
 <style>
 #mainContent {
   background: white;
+  border-radius: 0.5em;
   flex: 4;
   width: 100%;
   height: 100%;

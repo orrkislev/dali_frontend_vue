@@ -32,7 +32,7 @@ const useAuth = defineStore('auth', {
             }
             const api = useAPI()
             console.log('username =' + username);
-            let response = await api.post('students/pre_login/', {
+            let response = await api.post_json('students/pre_login/', {
                 'go_normal': 1,
                 'username': username,
                 'password': password,

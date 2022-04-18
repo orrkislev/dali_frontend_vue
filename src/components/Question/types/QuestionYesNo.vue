@@ -1,27 +1,35 @@
 <script setup>
-import { ref } from 'vue-demi';
+// import { ref } from 'vue-demi';
 import useAPI from '../../../utils/useAPI';
 import useEmitter from '../../../utils/useEmmiter';
 import useGameManager from '../../../utils/useGameManager';
+import ActionButton from '../../ActionButton.vue';
+// import useStoreSubscribe from '../../../utils/useStoreSubscribe';
 
 const gameManager = useGameManager()
-const question = gameManager.question
-
-let answers = ref([])
-
-const emitter = useEmitter()
 const api = useAPI()
-emitter.on('LIFELINE_STATS', async ()=>{
-    const res = await api.post("/quest/action/", { 'action': 'statistics', 'question_id': question.q.id })
-    let newAnswers = [...answers.value]
+const emitter = useEmitter()
+
+// useStoreSubscribe(gameManager,'question',(state)=>answers.value = state.question.answers)
+// const answers = ref(gameManager.question.answers)
+
+emitter.subscribe('LIFELINE_STATS', lifeline_stats)
+emitter.subscribe('CHECK_QUESTION', check)
+
+
+
+async function lifeline_stats(){
+    const res = await api.post("/quest/action/", { 'action': 'statistics', 'question_id': gameManager.question.q.id })
+    let newAnswers = [...gameManager.question.answers]
     newAnswers.forEach(a=>a.stats = ['',''])
     res.forEach(stat => {
         newAnswers.find(a=>a.id == stat.answer_id).stats[Math.abs(stat.select_id-2)] = stat.count
     })
-    this.answers = newAnswers
-})
-emitter.on('CHECK_QUESTION', ()=>{
-    let newAnswers = [...this.answers]
+    gameManager.question.answers = newAnswers
+}
+
+function check(){
+    let newAnswers = [...gameManager.question.answers]
     let result = 0
     newAnswers.forEach((a, i) => {
         if (a.selected == a.correct) {
@@ -32,10 +40,10 @@ emitter.on('CHECK_QUESTION', ()=>{
         }
         a.inactive = [true,true]
     })
-    this.answers = newAnswers
-    result = result / this.answers.length
+    gameManager.question.answers = newAnswers
+    result = result / gameManager.question.answers.length
 
-    const answerlist =  this.answers.map(a=>{
+    const answerlist =  gameManager.question.answers.map(a=>{
         return {
             id: a.id,
             res: a.result=='success' ? 1 : 0,
@@ -44,12 +52,12 @@ emitter.on('CHECK_QUESTION', ()=>{
     })
 
     gameManager.submitQuestion({result,answerlist})
-})
+}
 
 function select(answerIndex, val) {
-    let newAnswers = [...answers.value]
+    let newAnswers = [...gameManager.question.answers]
     newAnswers[answerIndex].selected = val
-    answers.value = newAnswers
+    gameManager.question.answers = newAnswers
 }
 
 </script>
@@ -57,17 +65,17 @@ function select(answerIndex, val) {
 
 <template>
     <div class="flex-column gap05">
-        <div v-for="(answer,index) in answers" :key="index">
+        <div v-for="(answer,index) in gameManager.question.answers" :key="index">
             {{ answer.text }}
             <div class='flex gap05'>
-                <button v-for="val in [0,1]" class="flex1" :key="val" :border="true" :center="true"
+                <action-button v-for="val in [0,1]" class="flex1" :key="val" :border="true" :center="true"
                     :indicator="answer.selected==val ? answer.result : null"
                     :inactive="answer.inactive ? answer.inactive[val] : null"
                     :selected="answer.selected==val" 
                     @click="select(index,val)">
                     {{ val == 1 ? 'נכון' : 'לא נכון'}}
                     <small v-if="answer.stats">&nbsp;({{ answer.stats[val] }})</small>
-                </button>
+                </action-button>
             </div>
             <div v-if="answer.result"
                 v-bind:style="{color:answer.result=='success' ? 'green' : 'red'}" v-html="answer.feedback_text.text">
@@ -79,6 +87,7 @@ function select(answerIndex, val) {
 
 <script>
 export default {
+  components: { ActionButton },
 name:'QuestionYesNo'
 };
 </script>

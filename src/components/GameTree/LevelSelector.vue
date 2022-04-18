@@ -5,7 +5,7 @@ import useBrowseManager from '../../utils/useBrowseManager'
 const browseManager = useBrowseManager()
 const api = useAPI()
 
-api.post("tasks/subjects_list/", {}).then(async (p) => {
+api.post_json("tasks/subjects_list/", {}).then(async (p) => {
   browseManager.level_list = p.list
   browseManager.curr_level = p.selected_id
 });
