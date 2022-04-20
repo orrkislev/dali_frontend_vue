@@ -33,7 +33,7 @@ api
             <div class="class_in_classlist" >
                 <div class="class_in_classlist_title">{{ cls.name }}</div>
                 <div class="class_in_classlist_actions">
-                    <button-small :border="true" :indicator='fail'>מחיקת כיתה</button-small>
+                    <button-small :border="true">מחיקת כיתה</button-small>
                     <button-small :border="true">עריכה</button-small>
                 </div>
             </div>

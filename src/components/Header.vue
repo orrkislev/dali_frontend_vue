@@ -1,18 +1,25 @@
 <script setup>
 import { NButton, NDropdown } from "naive-ui";
 import useAuth from '../utils/useAuth';
+import useStoreSubscribe from '../utils/useStoreSubscribe';
+import { ref } from 'vue-demi';
 
 const auth = useAuth()
 
-const options = [
-  { key: "1", label: "Marina Bay Sands", disabled: true },
-  { key: "2", label: "Brown's Hotel, London" },
-  { key: "3", label: "Atlantis Bahamas, Nassau" },
-  { key: "4", label: "The Beverly Hills Hotel, Los Angeles" },
-];
+useStoreSubscribe(auth,'username',(state)=>{
+    const newOptions = [...options.value]
+    newOptions[0].disabled = state.username==null
+    options.value = newOptions
+})
+
+const options = ref([
+  { key: "1", label: "התנתק", disabled: false},
+]);
 
 function SelectUserOption(key) {
-  console.log(key);
+  if (key=="1") {
+    auth.logout()
+  }
 }
 </script>
 

@@ -33,8 +33,11 @@ const useAuth = defineStore('auth', {
             this.username = 'אורכסלו'
             return response
         },
-        logout() {
-
+        async logout() {
+            const api = useAPI()
+            await api.get('students/logout')
+            this.role = null
+            this.username = null
         },
         register() {
 
