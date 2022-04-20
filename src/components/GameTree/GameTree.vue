@@ -24,5 +24,7 @@ export default {
 <style>
 #subject_game_selection{
   display: flex;
+  margin-top: 1em;
+  gap: 1em;
 }
 </style>

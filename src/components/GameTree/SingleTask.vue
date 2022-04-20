@@ -52,10 +52,14 @@ export default {
         overflow:hidden;
         box-shadow: rgba(0,0,0,0.2) 1px 3px 7px;
         position: relative;
+        transition: all 150ms ease-in-out;
+    }
+    .task:hover{
+        box-shadow: rgba(0,0,0,0.3) 1px 6px 4px;
     }
     .task-img{
         background-size: cover;
-        flex:2
+        flex:1;
     }
     .task-content{
         flex:5;
@@ -67,11 +71,11 @@ export default {
     .task-content-bottom{
         font-size: smaller;
         display: flex;
+        gap: 2em;
     }
     .task-content-bottom-marker{
         display: flex;
         gap: 4px;
-        flex:1;
     }
     .task-content-bottom-marker-circle{
         width: 1em;
@@ -92,5 +96,9 @@ export default {
         width: 150%;
         text-align: center;
         background-color: orange;
+    }
+    .task-content-name{
+        font-size: larger;
+        font-weight: 600;
     }
 </style>

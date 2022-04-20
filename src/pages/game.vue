@@ -1,8 +1,8 @@
 <script setup>
-import GameQuestion from '../components/GameQuestion.vue'
+import GameQuestion from '../components/Game/GameQuestion.vue'
 import { useRoute } from 'vue-router'
 import useGameManager from '../utils/useGameManager'
-import GameTitle from '../components/GameTitle.vue'
+import GameTitle from '../components/Game/GameTitle.vue'
 
 const route = useRoute()
 const gameManager = useGameManager()

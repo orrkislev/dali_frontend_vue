@@ -1,29 +1,37 @@
 <script setup>
 import useAPI from "../../utils/useAPI";
 import useBrowseManager from "../../utils/useBrowseManager";
-import useStoreSubscribe from '../../utils/useStoreSubscribe';
+import useStoreSubscribe from "../../utils/useStoreSubscribe";
 
 const browseManager = useBrowseManager();
 const api = useAPI();
 
-useStoreSubscribe(browseManager,'curr_level',(state)=>{
+useStoreSubscribe(browseManager, "curr_level", (state) => {
   if (state.curr_level != -1)
-        api.post_json("tasks/subjects_list/", {parent_id: state.curr_level}).then(async (p) => {
-            browseManager.subject_list = p.list
-            browseManager.curr_subject = p.selected_id
-        });
-})
+    api
+      .post_json("tasks/subjects_list/", { parent_id: state.curr_level })
+      .then((p) => {
+        browseManager.subject_list = p.list;
+        browseManager.curr_subject = p.selected_id;
+      });
+});
 
-function chooseSubject(id){
-    browseManager.curr_subject = id
+function chooseSubject(id) {
+  browseManager.curr_subject = id;
 }
 </script>
 
 <template>
-  <div>
-        <div v-for="a,i in browseManager.subject_list" :key="i" @click="chooseSubject(a.id)">
-            {{ a.name }}
-        </div>
+  <div id="subject_selector">
+    <div
+      v-for="(a, i) in browseManager.subject_list"
+      :key="i"
+      @click="chooseSubject(a.id)"
+      class="subject_selector_item"
+      :class="{ subject_selector_item_selected: browseManager.curr_subject==a.id }"
+    >
+      {{ a.name }}
+    </div>
   </div>
 </template>
 
@@ -34,4 +42,30 @@ export default {
 </script>
 
 <style>
+#subject_selector{
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+}
+.subject_selector_item {
+  border-radius: 0.2em;
+  cursor: pointer;
+  font-size: 1.1em;
+  transition: all 150ms ease;
+  padding-left: 2.5em;
+  padding-right: 0.5em;
+}
+
+.subject_selector_item:hover {
+  background: #99a;
+}
+.subject_selector_item:active {
+  background: darkgoldenrod;
+}
+.subject_selector_item_selected{
+  padding-right: 2.5em;
+  padding-left: .5em;
+  background: orange;
+  color:darkred;
+}
 </style>

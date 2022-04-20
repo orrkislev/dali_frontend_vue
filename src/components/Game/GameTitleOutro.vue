@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue-demi';
-import useAPI from "../utils/useAPI";
-import useGameManager from "../utils/useGameManager";
+import useAPI from "../../utils/useAPI";
+import useGameManager from "../../utils/useGameManager";
 import PlayedGamesList from "./PlayedGamesList.vue";
 
 const api = useAPI();

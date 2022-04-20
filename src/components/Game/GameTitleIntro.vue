@@ -1,6 +1,7 @@
 <script setup>
-import useGameManager from "../utils/useGameManager";
-import ActionButton from './ActionButton.vue';
+import useGameManager from "../../utils/useGameManager";
+import ActionButton from '../ActionButton.vue';
+import GameIntroTeacher from './teachers/GameIntro-Teacher.vue';
 import PlayedGamesList from "./PlayedGamesList.vue";
 
 const gameManager = useGameManager();
@@ -22,7 +23,9 @@ function startLevel(level) {
 <template>
   <div id="task-main">
     <div id="task-main-top" style="padding: 1em" v-if="gameManager.game">
+      <div style="width:5em;height:5em; background-size:cover;" :style="{backgroundImage: 'url(http://da-li.co.il'+gameManager.game.game.game_icon_name+')'}"/>
       <h1>{{ gameManager.game?.game.name }}</h1>
+      <!-- <div class='mobile-top mobile-top-image' v-bind:style="{backgroundImage: 'url('+gameManager.game.game.game_icon_name+')'}"> -->
       <div v-if="gameManager.game?.extra.exam">
         <h3>בוחן</h3>
         יש לסיים את כל השאלות. לא ניתן יהיה לחזור לבוחן אם תצאו לפני תום כל השאלות!
@@ -52,13 +55,14 @@ function startLevel(level) {
         </action-button>
       </div>
     </div>
+    <game-intro-teacher />
   </div>
 </template>
 
 
 <script>
 export default {
-  components: { PlayedGamesList, ActionButton },
+  components: { PlayedGamesList, ActionButton, GameIntroTeacher },
   name: "GameTitleIntro",
 };
 </script>

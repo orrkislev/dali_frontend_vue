@@ -1,19 +1,13 @@
 <script setup>
-import useAuth from '../utils/useAuth';
-import ActionButton from './ActionButton.vue';
-import SideBarStaff from './SideBar/SideBarStaff.vue';
-
-const auth = useAuth()
-const auto_login = ()=>auth.auto_login();
+import SideBarStaff from './SideBarStaff.vue';
+import SideBarUser from './SideBarUser.vue';
 
 </script>
 
 
 <template>
     <div id="sidebar">
-        <div class='sideBarElement'>
-            <action-button @click=auto_login>auto_login</action-button>
-        </div>
+        <side-bar-user />
         <side-bar-staff />
     </div>
 </template>
@@ -21,7 +15,7 @@ const auto_login = ()=>auth.auto_login();
 
 <script>
 export default {
-  components: { SideBarStaff, ActionButton },
+  components: { SideBarStaff, SideBarUser },
   name:'SideBar'
 };
 </script>

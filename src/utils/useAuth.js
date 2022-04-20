@@ -4,35 +4,26 @@ import useAPI from './useAPI';
 const useAuth = defineStore('auth', {
     state: () => ({
         username: null,
-        csrfToken:null
+        role:null
     }),
+    getters: {
+        isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.role)
+    },
     actions: {
         async auto_login(){
             const api = useAPI()
-            await api.get('students/vue_login')
-            return true
-        },
-        async getCsrfToken(){
-            const api = useAPI()
-            let response = await api.get('students/get_csrf_token/')
+            let response = await api.get('students/vue_login')
             response = await response.json()
-            console.log(response)
-            this.csrfToken = response.token
-            return response
-        },
-        async pre_login() {
-            const api = useAPI()
-            let response = await api.get('students/pre_login')
-            return response
+            this.role = response.role
+            this.username = 'אורכסלו'
+            return true
         },
         async login(username, password) {
             if (username == '') {
-                username = 'אורכסלו'
-                password = 'Ok061187'
+                return await this.auto_login()
             }
             const api = useAPI()
-            console.log('username =' + username);
-            let response = await api.post_json('students/pre_login/', {
+            let response = await api.post('students/pre_login/', {
                 'go_normal': 1,
                 'username': username,
                 'password': password,

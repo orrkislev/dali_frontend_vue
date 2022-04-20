@@ -1,12 +1,12 @@
 <script setup>
-import GameTop from "./GameTop.vue";
-import GameButtons from "./Question/GameButtons.vue";
-import GameLifelines from "./Question/GameLifelines.vue";
-import GameMedia from "./Question/GameMedia.vue";
-import GameProgress from "./Question/GameProgress.vue";
-import QuestionContent from "./Question/QuestionContent.vue";
-import QuestionFeedback from "./Question/QuestionFeedback.vue";
-import QuestionPart from "./Question/QuestionPart.vue";
+import GameTop from "../Question/GameTop.vue";
+import GameButtons from "../Question/GameButtons.vue";
+import GameLifelines from "../Question/GameLifelines.vue";
+import GameMedia from "../Question/GameMedia.vue";
+import GameProgress from "../Question/GameProgress.vue";
+import QuestionContent from "../Question/QuestionContent.vue";
+import QuestionFeedback from "../Question/QuestionFeedback.vue";
+import QuestionPart from "../Question/QuestionPart.vue";
 </script>
 
 

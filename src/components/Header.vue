@@ -1,5 +1,8 @@
 <script setup>
 import { NButton, NDropdown } from "naive-ui";
+import useAuth from '../utils/useAuth';
+
+const auth = useAuth()
 
 const options = [
   { key: "1", label: "Marina Bay Sands", disabled: true },
@@ -25,14 +28,14 @@ function SelectUserOption(key) {
         <NButton round secondary color="#ffffff">
           <router-link to="/allgames">מאגר משימות</router-link>
         </NButton>
-        <NButton round secondary color="#ffffff">
+        <NButton round secondary color="#ffffff" v-if="auth.isTeacherOrStaff">
           <router-link to="/login">משימות לכיתות</router-link>
         </NButton>
-        <NButton round secondary color="#ffffff">
+        <NButton round secondary color="#ffffff" v-if="auth.isTeacherOrStaff">
           <router-link to="/">בחנים לכיתות</router-link>
         </NButton>
-        <NButton round secondary color="#ffffff">
-          <router-link to="/">ניהול כיתות</router-link>
+        <NButton round secondary color="#ffffff" v-if="auth.isTeacherOrStaff">
+          <router-link to="/classes">ניהול כיתות</router-link>
         </NButton>
       </div>
       <div id="header_left">
@@ -42,7 +45,7 @@ function SelectUserOption(key) {
           :options="options"
         >
           <NButton round secondary color="#ffffff">
-            <router-link to="/login">LOGIN</router-link>
+            <router-link to="/login">{{ auth.username ?? 'LOGIN' }}</router-link>
           </NButton>
         </n-dropdown>
       </div>

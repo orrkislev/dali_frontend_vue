@@ -1,7 +1,7 @@
 <script setup>
 import Header from "./components/Header.vue";
 import MainContent from "./components/MainContent.vue";
-import SideBar from "./components/SideBar.vue";
+import SideBar from "./components/SideBar/SideBar.vue";
 </script>
 
 
@@ -30,7 +30,7 @@ body {
   direction: rtl;
 }
 #app {
-  max-width: 77em;
+  max-width: 84em;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
