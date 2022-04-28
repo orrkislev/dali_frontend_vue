@@ -61,6 +61,7 @@ export default {
   border-radius: 0.3em;
   display: flex;
   min-width: 100px;
+  max-width: 20em;
   align-items: center;
   padding: 0.3em 0.5em;
   transition: background-color 200ms ease-in-out;

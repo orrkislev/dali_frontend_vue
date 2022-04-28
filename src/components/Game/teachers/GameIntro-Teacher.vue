@@ -2,6 +2,7 @@
 import useAuth from "../../../utils/useAuth";
 import ActionButton from '../../ActionButton.vue';
 import GameManageClasses from './GameManageClasses.vue';
+import Divider from 'primevue/divider';
 
 const auth = useAuth();
 
@@ -11,6 +12,19 @@ const auth = useAuth();
 <template>
   <div v-if="['stuff', 'teacher'].includes(auth.role)">
     <game-manage-classes />
+    <Divider />
+    <div class="teacher_section">
+      <div class="teacher_section_title">משחק מובייל בכיתה</div>
+      <div class="teacher_section_subtitle">פתיחת המשחק למובייל בכיתה</div>
+      <div class="teacher_section_content">
+        <div class="teacher_section_content_text">
+          בחרו את הכיתה/ות שבה/ן תרצו להתחיל עכשיו משחק בכיתה, בו המורה מציגה את השאלות במחשב, והתלמידים עונים בטלפונים הניידים.
+        </div>
+        <div class="teacher_section_content_action">
+          <action-button :center='true' :border="true">משחק מובייל </action-button>
+        </div>
+      </div>
+    </div>
 
     <div class="teacher_section">
       <div class="teacher_section_title">בוחן מקוון</div>
@@ -65,7 +79,7 @@ const auth = useAuth();
 
 <script>
 export default {
-  components: { ActionButton },
+  components: { ActionButton},
   name: "GameIntro-Teacher",
     GameManageClasses
 };

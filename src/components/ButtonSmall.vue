@@ -1,5 +1,6 @@
 <script setup>
 
+const emit = defineEmits(['click'])
 const props = defineProps({
     border: {type:Boolean, default: false},
     primary: {type:Boolean, default: false},

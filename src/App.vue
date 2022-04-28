@@ -2,10 +2,13 @@
 import Header from "./components/Header.vue";
 import MainContent from "./components/MainContent.vue";
 import SideBar from "./components/SideBar/SideBar.vue";
+
+import ConfirmDialog from 'primevue/confirmdialog'
 </script>
 
 
 <template>
+  <ConfirmDialog></ConfirmDialog>
   <Header />
   <div id="mainLayout">
     <main-content>
