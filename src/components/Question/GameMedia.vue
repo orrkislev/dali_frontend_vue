@@ -53,7 +53,7 @@ function editMediaForDevelopment(media){
       <button v-else @click="openMedia">לצפייה חוזרת בטקסט</button>
     </div>
 
-    <div v-if="gameManager.question.q.type != 'mouseselect'">
+    <div v-if="gameManager.question.q.type != 'mouseselect'" class='mt-5 flex justify-content-center'>
       <div v-for="(qmedia, i) in gameManager.question?.medias" :key="i" v-html="editMediaForDevelopment(qmedia)"></div>
     </div>
   </div>

@@ -3,9 +3,6 @@ import useGameManager from "../../utils/useGameManager";
 import ActionButton from "../ActionButton.vue";
 import GameIntroTeacher from "./teachers/GameIntro-Teacher.vue";
 import PlayedGamesList from "./PlayedGamesList.vue";
-import Button from "primevue/button";
-import Divider from "primevue/divider";
-import SplitButton from 'primevue/splitbutton';
 import GameLeaderboard from './GameLeaderboard.vue';
 import useAuth from '../../utils/useAuth';
 

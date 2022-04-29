@@ -2,7 +2,6 @@
 import { ref } from "vue-demi";
 import { useRoute } from "vue-router";
 import useAPI from "../../../utils/useAPI";
-import InputSwitch from "primevue/inputswitch";
 
 const route = useRoute();
 const api = useAPI();

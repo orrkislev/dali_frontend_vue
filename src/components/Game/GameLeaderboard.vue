@@ -1,9 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import useAPI, { real_url } from '../../utils/useAPI';
-import TabMenu from 'primevue/tabmenu';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
 import { ref } from 'vue-demi';
 
 const api = useAPI()
@@ -47,7 +44,7 @@ function getIconSrc(icon){
         <h3>טבלת השיאים של</h3>
         <TabMenu :model="tabs" :activeIndex="activeTab" @tab-change="tabChange"/>
     </div>
-    <DataTable :value="tableData.all" responsiveLayout="scroll" v-if='tableData.all.length>0' class="p-datatable-sm">
+    <DataTable :value="tableData.all" responsiveLayout="scroll" v-if='tableData?.all.length>0' class="p-datatable-sm">
         <Column field="school" header="כיתה" v-if="tableData.type=='school'" class='text-right'></Column>
         <Column field="studentIcon" header="דמות" class='text-right'>
             <template #body="slotProps">

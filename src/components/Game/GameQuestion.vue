@@ -8,8 +8,9 @@ import QuestionContent from "../Question/QuestionContent.vue";
 import QuestionFeedback from "../Question/QuestionFeedback.vue";
 import QuestionPart from "../Question/QuestionPart.vue";
 import { onBeforeRouteLeave } from "vue-router";
-import { useConfirm } from "primevue/useconfirm";
+import { useConfirm } from "primevue/useconfirm"; 
 import useGameManager from '../../utils/useGameManager';
+
 
 const gameManager = useGameManager()
 const confirm = useConfirm();
@@ -36,23 +37,18 @@ onBeforeRouteLeave(async (to, from) => {
 <template>
   <div class="flex-column gap1">
     <game-top />
-    <game-lifelines />
     <game-progress />
-    <div class="flex gap1">
-      <div class="flex1">
-        <game-media />
-      </div>
-      <div class="flex2 flex-column gap1 space-between">
-        <div>
-          <question-content />
-          <question-part />
-        </div>
-        <div>
-          <game-buttons />
-        </div>
-      </div>
+    <Divider align='right'>
+      <game-lifelines />
+    </Divider>
+    <div class='flex flex-column gap1'>
+      <question-content />
+      <question-part />
+      <game-buttons />
+      <question-feedback />
     </div>
-    <question-feedback />
+    <Divider />
+    <game-media />
   </div>
 </template>
 

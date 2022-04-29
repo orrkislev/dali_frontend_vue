@@ -2,23 +2,19 @@
 import { ref } from "vue-demi";
 import useEmmiter from "../../utils/useEmmiter";
 import useGameManager from "../../utils/useGameManager";
-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { library } from '@fortawesome/fontawesome-svg-core'
-import { faForward, faUndo, faRandom, faChartBar, faBalanceScale, faGift } from '@fortawesome/free-solid-svg-icons'
-library.add(faForward, faUndo, faRandom, faChartBar, faBalanceScale, faGift)
+import { useConfirm } from "primevue/useconfirm";
 
 const gameManager = useGameManager();
 const emitter = useEmmiter();
 
-emitter.subscribe("LIFELINE_ACCEPT", activateLifeline);
 
 const lifelines = ref({
-  skip: { icon: "forward", active: true, default: true, afterQ: false, },
-  retry: { icon: "undo",active: true, default: false, afterQ: true },
-  replace: { icon: "random", active: true, default: true, afterQ: false, },
-  stats: { icon: "chart-bar", active: true, default: true, afterQ: false, },
-  5050: { icon: "balance-scale", active: true, default: true, afterQ: false, yesno: false,},
+  skip: { text:'', name:'דלג',icon: "forward", active: true, default: true, afterQ: false, },
+  retry: { text:'', name:'נסה שוב',icon: "undo",active: true, default: false, afterQ: true },
+  replace: { text:'', name:'החלף שאלה',icon: "random", active: true, default: true, afterQ: false, },
+  stats: { text:'', name:'סטטיסטיקה', icon: "chart-bar", active: true, default: true, afterQ: false, },
+  5050: { text:'', name:'5050', icon: "balance-scale", active: true, default: true, afterQ: false, yesno: false,},
 });
 const initialValues = { ...lifelines.value };
 
@@ -39,10 +35,6 @@ function activateLifeline(name) {
   if (name == "replace") gameManager.lifeline_replace();
 }
 
-function click(lifeline, name) {
-  if (this.isActive(lifeline, name) == false) return;
-  activateLifeline(name)
-}
 function restart() {
   gameManager.startGame({ restart: true });
   lifelines.value = initialValues;
@@ -75,24 +67,45 @@ function lifeline_5050() {
   questionResult.used5050 = true;
   gameManager.questionResult = questionResult;
 }
+
+const confirm = useConfirm()
+function click(event,lifeline, name) {
+  confirm.require({
+      target: event.currentTarget,
+      group: 'lifeline',
+      message: lifeline.text,
+      // icon: 'pi pi-exclamation-triangle',
+      acceptLabel:lifeline.name,
+      rejectLabel:'ביטול',
+      accept: () => {
+          if (isActive(lifeline, name) == false) return;
+          activateLifeline(name)
+      },
+      reject: () => {
+          // 
+      }
+  })
+} 
 </script>
 
+
+
 <template>
+  <ConfirmPopup group="lifeline"></ConfirmPopup>
   <div v-if="gameManager.game?.extra.exam" class="text-white">
     יש לסיים את כל השאלות. לא ניתן יהיה לחזור לבוחן אם תצאו לפני תום כל השאלות!
   </div>
-  <div v-else class="flex" style="justify-content: space-between">
-    <div class="task-lifeline" v-on:click="restart()">
+  <div v-else>
+    <!-- <div class="task-lifeline" v-on:click="restart()">
       <font-awesome-icon icon="undo" size="lg"/>
-    </div>
+    </div> -->
 
     <div class="flex" style="gap: 4px">
-      <div
+      <Button class="p-button-sm p-button-rounded"
         v-for="(lifeline, name) in lifelines"
         :key="name"
-        v-on:click="click(lifeline, name)"
-        class="task-lifeline"
-        v-bind:class="{ 'task-lifeline-inactive': !isActive(lifeline, name) }"
+        @click="click($event,lifeline, name)"
+        :disabled="!isActive(lifeline, name)"
       >
         <font-awesome-icon v-bind:icon="lifeline.icon" size="lg"/>
         <div
@@ -101,16 +114,21 @@ function lifeline_5050() {
         >
           <font-awesome-icon icon="fa-sm gift" />
         </div>
-      </div>
+      </Button>
     </div>
   </div>
 </template>
+
+
 
 <script>
 export default {
   name: "GameLifelines",
 };
 </script>
+
+
+
 
 <style>
 .task-lifeline-container {
@@ -150,39 +168,3 @@ export default {
   background-color: orangered;
 }
 </style>
-
-
-<!---
-<template id="alert-lifeline">
-  <div>
-    <h3 v-if="lifeline == 'lifeline_5050'">גלגל הצלה 50-50</h3>
-    <h3 v-else-if="lifeline == 'lifeline_stats'">סטטיסטיקה</h3>
-    <h3 v-else-if="lifeline == 'lifeline_retry'">נסיון נוסף</h3>
-    <h3 v-else-if="lifeline == 'lifeline_skip'">דילוג על השאלה</h3>
-    <h3 v-else-if="lifeline == 'lifeline_replace'">החלפת שאלה</h3>
-    <div>
-      <task-button :main="true" :center="true" @click="() => accept(lifeline)">אישור</task-button>
-      <task-button :center="true" :border="true" @click="cancel">ביטול</task-button>
-    </div>
-  </div>
-</template>
-
-<script>
-    Vue.component("alert-lifeline", {
-        template: "#alert-lifeline",
-        props: {
-            lifeline: String
-        },
-        methods: {
-            cancel(){
-                EventBus.$emit('ALERT_CLEAR')
-            },
-            accept(name){
-                name = name.replace('lifeline_','')
-                EventBus.$emit('LIFELINE_ACCEPT',name)
-                EventBus.$emit('ALERT_CLEAR')
-            }
-        }
-    });
-</script>
---->

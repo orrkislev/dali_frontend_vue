@@ -2,24 +2,21 @@
 import useGameManager from '../../utils/useGameManager';
 
 const gameManager = useGameManager()
-const progress = gameManager.progress;
 
 </script>
 
 
 <template>
-  <div v-if="progress" class="flex gap05">
+  <div v-if="gameManager.progress" class="flex gap05">
     <div
-      v-for="(p,i) in progress.progress"
-      :key=i
-      class="task-progress-part"
-      v-bind:class="{
-        'task-progress-part-curr': p == 'curr',
-        'task-progress-part-success': p == 1,
-        'task-progress-part-fail': p == 0,
-        'task-progress-part-partial': p > 0 && p < 1,
-      }"
-    ></div>
+      v-for="(p,i) in gameManager.progress.progress" :key=i
+      class="game-progress-part"
+      :class="{
+        'game-progress-part-curr': p == 'curr',
+        'game-progress-part-success': p == 1,
+        'game-progress-part-fail': p == 0,
+        'game-progress-part-partial': p > 0 && p < 1,
+      }"></div>
   </div>
 </template>
 
