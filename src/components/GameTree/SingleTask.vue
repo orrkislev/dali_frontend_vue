@@ -1,29 +1,36 @@
 <script setup>
 import { real_url } from '../../utils/useAPI';
 
+const knobSize = 80
 </script>
 
 <template>
     <router-link :to="'/game/' + task.id">
         <div class='task'>
-            <div class='task-img' v-bind:style="{backgroundImage: 'url('+real_url+task.icon+')'}"></div>
-            <div class='task-content'>
-                <div v-if="category" class='task-ribbon'>
-                    <div class='task-ribbon-text'>
-                        {{ category }}
+            <div class='flex justify-content-between'>
+                <div class='flex flex-1'>
+                    <div class='task-img' v-bind:style="{backgroundImage: 'url('+real_url+task.icon+')'}"></div>
+                    <div class='task-content'>
+                        <div v-if="category" class='task-ribbon'>
+                            <div class='task-ribbon-text'>
+                                {{ category }}
+                            </div>
+                        </div>
+                        <div class='task-content-name'>{{ task.name }}</div>
+                        <div class='task-content-bottom'>
+                            <div class='task-content-bottom-marker'>
+                                <div class='task-content-bottom-marker-circle' v-bind:style="{backgroundColor: played ? 'orange' : 'lightgray' }"></div>
+                                {{ played ? 'שיחקתי' : 'לא שיחקתי'}}
+                            </div>
+                            <div class='task-content-bottom-marker'>
+                                <div class='task-content-bottom-marker-circle' v-bind:style="{backgroundColor: assigned ? 'orange' : 'lightgray' }"></div>
+                                {{ assigned ? 'פרסמתי' : 'לא פרסמתי'}}
+                            </div>
+                        </div>
+                        
                     </div>
                 </div>
-                <div class='task-content-name'>{{ task.name }}</div>
-                <div class='task-content-bottom'>
-                    <div class='task-content-bottom-marker'>
-                        <div class='task-content-bottom-marker-circle' v-bind:style="{backgroundColor: played ? 'orange' : 'lightgray' }"></div>
-                        {{ played ? 'שיחקתי' : 'לא שיחקתי'}}
-                    </div>
-                    <div class='task-content-bottom-marker'>
-                        <div class='task-content-bottom-marker-circle' v-bind:style="{backgroundColor: assigned ? 'orange' : 'lightgray' }"></div>
-                        {{ assigned ? 'פרסמתי' : 'לא פרסמתי'}}
-                    </div>
-                </div>
+                <Knob :modelValue="score" :min="0" :max="target" disabled :size="knobSize" />
             </div>
         </div>
     </router-link>
@@ -38,6 +45,8 @@ export default {
     assigned: Boolean,
     exam: { type: Boolean, default: false },
     category: String,
+    score: {type:Number , default:0},
+    target:Number,
   },
 };
 </script>
@@ -48,18 +57,19 @@ export default {
         background:white;
         border-radius: .5em;
         height: 6em;
-        display: flex;
-        overflow:hidden;
+        /* display: flex; */
+        overflow:hidden;    
         box-shadow: rgba(0,0,0,0.2) 1px 3px 7px;
         position: relative;
         transition: all 150ms ease-in-out;
+        padding-left: 2em;
     }
     .task:hover{
         box-shadow: rgba(0,0,0,0.3) 1px 6px 4px;
     }
     .task-img{
         background-size: cover;
-        flex:1;
+        flex:2;
     }
     .task-content{
         flex:5;

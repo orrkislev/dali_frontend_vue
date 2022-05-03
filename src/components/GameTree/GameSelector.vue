@@ -41,6 +41,8 @@ function getGamesData(subjectID) {
       :category="null"
       :played="gameData.played_games.includes(task.id)"
       :assigned="gameData.extra_games_info.includes(task.id)"
+      :score="task.scores.best ? task.scores.best : 0"
+      :target="task.target"
     />
     <div v-if="gameData.list.length == 0">אין משימות פתוחות</div>
   </div>

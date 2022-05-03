@@ -15,6 +15,8 @@ import SplitButton from 'primevue/splitbutton';
 import InputSwitch from "primevue/inputswitch";
 import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmPopup from 'primevue/confirmpopup';
+import Knob from 'primevue/knob';
+
 
 
 export default function initPrimevue(app){
@@ -30,4 +32,5 @@ export default function initPrimevue(app){
     app.component('InputSwitch', InputSwitch);
     app.component('ConfirmDialog', ConfirmDialog);
     app.component('ConfirmPopup', ConfirmPopup);
+    app.component('Knob', Knob);
 }
