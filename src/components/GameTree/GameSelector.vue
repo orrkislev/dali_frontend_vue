@@ -1,27 +1,26 @@
 <script setup>
 import SingleTask from "./SingleTask.vue";
-import { ref } from "vue-demi";
-import useAPI from "../../utils/useAPI";
-import useBrowseManager from "../../utils/useBrowseManager";
-import useStoreSubscribe from "../../utils/useStoreSubscribe";
+import useAPI from "src/utils/useAPI";
+import useBrowseManager from "src/utils/useBrowseManager";
+import useStoreSubscribe from "src/utils/useStoreSubscribe";
 
 const browseManager = useBrowseManager();
 const api = useAPI();
 
-const gameData = ref(null);
 getGamesData(browseManager.curr_subject);
-
 useStoreSubscribe(browseManager, "curr_subject", (state) => {
   if (state.curr_subject != -1) getGamesData(state.curr_subject);
 });
 
 function getGamesData(subjectID) {
-  api.post_json("tasks/tasks_list/", { parent_id: subjectID }).then((p) =>  gameData.value = p );
+  api.post_json("tasks/tasks_list/", { parent_id: subjectID }).then((p) =>  {
+    browseManager.game_list = p 
+  });
 }
 </script>
 
 <template>
-  <div id="gameselector" v-if="gameData != null">
+  <div id="gameselector" v-if="browseManager.game_list != null">
     <!-- <single-task v-if="gameData.game_in_class != null"
              :task="gameData.game_in_class" :category="'משחק כיתתי'"
              @click="OpenGameInclass()">
@@ -35,16 +34,16 @@ function getGamesData(subjectID) {
             </single-task>
         </template> -->
     <single-task
-      v-for="task in gameData.list"
+      v-for="task in browseManager.game_list.list"
       :key="task.id"
       :task="task"
       :category="null"
-      :played="gameData.played_games.includes(task.id)"
-      :assigned="gameData.extra_games_info.includes(task.id)"
+      :played="browseManager.game_list.played_games.includes(task.id)"
+      :assigned="browseManager.game_list.extra_games_info.includes(task.id)"
       :score="task.scores.best ? task.scores.best : 0"
       :target="task.target"
     />
-    <div v-if="gameData.list.length == 0">אין משימות פתוחות</div>
+    <div v-if="browseManager.game_list.list.length == 0">אין משימות פתוחות</div>
   </div>
 </template>
 

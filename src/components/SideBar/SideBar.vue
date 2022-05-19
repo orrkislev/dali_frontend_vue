@@ -1,6 +1,7 @@
 <script setup>
 import SideBarStaff from "./SideBarStaff.vue";
 import SideBarUser from "./SideBarUser.vue";
+import Survey from "./Survey.vue";
 </script>
 
 
@@ -8,6 +9,7 @@ import SideBarUser from "./SideBarUser.vue";
   <div id="sidebar">
     <side-bar-user />
     <side-bar-staff />
+    <survey />
   </div>
 </template>
 

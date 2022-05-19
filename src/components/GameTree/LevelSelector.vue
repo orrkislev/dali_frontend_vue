@@ -1,6 +1,6 @@
 <script setup>
-import useAPI from "../../utils/useAPI";
-import useBrowseManager from "../../utils/useBrowseManager";
+import useAPI from "src/utils/useAPI";
+import useBrowseManager from "src/utils/useBrowseManager";
 
 const browseManager = useBrowseManager();
 const api = useAPI();

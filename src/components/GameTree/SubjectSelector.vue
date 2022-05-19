@@ -1,7 +1,7 @@
 <script setup>
-import useAPI from "../../utils/useAPI";
-import useBrowseManager from "../../utils/useBrowseManager";
-import useStoreSubscribe from "../../utils/useStoreSubscribe";
+import useAPI from "src/utils/useAPI";
+import useBrowseManager from "src/utils/useBrowseManager";
+import useStoreSubscribe from "src/utils/useStoreSubscribe";
 
 const browseManager = useBrowseManager();
 const api = useAPI();

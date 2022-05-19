@@ -1,9 +1,12 @@
 <script setup>
 import { ref } from "vue-demi";
-import useEmmiter from "../../utils/useEmmiter";
-import useGameManager from "../../utils/useGameManager";
+import useEmmiter from "src/utils/useEmmiter";
+import useGameManager from "src/utils/useGameManager";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { useConfirm } from "primevue/useconfirm";
+import Badge from 'primevue/badge';
+
+
 
 const gameManager = useGameManager();
 const emitter = useEmmiter();
@@ -101,7 +104,7 @@ function click(event,lifeline, name) {
     </div> -->
 
     <div class="flex" style="gap: 4px">
-      <Button class="p-button-sm p-button-rounded"
+      <Button class="p-button-sm p-button-rounded overflow-visible"
         v-for="(lifeline, name) in lifelines"
         :key="name"
         @click="click($event,lifeline, name)"
@@ -110,9 +113,10 @@ function click(event,lifeline, name) {
         <font-awesome-icon v-bind:icon="lifeline.icon" size="lg"/>
         <div
           v-if="!lifeline.active && gameManager.progress?.bonus"
-          class="task-lifeline-bonus"
+          class="task-lifeline-bonus" 
         >
-          <font-awesome-icon icon="fa-sm gift" />
+          <Badge style="font-size: 2rem" severity="danger"></Badge>
+          <!-- <font-awesome-icon icon="fa-sm gift" /> -->
         </div>
       </Button>
     </div>
@@ -155,12 +159,8 @@ export default {
 .task-lifeline-bonus {
   position: absolute;
   right: -0.3em;
-  bottom: -0.3em;
-  color: chocolate;
-  background-color: white;
+  bottom: -0.5em;
   border-radius: 999px;
-  width: 25px;
-  height: 25px;
   display: grid;
   place-content: center;
 }

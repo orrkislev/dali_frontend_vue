@@ -1,6 +1,6 @@
 <script setup>
-import useEmitter from "../../../utils/useEmmiter";
-import useGameManager from "../../../utils/useGameManager";
+import useEmitter from "src/utils/useEmmiter";
+import useGameManager from "src/utils/useGameManager";
 import $ from "jquery";
 
 const gameManager = useGameManager();

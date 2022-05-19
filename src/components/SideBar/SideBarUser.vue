@@ -1,7 +1,9 @@
 <script setup>
-import login from "../../pages/login.vue";
-import useAuth from "../../utils/useAuth";
+import login from "src/pages/login.vue";
+import useAuth from "src/utils/useAuth";
 const auth = useAuth();
+
+if (!auth.username) auth.getUserdata()
 </script>
 
 

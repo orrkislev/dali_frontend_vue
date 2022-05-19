@@ -1,10 +1,10 @@
 <script setup>
 import { ref } from "vue-demi";
 import { useRouter } from "vue-router";
-import useAPI from "../utils/useAPI";
-import useAuth from "../utils/useAuth";
-import PageTitle from "../components/PageTitle.vue";
-import ButtonSmall from '../components/ButtonSmall.vue';
+import useAPI from "src/utils/useAPI";
+import useAuth from "src/utils/useAuth";
+import PageTitle from "src/components/PageTitle.vue";
+import ButtonSmall from 'src/components/ButtonSmall.vue';
 
 const auth = useAuth();
 const router = useRouter();
@@ -54,6 +54,15 @@ async function newClass(){
 	loadData()
 }
 
+async function setOpen(clsIndex){
+	const res = await api.post_json("teachers/register_class_toggle/",{
+		class_id: data.value[clsIndex].cl_id,
+		game_id: "all",
+		purpose: "register"})
+	data.value[clsIndex].isopen = res.status
+	additional.value = {}
+}
+
 </script>
 
 
@@ -63,7 +72,7 @@ async function newClass(){
 		<div v-if="data" class="flex-column gap1 classlist">
       	<div class="class_in_classlist" v-for="(cls, clsIndex) in data" :key="cls.cl_id" >
 			<div class="class_in_classlist_title">
-				<router-link :to="'/classes/' + cls.cl_id"> {{ cls.name }} </router-link>
+				<router-link :to="'/manage/classes/' + cls.cl_id"> {{ cls.name }} </router-link>
 				<div v-if="additional.classIndex == clsIndex">
 					<div class="class_in_classlist_title">
 						<h3>מחיקת כיתה</h3>
@@ -79,6 +88,7 @@ async function newClass(){
 				</div>
 			</div>
 			<div v-if="additional.classIndex != clsIndex" class="class_in_classlist_actions" >
+				<InputSwitch v-model="cls.isopen" @input="(e) => setOpen(clsIndex)" />
 				<button-small :border="true" @click="startRemoveClass(clsIndex)">מחיקת כיתה</button-small>
 				<button-small :border="true">עריכה</button-small>
 			</div>
@@ -104,7 +114,7 @@ async function newClass(){
 <script>
 export default {
   components: { PageTitle, ButtonSmall },
-  name: "manageClasses",
+  name: "Classes",
 };
 </script>
 

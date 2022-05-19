@@ -16,6 +16,12 @@ import InputSwitch from "primevue/inputswitch";
 import ConfirmDialog from 'primevue/confirmdialog'
 import ConfirmPopup from 'primevue/confirmpopup';
 import Knob from 'primevue/knob';
+import Dialog from 'primevue/dialog';
+import ToggleButton from 'primevue/togglebutton';
+
+
+import BadgeDirective from 'primevue/badgedirective';
+
 
 
 
@@ -33,4 +39,8 @@ export default function initPrimevue(app){
     app.component('ConfirmDialog', ConfirmDialog);
     app.component('ConfirmPopup', ConfirmPopup);
     app.component('Knob', Knob);
+    app.component('Dialog', Dialog);
+    app.component('ToggleButton', ToggleButton);
+
+    app.directive('badge', BadgeDirective);
 }

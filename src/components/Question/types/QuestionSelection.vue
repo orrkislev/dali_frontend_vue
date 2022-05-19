@@ -1,8 +1,9 @@
 <script setup>
 import { ref } from 'vue-demi';
-import useGameManager from '../../../utils/useGameManager';
-import useEmitter from '../../../utils/useEmmiter';
-import useAPI from '../../../utils/useAPI';
+import useGameManager from 'src/utils/useGameManager';
+import useEmitter from 'src/utils/useEmmiter';
+import useAPI from 'src/utils/useAPI';
+import ActionButton from '../../ActionButton.vue';
 
 const api = useAPI()
 const gameManager = useGameManager()
@@ -56,12 +57,12 @@ function check(){
         } else {
             a.result='fail'
         }
-        a.inactive = Array(this.options.length).fill(true)
+        a.inactive = Array(options.value.length).fill(true)
     })
     answers.value = newAnswers
-    result = result / this.answers.length
+    result = result / answers.value.length
 
-    const answerlist =  this.answers.map(a=>{
+    const answerlist =  answers.value.map(a=>{
         return {
             id: a.id,
             res: a.result=='success' ? 1 : 0,
@@ -85,15 +86,19 @@ function select(answerIndex, val) {
   <div class="flex-column gap05">
     <div v-for="(answer, answerIndex) in answers" :key="answerIndex">
       <div style="flex: 1">
-        <span v-append="answer.text"></span>
+        <span v-html="answer.text"></span>
         <div class="flex gap05">
-          <button v-for="(option, index) in options" :key="index"
+          <action-button v-for="(option, index) in options" :key="index"
+            :border="true"
+            :indicator="answer.selected==option.num ? answer.result : null"
+            :inactive="answer.inactive ? answer.inactive[option.num] : null"
+            :selected="answer.selected==option.num"
             class="flex1"
             @click="select(answerIndex, option.num)"
           >
             {{ option.text }}
             <small v-if="answer.stats">&nbsp; ({{ answer.stats[index] }})</small>
-          </button>
+          </action-button>
         </div>
         <div v-if="answer.result"
           v-bind:style="{ color: answer.result == 'success' ? 'green' : 'red' }"

@@ -9,7 +9,7 @@ import QuestionFeedback from "../Question/QuestionFeedback.vue";
 import QuestionPart from "../Question/QuestionPart.vue";
 import { onBeforeRouteLeave } from "vue-router";
 import { useConfirm } from "primevue/useconfirm"; 
-import useGameManager from '../../utils/useGameManager';
+import useGameManager from 'src/utils/useGameManager';
 
 
 const gameManager = useGameManager()
@@ -18,8 +18,8 @@ const confirm = useConfirm();
 onBeforeRouteLeave(async (to, from) => {
   return await new Promise((resolve) => {
     confirm.require({
-      message: "Are you sure you want to proceed?",
-      header: "Confirmation",
+      message: "יציאה?",
+      header: "יציאה מהמשחק",
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         gameManager.$reset()
@@ -41,7 +41,7 @@ onBeforeRouteLeave(async (to, from) => {
     <Divider align='right'>
       <game-lifelines />
     </Divider>
-    <div class='flex flex-column gap1'>
+    <div class='flex flex-column gap1 px-5'>
       <question-content />
       <question-part />
       <game-buttons />

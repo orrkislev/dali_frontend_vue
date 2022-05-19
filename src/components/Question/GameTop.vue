@@ -1,5 +1,7 @@
 <script setup>
-import useGameManager from '../../utils/useGameManager'
+import useGameManager from 'src/utils/useGameManager'
+// import ProgressBar from 'primevue/progressbar';
+
 const gameManager = useGameManager()
 
 </script>
@@ -8,6 +10,9 @@ const gameManager = useGameManager()
   <div id='game_top'>
         <div id='game_title'>{{ gameManager.game.game.name }}</div>
         <div id='score'>
+            <!-- <ProgressBar :value="gameManager.progress?.score" class='w-5'>
+                {{ gameManager.progress?.score }} נקודות
+            </ProgressBar> -->
             <span v-if='gameManager.progress?.bonus' style="color:orange;"><i class="fa fa-sm fa-gift"></i>10+</span>
             {{ gameManager.progress?.score }} נקודות
         </div>

@@ -1,11 +1,18 @@
 <script setup>
 import { ref } from 'vue-demi';
-import useAPI from "../../utils/useAPI";
-import useGameManager from "../../utils/useGameManager";
+import useAPI from "src/utils/useAPI";
+import useGameManager from "src/utils/useGameManager";
 import PlayedGamesList from "./PlayedGamesList.vue";
+import { onBeforeRouteLeave } from 'vue-router';
+import GameTitleTop from './GameTitleTop.vue';
 
 const api = useAPI();
 const gameManager = useGameManager()
+
+onBeforeRouteLeave(async (to, from) => {
+  gameManager.question = null
+  return true
+});
 
 let isPublished = ref(false);
 
@@ -23,34 +30,24 @@ async function publish() {
 
 <template>
   <div id="task-main">
-    <div id="task-main-top" style="padding: 1em">
-      <h3>{{ gameManager.game.game.name }}</h3>
-      <div class="flex-column gap1">
-        {{ gameManager.question.reason }}
-        <div style="display: grid; place-items: center">
-          <div
-            style="
-              display: flex;
-              flex-direction: row-reverse;
-              align-items: baseline;
-              font-family: SecularOne;
-            "
-          >
+    <GameTitleTop>
+        <Knob :modelValue="gameManager.question.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
+        <!-- <div style="display: grid; place-items: center">
+          <div style="display: flex; flex-direction: row-reverse; align-items: baseline; font-family: SecularOne; " >
             <span style="font-size: 5em">{{ gameManager.question.score }}</span>
             <span style="font-size: 2em; transform: scaleY(2)">/</span>
             <span style="font-size: larger">{{ gameManager.question.target }}</span>
           </div>
-        </div>
-        <button v-if="!gameManager.game.extra.exam" disabled="isPublished" @click="publish">
+        </div> -->
+        <div class="flex flex-column gap05">
+        <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-lg" disabled="isPublished" @click="publish">
           {{ isPublished ? 'פורסם' : 'פרסם' }}
-        </button>
-      </div>
-
-      <PlayedGamesList />
-    </div>
-    <div class="flex-column gap05">
-      <button v-if="!gameManager.game.extra.exam" @click="restartGame">לשחק שוב</button>
-    </div>
+        </Button>
+        <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-sm" @click="restartGame">לשחק שוב</Button>
+        </div>
+    </GameTitleTop>
+    <Divider />
+    <PlayedGamesList />
   </div>
 </template>
 

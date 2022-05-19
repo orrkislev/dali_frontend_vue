@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from "vue-demi";
 import $ from 'jquery'
-import useGameManager from "../../utils/useGameManager";
-import useEmitter from "../../utils/useEmmiter";
+import useGameManager from "src/utils/useGameManager";
+import useEmitter from "src/utils/useEmmiter";
 
 const gameManager = useGameManager();
 
@@ -38,7 +38,7 @@ function showMedia(feedback){
 }
 
 function editMediaForDevelopment(media){
-  return media.split('/static/').join('http://da-li.co.il/static/')
+  return media.split('/static/').join('http://da-li.co.il/static/') //TODO update when production
 }
 </script>
 
@@ -53,8 +53,8 @@ function editMediaForDevelopment(media){
       <button v-else @click="openMedia">לצפייה חוזרת בטקסט</button>
     </div>
 
-    <div v-if="gameManager.question.q.type != 'mouseselect'" class='mt-5 flex justify-content-center'>
-      <div v-for="(qmedia, i) in gameManager.question?.medias" :key="i" v-html="editMediaForDevelopment(qmedia)"></div>
+    <div v-if="gameManager.question.q.type != 'mouseselect'">
+      <div v-for="(qmedia, i) in gameManager.question?.medias" :key="i" v-html="editMediaForDevelopment(qmedia)" class='w-8 mx-auto'></div>
     </div>
   </div>
 </template>

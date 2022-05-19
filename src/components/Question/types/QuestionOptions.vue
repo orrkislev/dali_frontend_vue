@@ -1,8 +1,8 @@
 <script setup>
-import useGameManager from "../../../utils/useGameManager";
-import useEmitter from "../../../utils/useEmmiter";
+import useGameManager from "src/utils/useGameManager";
+import useEmitter from "src/utils/useEmmiter";
 // import { ref } from 'vue-demi';
-// import useStoreSubscribe from '../../../utils/useStoreSubscribe';
+// import useStoreSubscribe from 'src/utils/useStoreSubscribe';
 import ActionButton from "../../ActionButton.vue";
 
 const gameManager = useGameManager();
@@ -68,8 +68,8 @@ function select(answerIndex, val) {
 
 
 <template>
-  <div class="flex-column gap05">
-    <div v-for="(answer, answerIndex) in gameManager.question.answers" :key="answerIndex" class="flex">
+  <div>
+    <div v-for="(answer, answerIndex) in gameManager.question.answers" :key="answerIndex" class='mb-2'>
         <action-button
           :border="true"
           :indicator="answer.selected == 1 ? answer.result : null"

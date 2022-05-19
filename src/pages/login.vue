@@ -1,16 +1,16 @@
 <script setup>
 import { ref } from 'vue-demi';
-import useAuth from '../utils/useAuth';
-import useStoreSubscribe from '../utils/useStoreSubscribe';
+import useAuth from 'src/utils/useAuth';
+import useStoreSubscribe from 'src/utils/useStoreSubscribe';
 import { useRouter } from 'vue-router';
 
 const auth = useAuth()
 const router = useRouter()
 
-if (auth.username) router.push('/allgames')
-useStoreSubscribe(auth,'username',(state)=>{
-    router.push('/allgames')
-})
+// if (auth.username) router.push('/allgames')
+// useStoreSubscribe(auth,'username',(state)=>{
+//     router.push('/allgames')
+// })
 
 const name = ref("")
 const password = ref("")

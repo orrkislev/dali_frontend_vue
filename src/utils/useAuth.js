@@ -10,6 +10,15 @@ const useAuth = defineStore('auth', {
         isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.role)
     },
     actions: {
+        async getUserdata(){
+            const api = useAPI()
+            let response = await api.get('students/userdata')
+            if (response=='false') return
+            response = await response.json()
+            this.role = response.role
+            this.username = response.name
+        },
+
         async auto_login(){
             const api = useAPI()
             let response = await api.get('students/vue_login')

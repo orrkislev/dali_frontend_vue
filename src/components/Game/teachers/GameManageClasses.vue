@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue-demi";
 import { useRoute } from "vue-router";
-import useAPI from "../../../utils/useAPI";
+import useAPI from "src/utils/useAPI";
 
 const route = useRoute();
 const api = useAPI();

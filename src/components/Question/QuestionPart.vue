@@ -1,5 +1,5 @@
 <script setup>
-import useGameManager from '../../utils/useGameManager';
+import useGameManager from 'src/utils/useGameManager';
 import LashonDragToTableShuffle from './types/LashonDragToTableShuffle.vue';
 import QuestionMouseSelect from './types/QuestionMouseSelect.vue';
 import QuestionOptions from './types/QuestionOptions.vue';

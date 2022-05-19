@@ -60,11 +60,11 @@ export default {
   cursor: pointer;
   border-radius: 0.3em;
   display: flex;
-  min-width: 100px;
-  max-width: 20em;
+  max-inline-size: max-content;
   align-items: center;
   padding: 0.3em 0.5em;
   transition: background-color 200ms ease-in-out;
+  min-width: 8em;
 }
 
 .btnFull-border { border: 1px solid gray; }
@@ -74,6 +74,7 @@ export default {
   background: #3a7fce;
   color: white;
   font-weight: bold;
+  min-width: 20em;
 }
 .btnFull-selected { background: #c2deff; }
 .btnFull-inactive {

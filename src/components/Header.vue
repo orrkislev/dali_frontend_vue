@@ -1,7 +1,7 @@
 <script setup>
 import { NButton, NDropdown } from "naive-ui";
-import useAuth from '../utils/useAuth';
-import useStoreSubscribe from '../utils/useStoreSubscribe';
+import useAuth from 'src/utils/useAuth';
+import useStoreSubscribe from 'src/utils/useStoreSubscribe';
 import { ref } from 'vue-demi';
 
 const auth = useAuth()
@@ -36,13 +36,13 @@ function SelectUserOption(key) {
           <router-link to="/allgames">מאגר משימות</router-link>
         </NButton>
         <NButton round secondary color="#ffffff" v-if="auth.isTeacherOrStaff">
-          <router-link to="/login">משימות לכיתות</router-link>
+          <router-link to="/manage/tasks">משימות לכיתות</router-link>
         </NButton>
         <NButton round secondary color="#ffffff" v-if="auth.isTeacherOrStaff">
-          <router-link to="/">בחנים לכיתות</router-link>
+          <router-link to="/manage/exams">בחנים לכיתות</router-link>
         </NButton>
         <NButton round secondary color="#ffffff" v-if="auth.isTeacherOrStaff">
-          <router-link to="/classes">ניהול כיתות</router-link>
+          <router-link to="/manage/classes">ניהול כיתות</router-link>
         </NButton>
       </div>
       <div id="header_left">

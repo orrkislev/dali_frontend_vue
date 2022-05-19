@@ -1,3 +1,7 @@
+body{
+    caret-color: transparent;
+}
+
 .gap05 { gap: 0.5em; }
 .gap1 { gap: 1em; }
 .gap15 { gap: 1.5em; }
@@ -22,4 +26,8 @@ a {
 
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+}
+
+.p-togglebutton {
+    border-radius: 1em;
 }

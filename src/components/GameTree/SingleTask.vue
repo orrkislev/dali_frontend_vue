@@ -1,7 +1,6 @@
 <script setup>
-import { real_url } from '../../utils/useAPI';
+import { real_url } from 'src/utils/useAPI';
 
-const knobSize = 80
 </script>
 
 <template>
@@ -30,7 +29,7 @@ const knobSize = 80
                         
                     </div>
                 </div>
-                <Knob :modelValue="score" :min="0" :max="target" disabled :size="knobSize" />
+                <Knob :modelValue="score" :min="0" :max="target" disabled :size="80" />
             </div>
         </div>
     </router-link>

@@ -1,0 +1,110 @@
+<script setup>
+import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
+import useAPI from 'src/utils/useAPI';
+import useAuth from 'src/utils/useAuth';
+import PageTitle from 'src/components/PageTitle.vue';
+import TeacherActionSection from 'src/components/TeacherActionSection.vue';
+
+const route = useRoute()
+const router = useRouter()
+const auth = useAuth()
+const api = useAPI()
+
+// if (!auth.isTeacherOrStaff) router.push("/");
+
+const data = ref({})
+api.post_json('teachers/class_data/',{class_id:route.params.classid}).then(res=>{
+    console.log(res)
+    data.value = res
+})
+
+const displayDialog = ref(false)
+const popUpData = ref("")
+const popUpHeader = ref("")
+async function report_tasks(){
+    const res = await api.post('statistics/teacher_report/', {class_id: route.params.classid,report_type: 'class',dialog_title_text: ""})
+    popUpData.value = res
+    popUpHeader.value = 'דוח משימות'
+    displayDialog.value = true
+}
+async function report_exams(){
+    const res = await api.post('statistics/teacher_report/', {class_id: route.params.classid,report_type: 'exams',dialog_title_text: ""})
+    popUpData.value = res
+    popUpHeader.value = 'דוח בחנים'
+    displayDialog.value = true
+}
+async function report_state(){
+    const res = await api.post('statistics/teacher_report/', {class_id: route.params.classid,report_type: 'full_diagnostics',dialog_title_text: ""})
+    popUpData.value = res
+    popUpHeader.value = 'דוח מצב'
+    displayDialog.value = true
+}
+async function tasks(){
+    const res = await api.post('statistics/teacher_report/', {class_id: route.params.classid,report_type: 'tasks',dialog_title_text: ""})
+    popUpData.value = res
+    popUpHeader.value = 'משימות'
+    displayDialog.value = true
+}
+async function students(){
+    const res = await api.post('statistics/teacher_report/', {class_id: route.params.classid,report_type: 'students',dialog_title_text: ""})
+    popUpData.value = res
+    popUpHeader.value = 'תלמידים'
+    displayDialog.value = true
+}
+
+</script>
+
+
+<template>
+<div>
+    <PageTitle :title="data?.name"/>
+
+    <Dialog :header=popUpHeader v-model:visible="displayDialog" :style="{width: '50vw'}" modal>
+        <div v-append=popUpData />
+    </Dialog>
+
+    <TeacherActionSection 
+        title="דוח משימות" 
+        subtitle="דוח של משימות"
+        text="לכל תלמיד/ה מוצגת התוצאה הטובה ביותר שפרסם/פרסמה בכל משימה." 
+        action_label="פתח"
+        @click="report_tasks" />
+    <TeacherActionSection 
+        title="דוח בחנים" 
+        subtitle="דוח של בחנים"
+        text="בטבלה מוצגים כל הבחנים שניתנו לכיתה." 
+        action_label="פתח"
+        @click="report_exams" />
+    <TeacherActionSection 
+        title="דוח מצב" 
+        subtitle="דוח של המצב"
+        text="מה המצב וכל זה" 
+        action_label="פתח"
+        @click="report_state" />
+    <TeacherActionSection 
+        title="פירוט משימות" 
+        subtitle="פירוט של המשימות"
+        text="איזה משימות יש וכל זה" 
+        action_label="פתח"
+        @click="tasks" />
+    <TeacherActionSection 
+        title="רשימת תלמידים" 
+        subtitle="רשימה של התלמידים"
+        text="איזה תלמידים יש וכל זה" 
+        action_label="פתח"
+        @click="students" />
+
+</div>
+</template>
+
+
+<script>
+export default {
+name:'Class'
+};
+</script>
+
+
+<style>
+</style>

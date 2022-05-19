@@ -1,6 +1,6 @@
 <script setup>
 import { useRoute } from 'vue-router';
-import useAPI, { real_url } from '../../utils/useAPI';
+import useAPI, { real_url } from 'src/utils/useAPI';
 import { ref } from 'vue-demi';
 
 const api = useAPI()
@@ -45,15 +45,13 @@ function getIconSrc(icon){
         <TabMenu :model="tabs" :activeIndex="activeTab" @tab-change="tabChange"/>
     </div>
     <DataTable :value="tableData.all" responsiveLayout="scroll" v-if='tableData?.all.length>0' class="p-datatable-sm">
+        <Column field="name" header="שם" class='text-right'>
+            <template> *** </template>
+        </Column>
         <Column field="school" header="כיתה" v-if="tableData.type=='school'" class='text-right'></Column>
         <Column field="studentIcon" header="דמות" class='text-right'>
             <template #body="slotProps">
                 <img :src="getIconSrc(slotProps.data.studentIcon)" class='h-1rem'/>
-            </template>
-        </Column>
-        <Column field="name" header="שם" class='text-right'>
-            <template #body="slotProps">
-                ***
             </template>
         </Column>
         <Column field="score" header="ניקוד" class='text-right'></Column>

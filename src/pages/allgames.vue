@@ -1,5 +1,5 @@
 <script setup>
-import GameTree from '../components/GameTree/GameTree.vue';
+import GameTree from 'src/components/GameTree/GameTree.vue';
 </script>
 
 

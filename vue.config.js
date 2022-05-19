@@ -1,4 +1,3 @@
-
 const path = require('path');
 
 module.exports = {
@@ -9,4 +8,12 @@ module.exports = {
     devServer: {
         writeToDisk: true, // Write files to disk in dev mode, so Django can serve the assets
     },
+
+    configureWebpack: {
+        resolve: {
+          alias: {
+            src: path.resolve(__dirname, 'src')
+          }
+        },
+      }
 };

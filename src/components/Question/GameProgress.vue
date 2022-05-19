@@ -1,5 +1,5 @@
 <script setup>
-import useGameManager from '../../utils/useGameManager';
+import useGameManager from 'src/utils/useGameManager';
 
 const gameManager = useGameManager()
 
@@ -16,7 +16,9 @@ const gameManager = useGameManager()
         'game-progress-part-success': p == 1,
         'game-progress-part-fail': p == 0,
         'game-progress-part-partial': p > 0 && p < 1,
-      }"></div>
+      }">
+        <div v-if="p == 'curr'" class='game-progress-part-text'>{{ i+1 }}</div>
+      </div>
   </div>
 </template>
 
@@ -33,6 +35,14 @@ export default {
   height: 5px;
   flex: 1;
   background-color: lightgray;
+  
+  display: flex;
+  justify-content: center;
+}
+.game-progress-part-text {
+  margin-top:-0.6em;
+  background: rgba(255,255,255,0.9);
+  padding: 0 0.3em;
 }
 .game-progress-part-curr {
   background-color: orange;

@@ -1,5 +1,5 @@
 <script setup>
-import useGameManager from '../../utils/useGameManager';
+import useGameManager from 'src/utils/useGameManager';
 
 const gameManager = useGameManager()
 </script>

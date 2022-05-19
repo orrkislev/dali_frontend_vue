@@ -1,8 +1,8 @@
 <script setup>
 import { ref } from 'vue-demi';
-import useEmitter from '../../utils/useEmmiter';
-import useGameManager from '../../utils/useGameManager'
-import useStoreSubscribe from '../../utils/useStoreSubscribe';
+import useEmitter from 'src/utils/useEmmiter';
+import useGameManager from 'src/utils/useGameManager'
+import useStoreSubscribe from 'src/utils/useStoreSubscribe';
 import ActionButton from '../ActionButton.vue';
 
 const gameManager = useGameManager()
