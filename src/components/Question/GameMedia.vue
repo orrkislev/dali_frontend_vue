@@ -3,6 +3,8 @@ import { ref } from "vue-demi";
 import $ from 'jquery'
 import useGameManager from "src/utils/useGameManager";
 import useEmitter from "src/utils/useEmmiter";
+import GameMultiMedia from "../Game/GameMultiMedia.vue";
+import ActionButton from "../ActionButton.vue";
 
 const gameManager = useGameManager();
 
@@ -11,6 +13,9 @@ emitter.subscribe("SHOW_MEDIA", showMedia);
 
 let open = ref(false);
 
+function openMedia() {
+  open.value = true;
+}
 function closeMedia() {
   open.value = false;
 }
@@ -47,10 +52,10 @@ function editMediaForDevelopment(media){
   <div>
     <div v-if="gameManager.media" id="gameMedia">
       <div v-if="open">
-        <div v-append="editMediaForDevelopment(gameManager.media)"></div>
-        <button @click="closeMedia">סגירה</button>
+        <game-multi-media />
+        <action-button :border="true"  @click="closeMedia">סגירה</action-button>
       </div>
-      <button v-else @click="openMedia">לצפייה חוזרת בטקסט</button>
+      <action-button :border="true" v-else @click="openMedia">לצפייה חוזרת בטקסט</action-button>
     </div>
 
     <div v-if="gameManager.question.q.type != 'mouseselect'">

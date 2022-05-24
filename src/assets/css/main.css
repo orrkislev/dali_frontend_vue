@@ -31,3 +31,38 @@ a {
 .p-togglebutton {
     border-radius: 1em;
 }
+
+
+
+
+
+.localimg{
+    font-size: small;
+    width: 100% !important;
+}
+.youtube{
+    width: 100% !important;
+    aspect-ratio: 16 / 9;
+    height: unset !important;
+}
+
+#gameMedia{
+    border-bottom: dashed 1px gray; 
+    padding-bottom: 0.5em; 
+    margin-bottom: 0.5em;
+}
+#showcase-caption-description-0{
+    display: none !important;
+}
+.popcorn_footnote{
+    width: unset !important;
+    height: unset !important;
+    font-weight: initial !important;
+    font-size: initial !important;
+    background-color: unset !important;
+    font-style: italic;
+    border: 1px dashed orange;
+}
+.disableButtons a{
+    pointer-events: none;
+}
