@@ -3,8 +3,8 @@ import { ref } from "vue-demi";
 import $ from 'jquery'
 import useGameManager from "src/utils/useGameManager";
 import useEmitter from "src/utils/useEmmiter";
-import GameMultiMedia from "../Game/GameMultiMedia.vue";
 import ActionButton from "../ActionButton.vue";
+import AjaxViewer from "../AjaxViewer.vue";
 
 const gameManager = useGameManager();
 
@@ -52,7 +52,7 @@ function editMediaForDevelopment(media){
   <div>
     <div v-if="gameManager.media" id="gameMedia">
       <div v-if="open">
-        <game-multi-media />
+        <AjaxViewer htmlWithScripts="{{gameManager.media}}" />
         <action-button :border="true"  @click="closeMedia">סגירה</action-button>
       </div>
       <action-button :border="true" v-else @click="openMedia">לצפייה חוזרת בטקסט</action-button>

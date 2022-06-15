@@ -5,6 +5,7 @@ import useAPI from 'src/utils/useAPI';
 import useAuth from 'src/utils/useAuth';
 import PageTitle from 'src/components/PageTitle.vue';
 import TeacherActionSection from 'src/components/TeacherActionSection.vue';
+import AjaxViewer from '../../components/AjaxViewer.vue';
 
 const route = useRoute()
 const router = useRouter()
@@ -23,6 +24,26 @@ const displayDialog = ref(false)
 const popUpData = ref("")
 const popUpHeader = ref("")
 async function report_tasks(){
+    // load google chart script, wait for it to load
+    let googleChartsScript = document.createElement('script')
+    googleChartsScript.setAttribute('src', 'https://www.gstatic.com/charts/loader.js')
+    document.head.appendChild(googleChartsScript)
+    await new Promise(resolve=>{
+        googleChartsScript.onload = ()=>{
+            google.charts.load('current', {'name':'visualization',packages: ['corechart','table']});
+            resolve()
+        }
+    })
+
+    // load jquery ui script, wait for it to load
+    let jqueryUIScript = document.createElement('script')
+    jqueryUIScript.setAttribute('src', 'https://code.jquery.com/ui/1.12.1/jquery-ui.min.js')
+    document.head.appendChild(jqueryUIScript)
+    await new Promise(resolve=>{
+        jqueryUIScript.onload = resolve
+    })
+
+    // load the report
     const res = await api.post('statistics/teacher_report/', {class_id: route.params.classid,report_type: 'class',dialog_title_text: ""})
     popUpData.value = res
     popUpHeader.value = 'דוח משימות'
@@ -61,7 +82,7 @@ async function students(){
     <PageTitle :title="data?.name"/>
 
     <Dialog :header=popUpHeader v-model:visible="displayDialog" :style="{width: '50vw'}" modal>
-        <div v-append=popUpData />
+        <AjaxViewer :htmlWithScripts="popUpData" />
     </Dialog>
 
     <TeacherActionSection 

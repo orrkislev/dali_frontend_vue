@@ -3,9 +3,15 @@ import SingleTask from "./SingleTask.vue";
 import useAPI from "src/utils/useAPI";
 import useBrowseManager from "src/utils/useBrowseManager";
 import useStoreSubscribe from "src/utils/useStoreSubscribe";
+import { useRoute } from "vue-router";
 
+const route = useRoute()
 const browseManager = useBrowseManager();
 const api = useAPI();
+
+let action = null
+if (route.path == '/manage/tasks') action = 'ADD_TASK'
+else if (route.path == '/manage/exams')action = 'ADD_EXAM'
 
 getGamesData(browseManager.curr_subject);
 useStoreSubscribe(browseManager, "curr_subject", (state) => {
@@ -42,6 +48,7 @@ function getGamesData(subjectID) {
       :assigned="browseManager.game_list.extra_games_info.includes(task.id)"
       :score="task.scores.best ? task.scores.best : 0"
       :target="task.target"
+      :action="action"
     />
     <div v-if="browseManager.game_list.list.length == 0">אין משימות פתוחות</div>
   </div>

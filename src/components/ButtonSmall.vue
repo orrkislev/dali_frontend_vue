@@ -8,8 +8,8 @@ const props = defineProps({
     selected: {type:Boolean, default: false},
 })
 
-function click() {
-    if (!props.inactive) emit('click')
+function click(event) {
+    if (!props.inactive) emit('click', event)
 }
 </script>
 
@@ -39,6 +39,7 @@ name:'ButtonSmall'
     border-radius: 999px;
     background: white;
     transition: all 150ms ease-in-out;
+    max-height: 2em;
 }
 .btnSmall-border{
     border: 1px solid #DDD;

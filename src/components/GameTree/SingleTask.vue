@@ -1,12 +1,69 @@
 <script setup>
+import { computed } from '@vue/reactivity';
 import { real_url } from 'src/utils/useAPI';
+import { useRouter } from 'vue-router';
+import useBrowseManager from '../../utils/useBrowseManager';
+
+const props = defineProps({
+    task: Object,
+    played: Boolean,
+    assigned: Boolean,
+    exam: { type: Boolean, default: false },
+    category: String,
+    score: {type:Number , default:0},
+    target:Number,
+    action:String
+  })
+
+const router = useRouter()
+const browseManager = useBrowseManager();
+
+let clickAction = goToGamePage
+if (props.action == 'ADD_TASK') clickAction = addTask
+else if (props.action == 'ADD_EXAM') clickAction = addExam
+
+function goToGamePage() {
+  router.push({
+    path: '/game/' + props.task.id,
+  })
+}
+
+function addTask() {
+    const d = browseManager.openTasks.more.map(t => t.id)
+    const indexOf = d.indexOf(props.task.id)
+    if (indexOf != -1) browseManager.openTasks.more.splice(indexOf, 1)
+    else browseManager.openTasks.more.push({id:props.task.id,name:props.task.name})
+  
+}
+
+function addExam(){
+    const d = browseManager.openExams.more.map(t => t.id)
+    const indexOf = d.indexOf(props.task.id)
+    if (indexOf != -1) browseManager.openExams.more.splice(indexOf, 1)
+    else browseManager.openExams.more.push({id:props.task.id,name:props.task.name})
+}
+
+const actionToggleIsChecked = computed(() => {
+    
+    if (props.action == 'ADD_TASK') 
+        return browseManager.openTasks.tasks.map(t => t.id).includes(props.task.id) || browseManager.openTasks.more.map(t => t.id).includes(props.task.id)
+    else if (props.action == 'ADD_EXAM') 
+        return browseManager.openExams.exams.map(t => t.id).includes(props.task.id) || browseManager.openExams.more.map(t => t.id).includes(props.task.id)
+})
 
 </script>
 
 <template>
-    <router-link :to="'/game/' + task.id">
-        <div class='task'>
+    <!-- <router-link :to="'/game/' + task.id"> -->
+        <div class='task' @click="clickAction">
             <div class='flex justify-content-between'>
+                <div v-if="action" class='action'>
+                <ToggleButton v-model="actionToggleIsChecked"
+                            onIcon="pi pi-check" offIcon="pi pi-times" 
+                            class="p-button-sm border-transparent" 
+                            :style="{backgroundColor:actionToggleIsChecked ? 'orange' : 'white'}"
+                            />
+            </div>
                 <div class='flex flex-1'>
                     <div class='task-img' v-bind:style="{backgroundImage: 'url('+real_url+task.icon+')'}"></div>
                     <div class='task-content'>
@@ -29,24 +86,15 @@ import { real_url } from 'src/utils/useAPI';
                         
                     </div>
                 </div>
-                <Knob :modelValue="score" :min="0" :max="target" disabled :size="80" />
+                <Knob v-if="!action" :modelValue="score" :min="0" :max="target" disabled :size="80" />
             </div>
         </div>
-    </router-link>
+    <!-- </router-link> -->
 </template>
 
 <script>
 export default {
   name: "Single Task",
-  props: {
-    task: Object,
-    played: Boolean,
-    assigned: Boolean,
-    exam: { type: Boolean, default: false },
-    category: String,
-    score: {type:Number , default:0},
-    target:Number,
-  },
 };
 </script>
 
@@ -109,5 +157,12 @@ export default {
     .task-content-name{
         font-size: larger;
         font-weight: 600;
+    }
+    .action{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 0 2em;
     }
 </style>

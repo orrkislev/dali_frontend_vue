@@ -1,35 +1,43 @@
 <script setup>
 import PageTitle from '../../components/PageTitle.vue';
+import GameTree from '../../components/GameTree/GameTree.vue';
 const api = useAPI()
 
-const headers = ref([])
-const data = ref([])
+const browseManager = useBrowseManager()
 
 api.post_json('tasks/tasks_table_data/',{purpose: "tasks_table"}).then(res=>{
-    console.log(res)
-    res.classes_list.forEach(cls=>{
-        headers.value.push({id:cls.id.toString(), name: cls.name})
+    browseManager.openTasks.classes = res.classes_list.map(cls=>{
+        return {id:cls.id.toString(), name: cls.name}
     })
-    Object.values(res.classes_table).forEach(row=>{
+    browseManager.openTasks.tasks = Object.values(res.classes_table).map(row=>{
         const dataRow = {"name":row.name, "id":row.id}
         row.list.forEach(l=>dataRow[l.cl_id.toString()] = l.isopen)
-        data.value.push(dataRow)
+        return dataRow
     })
 })
 
-function updateClassTask(class_id,game_id){
-    const newData = [...data.value]
-        newData.forEach(row=>{
-            if (row.id==game_id) row[class_id] = !row[class_id]
-        })
-        data.value = newData
+function getTableData(){
+    const data = [...browseManager.openTasks.tasks]
+    browseManager.openTasks.more.forEach(more=>{
+        const dataRow = {...more}
+        Object.keys(data[0]).filter(k=>k!="name"&&k!="id").forEach(k=>dataRow[k] = false)
+        data.push(more)
+    })
+    return data
+}
 
+function updateClassTask(class_id,game_id){
+    browseManager.openTasks.tasks.forEach(row=>{
+        if (row.id==game_id) row[class_id] = !row[class_id]
+    })
     api.post_json("tasks/task_class_toggle/",{class_id,game_id,purpose: "tasks_table"}).then(res=>{
-        const newData = [...data.value]
-        newData.forEach(row=>{
+        if (browseManager.openTasks.more.map(t=>t.id).includes(game_id)){
+            browseManager.openTasks.tasks.push(browseManager.openTasks.more.find(t=>t.id==game_id))
+            browseManager.openTasks.more = browseManager.openTasks.more.filter(t=>t.id!=game_id)
+        }
+        browseManager.openTasks.tasks.forEach(row=>{
             if (row.id==game_id) row[class_id] = res.status
         })
-        data.value = newData
     })
 }
 </script>
@@ -39,9 +47,9 @@ function updateClassTask(class_id,game_id){
     <div>
         <PageTitle title="משימות לכיתות" subtitle="המשימות שבחרת לכיתות" />
         <div style="width:65%;">
-            <DataTable :value="data" stripedRows showGridlines class="p-datatable-sm" autoLayout>
+            <DataTable :value="getTableData()" stripedRows showGridlines class="p-datatable-sm" autoLayout>
                 <Column field="name" header="" bodyClass="text-right p-2"></Column>
-                <Column v-for="header,i in headers" :key="header.id" :field="header.id" :header="header.name" bodyClass="text-center p-0" headerClass="text-center">
+                <Column v-for="header in browseManager.openTasks.classes" :key="header.id" :field="header.id" :header="header.name" bodyClass="text-center p-0" headerClass="text-center">
                     <template #body="slotProps">
                         <ToggleButton :modelValue="slotProps.data[header.id]" 
                             onIcon="pi pi-check" offIcon="pi pi-times" 
@@ -51,9 +59,11 @@ function updateClassTask(class_id,game_id){
                             />
                     </template>
                 </Column>
-                
             </DataTable>
         </div>
+        <Divider />
+        <div class="teacher_section_title">הוספת משימה</div>
+        <game-tree />
     </div>
 </template>
 
@@ -61,6 +71,7 @@ function updateClassTask(class_id,game_id){
 <script>
 import useAPI from 'src/utils/useAPI';
 import { ref } from 'vue';
+import useBrowseManager from '../../utils/useBrowseManager';
 
 export default {
 name:'Tasks'
