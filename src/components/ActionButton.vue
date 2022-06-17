@@ -8,6 +8,7 @@ const props = defineProps({
     selected: {type:Boolean, default: false},
     center: {type:Boolean, default: false},
     indicator: {type:String, default: ""},
+    icon: {type:String, default: null},
 })
 const emit = defineEmits(['click'])
 
@@ -27,6 +28,7 @@ function click() {
             'btnFull-correct': indicator=='success',
             'btnFull-wrong': indicator=='fail',
         }">
+        <i v-if="icon" :class="'btnFullIcon pi pi-' + icon"></i>
         <slot></slot>
     </div>
 </template>
@@ -88,4 +90,8 @@ export default {
 .word_select_selection_wrong { background: tomato !important; }
 .draggableItem-success { background: #ccff91 !important; }
 .draggableItem-fail { background: tomato !important; }
+
+.btnFullIcon{
+  padding: 0 0 0 0.5em;
+}
 </style>

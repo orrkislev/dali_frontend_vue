@@ -20,9 +20,10 @@ function restartGame() {
   gameManager.startGame(null, true);
 }
 async function publish() {
-  let res = await api.post("/statistics/publish/", {
+  let res = await api.post("statistics/publish/", {
     id: gameManager.question.publishID[0],
   });
+  console.log(res)
   isPublished.value = true;
 }
 </script>
@@ -32,15 +33,8 @@ async function publish() {
   <div id="task-main">
     <GameTitleTop>
         <Knob :modelValue="gameManager.question.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
-        <!-- <div style="display: grid; place-items: center">
-          <div style="display: flex; flex-direction: row-reverse; align-items: baseline; font-family: SecularOne; " >
-            <span style="font-size: 5em">{{ gameManager.question.score }}</span>
-            <span style="font-size: 2em; transform: scaleY(2)">/</span>
-            <span style="font-size: larger">{{ gameManager.question.target }}</span>
-          </div>
-        </div> -->
         <div class="flex flex-column gap05">
-        <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-lg" disabled="isPublished" @click="publish">
+        <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-lg" :disabled="isPublished" @click="publish">
           {{ isPublished ? 'פורסם' : 'פרסם' }}
         </Button>
         <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-sm" @click="restartGame">לשחק שוב</Button>

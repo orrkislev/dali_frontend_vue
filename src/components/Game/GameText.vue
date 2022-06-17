@@ -1,7 +1,7 @@
 <script setup>
 import useGameManager from '../../utils/useGameManager';
 import ActionButton from '../ActionButton.vue';
-import GameMultiMedia from './GameMultiMedia.vue';
+import AjaxViewerVue from '../AjaxViewer.vue';
 
 const gameManager = useGameManager()
 
@@ -22,7 +22,7 @@ function nextQuestion() {
                     <strong>המשך לשאלות</strong>
                     כדי לענות על השאלות המתייחסות לטקסט
                 </div>
-                <GameMultiMedia />
+                <AjaxViewerVue :htmlWithScripts="gameManager.media.media" />
             </div>
         </div>
         <div class='flex-column gap05'>
