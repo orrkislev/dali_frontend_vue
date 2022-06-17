@@ -34,6 +34,15 @@ sizes[25] = new create_size_key('game_head_div_example_games',1000,1259,-40,130)
 sizes[26] = new create_size_key('game_head_div_example_games',1260,1859,0,160);
 sizes[27] = new create_size_key('game_head_div_example_games',1860,4000,0,160);
 
+function create_size_key(key,browser_min_w,browser_max_w,content_h,content_w)
+{
+  this.key = key;
+  this.browser_min_w = browser_min_w;
+  this.browser_max_w = browser_max_w;
+  this.content_h = content_h;
+  this.content_w = content_w;
+}
+
 
 var waitstring = "";
 function screen_size(key)
