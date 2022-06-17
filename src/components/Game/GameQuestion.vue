@@ -10,10 +10,12 @@ import QuestionPart from "../Question/QuestionPart.vue";
 import { onBeforeRouteLeave } from "vue-router";
 import { useConfirm } from "primevue/useconfirm"; 
 import useGameManager from 'src/utils/useGameManager';
+import useAPI from "../../utils/useAPI";
 
 
 const gameManager = useGameManager()
 const confirm = useConfirm();
+const api = useAPI();
 
 onBeforeRouteLeave(async (to, from) => {
   return await new Promise((resolve) => {
@@ -23,7 +25,9 @@ onBeforeRouteLeave(async (to, from) => {
       icon: "pi pi-exclamation-triangle",
       accept: () => {
         gameManager.$reset()
-        resolve(true)
+        api.post_json("quest/action/", {action: "endgame"}).then(res => {
+          resolve(true)
+        })
       },
       reject: () => {
         resolve(false)

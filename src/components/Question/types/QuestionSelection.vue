@@ -16,6 +16,14 @@ let options = ref([...gameManager.question.options])
 emitter.subscribe('LIFELINE_STATS',lifeline_stats)
 emitter.subscribe('LIFELINE_5050',lifeline_5050)
 emitter.subscribe('CHECK_QUESTION',check)
+emitter.subscribe('SHOW_ANSWER', showAnswer)
+
+function showAnswer(){
+    answers.value.forEach((a, i) => {
+      select(i,a.correct);
+    })
+    check()
+}
 
 async function lifeline_stats(){
   let newAnswers = [...answers.value]

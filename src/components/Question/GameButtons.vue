@@ -4,9 +4,11 @@ import useEmitter from 'src/utils/useEmmiter';
 import useGameManager from 'src/utils/useGameManager'
 import useStoreSubscribe from 'src/utils/useStoreSubscribe';
 import ActionButton from '../ActionButton.vue';
+import useAuth from '../../utils/useAuth';
 
 const gameManager = useGameManager()
 const emitter = useEmitter()
+const auth = useAuth()
 
 const canSubmit = ref(false)
 
@@ -23,13 +25,25 @@ function submitQuestion() {
 function nextQuestion(){
     gameManager.nextQuestion()
 }
+function showAnswer(){
+    emitter.emit('SHOW_ANSWER')
+}
+function skipQuestion(){
+    gameManager.lifeline_skip()
+}
 </script>
 
 
 <template>
-<div>
-    <action-button v-if="gameManager.questionResult?.result==null" :center="true" :main="true" @click="submitQuestion"> בדיקה </action-button>
-    <action-button v-else :center="true" :main="true" @click="nextQuestion"> {{ getNextQuestionText() }} </action-button>
+<div class="flex justify-content-between">
+    <div class="flex ">
+        <action-button v-if="gameManager.questionResult?.result==null" :center="true" :main="true" @click="submitQuestion"> בדיקה </action-button>
+        <action-button v-else :center="true" :main="true" @click="nextQuestion"> {{ getNextQuestionText() }} </action-button>
+        <action-button v-if="auth.isTeacherOrStaff && gameManager.extra.teacher" :center="true" :border="true" @click="showAnswer"> הצגת תשובה </action-button>
+    </div>
+    <div>
+        <action-button v-if="auth.isTeacherOrStaff && gameManager.extra.teacher" :center="true" :border="true" @click="skipQuestion"> לשאלה הבאה </action-button>
+    </div>
 </div>
 </template>
 

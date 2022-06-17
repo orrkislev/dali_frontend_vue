@@ -1,6 +1,7 @@
 <script setup>
 import useEmitter from 'src/utils/useEmmiter';
 import useGameManager from 'src/utils/useGameManager';
+import ActionButton from '../ActionButton.vue';
 
 const gameManager = useGameManager()
 const emitter = useEmitter()
@@ -32,8 +33,8 @@ function showMedia(){
     <div v-else v-append="gameManager.question.incorrect_image"></div>
     <div v-html="getHead()"></div>
     <div v-html="gameManager.question.q.feedback_general.text"></div>
-    <div v-if="'sentences' in gameManager.question.q.feedback_general" id="feedback_button_container">
-      <a id="feedback_button" v-on:click="showMedia">הצג בטקסט</a>
+    <div>
+      <action-button v-if="'sentences' in gameManager.question.q.feedback_general" :border="true"  @click="showMedia">הצג בטקסט</action-button>  
     </div>
   </div>
 </template>

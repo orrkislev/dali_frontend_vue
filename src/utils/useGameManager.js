@@ -8,7 +8,8 @@ const useGameManager = defineStore('game', {
         game: null,
         progress: null,
         view: null,
-        media: null,
+        media: {media:null, open:false},
+        extra:null
     }),
     getters: {
         getPostDataForSubmitAndNext: state => {
@@ -37,8 +38,10 @@ const useGameManager = defineStore('game', {
             if (res.game.gameType != 'trivia') console.log('SPECIAL GAMETYPE:', res.game.gameType)
             this.view = 'title'
         },
-        async startGame(level = null, restart = false) {
+        async startGame(level = null, restart = false, extra) {
+            if (extra) this.extra = extra
             this.question = null
+            this.questionResult = null
             let newProgress = {
                 progress: Array(this.game.game.NumQuestions).fill('notyet'),
                 score: 0,
@@ -61,7 +64,7 @@ const useGameManager = defineStore('game', {
                 gametype: this.game.game.gameType,
                 name: this.game.game.name,
                 purpose: 'direct_start',
-                gtype: 'start_normal',
+                gtype: extra.teacher ? 'teacher_test' : 'start_normal',
                 onlyData: true
             }
             // START AN EXAM
@@ -105,22 +108,21 @@ const useGameManager = defineStore('game', {
 
             // START GAME
             res = await api.post("quest/gamehead/", { 'master': 1 })
-            postdata.purpose = '';
-            postdata.gametype = 'start_normal';
+            postdata.purpose = ''
+            postdata.gametype = extra.teacher ? 'teacher_test' : 'start_normal'
             res = await api.post("quest/gamehead/", postdata)
-            console.log(res, 'media' in res)
             // SHOW MEDIA BEFORE QUESTION?
             if ('media' in res) {
-                console.log('show media')
                 this.view = 'media-start'
-                this.media = res.media
+                this.media.media = res.media
                 // SHOW QUESTION
             } else {
-                console.log('show question')
                 res = await api.post("quest/game_description/", {})
                 res = await api.post("quest/buttons/", postdata)
                 res = await api.post("quest/play/", { onlyData: true })
+                this.media.media = null
                 this.question = res
+                console.log(res)
                 this.questionResult = {}
                 if (res.action == 'game ended') this.view = 'title'
                 else if (res.action == 'next question') this.view = 'question'
@@ -143,6 +145,7 @@ const useGameManager = defineStore('game', {
             await api.post("quest/gamehead/", data)
         },
         async nextQuestion(withData = true) {
+            this.media.open = false
             const api = useAPI()
             if (this.progress.progress[0] == 'admin') window.location.reload();
 
@@ -152,7 +155,7 @@ const useGameManager = defineStore('game', {
             else if (res.action == 'next question') this.view = 'question'
             else if (res.action == 'media start') {
                 this.view = 'media'
-                this.media = res.media
+                this.media.media = res.media
             }
             this.question = res
             this.questionResult = {}

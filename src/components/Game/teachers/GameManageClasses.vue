@@ -15,6 +15,7 @@ api
   })
   .then((res) => {
     data.value = res;
+    console.log(res)
   });
 
 async function click(clsIndex, val) {
@@ -29,8 +30,13 @@ async function click(clsIndex, val) {
 
 
 <template>
-    <div class="teacher_section_title">ניהול משימה לכיתות</div>
+  <div class="teacher_section_title">ניהול משימה לכיתות</div>
   <div v-if="data" class="flex">
+    <div v-if="data.filtered_game">
+        בחרת להסיר שאלות מהמשימה. תלמידים יראו את המשימה המעודכנת בשם {{data.filtered_game.name}}.
+        גם בדו"חות המשימה תופיע בשם זה.
+        תלמידים יקבלו בכל משחק {{ data.filtered_game.NumQuestions }} שאלות. תשובה נכונה מזכה ב- {{ data.filtered_game.scoreValue }} נקודות ובמקרה של תשובה שגויה יורדות {{  data.filtered_game.scoreError}} נקודות.
+    </div>
     <div v-for="(cls, cldIndex) in data.classes_table[route.params.taskid].list" :key="cls.cl_id" class="w-3">
       <h3><InputSwitch v-model="cls.isopen" @input="(e) => click(cldIndex)" /> {{ cls.name }} </h3>
       <div v-if="cls.isopen">משימה זו פתוחה לכיתה</div>

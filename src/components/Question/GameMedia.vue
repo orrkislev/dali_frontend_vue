@@ -1,6 +1,5 @@
 <script setup>
 import { ref } from "vue-demi";
-import $ from 'jquery'
 import useGameManager from "src/utils/useGameManager";
 import useEmitter from "src/utils/useEmmiter";
 import ActionButton from "../ActionButton.vue";
@@ -11,35 +10,34 @@ const gameManager = useGameManager();
 const emitter = useEmitter()
 emitter.subscribe("SHOW_MEDIA", showMedia);
 
-let open = ref(false);
-
-function openMedia() {
-  open.value = true;
-}
-function closeMedia() {
-  open.value = false;
-}
-
-function showMedia(feedback){
+function showMedia(feedback){    
+  openMedia()
+  feedback = gameManager.question.q.feedback_general
   let scroll_to = null;
 
-  open.value = true;
   setTimeout(() => {
     if ("sentences" in feedback) {
       feedback.sentences.forEach((sentence) => {
-        $("#" + sentence[0]).addClass(sentence[1]);
-        scroll_to = "#" + sentence[0]; //+ 150
+        document.getElementById(sentence[0]).classList.add(sentence[1]);
+        scroll_to = document.getElementById(sentence[0])
       });
     }
 
     if (scroll_to) {
-      $("#task-main").animate( {
-          scrollTop: $(scroll_to).offset().top - $("#task-main").offset().top + $("#task-main").scrollTop() - 20,
-        },
-        1000
-      );
+      window.scroll({
+        top: scroll_to.offsetTop - 150,
+        left: 0,
+        behavior: "smooth",
+      });
     }
   }, 300);
+}
+
+function openMedia(){
+  gameManager.media.open = true;
+}
+function closeMedia(){
+  gameManager.media.open = false;
 }
 
 function editMediaForDevelopment(media){
@@ -50,12 +48,13 @@ function editMediaForDevelopment(media){
 
 <template>
   <div>
-    <div v-if="gameManager.media" id="gameMedia">
-      <div v-if="open">
-        <AjaxViewer htmlWithScripts="{{gameManager.media}}" />
-        <action-button :border="true"  @click="closeMedia">סגירה</action-button>
+    <div v-if="gameManager.media.media" id="gameMedia">
+      <action-button v-if="gameManager.media.open" :border="true"  @click="closeMedia" icon="align-right">סגירה</action-button>
+      <action-button v-else :border="true"  @click="openMedia" icon="align-right">לצפייה חוזרת בטקסט</action-button>
+      <div v-if="gameManager.media.open">
+        <AjaxViewer :htmlWithScripts="gameManager.media.media" />
+        <action-button :border="true"  @click="closeMedia" icon="align-right">סגירה</action-button>
       </div>
-      <action-button :border="true" v-else @click="openMedia">לצפייה חוזרת בטקסט</action-button>
     </div>
 
     <div v-if="gameManager.question.q.type != 'mouseselect'">
@@ -102,5 +101,8 @@ export default {
     }
     .disableButtons a{
         pointer-events: none;
+    }
+    .highlight{
+        background-color: lightgreen;
     }
 </style>
