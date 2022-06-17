@@ -18,6 +18,14 @@ const emitter = useEmitter()
 emitter.subscribe("LIFELINE_STATS", lifeline_stats)
 emitter.subscribe("LIFELINE_5050", lifeline_5050)
 emitter.subscribe("CHECK_QUESTION", check);
+emitter.subscribe('SHOW_ANSWER', showAnswer)
+
+function showAnswer(){
+    gameManager.question.answers.forEach((answer,i) => {
+        select(i,answer.correct);
+    })
+    check()
+}
 
 function lifeline_stats(){
   let newAnswers = [...gameManager.question.answers];

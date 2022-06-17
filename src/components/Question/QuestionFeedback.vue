@@ -2,7 +2,6 @@
 import useEmitter from 'src/utils/useEmmiter';
 import useGameManager from 'src/utils/useGameManager';
 import ActionButton from '../ActionButton.vue';
-import ButtonSmallVue from '../ButtonSmall.vue';
 
 const gameManager = useGameManager()
 const emitter = useEmitter()

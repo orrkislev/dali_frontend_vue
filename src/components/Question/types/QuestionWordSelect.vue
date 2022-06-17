@@ -7,6 +7,16 @@ const gameManager = useGameManager();
 const emitter = useEmitter()
 
 emitter.subscribe("CHECK_QUESTION", check);
+emitter.subscribe('SHOW_ANSWER', showAnswer)
+
+function showAnswer(){
+  gameManager.question.wordSelect[1].forEach((a, i) => {
+    let el = $("#selection" + (i + 1));
+    if (el.attr("type") == "text") el.val = a.split(",")[0];
+    else input = $("#selection" + (i + 1) + " option:selected").text = a.split(",")[0];
+  });
+  check()
+}
 
 function check() {
   let result = 0;

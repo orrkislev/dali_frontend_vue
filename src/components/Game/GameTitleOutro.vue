@@ -5,6 +5,7 @@ import useGameManager from "src/utils/useGameManager";
 import PlayedGamesList from "./PlayedGamesList.vue";
 import { onBeforeRouteLeave } from 'vue-router';
 import GameTitleTop from './GameTitleTop.vue';
+import GameManageClasses from './teachers/GameManageClasses.vue';
 
 const api = useAPI();
 const gameManager = useGameManager()
@@ -31,7 +32,7 @@ async function publish() {
 
 <template>
   <div id="task-main">
-    <GameTitleTop>
+    <GameTitleTop >
         <Knob :modelValue="gameManager.question.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
         <div class="flex flex-column gap05">
         <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-lg" :disabled="isPublished" @click="publish">
@@ -41,6 +42,7 @@ async function publish() {
         </div>
     </GameTitleTop>
     <Divider />
+    <game-manage-classes v-if="gameManager.extra.teacher"/>
     <PlayedGamesList />
   </div>
 </template>

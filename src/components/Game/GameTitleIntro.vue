@@ -24,7 +24,7 @@ function startLevel(level) {
   gameManager.startGame(level);
 }
 function startTeacherWalkthrough() {
-  console.log("start teacher");
+  gameManager.startGame(null,null,{teacher:true});
 }
 function startMobileGame() {
   console.log("start mobile");
@@ -48,7 +48,7 @@ function startMobileGame() {
             {{ level.title }}
           </button>
         </div>
-        <div v-if="['stuff', 'teacher'].includes(auth.role)" class="p-buttonset">
+        <div v-if="auth.isTeacherOrStaff" class="p-buttonset">
           <Button class="p-button-rounded px-6" @click="startGame">
             התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
           </Button>

@@ -15,8 +15,14 @@ const emitter = useEmitter()
 
 emitter.subscribe('LIFELINE_STATS', lifeline_stats)
 emitter.subscribe('CHECK_QUESTION', check)
+emitter.subscribe('SHOW_ANSWER', showAnswer)
 
-
+function showAnswer(){
+    gameManager.question.answers.forEach((answer,i) => {
+        select(i,answer.correct);
+    })
+    check()
+}
 
 async function lifeline_stats(){
     const res = await api.post("/quest/action/", { 'action': 'statistics', 'question_id': gameManager.question.q.id })

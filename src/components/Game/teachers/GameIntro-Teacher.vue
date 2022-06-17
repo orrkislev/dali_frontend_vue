@@ -26,7 +26,7 @@ function additional(){
 
 
 <template>
-  <div v-if="['stuff', 'teacher'].includes(auth.role)">
+  <div v-if="auth.isTeacherOrStaff">
     <game-manage-classes />
     <Divider />
 
