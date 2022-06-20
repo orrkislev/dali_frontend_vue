@@ -7,6 +7,7 @@ const browseManager = useBrowseManager();
 const api = useAPI();
 
 useStoreSubscribe(browseManager, "curr_level", (state) => {
+  if (state.curr_level === undefined) { state.curr_level = -1;}
   if (state.curr_level != -1)
     api
       .post_json("tasks/subjects_list/", { parent_id: state.curr_level })
