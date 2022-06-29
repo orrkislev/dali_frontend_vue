@@ -4,16 +4,25 @@ import Home from 'src/pages/home.vue'
 import allgames from 'src/pages/allgames.vue'
 import login from 'src/pages/login.vue'
 import Game from 'src/pages/game.vue'
+import Profile from 'src/pages/profile.vue'
+
+import Help from 'src/pages/help.vue'
+import Legal from 'src/pages/legal.vue'
 
 import Classes from 'src/pages/manage/Classes.vue'
 import Class from 'src/pages/manage/Class.vue'
 import Tasks from 'src/pages/manage/Tasks.vue'
 import Exams from 'src/pages/manage/Exams.vue'
 
+import Qadmin from 'src/pages/qadmin.vue'
+
+
 const routes = [
     { path: '/', component: Home },
     { path: '/allgames', component: allgames },
     { path: '/login', component: login },
+    { path: '/profile', component: Profile },
+
     { path: '/game/:taskid', component: Game},
     { path: '/game/:taskid/:questionid', component: Game},
 
@@ -21,6 +30,11 @@ const routes = [
     { path: '/manage/classes/:classid', component: Class},
     { path: '/manage/tasks', component: Tasks},
     { path: '/manage/exams', component: Exams},
+    
+    { path: '/help', component: Help },
+    { path: '/legal', component: Legal },
+
+    { path: '/qadmin/:id', component: Qadmin },
   ]
 
   const router = createRouter({

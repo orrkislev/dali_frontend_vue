@@ -46,13 +46,14 @@ function SelectUserOption(key) {
         </NButton>
       </div>
       <div id="header_left">
-        <n-dropdown
-          trigger="hover"
-          @select="SelectUserOption"
-          :options="options"
-        >
+        <NButton round secondary color="#ffffff">
+          <router-link to="/help">עזרה</router-link>
+        </NButton>
+
+        <n-dropdown trigger="hover" @select="SelectUserOption" :options="options">
           <NButton round secondary color="#ffffff">
-            <router-link to="/login">{{ auth.username ?? 'LOGIN' }}</router-link>
+            <router-link v-if="auth.username" to="/profile">{{ auth.username }}</router-link>
+            <router-link v-else to="/login">{{ 'LOGIN' }}</router-link>
           </NButton>
         </n-dropdown>
       </div>

@@ -2,6 +2,7 @@
 import SideBarStaff from "./SideBarStaff.vue";
 import SideBarUser from "./SideBarUser.vue";
 import Survey from "./Survey.vue";
+import SendComment from "./SendComment.vue";
 </script>
 
 
@@ -9,6 +10,7 @@ import Survey from "./Survey.vue";
   <div id="sidebar">
     <side-bar-user />
     <side-bar-staff />
+    <send-comment />
     <survey />
   </div>
 </template>

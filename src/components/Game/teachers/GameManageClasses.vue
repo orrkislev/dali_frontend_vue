@@ -15,7 +15,6 @@ api
   })
   .then((res) => {
     data.value = res;
-    console.log(res)
   });
 
 async function click(clsIndex, val) {

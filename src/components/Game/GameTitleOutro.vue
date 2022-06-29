@@ -6,6 +6,7 @@ import PlayedGamesList from "./PlayedGamesList.vue";
 import { onBeforeRouteLeave } from 'vue-router';
 import GameTitleTop from './GameTitleTop.vue';
 import GameManageClasses from './teachers/GameManageClasses.vue';
+import ActionButton from '../ActionButton.vue';
 
 const api = useAPI();
 const gameManager = useGameManager()
@@ -27,6 +28,10 @@ async function publish() {
   console.log(res)
   isPublished.value = true;
 }
+
+function backToGamePage() {
+  gameManager.question=null
+}
 </script>
 
 
@@ -35,12 +40,14 @@ async function publish() {
     <GameTitleTop >
         <Knob :modelValue="gameManager.question.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
         <div class="flex flex-column gap05">
-        <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-lg" :disabled="isPublished" @click="publish">
-          {{ isPublished ? 'פורסם' : 'פרסם' }}
-        </Button>
-        <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-sm" @click="restartGame">לשחק שוב</Button>
+          <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-lg" :disabled="isPublished" @click="publish">
+            {{ isPublished ? 'פורסם' : 'פרסם' }}
+          </Button>
+          <Button v-if="!gameManager.game.extra.exam" class="p-button-secondary p-button-rounded px-6 p-button-sm" @click="restartGame">לשחק שוב</Button>
+          <ActionButton :border="true" :center="true" @click="backToGamePage" style="minWidth:100%">חזרה לדף המשימה</ActionButton>
         </div>
     </GameTitleTop>
+    
     <Divider />
     <game-manage-classes v-if="gameManager.extra.teacher"/>
     <PlayedGamesList />

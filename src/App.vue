@@ -2,6 +2,7 @@
 import Header from "./components/Header.vue";
 import MainContent from "./components/MainContent.vue";
 import SideBar from "./components/SideBar/SideBar.vue";
+import Footer from "./components/Footer.vue";
 </script>
 
 
@@ -14,6 +15,7 @@ import SideBar from "./components/SideBar/SideBar.vue";
     </main-content>
     <side-bar />
   </div>
+  <Footer />
 </template>
 
 

@@ -4,7 +4,8 @@ import useAPI from './useAPI';
 const useAuth = defineStore('auth', {
     state: () => ({
         username: null,
-        role:null
+        role:null,
+        userData:null
     }),
     getters: {
         isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.role)
@@ -17,14 +18,14 @@ const useAuth = defineStore('auth', {
             response = await response.json()
             this.role = response.role
             this.username = response.name
+            this.userData = response
         },
 
         async auto_login(){
             const api = useAPI()
             let response = await api.get('students/vue_login')
             response = await response.json()
-            this.role = response.role
-            this.username = 'אורכסלו'
+            this.getUserdata()
             return true
         },
         async login(username, password) {
@@ -38,8 +39,7 @@ const useAuth = defineStore('auth', {
                 'password': password,
                 'next': '/',
             })
-            console.log('login', response)
-            this.username = 'אורכסלו'
+            this.getUserdata()
             return response
         },
         async logout() {
