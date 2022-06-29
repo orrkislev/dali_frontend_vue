@@ -9,7 +9,7 @@ const useGameManager = defineStore('game', {
         progress: null,
         view: null,
         media: {media:null, open:false},
-        extra:null
+        extra:{}
     }),
     getters: {
         getPostDataForSubmitAndNext: state => {
@@ -64,7 +64,7 @@ const useGameManager = defineStore('game', {
                 gametype: this.game.game.gameType,
                 name: this.game.game.name,
                 purpose: 'direct_start',
-                gtype: extra.teacher ? 'teacher_test' : 'start_normal',
+                gtype: this.extra.teacher ? 'teacher_test' : 'start_normal',
                 onlyData: true
             }
             // START AN EXAM
@@ -109,7 +109,7 @@ const useGameManager = defineStore('game', {
             // START GAME
             res = await api.post("quest/gamehead/", { 'master': 1 })
             postdata.purpose = ''
-            postdata.gametype = extra.teacher ? 'teacher_test' : 'start_normal'
+            postdata.gametype = this.extra.teacher ? 'teacher_test' : 'start_normal'
             res = await api.post("quest/gamehead/", postdata)
             // SHOW MEDIA BEFORE QUESTION?
             if ('media' in res) {
@@ -122,7 +122,6 @@ const useGameManager = defineStore('game', {
                 res = await api.post("quest/play/", { onlyData: true })
                 this.media.media = null
                 this.question = res
-                console.log(res)
                 this.questionResult = {}
                 if (res.action == 'game ended') this.view = 'title'
                 else if (res.action == 'next question') this.view = 'question'

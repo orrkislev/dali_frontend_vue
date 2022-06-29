@@ -9,6 +9,7 @@ const props = defineProps({
     center: {type:Boolean, default: false},
     indicator: {type:String, default: ""},
     icon: {type:String, default: null},
+    style: {type:Object, default: null},
 })
 const emit = defineEmits(['click'])
 
@@ -19,7 +20,8 @@ function click() {
 
 
 <template>
-  <div v-on:click="click" class='btnFull' v-bind:class="{ 
+  <div v-on:click="click" class='btnFull' 
+       v-bind:class="{ 
             'btnFull-border': border, 
             'btnFull-center' : center,
             'btnFull-main':main,
@@ -27,7 +29,7 @@ function click() {
             'btnFull-inactive': inactive, 
             'btnFull-correct': indicator=='success',
             'btnFull-wrong': indicator=='fail',
-        }">
+        }" v-bind:style="style">
         <i v-if="icon" :class="'btnFullIcon pi pi-' + icon"></i>
         <slot></slot>
     </div>

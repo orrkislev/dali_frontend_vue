@@ -25,6 +25,6 @@ export default {
   height: 100%;
   padding: 1em;
   padding-top: 2em;
-  margin-bottom: 5em;
+  margin-bottom: 3em;
 }
 </style>
