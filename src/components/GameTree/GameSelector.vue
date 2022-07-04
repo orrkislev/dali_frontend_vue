@@ -46,7 +46,7 @@ function getGamesData(subjectID) {
       :category="null"
       :played="browseManager.game_list.played_games.includes(task.id)"
       :assigned="browseManager.game_list.extra_games_info.includes(task.id)"
-      :score="task.scores.best ? task.scores.best : 0"
+      :score="task.scores?.best ?? 0"
       :target="task.target"
       :action="action"
     />

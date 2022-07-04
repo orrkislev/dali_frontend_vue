@@ -3,6 +3,7 @@ import SideBarStaff from "./SideBarStaff.vue";
 import SideBarUser from "./SideBarUser.vue";
 import Survey from "./Survey.vue";
 import SendComment from "./SendComment.vue";
+import SideBarBest from "./SideBarBest.vue";
 </script>
 
 
@@ -12,6 +13,7 @@ import SendComment from "./SendComment.vue";
     <side-bar-staff />
     <send-comment />
     <survey />
+    <side-bar-best />
   </div>
 </template>
 
@@ -37,5 +39,9 @@ export default {
   border-radius: 0.5em;
   background: white;
   padding: 0.5em;
+}
+.sideBarElement-dark {
+  background:#396672;
+  color:white;
 }
 </style>
