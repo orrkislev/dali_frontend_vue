@@ -24,7 +24,7 @@ const initialValues = { ...lifelines.value };
 function activateLifeline(name) {
   if (lifelines.value[name].active) {
     let newLifelines = { ...lifelines.value };
-    newLifelines[name].active = false;
+    if (name!=='retry') newLifelines[name].active = false;
     lifelines.value = newLifelines;
   } else if (gameManager.progress.bonus) {
     let newProgress = { ...gameManager.progress };

@@ -11,6 +11,7 @@ const emit = defineEmits(['reload'])
 const api = useAPI()
 
 const state = ref(null)
+const newName = ref(props.name)
 
 async function removeClass(){
     const res = await api.post_json("teachers/update_class/",{action: "delete",class_id: props.id })
@@ -21,9 +22,14 @@ function editClass(){
     api.post_json("teachers/update_class/", {
         action: "update",
         class_id: props.id,
-        class_name: props.name,
+        class_name: newName.value,
         is_REST: "True"
     })
+    state.value = null
+}
+function cancelEdit(){
+    newName.value = props.name
+    state.value = null
 }
 
 async function setOpen(){
@@ -42,7 +48,7 @@ async function setOpen(){
     <div>
             <div v-if="state == 'remove'" class="class_in_classlist">
                 <div class="class_in_classlist_title">
-                    <div>{{ name }}</div>
+                    <div>{{ newName }}</div>
                     <h3>מחיקת כיתה</h3>
                     <div>
                         האם את/ה בטוח/ה? במידה ויש תלמידים משוייכים לכיתה, הם יוצאו
@@ -57,21 +63,21 @@ async function setOpen(){
 
             <div v-else-if="state == 'edit'" class="class_in_classlist">
                 <div class="class_in_classlist_title">
-                    <div>{{ name }}</div>
+                    <!-- <div>{{ newName }}</div> -->
                     <h3>עריכת כיתה</h3>
                     <div>
-                        <input v-model="name" type="text" />
+                        <input v-model="newName" type="text" />
                     </div>
                 </div>
                 <div class="class_in_classlist_actions">
                     <button-small :border="true" @click="editClass()">עדכן</button-small>
-                    <button-small :border="true" @click="()=>state = null">ביטול</button-small>
+                    <button-small :border="true" @click="cancelEdit()">ביטול</button-small>
                 </div>
             </div>
 
             <div v-else class="class_in_classlist">
                 <div class="class_in_classlist_title">
-                    <router-link :to="'/manage/classes/' + id"> {{ name }} </router-link>
+                    <router-link :to="'/manage/classes/' + id"> {{ newName }} </router-link>
                 </div>
                 <div class="class_in_classlist_actions" >
                     <InputSwitch v-model="isOpen" @input="setOpen" />
@@ -112,5 +118,10 @@ name:'classInClasses'
 .class_in_classlist_actions {
   display: flex;
   gap: 0.5em;
+}
+.class_in_classlist_title{
+    display: flex;
+    flex-direction: column;
+    gap:0.5em;
 }
 </style>

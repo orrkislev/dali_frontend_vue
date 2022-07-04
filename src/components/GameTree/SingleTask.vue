@@ -2,8 +2,10 @@
 import { computed } from '@vue/reactivity';
 import { real_url } from 'src/utils/useAPI';
 import { useRouter } from 'vue-router';
+import useAuth from '../../utils/useAuth';
 import useBrowseManager from '../../utils/useBrowseManager';
 
+const auth = useAuth()
 const props = defineProps({
     task: Object,
     played: Boolean,
@@ -29,6 +31,8 @@ function goToGamePage() {
 }
 
 function addTask() {
+    if (browseManager.openTasks.tasks.map(t => t.id).includes(props.task.id))
+        return
     const d = browseManager.openTasks.more.map(t => t.id)
     const indexOf = d.indexOf(props.task.id)
     if (indexOf != -1) browseManager.openTasks.more.splice(indexOf, 1)
@@ -37,6 +41,8 @@ function addTask() {
 }
 
 function addExam(){
+    if (browseManager.openExams.exams.map(t => t.id).includes(props.task.id))
+        return
     const d = browseManager.openExams.more.map(t => t.id)
     const indexOf = d.indexOf(props.task.id)
     if (indexOf != -1) browseManager.openExams.more.splice(indexOf, 1)
@@ -44,7 +50,6 @@ function addExam(){
 }
 
 const actionToggleIsChecked = computed(() => {
-    
     if (props.action == 'ADD_TASK') 
         return browseManager.openTasks.tasks.map(t => t.id).includes(props.task.id) || browseManager.openTasks.more.map(t => t.id).includes(props.task.id)
     else if (props.action == 'ADD_EXAM') 
@@ -86,7 +91,7 @@ const actionToggleIsChecked = computed(() => {
                         
                     </div>
                 </div>
-                <Knob v-if="!action" :modelValue="score" :min="0" :max="target" disabled :size="80" />
+                <Knob v-if="!action && !auth.isTeacherOrStaff" :modelValue="score" :min="0" :max="target" disabled :size="80" />
             </div>
         </div>
     <!-- </router-link> -->

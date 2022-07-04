@@ -11,7 +11,7 @@ const api = useAPI();
 
 let action = null
 if (route.path == '/manage/tasks') action = 'ADD_TASK'
-else if (route.path == '/manage/exams')action = 'ADD_EXAM'
+else if (route.path == '/manage/exams') action = 'ADD_EXAM'
 
 getGamesData(browseManager.curr_subject);
 useStoreSubscribe(browseManager, "curr_subject", (state) => {
@@ -19,8 +19,8 @@ useStoreSubscribe(browseManager, "curr_subject", (state) => {
 });
 
 function getGamesData(subjectID) {
-  api.post_json("tasks/tasks_list/", { parent_id: subjectID }).then((p) =>  {
-    browseManager.game_list = p 
+  api.post_json("tasks/tasks_list/", { parent_id: subjectID }).then((p) => {
+    browseManager.game_list = p
   });
 }
 </script>
@@ -39,17 +39,10 @@ function getGamesData(subjectID) {
                 @click="selectTask(exam.game_id, {exam:exam.exam_id})">
             </single-task>
         </template> -->
-    <single-task
-      v-for="task in browseManager.game_list.list"
-      :key="task.id"
-      :task="task"
-      :category="null"
+    <single-task v-for="task in browseManager.game_list.list" :key="task.id" :task="task" :category="null"
       :played="browseManager.game_list.played_games.includes(task.id)"
       :assigned="browseManager.game_list.extra_games_info.includes(task.id)"
-      :score="task.scores.best ? task.scores.best : 0"
-      :target="task.target"
-      :action="action"
-    />
+      :score="task.scores.best ? task.scores.best : 0" :target="task.target" :action="action" />
     <div v-if="browseManager.game_list.list.length == 0">אין משימות פתוחות</div>
   </div>
 </template>
@@ -66,6 +59,6 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 0.5em;
-  flex:1;
+  flex: 1;
 }
 </style>

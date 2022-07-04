@@ -20,17 +20,10 @@ const useAuth = defineStore('auth', {
             this.username = response.name
             this.userData = response
         },
-
-        async auto_login(){
-            const api = useAPI()
-            let response = await api.get('students/vue_login')
-            response = await response.json()
-            this.getUserdata()
-            return true
-        },
         async login(username, password) {
             if (username == '') {
-                return await this.auto_login()
+                username = "mora21"
+                password = "orit2345"
             }
             const api = useAPI()
             let response = await api.post('students/pre_login/', {

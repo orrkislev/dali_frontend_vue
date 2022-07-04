@@ -1,20 +1,28 @@
 import { defineStore } from 'pinia'
 
-export const base_url = 'http://localhost:9200/'
+export const base_url = 'http://localhost:8200/'
 export const real_url = 'https://da-li.co.il/' //TODO update when production
 
-function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+function getCookie(name){
+    var value = "; " + document.cookie;
+    var parts = value.split("; " + name + "=");
+    if (parts.length == 2) return parts.pop().split(";").shift();
 }
 
 const useAPI = defineStore('api', {
     state: () => ({}),
     actions: {
+        async getCSRF(){
+            const res = await fetch(base_url + 'students/get_csrf_token/', { 
+                method: 'GET',
+                credentials: 'include',
+            })
+
+        },
         async post_json(url, data) {
             data['onlyData'] = true
             const token = getCookie('csrftoken')
+            if (!token) await this.getCSRF()
             let response = await fetch(base_url + url, {
                 method: 'post', credentials: 'include',
                 headers: {

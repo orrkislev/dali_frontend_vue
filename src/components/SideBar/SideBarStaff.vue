@@ -26,6 +26,10 @@ async function filterQuestion(){
         else gameManager.question.filterQuest = true
     }
 }
+
+function skipQuestion(){
+    gameManager.lifeline_skip()
+}
 </script>
 
 
@@ -40,8 +44,10 @@ async function filterQuestion(){
                     שאלה
                 </button-small>
                 <div v-else>{{ "סיננתם הרבה שאלות. לא ניתן לסנן שאלות נוספות" }}</div>
-                <div v-if="gameManager.question.filterQuest">שימו לב: בחרתם להסיר שאלה זו. השאלה לא תופיע במשחקי תלמידים.</div>
+                <div class='filteralert pulsing' v-if="gameManager.question.filterQuest">שימו לב: בחרתם להסיר שאלה זו. השאלה לא תופיע במשחקי תלמידים.</div>
             </div>
+            <Divider />
+            <Button @click="skipQuestion" class="p-button-outlined p-button-sm">לשאלה הבאה</Button>
             <Button @click="endGame" class="p-button-outlined p-button-sm">דלג לסוף המשחק</Button>
         </div>
     </div>
@@ -56,4 +62,26 @@ name:'SideBarStaff'
 
 
 <style>
+@keyframes pulsing {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+.pulsing{
+    animation: pulsing 1s infinite;
+}
+.filteralert{
+    color: red;
+    background-color: white;
+    padding: .5em;
+    border-radius: .5em;
+    font-size: 0.8em;
+    margin-top: 0.5em;
+}
 </style>

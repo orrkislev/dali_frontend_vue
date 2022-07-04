@@ -41,9 +41,9 @@ function skipQuestion(){
         <action-button v-else :center="true" :main="true" @click="nextQuestion"> {{ getNextQuestionText() }} </action-button>
         <action-button v-if="auth.isTeacherOrStaff && gameManager.extra.teacher" :center="true" :border="true" @click="showAnswer"> הצגת תשובה </action-button>
     </div>
-    <div>
+    <!-- <div>
         <action-button v-if="auth.isTeacherOrStaff && gameManager.extra.teacher" :center="true" :border="true" @click="skipQuestion"> לשאלה הבאה </action-button>
-    </div>
+    </div> -->
 </div>
 </template>
 

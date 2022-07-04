@@ -66,14 +66,14 @@ async function newClass(event){
 		<Divider />
 		<div>הוספת כיתה או קבוצת לימוד</div>
 		<div id='newClassContainer'>
-			<div class="class_in_classlist_title">
+			<div class="newclass_title">
 				<input v-model="newClassName" type="text" />
 				<div v-for="grade in grades" :key="grade.id">
 					<input type="radio" :id="grade.name" :value="grade.id" v-model="newClassGrade"/>
 					<label :for="grade.name">{{ grade.name }}</label>
 				</div>						
 			</div>
-			<div class="class_in_classlist_actions" >
+			<div class="newclass_action" >
 				<button-small :border="true" @click='newClass'>הוסף</button-small>
 			</div>
 		</div>
@@ -96,7 +96,7 @@ export default {
 	display: flex;
   	justify-content: space-between;
 }
-.class_in_classlist_title{
+.newclass_title{
 	display: flex;
 	gap:0.5em;
 }

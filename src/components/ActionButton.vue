@@ -53,9 +53,6 @@ export default {
   border-bottom-left-radius: 1em;
 }
 
-.btnFull:hover{
-  background-color: brown;
-}
 .btnFull:active{
   background-color: red;
 }
@@ -93,7 +90,11 @@ export default {
 .draggableItem-success { background: #ccff91 !important; }
 .draggableItem-fail { background: tomato !important; }
 
-.btnFullIcon{
-  padding: 0 0 0 0.5em;
-}
+.btnFull:hover{ background-color: #d5d5d5; }
+.btnFull-main:hover{ background-color: #254c79; }
+.btnFull-correct:hover{ background-color: #ccff91; }
+.btnFull-wrong:hover{ background-color: tomato; }
+
+
+.btnFullIcon{ padding: 0 0 0 0.5em; }
 </style>

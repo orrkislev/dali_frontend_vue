@@ -8,14 +8,18 @@ import Footer from "./components/Footer.vue";
 
 <template>
   <ConfirmDialog></ConfirmDialog>
-  <Header />
-  <div id="mainLayout">
-    <main-content>
-      <router-view></router-view>
-    </main-content>
-    <side-bar />
+  <div id="allApp">
+    <div id="allAppTop">
+      <Header />
+      <div id="mainLayout">
+        <main-content>
+          <router-view></router-view>
+        </main-content>
+        <side-bar />
+      </div>
+    </div>
+    <Footer />
   </div>
-  <Footer />
 </template>
 
 
@@ -32,13 +36,21 @@ body {
   background: linear-gradient(12deg, #92c7d5, #e1ebed) fixed;
   direction: rtl;
 }
-#app {
+
+#allApp{
   max-width: 84em;
+  min-height: 100vh;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#allAppTop {
   display: flex;
   flex-direction: column;
   gap: 1em;
 }
+
 #mainLayout {
   display: flex;
   gap: 1em;
