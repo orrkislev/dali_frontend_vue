@@ -141,7 +141,8 @@ const useGameManager = defineStore('game', {
             }
             this.progress = newProgress
             const api = useAPI()
-            await api.post("quest/gamehead/", data)
+            const res = await api.post("quest/gamehead/", data)
+            console.log('submitQuestion', res)
         },
         async nextQuestion(withData = true) {
             this.media.open = false
@@ -169,10 +170,14 @@ const useGameManager = defineStore('game', {
             newProgress.progress[this.question.question_num - 1] = 'curr'
             this.progress = newProgress
 
-            let res = await api.post("quest/action/", { action: 'retry', onlyData: true })
+            
+            const action = this.extra.usedRetry ? 'retry_more' : 'retry'
+            let res = await api.post("quest/action/", { action , onlyData: true })
             res = await api.post("quest/action/", { action: 'reshow', question_id: this.question.q.id, onlyData: true })
             this.question = res
             this.questionResult = {}
+
+            if (!this.extra.usedRetry) this.extra.usedRetry = true
         },
         async lifeline_skip() {
             const api = useAPI()

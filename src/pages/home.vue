@@ -1,10 +1,14 @@
 <script setup>
+import HomeTeacher from '../components/home/HomeTeacher.vue';
+import useAuth from '../utils/useAuth';
+
+const auth = useAuth();
 </script>
 
 
 <template>
   <div>
-    home
+    <HomeTeacher v-if="auth.isTeacherOrStaff"/>
   </div>
 </template>
 
