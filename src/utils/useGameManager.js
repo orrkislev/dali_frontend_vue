@@ -129,10 +129,12 @@ const useGameManager = defineStore('game', {
         },
         async submitQuestion(questionResult) {
             this.questionResult = { ...this.questionResult, ...questionResult }
+            if (this.progress.progress[0] == 'admin') return
 
             const data = this.getPostDataForSubmitAndNext
             let newProgress = { ...this.progress }
             newProgress.progress[this.question.question_num - 1] = questionResult.result
+            if (this.extra?.usedRetry > 1) data.ScoreChange = 0
             newProgress.score += data.ScoreChange
             if (this.game.game.bonusscore > 0 && !this.game.extra.exam) {
                 if (newProgress.score >= this.game.game.bonusscore && !newProgress.bonus) {
@@ -142,7 +144,6 @@ const useGameManager = defineStore('game', {
             this.progress = newProgress
             const api = useAPI()
             const res = await api.post("quest/gamehead/", data)
-            console.log('submitQuestion', res)
         },
         async nextQuestion(withData = true) {
             this.media.open = false
@@ -159,6 +160,7 @@ const useGameManager = defineStore('game', {
             }
             this.question = res
             this.questionResult = {}
+            delete this.extra.retry
             // EventBus.$emit('NEXT_QUESTION') TODO emitter event
 
             if (res.question_num) this.progress[res.question_num - 1] = 'curr'
@@ -177,7 +179,8 @@ const useGameManager = defineStore('game', {
             this.question = res
             this.questionResult = {}
 
-            if (!this.extra.usedRetry) this.extra.usedRetry = true
+            if (!this.extra.usedRetry) this.extra.usedRetry = 0
+            this.extra.usedRetry++
         },
         async lifeline_skip() {
             const api = useAPI()

@@ -12,7 +12,6 @@ import { useConfirm } from "primevue/useconfirm";
 import useGameManager from 'src/utils/useGameManager';
 import useAPI from "../../utils/useAPI";
 
-
 const gameManager = useGameManager()
 const confirm = useConfirm();
 const api = useAPI();
@@ -40,10 +39,10 @@ onBeforeRouteLeave(async (to, from) => {
 
 <template>
   <div class="flex-column gap1">
-    <game-top />
-    <game-progress />
-    <Divider align='right'>
-      <game-lifelines />
+    <game-top v-if="gameManager.progress.progress[0]!='admin'"/>
+    <game-progress v-if="gameManager.progress.progress[0]!='admin'"/>
+    <Divider align='right' v-if="gameManager.progress.progress[0]!='admin'">
+      <game-lifelines/>
     </Divider>
     <div class='flex flex-column gap1 px-5'>
       <question-content />

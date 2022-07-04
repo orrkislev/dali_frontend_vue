@@ -1,19 +1,10 @@
 <script setup>
 import useGameManager from "src/utils/useGameManager";
 import useEmitter from "src/utils/useEmmiter";
-// import { ref } from 'vue-demi';
-// import useStoreSubscribe from 'src/utils/useStoreSubscribe';
 import ActionButton from "../../ActionButton.vue";
 
 const gameManager = useGameManager();
 const emitter = useEmitter()
-
-// useStoreSubscribe( gameManager, 'question' , (state) => {
-//   console.log('update answers')
-//   answers.value = state.question.answers
-// })
-
-// let answers = ref([...gameManager.question.answers])
 
 emitter.subscribe("LIFELINE_STATS", lifeline_stats)
 emitter.subscribe("LIFELINE_5050", lifeline_5050)
@@ -22,7 +13,7 @@ emitter.subscribe('SHOW_ANSWER', showAnswer)
 
 function showAnswer(){
     gameManager.question.answers.forEach((answer,i) => {
-        select(i,answer.correct);
+      if (answer.correct) select(i,answer.correct);
     })
     check()
 }

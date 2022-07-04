@@ -19,6 +19,7 @@ emitter.subscribe('CHECK_QUESTION',check)
 emitter.subscribe('SHOW_ANSWER', showAnswer)
 
 function showAnswer(){
+  console.log('showAnswer at selection')
     answers.value.forEach((a, i) => {
       select(i,a.correct);
     })

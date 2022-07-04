@@ -8,7 +8,6 @@ const data = ref(null)
 const router = useRouter()
 
 api.post('teachers/update_classes_dashboard/', {}).then(res => {
-    console.log(res)
     const newData = []
     if (res.classes_list) {
         res.classes_list.forEach(cls=>{

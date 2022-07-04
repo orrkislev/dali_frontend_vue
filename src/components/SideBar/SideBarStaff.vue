@@ -36,7 +36,8 @@ function skipQuestion(){
 <template>
     <div class="sideBarElement" v-if="auth.isTeacherOrStaff">
         <div v-if="gameManager.question">
-            <div v-if="gameManager.question.q?.id">שאלה {{ gameManager.question.q.id }}</div>
+            <div v-if="gameManager.question.q?.id">שאלה {{ gameManager.question.q.id }}, 
+                {{ gameManager.question.q.type ?? gameManager.question.q.display_template }}</div>
             <div v-if="gameManager.extra.teacher">
                 <h4>התאמה אישית</h4>
                 <button-small v-if="!gameManager.question.too_few" :border="true" @click="filterQuestion">

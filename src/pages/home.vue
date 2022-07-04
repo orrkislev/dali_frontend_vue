@@ -7,7 +7,9 @@ const auth = useAuth();
 
 
 <template>
-  <div>
+  <div v-if="auth.username">
+    <h3>שלום {{ auth.username }}</h3>
+    <h4 v-if="auth.role=='teacher'">מורה</h4>
     <HomeTeacher v-if="auth.isTeacherOrStaff"/>
   </div>
 </template>

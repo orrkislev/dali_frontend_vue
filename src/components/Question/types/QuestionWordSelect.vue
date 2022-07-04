@@ -10,6 +10,7 @@ emitter.subscribe("CHECK_QUESTION", check);
 emitter.subscribe('SHOW_ANSWER', showAnswer)
 
 function showAnswer(){
+  console.log('showAnswer at word select')
   gameManager.question.wordSelect[1].forEach((a, i) => {
     let el = $("#selection" + (i + 1));
     if (el.attr("type") == "text") el.val = a.split(",")[0];

@@ -3,15 +3,16 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import GameQuestion from '../components/Game/GameQuestion.vue';
 import useAPI from '../utils/useAPI';
+import useGameManager from '../utils/useGameManager';
 
 const route = useRoute()
 const api = useAPI()
-const ready = ref(false)
+const gameManager = useGameManager()
 
 if (route.params.id){
-    api.post_json(`quest/qadmin/${route.params.id}/`, {}).then(res => {
-        console.log(res)
-        // ready.value = true
+    api.post(`quest/qadmin/${route.params.id}/`, {}).then(res => {
+        gameManager.question = res
+        gameManager.progress = {progress:['admin']}
     })
 }
 
@@ -19,7 +20,7 @@ if (route.params.id){
 
 
 <template>
-    <GameQuestion v-if="ready"/>
+    <GameQuestion v-if="gameManager.question" admin/>
 </template>
 
 
