@@ -42,7 +42,10 @@ function getGamesData(subjectID) {
     <single-task v-for="task in browseManager.game_list.list" :key="task.id" :task="task" :category="null"
       :played="browseManager.game_list.played_games.includes(task.id)"
       :assigned="browseManager.game_list.extra_games_info.includes(task.id)"
-      :score="task.scores.best ? task.scores.best : 0" :target="task.target" :action="action" />
+      :score="task.scores?.best ?? 0"
+      :target="task.target"
+      :action="action"
+    />
     <div v-if="browseManager.game_list.list.length == 0">אין משימות פתוחות</div>
   </div>
 </template>

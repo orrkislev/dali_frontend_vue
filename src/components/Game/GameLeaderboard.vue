@@ -12,11 +12,14 @@ const tableData = ref(null)
 
 api.post_json(`statistics/leaderboard/start/${route.params.taskid}/0/`,{}).then(res=>{
     if (res.school) tabs.value.push({label: 'בית הספר', icon: 'pi pi-fw pi-home',action:'school'})
-    res.classes.forEach(cls=>{
-        tabs.value.push({label: cls.name, icon: 'pi pi-fw pi-home',action:'class',id:cls.id})
-    })
-    activeTab.value = 0
-    tabChange({index:0})
+    if (res.classes)
+    {
+        res.classes.forEach(cls=>{
+            tabs.value.push({label: cls.name, icon: 'pi pi-fw pi-home',action:'class',id:cls.id})
+        })
+        activeTab.value = 0
+        tabChange({index:0})
+    }
 })
 
 
