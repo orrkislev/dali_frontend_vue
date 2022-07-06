@@ -61,7 +61,7 @@ function screen_size(key)
   return(obj);//(content_hight,content_width)
 }
 
-/*
+
 $(document).ready(function()
 {
   $('div#teachers_reports_dialog').dialog
@@ -102,7 +102,7 @@ function show_static(content,div_id,close_popups,is_dialog, show_wait,post_app,p
   if (show_wait === undefined) show_wait = false;
   if (params === undefined) params = {};
   if (post_action_call === undefined) post_action_call = null;
-  if (close_popups)   closeAllPopups();
+  // if (close_popups)   closeAllPopups();
   if (show_wait)
   {
     $("div#" + div_id).html(waitstring);
@@ -133,4 +133,3 @@ function show_static(content,div_id,close_popups,is_dialog, show_wait,post_app,p
       post_action_call();
 	});
 }
-*/

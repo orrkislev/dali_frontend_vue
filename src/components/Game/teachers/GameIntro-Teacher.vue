@@ -27,6 +27,7 @@ function additional(){
 
 <template>
   <div v-if="auth.isTeacherOrStaff">
+    <Divider />
     <game-manage-classes />
     <Divider />
 

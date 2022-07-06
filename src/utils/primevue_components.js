@@ -19,6 +19,8 @@ import Knob from 'primevue/knob';
 import Dialog from 'primevue/dialog';
 import ToggleButton from 'primevue/togglebutton';
 import ProgressBar from 'primevue/progressbar';
+import Fieldset from 'primevue/fieldset';
+
 
 
 import BadgeDirective from 'primevue/badgedirective';
@@ -43,6 +45,7 @@ export default function initPrimevue(app){
     app.component('Dialog', Dialog);
     app.component('ToggleButton', ToggleButton);
     app.component('ProgressBar', ProgressBar);
+    app.component('Fieldset', Fieldset);
 
     app.directive('badge', BadgeDirective);
 }

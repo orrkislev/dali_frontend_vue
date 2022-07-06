@@ -19,6 +19,7 @@ const useAuth = defineStore('auth', {
             this.role = response.role
             this.username = response.name
             this.userData = response
+            console.log(response)
         },
         async login(username, password) {
             if (username == '') {

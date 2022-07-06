@@ -43,29 +43,27 @@ function startMobileGame() {
             </div>
       </div>
       <div v-else> במשחק {{ gameManager.game?.game.NumQuestions }} שאלות </div>
-      <div v-if="gameManager.game?.levels">
-          <button v-for="level in gameManager.game.levels" :key="level.order" @click="startLevel(level)" >
-            {{ level.title }}
-          </button>
-        </div>
-        <div v-if="auth.isTeacherOrStaff" class="p-buttonset">
-          <Button class="p-button-rounded px-6" @click="startGame">
-            התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
-          </Button>
-          <Button class="p-button-rounded p-button-secondary" @click="startTeacherWalkthrough">
-            מעבר מורה
-          </Button>
-        </div>
-        <div v-else>
-          <Button class="p-button-rounded px-8" @click="startGame">
-            התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
-          </Button>
-        </div>
+      <div v-if="gameManager.game?.levels" class="flex flex-column gap-2">
+        <Button class="p-button-rounded px-8" v-for="level in gameManager.game.levels" :key="level.order" @click="startLevel(level)" >
+          {{ level.title }}
+        </Button>
+      </div>
+      <div v-else-if="auth.isTeacherOrStaff && gameManager.game.allow_teacher_test" class="p-buttonset">
+        <Button class="p-button-rounded px-6" @click="startGame">
+          התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
+        </Button>
+        <Button class="p-button-rounded p-button-secondary" @click="startTeacherWalkthrough">
+          מעבר מורה
+        </Button>
+      </div>
+      <div v-else>
+        <Button class="p-button-rounded px-8" @click="startGame">
+          התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
+        </Button>
+      </div>
     </game-title-top>
-    <PlayedGamesList />
-    <Divider />
     <game-intro-teacher />
-    <Divider />
+    <PlayedGamesList />
     <game-leaderboard />
   </div>
 </template>
