@@ -48,7 +48,6 @@ function backToGamePage() {
         </div>
     </GameTitleTop>
     
-    <Divider />
     <game-manage-classes v-if="gameManager.extra.teacher"/>
     <PlayedGamesList />
   </div>

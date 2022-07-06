@@ -81,7 +81,7 @@ async function students(){
 <div>
     <PageTitle :title="data?.name"/>
 
-    <Dialog :header=popUpHeader v-model:visible="displayDialog" :style="{width: '50vw'}" modal>
+    <Dialog :header=popUpHeader v-model:visible="displayDialog" :style="{width: '70vw'}" modal>
         <AjaxViewer :htmlWithScripts="popUpData" />
     </Dialog>
 

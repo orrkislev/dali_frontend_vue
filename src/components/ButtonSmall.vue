@@ -35,6 +35,7 @@ name:'ButtonSmall'
 
 <style>
 .btnSmall{
+    cursor: pointer;
     padding: 0.2em 0.5em;
     border-radius: 999px;
     background: white;
