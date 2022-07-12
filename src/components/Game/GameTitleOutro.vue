@@ -25,7 +25,6 @@ async function publish() {
   let res = await api.post("statistics/publish/", {
     id: gameManager.question.publishID[0],
   });
-  console.log(res)
   isPublished.value = true;
 }
 
@@ -40,7 +39,9 @@ function backToGamePage() {
     <GameTitleTop >
         <Knob :modelValue="gameManager.question.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
         <div class="flex flex-column gap05">
-          <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-lg" :disabled="isPublished" @click="publish">
+          <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-lg" 
+            :disabled="isPublished" @click="publish"
+            :class="{'p-button-warning': isPublished}">
             {{ isPublished ? 'פורסם' : 'פרסם' }}
           </Button>
           <Button v-if="!gameManager.game.extra.exam" class="p-button-secondary p-button-rounded px-6 p-button-sm" @click="restartGame">לשחק שוב</Button>
@@ -49,7 +50,7 @@ function backToGamePage() {
     </GameTitleTop>
     
     <game-manage-classes v-if="gameManager.extra.teacher"/>
-    <PlayedGamesList />
+    <PlayedGamesList :publishedFirst="isPublished"/>
   </div>
 </template>
 

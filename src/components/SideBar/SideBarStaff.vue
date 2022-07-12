@@ -46,10 +46,10 @@ function skipQuestion(){
                 </button-small>
                 <div v-else>{{ "סיננתם הרבה שאלות. לא ניתן לסנן שאלות נוספות" }}</div>
                 <div class='filteralert pulsing' v-if="gameManager.question.filterQuest">שימו לב: בחרתם להסיר שאלה זו. השאלה לא תופיע במשחקי תלמידים.</div>
+                <Divider />
+                <Button @click="skipQuestion" class="p-button-outlined p-button-sm">לשאלה הבאה</Button>
+                <Button @click="endGame" class="p-button-outlined p-button-sm">דלג לסוף המשחק</Button>
             </div>
-            <Divider />
-            <Button @click="skipQuestion" class="p-button-outlined p-button-sm">לשאלה הבאה</Button>
-            <Button @click="endGame" class="p-button-outlined p-button-sm">דלג לסוף המשחק</Button>
         </div>
     </div>
 </template>

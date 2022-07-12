@@ -8,7 +8,8 @@ const useAuth = defineStore('auth', {
         userData:null
     }),
     getters: {
-        isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.role)
+        isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.role),
+        isStaff: (state) => ['stuff'].includes(state.role)
     },
     actions: {
         async getUserdata(){
