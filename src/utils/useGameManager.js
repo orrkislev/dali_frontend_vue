@@ -47,6 +47,7 @@ const useGameManager = defineStore('game', {
                 score: 0,
                 bonus: false
             }
+            if (extra?.teacher) newProgress.progress = Array(this.game.num_q_for_teacher).fill('notyet')
             if (level) {
                 const levelQuestionSum = this.game.sub_games.find(sg => sg.order == level.order).game.NumQuestions
                 newProgress.progress = Array(levelQuestionSum).fill('notyet'),
