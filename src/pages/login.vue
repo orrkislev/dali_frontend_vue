@@ -1,46 +1,49 @@
 <script setup>
 import { ref } from 'vue-demi';
 import useAuth from 'src/utils/useAuth';
-import useStoreSubscribe from 'src/utils/useStoreSubscribe';
+import useStoreSubscribe from '../utils/useStoreSubscribe';
 import { useRouter } from 'vue-router';
 
 const auth = useAuth()
 const router = useRouter()
 
-// if (auth.username) router.push('/allgames')
-// useStoreSubscribe(auth,'username',(state)=>{
-//     router.push('/allgames')
-// })
-
 const name = ref("")
 const password = ref("")
 
-function login(){
-    auth.login(name.value,password.value);
+useStoreSubscribe(auth,'state',(state)=>{
+//   if (state.state=='authenticated') {
+//     router.push('/')
+//   }
+})
+
+function login() {
+    auth.login(name.value, password.value);
 }
 </script>
 
 
 <template>
-<form @submit.prevent="login">
-    <div style='display:flex;flex-direction: column; gap:1em; align-items: center; margin-bottom: 1em;'>
-        <div>
-            <div class='inputLable'>שם משתמש</div>
-            <input type='text' id='id_username' maxlength='30' name='username' aria-label='שם משתמש' v-model="name"/>
+    <div class="flex w-screen h-screen justify-content-center align-items-center">
+        <div class="bg-white border-round shadow p-5 w-5">
+            <form @submit.prevent="login">
+                <div class="flex flex-column">
+                    <div>שם משתמש</div>
+                    <InputText id="username" type="text" v-model="name" />
+                    <div>סיסמא</div>
+                    <Password v-model="password" />
+                    <Button label="כניסה" type="submit"/>
+                </div>
+            </form>
+            <Divider />
+             <Button label="הזדהות אחידה" type="submit"/>
         </div>
-        <div>
-            <div class='inputLable'>סיסמא</div>
-            <input type='password' id='id_password' maxlength='30' name='password' aria-label='סיסמה' v-model="password"/>
-        </div>
-        <input id='submit' type="submit" value='כניסה' />
     </div>
-</form>
 </template>
 
 
 <script>
 export default {
-  name: "login",
+    name: "login",
 };
 </script>
 

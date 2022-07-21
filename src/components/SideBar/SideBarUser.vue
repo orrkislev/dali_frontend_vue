@@ -1,5 +1,4 @@
 <script setup>
-import login from "src/pages/login.vue";
 import useAuth from "src/utils/useAuth";
 import { real_url } from "../../utils/useAPI";
 
@@ -29,14 +28,13 @@ function badgeURL(url){
         </div>
       </div>
     </div>
-    <login v-else />
   </div>
 </template>
 
 
 <script>
 export default {
-  components: { login },
+  components: { },
   name: "SideBarUser",
 };
 </script>

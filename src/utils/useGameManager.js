@@ -38,8 +38,8 @@ const useGameManager = defineStore('game', {
             if (res.game.gameType != 'trivia') console.log('SPECIAL GAMETYPE:', res.game.gameType)
             this.view = 'title'
         },
-        async startGame(level = null, restart = false, extra) {
-            if (extra) this.extra = extra
+        async startGame(level = null, restart = false, extra = {}) {
+            this.extra = extra
             this.question = null
             this.questionResult = null
             let newProgress = {
@@ -161,7 +161,7 @@ const useGameManager = defineStore('game', {
             }
             this.question = res
             this.questionResult = {}
-            delete this.extra.retry
+            this.extra.usedRetry = 0
             // EventBus.$emit('NEXT_QUESTION') TODO emitter event
 
             if (res.question_num) this.progress[res.question_num - 1] = 'curr'

@@ -3,23 +3,37 @@ import Header from "./components/Header.vue";
 import MainContent from "./components/MainContent.vue";
 import SideBar from "./components/SideBar/SideBar.vue";
 import Footer from "./components/Footer.vue";
+import Landing from "./pages/landing.vue";
+import useAuth from "./utils/useAuth";
+import Login from "./pages/login.vue";
+
+const auth = useAuth()
+
 </script>
 
 
 <template>
-  <ConfirmDialog></ConfirmDialog>
-  <div id="allApp">
-    <div id="allAppTop">
-      <Header />
-      <div id="mainLayout">
-        <main-content>
-          <router-view></router-view>
-        </main-content>
-        <side-bar />
+  <template v-if="auth.state=='authenticated'">
+    <ConfirmDialog></ConfirmDialog>
+    <div id="allApp">
+      <div id="allAppTop">
+        <Header />
+        <div id="mainLayout">
+          <main-content>
+            <router-view></router-view>
+          </main-content>
+          <side-bar />
+        </div>
       </div>
+      <Footer />
     </div>
-    <Footer />
-  </div>
+  </template>
+  <template v-else-if="auth.state=='login'">
+    <Login />
+  </template>
+  <template v-else>
+    <Landing />
+  </template>
 </template>
 
 

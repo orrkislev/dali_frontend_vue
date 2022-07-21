@@ -1,8 +1,10 @@
 import { defineStore } from 'pinia'
+import { useRouter } from 'vue-router';
 import useAPI from './useAPI';
 
 const useAuth = defineStore('auth', {
     state: () => ({
+        state: null,
         username: null,
         role:null,
         userData:null
@@ -12,15 +14,19 @@ const useAuth = defineStore('auth', {
         isStaff: (state) => ['stuff'].includes(state.role)
     },
     actions: {
+        startLogin(){
+            this.state = 'login'
+        },
         async getUserdata(){
             const api = useAPI()
             let response = await api.get('students/userdata')
-            if (response=='false') return
             response = await response.json()
+            if (response==false) return
+            console.log(response)
             this.role = response.role
             this.username = response.name
             this.userData = response
-            console.log(response)
+            this.state = 'authenticated'
         },
         async login(username, password) {
             if (username == '') {
@@ -42,6 +48,7 @@ const useAuth = defineStore('auth', {
             await api.get('students/logout')
             this.role = null
             this.username = null
+            this.state = null
         },
         register() {
 

@@ -30,17 +30,18 @@ function showMedia() {
 
 <template>
   <div>
-    <div v-if="gameManager.questionResult?.result != null" class="flex justify-content-between">
-      <div>
-        <div v-html="getHead()"></div>
-        <div v-html="gameManager.question.q.feedback_general.text"></div>
+    <div v-if="gameManager.questionResult?.result != null" >
+      <div class="flex justify-content-between">
+          <div>
+              <div v-html="getHead()"></div>
+              <div v-html="gameManager.question.q.feedback_general.text"></div>
+          </div>
+          <AjaxViewer v-if="gameManager.questionResult.result == 1" :htmlWithScripts="gameManager.question.correct_image" />
+          <AjaxViewer v-else :htmlWithScripts="gameManager.question.incorrect_image" />
       </div>
-      <AjaxViewer v-if="gameManager.questionResult.result == 1" :htmlWithScripts="gameManager.question.correct_image" />
-      <AjaxViewer v-else :htmlWithScripts="gameManager.question.incorrect_image" />
-    </div>
-    <div>
-      <action-button v-if="'sentences' in gameManager.question.q.feedback_general" :border="true" @click="showMedia">הצג
-        בטקסט</action-button>
+      <div>
+          <action-button v-if="'sentences' in gameManager.question.q.feedback_general" :border="true" @click="showMedia">הצג בטקסט</action-button>
+      </div>
     </div>
   </div>
 </template>

@@ -6,8 +6,6 @@ import GameTree from 'src/components/GameTree/GameTree.vue';
 <template>
   <div>
     <h2>כל המשימות</h2>
-    <div>אלה המשימות הפתוחות לך</div>
-    <div>בהצלחה</div>
     <game-tree />
   </div>
 </template>

@@ -5,7 +5,6 @@ import useAuth from '../utils/useAuth';
 
 const auth = useAuth()
 const router = useRouter()
-if (!auth.username) router.push('/login')
 
 function updateUser(field, value) {
     console.log(field, value)

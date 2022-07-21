@@ -20,6 +20,8 @@ import Dialog from 'primevue/dialog';
 import ToggleButton from 'primevue/togglebutton';
 import ProgressBar from 'primevue/progressbar';
 import Fieldset from 'primevue/fieldset';
+import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
 
 
 
@@ -46,6 +48,8 @@ export default function initPrimevue(app){
     app.component('ToggleButton', ToggleButton);
     app.component('ProgressBar', ProgressBar);
     app.component('Fieldset', Fieldset);
+    app.component('InputText', InputText);
+    app.component('Password', Password);
 
     app.directive('badge', BadgeDirective);
 }

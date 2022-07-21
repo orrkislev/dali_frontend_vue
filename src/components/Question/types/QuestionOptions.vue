@@ -72,7 +72,7 @@ function select(answerIndex, val) {
         <action-button
           :border="true"
           :indicator="answer.selected == 1 ? answer.result : null"
-          :disabled="answer.inactive"
+          :inactive="answer.inactive"
           :selected="answer.selected == 1"
           @click="select(answerIndex, 1)"
         >

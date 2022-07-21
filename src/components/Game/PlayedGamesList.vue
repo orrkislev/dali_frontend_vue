@@ -2,6 +2,7 @@
 import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import useAPI from '../../utils/useAPI';
+import useAuth from '../../utils/useAuth';
 
 const props = defineProps({
     publishedFirst: { type: Boolean, default: false },

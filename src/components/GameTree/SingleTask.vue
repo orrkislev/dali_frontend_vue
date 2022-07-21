@@ -91,7 +91,7 @@ const actionToggleIsChecked = computed(() => {
                         
                     </div>
                 </div>
-                <Knob v-if="!action && !auth.isTeacherOrStaff" :modelValue="score" :min="0" :max="target" disabled :size="80" />
+                <Knob v-if="!action && auth.username && !auth.isTeacherOrStaff" :modelValue="score" :min="0" :max="target" disabled :size="80" />
             </div>
         </div>
     <!-- </router-link> -->

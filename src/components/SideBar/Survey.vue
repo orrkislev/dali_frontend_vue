@@ -1,21 +1,23 @@
 <script setup>
 import { ref } from 'vue';
 import useAPI from '../../utils/useAPI';
+import useAuth from '../../utils/useAuth';
 import ButtonSmall from '../ButtonSmall.vue';
 
 const api = useAPI()
+const auth = useAuth()
 const data = ref(null)
 const selected = ref(null)
 
 
 api.post_json('review/survey_2_student/', {}).then(res => {
-    data.value = res
-    const maxCount = data.answers.reduce((acc, cur) => {
+    const maxCount = res.answers.reduce((acc, cur) => {
         return acc > cur.count ? acc : cur.count
     }, 0)
-    data.answers.forEach(ans => {
-        ans.percent = ans.count / maxCount * 100
+    res.answers.forEach(ans => {
+        ans.val = ans.count / maxCount * 100
     })
+    data.value = res
     console.log(res)
 })
 
@@ -23,6 +25,7 @@ function answerSurvey(id) {
     api.post_json('review/answer_survey/', { id: id }).then(res => {
         console.log(res)
         data.value.survey.answered = true
+        console.log(data.value.answers)
         const allVotes = data.value.answers.reduce((acc, cur) => acc + cur.count, 0)
         const results = data.value.answers.map(a => {
             return {
@@ -32,20 +35,13 @@ function answerSurvey(id) {
             }
         })
         data.value.answers = results
-
-        const maxCount = data.answers.reduce((acc, cur) => {
-            return acc > cur.count ? acc : cur.count
-        }, 0)
-        data.answers.forEach(ans => {
-            ans.percent = ans.count / maxCount * 100
-        })
     })
 }
 </script>
 
 
 <template>
-    <div v-if="data" class="sideBarElement" style="backgroundColor:#396672">
+    <div v-if="data && auth.username" class="sideBarElement" style="backgroundColor:#396672">
         <div class="text-white"> סקר החודש </div>
         <div class="survey-content"> {{ data.survey.text }} </div>
         <div v-if="!data.survey.answered" class="survey-answers">
@@ -59,8 +55,8 @@ function answerSurvey(id) {
         </div>
         <div v-else class="survey-answers">
             <div class="survey-answer" v-for="result in data.answers" :key="result.id">
-                {{ result.text }}
-                <ProgressBar :value="result.percent * 100" :showValue="false" style="height: .5em" />
+                {{ result.text}}
+                <ProgressBar :value="result.val" :showValue="false" style="height: .5em" />
             </div>
         </div>
     </div>

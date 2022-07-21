@@ -28,7 +28,7 @@ function showAnswer(){
 
 async function lifeline_stats(){
   let newAnswers = [...answers.value]
-    const res = await api.post("/quest/action/", { 'action': 'statistics', 'question_id': gameManager.question.q.id, })
+    const res = await api.post("quest/action/", { 'action': 'statistics', 'question_id': gameManager.question.q.id, })
     newAnswers.forEach(a=>a.stats = Array(options.value.length).fill(''))
     res.forEach(stat => {
         const optionIndex = options.value.findIndex((o, i) => o.num == stat.select)
