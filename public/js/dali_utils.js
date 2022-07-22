@@ -61,6 +61,40 @@ function screen_size(key)
   return(obj);//(content_hight,content_width)
 }
 
+function save_2_file(csvcontent,file_name,is_ie )
+{
+  if (is_ie === undefined) is_ie = false;
+  if (is_ie == 'True')
+    save_2_file_ie(csvcontent,file_name);
+  else
+    save_2_file_chrome(csvcontent,file_name );
+}
+
+function save_2_file_ie(content,file_name)
+{
+
+  var blob = new Blob([content],{
+    type: "text/html;charset=utf-8,\uFEFF;",});
+  navigator.msSaveBlob(blob,file_name + '.csv' );
+}
+
+function save_2_file_chrome(content,file_name)
+{
+	content = content.replace(/&#39;/g,"'"); // using regExp to replace all
+	content = content.replace(/&#34;/g,"\"");
+	content = content.replace(/&quot;/g,"\"");
+
+
+  var csvContent = "data:text/csv;charset=utf-8,\uFEFF" + content;
+  var encodedUri = encodeURI(csvContent);
+
+  var link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", file_name + '.csv');
+  link.click(); // This will download the file
+  show_accessibility_popup('הקובץ הורד כבקשתך');
+}
+
 
 $(document).ready(function()
 {
