@@ -82,6 +82,7 @@ export default {
   border: none;
   background: #d0d0d0;
   color: #666;
+  cursor: default;
 }
 .btnFull-correct { background: #ccff91; }
 .btnFull-wrong { background: tomato; }

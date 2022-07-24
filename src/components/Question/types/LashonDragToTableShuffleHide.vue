@@ -15,7 +15,7 @@ lists.value[0] = {title:"מחסן",list:gameManager.question.answers.map(answer=
     return {text:answer.text, result:null}
 })}
 gameManager.question.options.forEach(option => {
-    lists.value.push({title:option.text,list:[{text:'', result:null}]})
+    lists.value.push({title:"כותרת",list:[{text:'', result:null}]})
 });
 
 function onDrop(listIndex, dropResult) {
@@ -46,11 +46,13 @@ function check(){
   let result = 0;
   let answerlist = [];
   for (let i=0;i<lists.value.length;i++){
+    const listOption = gameManager.question.options.find(option => option.text == lists.value[i].title)?.num ?? 1000
+    console.log(listOption)
     for (const item of lists.value[i].list){
         const answer = gameManager.question.answers.find(answer=>answer.text==item.text)
         if (!answer) continue;
         const answerListData = { id: answer.id, res: false, val: i}
-        if ((answer.correct==-1 && i==0) || answer.correct == i){
+        if (answer.correct == listOption){
             item.result = "success"
             answerListData.res = true
             result++
@@ -69,7 +71,7 @@ function check(){
 
 <template>
     <div class="group" v-for="list, listIndex in lists">
-        <h3>{{list.title}}</h3>
+        <InputText v-model="list.title" class="my-2" />
         <Container 
             group-name="1" 
             drag-class="opacity-ghost" 
@@ -91,7 +93,7 @@ function check(){
 
 <script>
 export default {
-    name: 'LashonDragToTableShuffle'
+    name: 'LashonDragToTableShuffleHide'
 };
 </script>
 

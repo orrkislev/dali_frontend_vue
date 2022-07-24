@@ -22,7 +22,6 @@ const useAuth = defineStore('auth', {
             let response = await api.get('students/userdata')
             response = await response.json()
             if (response==false) return
-            console.log(response)
             this.role = response.role
             this.username = response.name
             this.userData = response

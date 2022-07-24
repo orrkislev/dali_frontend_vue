@@ -5,10 +5,7 @@ import useAPI from '../../utils/useAPI';
 const api = useAPI()
 const data = ref(null)
 
-api.post('students/group_badges/',{}).then(res=>{
-    data.value = res
-    console.log(res)
-})
+api.post('students/group_badges/',{}).then(res=>data.value = res)
 </script>
 
 

@@ -40,11 +40,8 @@ function skipQuestion(){
     <div class="flex ">
         <action-button v-if="gameManager.questionResult?.result==null" :center="true" :main="true" @click="submitQuestion"> בדיקה </action-button>
         <action-button v-else :center="true" :main="true" @click="nextQuestion"> {{ getNextQuestionText() }} </action-button>
-        <action-button v-if="auth.isTeacherOrStaff && gameManager.extra.teacher" :center="true" :border="true" @click="showAnswer"> הצגת תשובה </action-button>
+        <action-button v-if="(auth.isTeacherOrStaff && gameManager.extra.teacher) || gameManager.progress.progress[0]=='admin'" :center="true" :border="true" @click="showAnswer"> הצגת תשובה </action-button>
     </div>
-    <!-- <div>
-        <action-button v-if="auth.isTeacherOrStaff && gameManager.extra.teacher" :center="true" :border="true" @click="skipQuestion"> לשאלה הבאה </action-button>
-    </div> -->
 </div>
 </template>
 

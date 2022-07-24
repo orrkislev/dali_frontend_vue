@@ -18,14 +18,11 @@ api.post_json('review/survey_2_student/', {}).then(res => {
         ans.val = ans.count / maxCount * 100
     })
     data.value = res
-    console.log(res)
 })
 
 function answerSurvey(id) {
     api.post_json('review/answer_survey/', { id: id }).then(res => {
-        console.log(res)
         data.value.survey.answered = true
-        console.log(data.value.answers)
         const allVotes = data.value.answers.reduce((acc, cur) => acc + cur.count, 0)
         const results = data.value.answers.map(a => {
             return {
