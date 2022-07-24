@@ -1,10 +1,10 @@
 <script setup>
-import { ref } from 'vue-demi';
+import { ref, watch } from 'vue-demi';
 import useEmitter from 'src/utils/useEmmiter';
 import useGameManager from 'src/utils/useGameManager'
-import useStoreSubscribe from 'src/utils/useStoreSubscribe';
 import ActionButton from '../ActionButton.vue';
 import useAuth from '../../utils/useAuth';
+import { storeToRefs } from 'pinia';
 
 const gameManager = useGameManager()
 const emitter = useEmitter()
@@ -12,7 +12,8 @@ const auth = useAuth()
 
 const canSubmit = ref(false)
 
-useStoreSubscribe(gameManager,'question',(state)=>canSubmit.value = false)
+const { question } = storeToRefs(gameManager)
+watch(question, newVal=>canSubmit.value = false)
 
 function getNextQuestionText(){
     if (gameManager.progress.progress[0] == 'admin') return 'הצג מחדש'

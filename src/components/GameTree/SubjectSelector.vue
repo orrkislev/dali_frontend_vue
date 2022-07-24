@@ -1,22 +1,22 @@
 <script setup>
+import { storeToRefs } from "pinia";
 import useAPI from "src/utils/useAPI";
 import useBrowseManager from "src/utils/useBrowseManager";
-import useStoreSubscribe from "src/utils/useStoreSubscribe";
+import { watch } from "vue";
 
 const browseManager = useBrowseManager();
 const api = useAPI();
 
-useStoreSubscribe(browseManager, "curr_level", (state) => {
-  console.log(state.curr_level)
-  if (state.curr_level === undefined) { state.curr_level = -1;}
-  if (state.curr_level != -1)
+const { curr_level } = storeToRefs(browseManager);
+watch(curr_level, newCurrState=>{
+  if (newCurrState != -1)
     api
-      .post_json("tasks/subjects_list/", { parent_id: state.curr_level })
+      .post_json("tasks/subjects_list/", { parent_id: newCurrState })
       .then((p) => {
         browseManager.subject_list = p.list;
         browseManager.curr_subject = p.selected_id;
       });
-});
+})
 
 function chooseSubject(id) {
   browseManager.curr_subject = id;

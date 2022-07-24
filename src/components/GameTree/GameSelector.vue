@@ -2,8 +2,9 @@
 import SingleTask from "./SingleTask.vue";
 import useAPI from "src/utils/useAPI";
 import useBrowseManager from "src/utils/useBrowseManager";
-import useStoreSubscribe from "src/utils/useStoreSubscribe";
 import { useRoute } from "vue-router";
+import { watch } from "vue";
+import { storeToRefs } from "pinia";
 
 const route = useRoute()
 const browseManager = useBrowseManager();
@@ -14,9 +15,11 @@ if (route.path == '/manage/tasks') action = 'ADD_TASK'
 else if (route.path == '/manage/exams') action = 'ADD_EXAM'
 
 getGamesData(browseManager.curr_subject);
-useStoreSubscribe(browseManager, "curr_subject", (state) => {
-  if (state.curr_subject != -1) getGamesData(state.curr_subject);
-});
+
+const {curr_subject} = storeToRefs(browseManager)
+watch(curr_subject, newVal=>{
+  if (newVal != -1) getGamesData(newVal);
+})
 
 function getGamesData(subjectID) {
   api.post_json("tasks/tasks_list/", { parent_id: subjectID }).then((p) => {

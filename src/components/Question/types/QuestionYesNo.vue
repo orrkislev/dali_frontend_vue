@@ -1,17 +1,12 @@
 <script setup>
-// import { ref } from 'vue-demi';
 import useAPI from 'src/utils/useAPI';
 import useEmitter from 'src/utils/useEmmiter';
 import useGameManager from 'src/utils/useGameManager';
 import ActionButton from '../../ActionButton.vue';
-// import useStoreSubscribe from 'src/utils/useStoreSubscribe';
 
 const gameManager = useGameManager()
 const api = useAPI()
 const emitter = useEmitter()
-
-// useStoreSubscribe(gameManager,'question',(state)=>answers.value = state.question.answers)
-// const answers = ref(gameManager.question.answers)
 
 emitter.subscribe('LIFELINE_STATS', lifeline_stats)
 emitter.subscribe('CHECK_QUESTION', check)

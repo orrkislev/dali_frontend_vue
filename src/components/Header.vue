@@ -1,20 +1,17 @@
 <script setup>
 import { NButton, NDropdown } from "naive-ui";
+import { storeToRefs } from "pinia";
 import useAuth from 'src/utils/useAuth';
-import useStoreSubscribe from 'src/utils/useStoreSubscribe';
-import { ref } from 'vue-demi';
+import { ref, watch } from 'vue-demi';
 
 const auth = useAuth()
-
-useStoreSubscribe(auth,'username',(state)=>{
-    const newOptions = [...options.value]
-    newOptions[0].disabled = state.username==null
-    options.value = newOptions
-})
 
 const options = ref([
   { key: "1", label: "התנתק", disabled: false},
 ]);
+
+const { username } = storeToRefs(auth)
+watch(username, newVal => options.value[0].disabled = newVal==null)
 
 function SelectUserOption(key) {
   if (key=="1") {
