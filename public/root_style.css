@@ -1,0 +1,91 @@
+:root {
+  --questions_font_family:"Alef Hebrew";
+  --questions_font_size:20px;
+
+  --body_bgcolor:rgb(191,184,176);
+  --boxes_bgcolor_light:#e2dee8;
+  --boxes_bgcolor_dark:#315562;
+  --boxes_border_color:#718890;
+  --text_color:#1c323a;
+  --text_color_light:#98aab1;
+  --text_color_on_light:#1c323a;
+  --question_area_bgcolor:white;
+  --normal_white_color:white;
+  --text_white_color:white;
+  --text_white_on_dark_color:white;
+  --white_color:white;
+  --gallery_content_border:white;
+  --bluetable_bg_color:#D3E4E5;
+  --bluetable_caption_color:#5C443A;
+  --bluetable_text_color:#363636;
+  --dali_orange_color:rgb(255,136,51);
+  --dali_correct_color:rgb(70,191,75);
+  --dali_incorrect_color:#ed1c24;
+  --dali_normal_results:rgb(150, 225, 150);
+  --subject_leaf_basic:#d1d7df;
+  --subject_leaf_no_game:rgb(150,150,150);
+  --subject_leaf_w_game_inprogress:rgb(208,208,96);
+  --subject_tree_clicked_bg:white;
+  --question_media_small:rgb(233,237,238);
+  
+  --black_color:black;
+  --gray_color:gray;
+  --red_color:red;
+  --incorrect_red_color:#e94f5b;
+  --nopublish_bg:#ffcc33;
+  --subs_bg_color:rgb(191, 184, 176);
+  --game_levels_color:#4ecdc4;
+  --gallery_shoowcase_caption:black;
+  --diagnostic_cell_mid_bg:rgb(150, 225, 150);
+  --diagnostic_cell_high_bg:var(--dali_correct_color);
+  --diagnostic_cell_normal_bg:#ffcc33;
+  --diagnostic_cell_low_bg:red;
+  --survey_res_0:var(--dali_orange_color);
+  --survey_res_1:#e6693e;
+  --survey_res_2:#ec8f6e;
+  --survey_res_3:#f3b49f;
+  --survey_res_4:#f6c7b6;
+  --survey_res_5:white;  
+  --staf_color:rgb(208,208,96);
+  --login_form_bg:#eaf3f9;
+  --home_menu_popdown:#38565e;
+  --home_brown_strip_bg:rgb(158,148,136); 
+  --home_gray_strip_bg:rgb(246,244,241);
+  --home_fotter_strip_bg:rgb(33,49,54);
+  --home_bottom_strip_bg:rgb(23,23,23);
+  --home_picture_strip_bg:rgb(237,246,251);
+  --home_white_info_strip_bg:white;
+  --home_color_gray_color:rgb(155, 170, 175);
+  --home_color_gray2_color:rgb(184,189,192);
+  --home_contact_bg:rgb(74,113,124);
+  --home_example_games_bg:rgb(102,204,102);
+  --home_register_bg:rgb(116,67,146);
+  --home_info_parents_bg:rgb(102,204,102);
+  --home_info_sudents_bg:rgb(5,125,194);
+  --home_info_teachers_bg:rgb(5,192,194);
+  --home_team_bg:rgb(102,153,153);
+  --home_white_color:white;
+  --home_white_bg:white;
+  --home_text_color:black;
+  --home_orange_button_bg:var(--dali_orange_color);
+  
+  --channles_dlila_color:rgb(250,154,68);
+  --channel_et_hadat_color:rgb(77,165,79);
+  
+  --bluetable_color_blue:#03476F;
+  --bluetable_tr_hover:#99BCBF;
+  --intable_menu_bg:var(--bluetable_caption_color);
+  --intable_menu_text:var(--white_color);
+  --text_highlight_color:blue;
+  
+  --textarea_bg_color:white;
+  --textarea_text_color:var(--text_color);
+  --accessibility_button_text_color:var(--text_color);
+  
+  --qa_head_color:var(--boxes_bgcolor_dark);
+  --qa_text_color:var(--text_color);
+  
+  --newapp_green:#65D258;
+  --newapp_grey:#D2D2D2;
+  --newapp_grey_hover:#8AD282;
+}

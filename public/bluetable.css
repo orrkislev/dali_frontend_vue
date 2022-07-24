@@ -1,0 +1,63 @@
+/* 
+	Blue Dream
+	Written by Teylor Feliz  http://www.admixweb.com
+*/
+
+table.bluetable{
+  background:var(--bluetable_bg_color);
+  /*border:1px solid var(--gray_color);*/
+  border-radius: 0 0 8px 8px;
+  border-collapse:separate;
+  border-spacing:0;color:var(--white_color);
+  font:normal 12px verdana, arial, helvetica, sans-serif;
+}
+
+caption.bluetable { border:1px solid var(--bluetable_caption_color);
+ color:var(--bluetable_caption_color);
+ background-color:var(--question_area_bgcolor);
+ font-weight:bold;
+ text-align:center;
+ text-transform:uppercase;
+ caption-side:top;
+ font-size:18pt;
+ border-radius: 8px 8px 0 0;
+}
+td.bluetable , th.bluetable { color:var(--bluetable_text_color); padding:.4em;}
+td.border, th.border {border:1px solid var(--black_color);}
+tr.bluetable { border:1px dotted var(--gray_color);}
+thead.bluetable th.bluetable, tfoot.bluetable th.bluetable { background:var(--bluetable_caption_color);
+ color:var(--white_color);
+ /*padding:3px 10px 3px 10px;*/
+ text-transform:uppercase;
+}
+
+tbody.bluetable tr:last-child th:first-child{border-radius:0 0 8px 0 ;}
+tbody.bluetable tr:last-child th:last-child{border-radius:0 0 0 8px;}
+
+td.highlight {background-color:var(--normal_white_color);font-weight:bold;}
+
+thead.bluetable  tfoot.bluetable th.bluetable {text-align:center;}
+th.bluetable{text-align:center;}
+
+tbody.bluetable  td.bluetable  a.bluetable { color:var(--bluetable_text_color); text-decoration:none;}
+tbody td a:visited.bluetable { color:gray; text-decoration:line-through;}
+tbody td a:hover.bluetable { text-decoration:underline;}
+tbody th a.bluetable { color:var(--bluetable_text_color); font-weight:normal; text-decoration:none;}
+tbody th a:hover.bluetable { color:var(--bluetable_text_color);}
+tbody td+td+td+td a.bluetable { background-image:url('bullet_blue.png');
+ background-position:left center;
+ background-repeat:no-repeat;
+ color:var(--bluetable_color_blue);
+ padding-left:15px;
+}
+tbody td+td+td+td a:visited.bluetable { background-image:url('bullet_white.png');
+ background-position:left center;
+ background-repeat:no-repeat;
+}
+tbody th, tbody td.bluetable { text-align:center; vertical-align:top;border:1px solid var(--boxes_bgcolor_dark); }
+tfoot td.bluetable { background:var(--bluetable_caption_color); color:var(--white_color); padding-top:3px;}
+.oddbluetable { background:var(--white_color);}
+tbody tr:hover.bluetable { background:var(--bluetable_tr_hover); border:1px solid var(--boxes_bgcolor_dark); color:var(--black_color);}
+tbody tr:hover.oddbluetable { background:var(--boxes_border_color); border:1px solid var(--boxes_bgcolor_dark); color:var(--black_color);}
+.bluetable_right{text-align:right  !important;padding-right:10px;}
+.bluetable_with_link:hover{cursor:pointer;}
