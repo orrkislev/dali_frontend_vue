@@ -22,13 +22,9 @@ import ProgressBar from 'primevue/progressbar';
 import Fieldset from 'primevue/fieldset';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
-
-
+import Chart from 'primevue/chart';
 
 import BadgeDirective from 'primevue/badgedirective';
-
-
-
 
 export default function initPrimevue(app){
     app.use(PrimeVue);
@@ -50,6 +46,7 @@ export default function initPrimevue(app){
     app.component('Fieldset', Fieldset);
     app.component('InputText', InputText);
     app.component('Password', Password);
+    app.component('Chart', Chart);
 
     app.directive('badge', BadgeDirective);
 }

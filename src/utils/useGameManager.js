@@ -136,15 +136,13 @@ const useGameManager = defineStore('game', {
             const api = useAPI()
             const res = await api.post("quest/gamehead/", data)
             
-            let newProgress = { ...this.progress }
-            newProgress.score = res.score
-            newProgress.progress[this.question.question_num - 1] = questionResult.result
+            this.progress.score = res.score
+            this.progress.progress[this.question.question_num - 1] = questionResult.result
             if (this.game.game.bonusscore > 0 && !this.game.extra.exam) {
-                if (newProgress.score >= this.game.game.bonusscore && !newProgress.bonus) {
-                    newProgress['bonus'] = true
+                if (this.progress.score >= this.game.game.bonusscore && !this.progress.bonus) {
+                    this.progress['bonus'] = true
                 }
             }
-            this.progress = newProgress
         },
         async nextQuestion(withData = true) {
             this.media.open = false
@@ -161,14 +159,12 @@ const useGameManager = defineStore('game', {
             }
             this.question = res
             this.questionResult = {}
-            if (res.question_num) this.progress[res.question_num - 1] = 'curr'
+            if (res.question_num) this.progress.progress[res.question_num - 1] = 'curr'
         },
         async lifeline_retry() {
             const api = useAPI()
-            let newProgress = { ...this.progress }
-            newProgress.score -= this.getPostDataForSubmitAndNext.ScoreChange
-            newProgress.progress[this.question.question_num - 1] = 'curr'
-            this.progress = newProgress
+            this.progress.score -= this.getPostDataForSubmitAndNext.ScoreChange
+            this.progress.progress[this.question.question_num - 1] = 'curr'
 
             
             const action = this.extra.usedRetry ? 'retry_more' : 'retry'

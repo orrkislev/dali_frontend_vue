@@ -34,6 +34,32 @@ function answerSurvey(id) {
         data.value.answers = results
     })
 }
+
+const chartOptions = {
+    plugins: {
+        legend: {
+            display: false,
+            labels: {
+                color: '#495057'
+            }
+        }
+    }
+}
+function getChartData(){
+    const datasets = [{
+        data: data.value.answers.map(a => a.val),
+        backgroundColor: ["#42A5F5","#66BB6A","#FFA726"],
+        hoverBackgroundColor: ["#64B5F6","#81C784","#FFB74D"],
+        borderWidth: 10,
+        borderColor: 'rgb(57, 102, 114)',
+
+    }]
+    const labels = [...data.value.answers.map(a => a.text)]
+    return {
+        labels: labels,
+        datasets: datasets
+    }
+}
 </script>
 
 
@@ -51,10 +77,11 @@ function answerSurvey(id) {
                 class="p-button-outlined p-button-sm text-blue-900">הגב</ButtonSmall>
         </div>
         <div v-else class="survey-answers">
-            <div class="survey-answer" v-for="result in data.answers" :key="result.id">
+            <Chart type="pie" :data="getChartData()" :options="chartOptions" />
+            <!-- <div class="survey-answer" v-for="result in data.answers" :key="result.id">
                 {{ result.text}}
                 <ProgressBar :value="result.val" :showValue="false" style="height: .5em" />
-            </div>
+            </div> -->
         </div>
     </div>
 </template>

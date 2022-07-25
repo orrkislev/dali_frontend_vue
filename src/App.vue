@@ -6,8 +6,16 @@ import Footer from "./components/Footer.vue";
 import Landing from "./pages/landing.vue";
 import useAuth from "./utils/useAuth";
 import Login from "./pages/login.vue";
+import { real_url } from "./utils/useAPI";
 
 const auth = useAuth()
+
+// create tag to add favicon to the page
+const favicon = document.createElement('link');
+favicon.rel = 'icon';
+favicon.type="image/x-icon"
+favicon.href =  real_url+'./favicon.ico';
+document.head.appendChild(favicon);
 
 </script>
 
