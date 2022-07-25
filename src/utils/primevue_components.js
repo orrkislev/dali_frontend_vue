@@ -23,6 +23,7 @@ import Fieldset from 'primevue/fieldset';
 import InputText from 'primevue/inputtext';
 import Password from 'primevue/password';
 import Chart from 'primevue/chart';
+import ProgressSpinner from 'primevue/progressspinner';
 
 import BadgeDirective from 'primevue/badgedirective';
 
@@ -47,6 +48,7 @@ export default function initPrimevue(app){
     app.component('InputText', InputText);
     app.component('Password', Password);
     app.component('Chart', Chart);
+    app.component('ProgressSpinner', ProgressSpinner);
 
     app.directive('badge', BadgeDirective);
 }

@@ -19,7 +19,9 @@ function getTableData(){
     const data = [...browseManager.openExams.exams]
     browseManager.openExams.more.forEach(more=>{
         const dataRow = {...more}
-        Object.keys(data[0]).filter(k=>k!="name"&&k!="id").forEach(k=>dataRow[k] = false)
+        browseManager.openExams.classes.forEach(cls=>{
+            dataRow[cls.id] = false
+        })
         data.push(more)
     })
     return data

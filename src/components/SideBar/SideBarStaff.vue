@@ -35,16 +35,16 @@ function skipQuestion(){
 
 <template>
     <div class="sideBarElement" v-if="auth.isTeacherOrStaff">
-        <div v-if="gameManager.question">
+        <div v-if="gameManager.question && gameManager.view=='question'">
             <div v-if="gameManager.question.q?.id">שאלה {{ gameManager.question.q.id }}, 
                 {{ gameManager.question.q.type ?? gameManager.question.q.display_template }}</div>
             <div v-if="gameManager.extra.teacher">
                 <h4>התאמה אישית</h4>
-                <button-small v-if="!gameManager.question.too_few" :border="true" @click="filterQuestion">
+                <button-small :border="true" @click="filterQuestion">
                     {{ gameManager.question.filterQuest ? 'החזר' : 'הסר'}}
                     שאלה
                 </button-small>
-                <div v-else>{{ "סיננתם הרבה שאלות. לא ניתן לסנן שאלות נוספות" }}</div>
+                <div v-if="gameManager.question.too_few">{{ "סיננתם הרבה שאלות. לא ניתן לסנן שאלות נוספות" }}</div>
                 <div class='filteralert pulsing' v-if="gameManager.question.filterQuest">שימו לב: בחרתם להסיר שאלה זו. השאלה לא תופיע במשחקי תלמידים.</div>
                 <Divider />
                 <Button @click="skipQuestion" class="p-button-outlined p-button-sm">לשאלה הבאה</Button>
