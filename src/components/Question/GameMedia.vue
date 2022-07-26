@@ -48,7 +48,7 @@ function editMediaForDevelopment(media){
   node.innerHTML = media;
 
   nodeScriptReplace(node);
-  return media
+  return node.innerHTML
 }
 
 // TODO: move to utils
@@ -67,9 +67,9 @@ function nodeScriptReplace(node,parentobj)
       nodeScriptReplace( children[i] );
     }
   }
-
   return node;
 }
+
 function nodeScriptClone(node){
   var script  = document.createElement("script");
   script.text = node.innerHTML;
