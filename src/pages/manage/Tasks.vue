@@ -20,7 +20,9 @@ function getTableData(){
     const data = [...browseManager.openTasks.tasks]
     browseManager.openTasks.more.forEach(more=>{
         const dataRow = {...more}
-        Object.keys(data[0]).filter(k=>k!="name"&&k!="id").forEach(k=>dataRow[k] = false)
+        browseManager.openTasks.classes.forEach(cls=>{
+            dataRow[cls.id] = false
+        })
         data.push(more)
     })
     return data

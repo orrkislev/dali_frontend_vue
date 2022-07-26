@@ -24,6 +24,8 @@ const displayDialog = ref(false)
 const popUpData = ref("")
 const popUpHeader = ref("")
 async function report_tasks() {
+    
+    displayDialog.value = true
     // load google chart script, wait for it to load
     let googleChartsScript = document.createElement('script')
     googleChartsScript.setAttribute('src', 'https://www.gstatic.com/charts/loader.js')
@@ -47,31 +49,34 @@ async function report_tasks() {
     const res = await api.post('statistics/teacher_report/', { class_id: route.params.classid, report_type: 'class', dialog_title_text: "" })
     popUpData.value = res
     popUpHeader.value = 'דוח משימות'
-    displayDialog.value = true
 }
 async function report_exams() {
+    displayDialog.value = true
     const res = await api.post('statistics/teacher_report/', { class_id: route.params.classid, report_type: 'exams', dialog_title_text: "" })
     popUpData.value = res
     popUpHeader.value = 'דוח בחנים'
-    displayDialog.value = true
 }
 async function report_state() {
+    displayDialog.value = true
     const res = await api.post('statistics/teacher_report/', { class_id: route.params.classid, report_type: 'full_diagnostics', dialog_title_text: "" })
     popUpData.value = res
     popUpHeader.value = 'דוח מצב'
-    displayDialog.value = true
 }
 async function tasks() {
+    displayDialog.value = true
     const res = await api.post('statistics/teacher_report/', { class_id: route.params.classid, report_type: 'tasks', dialog_title_text: "" })
     popUpData.value = res
     popUpHeader.value = 'משימות'
-    displayDialog.value = true
 }
 async function students() {
+    displayDialog.value = true
     const res = await api.post('statistics/teacher_report/', { class_id: route.params.classid, report_type: 'students', dialog_title_text: "" })
     popUpData.value = res
     popUpHeader.value = 'תלמידים'
-    displayDialog.value = true
+}
+
+function closeDialog() {
+    popUpData.value = ""
 }
 
 </script>
@@ -81,7 +86,8 @@ async function students() {
     <div>
         <PageTitle :title="data?.name" />
 
-        <Dialog :header=popUpHeader v-model:visible="displayDialog" :style="{ width: '70vw' }" modal>
+        <Dialog :header=popUpHeader v-model:visible="displayDialog" :style="{ width: '70vw' }" modal @hide="closeDialog">
+            <ProgressSpinner v-if="popUpData.length==0" style="width:50px;height:50px" strokeWidth="8" fill="var(--surface-ground)" animationDuration=".5s"/>'
             <AjaxViewer :htmlWithScripts="popUpData" />
         </Dialog>
 
