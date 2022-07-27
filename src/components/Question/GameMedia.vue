@@ -4,6 +4,7 @@ import useGameManager from "src/utils/useGameManager";
 import useEmitter from "src/utils/useEmmiter";
 import ActionButton from "../ActionButton.vue";
 import AjaxViewer from "../AjaxViewer.vue";
+import { notificationDark } from "naive-ui";
 
 const gameManager = useGameManager();
 
@@ -45,6 +46,8 @@ function editMediaForDevelopment(media){
   if (process.env.NODE_ENV=='development') return media.split('/static/').join('http://da-li.co.il/static/') 
   return media
 }
+
+
 </script>
 
 
