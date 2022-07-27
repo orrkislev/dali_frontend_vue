@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import useAPI from '../../utils/useAPI';
 import useAuth from '../../utils/useAuth';
+import Classes from '../../pages/manage/Classes.vue';
 
 const api = useAPI()
 const auth = useAuth()
@@ -35,10 +36,11 @@ function rowClick(event) {
 </script>
 
 <template>
-    <div v-if="auth.userData.status == 'no_class'">
+    <div v-if="auth.userData.status == 'no_class' || data.length==0">
         <div class="text-center">
             <div class="text-4xl">לא נמצאה כיתה לך</div>
             <div style="margin-top:-1em;">נצטרך להגדיר כיתה לך</div>
+            <Classes />
         </div>
     </div>
     <div v-else-if="auth.userData.status == 'no_students'">

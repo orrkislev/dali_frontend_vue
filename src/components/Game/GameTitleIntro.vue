@@ -6,9 +6,12 @@ import PlayedGamesList from "./PlayedGamesList.vue";
 import GameLeaderboard from "./GameLeaderboard.vue";
 import useAuth from "src/utils/useAuth";
 import GameTitleTop from './GameTitleTop.vue';
+import { ref } from "vue";
 
 const gameManager = useGameManager();
 const auth = useAuth();
+
+const chooseTeacherGameType = ref(false)
 
 function getDescription() {
 	if (gameManager.game?.subj.description.length > 1)
@@ -17,13 +20,25 @@ function getDescription() {
 		return gameManager.game.game.description;
 	return "no description";
 }
-function startGame() {
-	gameManager.startGame();
+
+
+function startGame(gameType) {
+	if (gameType == null){
+		if (auth.isTeacherOrStaff && gameManager.game.classData?.filtered_game){
+			chooseTeacherGameType.value = true
+		} else {
+			gameManager.startGame();
+		}
+	} else if (gameType=='normal'){
+		gameManager.startGame();
+	} else if (gameType=='filtered'){
+		gameManager.startGame(null, null, { filtered:true });
+	} else {
+		gameManager.startGame(gameType);
+	}
 }
-function startLevel(level) {
-	gameManager.startGame(level);
-}
-function startTeacherWalkthrough() {
+
+function startTeacherWalkthrough(walkthoughType) {
 	gameManager.startGame(null, null, { teacher: true });
 }
 function startMobileGame() {
@@ -47,18 +62,24 @@ function startMobileGame() {
 			<div v-if="auth.username">
 				<div v-if="gameManager.game?.levels" class="flex flex-column gap-2">
 					<Button class="p-button-rounded px-8" v-for="level in gameManager.game.levels" :key="level.order"
-						@click="startLevel(level)">
+						@click="startGame(level)">
 						{{ level.title }}
 					</Button>
 				</div>
 				<div v-else-if="auth.isTeacherOrStaff && gameManager.game.allow_teacher_test" class="p-buttonset">
-					<Button class="p-button-rounded px-6" @click="startGame">
-						התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
-					</Button>
-					<Button class="p-button-rounded p-button-secondary" @click="startTeacherWalkthrough"> מעבר מורה </Button>
+					<template v-if="!chooseTeacherGameType">
+						<Button class="p-button-rounded px-6" @click="()=>startGame()">
+							התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
+						</Button>
+						<Button class="p-button-rounded p-button-secondary" @click="startTeacherWalkthrough"> מעבר מורה </Button>
+					</template>
+					<template v-else>
+						<Button class="p-button-rounded p-button-secondary" @click="()=>startGame('filtered')">  התחל - משחק מסונן</Button>
+						<Button class="p-button-rounded" @click="()=>startGame('normal')"> התחל - משחק מלא</Button>
+					</template>
 				</div>
 				<div v-else>
-					<Button class="p-button-rounded px-8" @click="startGame">
+					<Button class="p-button-rounded px-8" @click="()=>startGame()">
 						התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
 					</Button>
 				</div>

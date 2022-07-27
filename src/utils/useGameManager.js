@@ -65,7 +65,7 @@ const useGameManager = defineStore('game', {
                 gametype: this.game.game.gameType,
                 name: this.game.game.name,
                 purpose: 'direct_start',
-                gtype: this.extra.teacher ? 'teacher_test' : 'start_normal',
+                gtype: this.extra.teacher ? 'teacher_test' : (this.extra.filtered ? 'start_filter' : 'start_normal'),
                 onlyData: true
             }
             // START AN EXAM

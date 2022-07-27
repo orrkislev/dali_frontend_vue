@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
-export const base_url = 'http://localhost:8200/'
-export const real_url = 'https://da-li.co.il/' //TODO update when production
+export const base_url = process.env.NODE_ENV=='development' ? 'http://localhost:8200/' : './'
+export const real_url = process.env.NODE_ENV=='development' ? 'https://da-li.co.il/' : './'
 
 function getCookie(name) {
     var value = "; " + document.cookie;

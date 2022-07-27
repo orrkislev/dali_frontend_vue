@@ -41,7 +41,9 @@ function closeMedia(){
 }
 
 function editMediaForDevelopment(media){
-  return media.split('/static/').join('http://da-li.co.il/static/') //TODO update when production
+  //TODO update when production
+  if (process.env.NODE_ENV=='development') return media.split('/static/').join('http://da-li.co.il/static/') 
+  return media
 }
 </script>
 
@@ -58,7 +60,9 @@ function editMediaForDevelopment(media){
     </div>
 
     <div v-if="gameManager.question.q.type != 'mouseselect'">
-      <div v-for="(qmedia, i) in gameManager.question?.medias" :key="i" v-html="editMediaForDevelopment(qmedia)" class='w-8 mx-auto'></div>
+      <div v-for="(qmedia, i) in gameManager.question?.medias" :key="i" class='w-8 mx-auto'>
+        <AjaxViewer :htmlWithScripts="editMediaForDevelopment(qmedia)" />
+      </div>
     </div>
   </div>
 </template>
