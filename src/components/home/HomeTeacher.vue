@@ -36,7 +36,7 @@ function rowClick(event) {
 </script>
 
 <template>
-    <div v-if="auth.userData.status == 'no_class' || data.length==0">
+    <div v-if="auth.userData.status == 'no_class' || data?.length==0">
         <div class="text-center">
             <div class="text-4xl">לא נמצאה כיתה לך</div>
             <div style="margin-top:-1em;">נצטרך להגדיר כיתה לך</div>
