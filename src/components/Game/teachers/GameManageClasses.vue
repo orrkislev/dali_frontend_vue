@@ -21,7 +21,8 @@ async function click(clsIndex, val) {
     class_id: gameManager.game.classData.classes_table[taskId].list[clsIndex].cl_id,
     game_id: route.params.taskid,
   });
-  updateClassData()
+  if (res.success) gameManager.game.classData.classes_table[taskId].list[clsIndex].isopen = res.status;
+  // updateClassData()
 }
 </script>
 

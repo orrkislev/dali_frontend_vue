@@ -19,9 +19,11 @@ const api = useAPI();
 onBeforeRouteLeave(async (to, from) => {
   return await new Promise((resolve) => {
     confirm.require({
-      message: "יציאה?",
+      message: "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהמשחק?",
       header: "יציאה מהמשחק",
       icon: "pi pi-exclamation-triangle",
+      acceptLabel:'כן, לצאת',
+      rejectLabel:'ביטול',
       accept: () => {
         gameManager.$reset()
         api.post_json("quest/action/", {action: "endgame"}).then(res => {
@@ -38,7 +40,7 @@ onBeforeRouteLeave(async (to, from) => {
 
 
 <template>
-  <div class="flex-column gap1">
+  <div class="flex-column gap2">
     <game-top v-if="gameManager.progress.progress[0]!='admin'"/>
     <game-progress v-if="gameManager.progress.progress[0]!='admin'"/>
     <Divider align='right' v-if="gameManager.progress.progress[0]!='admin'">

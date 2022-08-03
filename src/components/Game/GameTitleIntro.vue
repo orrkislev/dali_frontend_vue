@@ -7,9 +7,11 @@ import GameLeaderboard from "./GameLeaderboard.vue";
 import useAuth from "src/utils/useAuth";
 import GameTitleTop from './GameTitleTop.vue';
 import { ref } from "vue";
+import { useRoute } from "vue-router";
 
 const gameManager = useGameManager();
 const auth = useAuth();
+const route = useRoute();
 
 const chooseTeacherGameType = ref(false)
 
@@ -89,7 +91,7 @@ function startMobileGame() {
 			</div>
 		</game-title-top>
 
-		<game-intro-teacher v-if="auth.isTeacherOrStaff"/>
+		<game-intro-teacher v-if="auth.isTeacherOrStaff && !route.path.includes('/game_sel')"/>
 		<PlayedGamesList v-if="auth.username"/>
 		<game-leaderboard v-if="auth.username"/>
 	</div>

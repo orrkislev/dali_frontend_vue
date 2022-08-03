@@ -40,7 +40,7 @@ function showAllBadges(){
             allAvatars.value = res
         })
     }
-    showAllAvatars.value = true
+    showAllAvatars.value = !showAllAvatars.value
 }
 </script>
 
@@ -51,10 +51,11 @@ function showAllBadges(){
     <div v-if="auth.userData">
         <div>
             האווטאר שלי
-            <img :src="badgeURL(auth.userData.avatar_icon)" class="h-3rem " />
+            <img :src="badgeURL(auth.userData.avatar_icon)" class="h-4rem " />
             <Button v-if="!showAllAvatars" icon="pi pi-user-edit" class="p-button-rounded p-button-outlined" @click="showAllBadges"/>
-            <div v-else  class="grid gap1">
-                <div v-for="avatarSeries in allAvatars" class="avatarSeries col-4 p-2" @click="updateUserAvatar(avatarSeries.id)">
+            <Button v-if="showAllAvatars" icon="pi pi-times" class="p-button-rounded p-button-outlined" @click="showAllBadges"/>
+            <div v-if="showAllAvatars"  class="grid gap1 mt-2">
+                <div v-for="avatarSeries in allAvatars" class="avatarSeries p-2" @click="updateUserAvatar(avatarSeries.id)">
                     <div> {{ avatarSeries.name }} </div>
                     <div class="flex">
                         <div v-for="avatar in avatarSeries.avatars">

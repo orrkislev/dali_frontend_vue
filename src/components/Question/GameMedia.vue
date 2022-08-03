@@ -81,7 +81,6 @@ export default {
 <style>
     .localimg{
         font-size: small;
-        width: 100% !important;
     }
     .youtube{
         width: 100% !important;
@@ -105,6 +104,10 @@ export default {
         background-color: unset !important;
         font-style: italic;
         border: 1px dashed orange;
+    }
+    .disableButtons {
+      display: flex;
+      justify-content: center;
     }
     .disableButtons a{
         pointer-events: none;

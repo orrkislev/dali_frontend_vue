@@ -108,8 +108,6 @@ export default {
         cursor: pointer;
         background:white;
         border-radius: .5em;
-        height: 6em;
-        /* display: flex; */
         overflow:hidden;    
         box-shadow: rgba(0,0,0,0.2) 1px 3px 7px;
         position: relative;
@@ -129,6 +127,7 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        margin-bottom: 1em;
     }
     .task-content-bottom{
         font-size: smaller;

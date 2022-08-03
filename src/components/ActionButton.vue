@@ -84,12 +84,12 @@ export default {
   color: #666;
   cursor: default;
 }
-.btnFull-correct { background: #ccff91; }
-.btnFull-wrong { background: tomato; }
+.btnFull-correct { background: #ccff91;  }
+.btnFull-wrong { background: tomato; color: #222; }
 .word_select_selection_right { background: #ccff91 !important; }
-.word_select_selection_wrong { background: tomato !important; }
+.word_select_selection_wrong { background: tomato !important; color: #222; }
 .draggableItem-success { background: #ccff91 !important; }
-.draggableItem-fail { background: tomato !important; }
+.draggableItem-fail { background: tomato !important; color: #222; }
 
 .btnFull:hover{ background-color: #d5d5d5; }
 .btnFull-main:hover{ background-color: #254c79; }
