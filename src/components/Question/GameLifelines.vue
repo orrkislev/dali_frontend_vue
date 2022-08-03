@@ -17,7 +17,7 @@ const lifelines = ref({
   retry: { text:'', name:'נסה שוב',icon: "undo",active: true, default: false, afterQ: true },
   replace: { text:'', name:'החלף שאלה',icon: "random", active: true, default: true, afterQ: false, },
   stats: { text:'', name:'סטטיסטיקה', icon: "chart-bar", active: true, default: true, afterQ: false, },
-  5050: { text:'', name:'5050', icon: "balance-scale", active: true, default: true, afterQ: false, yesno: false,},
+  5050: { text:'', name:'50:50', icon: "balance-scale", active: true, default: true, afterQ: false, yesno: false,},
 });
 const initialValues = { ...lifelines.value };
 
@@ -31,7 +31,7 @@ function activateLifeline(name) {
     newProgress.bonus = false;
     gameManager.progress = newProgress;
   }
-  if (name == "5050") lifeline_5050();
+  if (name == "50:50") lifeline_5050();
   if (name == "stats") lifeline_stats();
   if (name == "retry") gameManager.lifeline_retry();
   if (name == "skip") gameManager.lifeline_skip();

@@ -39,7 +39,7 @@ function backToGamePage() {
     <GameTitleTop >
         <Knob :modelValue="gameManager.question.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
         <div class="flex flex-column gap05">
-          <Button v-if="!gameManager.game.extra.exam" class="p-button-rounded px-6 p-button-lg" 
+          <Button v-if="!gameManager.game.extra.exam && !gameManager.extra.teacher" class="p-button-rounded px-6 p-button-lg" 
             :disabled="isPublished" @click="publish"
             :class="{'p-button-warning': isPublished}">
             {{ isPublished ? 'פורסם' : 'פרסם' }}
