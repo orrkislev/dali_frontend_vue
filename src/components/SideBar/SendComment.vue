@@ -14,7 +14,7 @@ const gameManager = useGameManager()
 async function send_comment(){
     const sendData = { 'text':comment.value,'email':'','quest_id':''}
     if (gameManager.question && gameManager.question.q?.id) sendData.quest_id = gameManager.question.q.id
-    res = await api.post_json('review/comment/', sendData)
+    const res = await api.post('review/comment/', sendData)
     comment_sent.value = true
     setTimeout(()=>displayDialog.value = false ,500)
 }
