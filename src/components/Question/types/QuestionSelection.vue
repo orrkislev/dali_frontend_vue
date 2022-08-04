@@ -92,7 +92,7 @@ function select(answerIndex, val) {
 
 
 <template>
-  <div class="flex-column gap05">
+  <div class="flex flex-column gap05">
     <div v-for="(answer, answerIndex) in answers" :key="answerIndex">
       <div style="flex: 1">
         <span v-html="answer.text"></span>

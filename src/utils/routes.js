@@ -23,6 +23,8 @@ const routes = [
     { path: '/login', component: login },
     { path: '/profile', component: Profile },
 
+    { path: '/game_sel/:taskid', component: Game},
+    { path: '/game_sel/:taskid/:questionid', component: Game},
     { path: '/game/:taskid', component: Game},
     { path: '/game/:taskid/:questionid', component: Game},
 
