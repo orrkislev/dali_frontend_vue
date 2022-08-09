@@ -13,9 +13,9 @@ const emitter = useEmmiter();
 
 
 const lifelines = ref({
-  skip: { text:'', name:'דלג',icon: "forward", active: true, default: true, afterQ: false, },
+  skip: { text:'', name:'דלג',icon: "forward", active: true, default: true, afterQ: false, qadmin:false},
   retry: { text:'', name:'נסה שוב',icon: "undo",active: true, default: false, afterQ: true },
-  replace: { text:'', name:'החלף שאלה',icon: "random", active: true, default: true, afterQ: false, },
+  replace: { text:'', name:'החלף שאלה',icon: "random", active: true, default: true, afterQ: false, qadmin:false},
   stats: { text:'', name:'סטטיסטיקה', icon: "chart-bar", active: true, default: true, afterQ: false, },
   5050: { text:'', name:'50:50', icon: "balance-scale", active: true, default: true, afterQ: false, yesno: false,},
 });
@@ -31,7 +31,7 @@ function activateLifeline(name) {
     newProgress.bonus = false;
     gameManager.progress = newProgress;
   }
-  if (name == "50:50") lifeline_5050();
+  if (name == "5050") lifeline_5050();
   if (name == "stats") lifeline_stats();
   if (name == "retry") gameManager.lifeline_retry();
   if (name == "skip") gameManager.lifeline_skip();
@@ -46,10 +46,11 @@ function isActive(lifeline, name) {
   if (!gameManager.question) return false;
   if (name == "retry" && gameManager.questionResult?.result == 1) return false;
 
-  const gameSettings = gameManager.game.game[name] ?? true;
+  const gameSettings = (gameManager.game && gameManager.game.game[name]) ?? true;
   if (!gameSettings) return false;
 
-  const activeState = gameManager.questionResult?.result != null ? "afterQ" : gameManager.question.q.type;
+  let activeState = gameManager.questionResult?.result != null ? "afterQ" : gameManager.question.q.type;
+  if (gameManager.progress.progress[0]=='admin') activeState = "qadmin"
   const lifelineState = lifeline[activeState] ?? lifeline.default;
   if (!lifelineState) return false;
 
@@ -65,6 +66,7 @@ function lifeline_stats() {
   gameManager.questionResult = questionResult;
 }
 function lifeline_5050() {
+  console.log("50:50");
   emitter.emit("LIFELINE_5050");
   const questionResult = { ...gameManager.questionResult };
   questionResult.used5050 = true;
@@ -95,7 +97,7 @@ function click(event,lifeline, name) {
 
 <template>
   <ConfirmPopup group="lifeline"></ConfirmPopup>
-  <div v-if="gameManager.game?.extra.exam" class="text-white">
+  <div v-if="gameManager.game && gameManager.game?.extra.exam" class="text-white">
     יש לסיים את כל השאלות. לא ניתן יהיה לחזור לבוחן אם תצאו לפני תום כל השאלות!
   </div>
   <div v-else>
@@ -104,7 +106,7 @@ function click(event,lifeline, name) {
     </div> -->
 
     <div class="flex" style="gap: 4px">
-      <Button class="p-button-sm p-button-rounded overflow-visible"
+      <Button class="p-button-sm p-button-rounded overflow-visible "
         v-for="(lifeline, name) in lifelines"
         :key="name"
         @click="click($event,lifeline, name)"

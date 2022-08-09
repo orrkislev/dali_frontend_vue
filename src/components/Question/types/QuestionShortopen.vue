@@ -22,6 +22,7 @@ function showAnswer(){
 }
 
 function lifeline_5050(){
+    console.log('5050 at short open')
     const correctAnswers = gameManager.question.answers.map(a => a.text.trim()).sort((a,b)=>Math.random()-0.5)
     for (let i=0;i<gameManager.question.q.num_correct_a/2;i++){
         answers.value[i] = correctAnswers[i]
@@ -40,6 +41,7 @@ function check() {
             val: a
         }
         if (availableAnswers.includes(a)) {
+            availableAnswers.splice(availableAnswers.indexOf(a), 1)
             inputColors.value[i] = 'success'
             result++
             answerListData.res = true

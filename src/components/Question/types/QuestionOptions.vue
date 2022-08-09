@@ -11,20 +11,20 @@ emitter.subscribe("LIFELINE_5050", lifeline_5050)
 emitter.subscribe("CHECK_QUESTION", check);
 emitter.subscribe('SHOW_ANSWER', showAnswer)
 
-function showAnswer(){
-    gameManager.question.answers.forEach((answer,i) => {
-      if (answer.correct) select(i,answer.correct);
-    })
-    check()
+function showAnswer() {
+  gameManager.question.answers.forEach((answer, i) => {
+    if (answer.correct) select(i, answer.correct);
+  })
+  check()
 }
 
-function lifeline_stats(){
+function lifeline_stats() {
   let newAnswers = [...gameManager.question.answers];
   newAnswers.forEach((answer) => (answer.stats = answer.chosen));
   gameManager.question.answers = newAnswers;
 }
 
-function lifeline_5050(){
+function lifeline_5050() {
   let newAnswers = [...gameManager.question.answers];
   let grayableAnswers = newAnswers
     .filter((a) => a.correct != 1)
@@ -35,7 +35,7 @@ function lifeline_5050(){
   gameManager.question.answers = newAnswers;
 }
 
-function check(){
+function check() {
   let newAnswers = [...gameManager.question.answers];
   let result = 0;
   newAnswers.forEach((a, i) => {
@@ -58,10 +58,10 @@ function check(){
 }
 
 function select(answerIndex, val) {
-    let newAnswers = [...gameManager.question.answers]
-    newAnswers.forEach(a => a.selected = 0)
-    newAnswers[answerIndex].selected = val
-    gameManager.question.answers = newAnswers
+  let newAnswers = [...gameManager.question.answers]
+  newAnswers.forEach(a => a.selected = 0)
+  newAnswers[answerIndex].selected = val
+  gameManager.question.answers = newAnswers
 }
 </script>
 
@@ -69,16 +69,11 @@ function select(answerIndex, val) {
 <template>
   <div>
     <div v-for="(answer, answerIndex) in gameManager.question.answers" :key="answerIndex" class='mb-2'>
-        <action-button
-          :border="true"
-          :indicator="answer.selected == 1 ? answer.result : null"
-          :inactive="answer.inactive"
-          :selected="answer.selected == 1"
-          @click="select(answerIndex, 1)"
-        >
-          <span v-append="answer.text">{{ answer.text }}</span>
-          <small v-if="answer.stats">&nbsp; ({{ answer.stats }})</small>
-        </action-button>
+      <action-button :border="true" :indicator="answer.selected == 1 ? answer.result : null" :inactive="answer.inactive"
+        :selected="answer.selected == 1" @click="select(answerIndex, 1)">
+        <span v-append="answer.text">{{ answer.text }}</span>
+        <small v-if="answer.stats">&nbsp; ({{ answer.stats }})</small>
+      </action-button>
     </div>
   </div>
 </template>
@@ -93,4 +88,13 @@ export default {
 
 
 <style>
+#mouseselectimage {
+  width: 100%;
+}
+
+.mouseselectmarker {
+  padding: 0.5em;
+  background-color: pink;
+  border-radius: 999px;
+}
 </style>

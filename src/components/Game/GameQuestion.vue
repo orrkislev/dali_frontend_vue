@@ -11,6 +11,7 @@ import { onBeforeRouteLeave } from "vue-router";
 import { useConfirm } from "primevue/useconfirm"; 
 import useGameManager from 'src/utils/useGameManager';
 import useAPI from "../../utils/useAPI";
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const gameManager = useGameManager()
 const confirm = useConfirm();
@@ -36,6 +37,10 @@ onBeforeRouteLeave(async (to, from) => {
     });
   });
 });
+
+function restartGame(){
+  gameManager.startGame({ restart: true });
+}
 </script>
 
 
@@ -43,7 +48,7 @@ onBeforeRouteLeave(async (to, from) => {
   <div class="flex-column gap2">
     <game-top v-if="gameManager.progress.progress[0]!='admin'"/>
     <game-progress v-if="gameManager.progress.progress[0]!='admin'"/>
-    <Divider align='right' v-if="gameManager.progress.progress[0]!='admin'">
+    <Divider align='right'>
       <game-lifelines/>
     </Divider>
     <div class='flex flex-column gap1 px-5'>
@@ -52,7 +57,9 @@ onBeforeRouteLeave(async (to, from) => {
       <game-buttons />
       <question-feedback />
     </div>
-    <Divider />
+    <Divider align='right'>
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחל משחק מחדש" /> 
+    </Divider>
     <game-media />
   </div>
 </template>
