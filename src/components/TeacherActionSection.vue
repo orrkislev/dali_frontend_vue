@@ -2,7 +2,7 @@
 import ActionButton from './ActionButton.vue';
 
 defineProps({
-    title:String, subtitle:String, text:String, action:Function, action_label:String
+    title:String, subtitle:String, text:String, action:Function, action_label:String, disabled:Boolean
 })
 const emit = defineEmits(['click'])
 function click() {
@@ -18,7 +18,7 @@ function click() {
       <div class="teacher_section_content">
         <div class="teacher_section_content_text">{{ text }} </div>
         <div class="teacher_section_content_action">
-          <ActionButton :center='true' :border="true" @click="click">{{ action_label }}</ActionButton>
+          <ActionButton :center='true' :border="true" @click="click" :inactive="disabled">{{ action_label }}</ActionButton>
         </div>
       </div>
     </div>

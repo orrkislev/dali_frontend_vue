@@ -6,6 +6,7 @@ import $ from "jquery";
 const gameManager = useGameManager();
 const emitter = useEmitter()
 
+emitter.subscribe("LIFELINE_STATS", lifeline_stats)
 emitter.subscribe('LIFELINE_5050', lifeline_5050)
 emitter.subscribe("CHECK_QUESTION", check);
 emitter.subscribe('SHOW_ANSWER', showAnswer)
@@ -19,7 +20,7 @@ function showAnswer() {
 }
 
 function lifeline_5050() {
-  const correctAnswers = gameManager.question.wordSelect[1].map((a,i)=>{
+  const correctAnswers = gameManager.question.wordSelect[1].map((a, i) => {
     return {
       index: i,
       answer: a
@@ -29,6 +30,10 @@ function lifeline_5050() {
     const ans = correctAnswers[i]
     fillCorrectAnswer(ans.answer, ans.index);
   }
+}
+
+function lifeline_stats() {
+  // TODO - implement stats lifeline  
 }
 
 function fillCorrectAnswer(a, i) {

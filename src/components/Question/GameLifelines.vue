@@ -16,7 +16,7 @@ const lifelines = ref({
   skip: { text:'', name:'דלג',icon: "forward", active: true, default: true, afterQ: false, qadmin:false},
   retry: { text:'', name:'נסה שוב',icon: "undo",active: true, default: false, afterQ: true },
   replace: { text:'', name:'החלף שאלה',icon: "random", active: true, default: true, afterQ: false, qadmin:false},
-  stats: { text:'', name:'סטטיסטיקה', icon: "chart-bar", active: true, default: true, afterQ: false, },
+  stats: { text:'', name:'סטטיסטיקה', icon: "chart-bar", active: true, default: true, afterQ: false,shortopen:false },
   5050: { text:'', name:'50:50', icon: "balance-scale", active: true, default: true, afterQ: false, yesno: false,},
 });
 const initialValues = { ...lifelines.value };
