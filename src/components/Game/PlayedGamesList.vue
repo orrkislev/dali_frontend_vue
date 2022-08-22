@@ -29,10 +29,11 @@ onMounted(() => {
 })
 
 function publish(id) {
-    if (!data.value.find(game => game.id == id).publish)
-        api.post('statistics/publish/', { id }).then((res) => {
-            data.value.find(game => game.id == id).publish = true
-        })
+    var stat =  data.value.find(game => game.id == id).publish;
+    console.log('stat =' + stat + "not stat = " + !stat);
+    api.post('statistics/publish/', { id ,'type':'switch'}).then((res) => {
+            data.value.find(game => game.id == id).publish = !stat
+    })
 }
 </script>
 
@@ -46,11 +47,10 @@ function publish(id) {
                 <Column field="score" header="ניקוד" bodyClass="text-right p-2"> </Column>
                 <Column field="publish" header="פורסם" bodyClass="text-right p-2">
                     <template #body="slotProps">
-                        <ToggleButton v-if="!slotProps.data.publish" :modelValue="slotProps.data.publish" onIcon="pi pi-check" offIcon="pi pi-times"
+                        <ToggleButton :modelValue="slotProps.data.publish" onIcon="pi pi-check" offIcon="pi pi-times"
                             class="p-button-sm border-transparent"
                             :style="{ backgroundColor: slotProps.data.publish ? 'orange' : 'lightblue' }"
-                            @change="(e) => publish(slotProps.data.id)" />
-                        <i v-else class="pi pi-check" />
+                            @change="(e) => publish(slotProps.data.id)" />                        
                     </template>
 
                 </Column>
