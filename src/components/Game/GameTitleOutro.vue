@@ -22,10 +22,13 @@ function restartGame() {
   gameManager.startGame(null, true);
 }
 async function publish() {
-  let res = await api.post("statistics/publish/", {
-    id: gameManager.question.publishID[0],
+  let res = await api.post("statistics/publish/",{id: gameManager.question.publishID[0]}).then((res) => {
+    if (res.external_continue_url)
+    {
+      window.location.href = res.external_continue_url;
+    }
+    isPublished.value = true;
   });
-  isPublished.value = true;
 }
 
 function backToGamePage() {
