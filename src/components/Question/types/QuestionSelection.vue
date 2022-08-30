@@ -9,10 +9,6 @@ const api = useAPI()
 const gameManager = useGameManager()
 const emitter = useEmitter()
 
-let answers = ref([...gameManager.question.answers])
-let options = ref([...gameManager.question.options])
-
-
 emitter.subscribe('LIFELINE_STATS', lifeline_stats)
 emitter.subscribe('LIFELINE_5050', lifeline_5050)
 emitter.subscribe('CHECK_QUESTION', check)
@@ -20,26 +16,26 @@ emitter.subscribe('SHOW_ANSWER', showAnswer)
 
 function showAnswer() {
   console.log('showAnswer at selection')
-  answers.value.forEach((a, i) => {
+  gameManager.question.answers.forEach((a, i) => {
     select(i, a.correct);
   })
   check()
 }
 
 async function lifeline_stats() {
-  let newAnswers = [...answers.value]
+  let newAnswers = [...gameManager.question.answers]
   const res = await api.post("quest/action/", { 'action': 'statistics', 'question_id': gameManager.question.q.id, })
-  newAnswers.forEach(a => a.stats = Array(options.value.length).fill(''))
+  newAnswers.forEach(a => a.stats = Array(gameManager.question.options.length).fill(''))
   res.forEach(stat => {
-    const optionIndex = options.value.findIndex((o, i) => o.num == stat.select)
+    const optionIndex = gameManager.question.options.findIndex((o, i) => o.num == stat.select)
     newAnswers.find((a, i) => a.id == stat.answer_id).stats[optionIndex] = stat.count
   })
-  answers.value = newAnswers
+  gameManager.question.answers = newAnswers
 }
 
 
 function lifeline_5050() {
-  const newAnswers = [...answers.value]
+  const newAnswers = [...gameManager.question.answers]
   newAnswers.forEach((a,i) => a.answerIndex = i)
   newAnswers.sort(() => Math.random() - 0.5)
   for (let i = 0; i < newAnswers.length/2; i++) {
@@ -48,7 +44,7 @@ function lifeline_5050() {
 }
 
 function check() {
-  let newAnswers = [...answers.value]
+  let newAnswers = [...gameManager.question.answers]
   let result = 0
   newAnswers.forEach((a, i) => {
     if (a.selected == a.correct) {
@@ -57,12 +53,12 @@ function check() {
     } else {
       a.result = 'fail'
     }
-    a.inactive = Array(options.value.length).fill(true)
+    a.inactive = Array(gameManager.question.options.length).fill(true)
   })
-  answers.value = newAnswers
-  result = result / answers.value.length
+  gameManager.question.answers = newAnswers
+  result = result / gameManager.question.answers.length
 
-  const answerlist = answers.value.map(a => {
+  const answerlist = gameManager.question.answers.map(a => {
     return {
       id: a.id,
       res: a.result == 'success' ? 1 : 0,
@@ -74,9 +70,11 @@ function check() {
 }
 
 function select(answerIndex, val) {
-  let newAnswers = [...answers.value]
-  newAnswers[answerIndex].selected = val
-  answers.value = newAnswers
+  gameManager.question.answers[answerIndex].selected = val
+}
+
+function getOptions(){
+  return [...gameManager.question.options].sort((a,b)=>Math.random()-0.5)
 }
 
 </script>
@@ -84,16 +82,16 @@ function select(answerIndex, val) {
 
 <template>
   <div class="flex flex-column gap05">
-    <div v-for="(answer, answerIndex) in answers" :key="answerIndex">
+    <div v-for="(answer, answerIndex) in gameManager.question.answers" :key="answerIndex" class="question-section">
       <div style="flex: 1">
         <span v-html="answer.text"></span>
         <div class="flex gap05">
-          <action-button v-for="(option, index) in options" :key="index" :border="true"
+          <action-button v-for="(option, index) in getOptions()" :key="index" :border="true"
             :indicator="answer.selected == option.num ? answer.result : null"
             :inactive="answer.inactive ? answer.inactive[option.num] : null" :selected="answer.selected == option.num"
             class="flex1" @click="select(answerIndex, option.num)">
             {{ option.text }}
-            <small v-if="answer.stats">&nbsp; ({{ answer.stats[index] }})</small>
+            <small v-if="answer.stats">&nbsp; ({{ answer.stats[option.num] }})</small>
           </action-button>
         </div>
         <div v-if="answer.result" v-bind:style="{ color: answer.result == 'success' ? 'green' : 'red' }"

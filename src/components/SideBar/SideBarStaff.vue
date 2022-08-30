@@ -39,7 +39,8 @@ function skipQuestion(){
             <div v-if="gameManager.question.q?.id">שאלה {{ gameManager.question.q.id }}, 
                 {{ gameManager.question.q.type ?? gameManager.question.q.display_template }}</div>
             <div v-if="gameManager.extra.teacher">
-                <h4>התאמה אישית</h4>
+                <h4 style="margin-bottom: 0;">התאמה אישית</h4>
+                <p style="margin-top:0;">ניתן להסיר/להחזיר שאלות ממשחקי התלמידים</p>
                 <button-small :border="true" @click="filterQuestion">
                     {{ gameManager.question.filterQuest ? 'החזר' : 'הסר'}}
                     שאלה

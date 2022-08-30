@@ -5,6 +5,7 @@ import useGameManager from 'src/utils/useGameManager'
 import GameTitleIntro from 'src/components/Game/GameTitleIntro.vue'
 import GameTitleOutro from 'src/components/Game/GameTitleOutro.vue'
 import GameText from '../components/Game/GameText.vue'
+import GameSurvey from '../components/Game/GameSurvey.vue'
 
 const route = useRoute()
 const gameManager = useGameManager()
@@ -27,6 +28,7 @@ function resetGame(){
         <game-title-intro v-else-if="gameManager.view=='title' && gameManager.question==null"></game-title-intro>
         <game-title-outro v-else-if="gameManager.view=='title' && gameManager.question.action=='game ended'"></game-title-outro>
         <game-text v-else-if="gameManager.view=='media-start'"></game-text>
+        <game-survey v-else-if="gameManager.view=='survey'"></game-survey>
         <div v-else>{{ resetGame() }}</div>
     </div>
 </template>

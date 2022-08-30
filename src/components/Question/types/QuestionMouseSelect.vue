@@ -95,7 +95,7 @@ function check(){
                 {{ answer.letter }}
             </div>
         </div>
-        <div v-for="(answer, answerIndex) in answers">
+        <div v-for="(answer, answerIndex) in answers" class="question-section">
             <div class="flex1">
                 <ActionButton :border="true" :indicator="answer.selected == 1 ? answer.result : null"
                     :inactive="answer.inactive" :selected="answer.selected == 1" @click="select(answerIndex, 1)">

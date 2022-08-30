@@ -286,7 +286,7 @@ a.wronganswer{color:red;text-align:right;height:35px;font-size:24px;font-weight:
 */
 td.result{font-size:25px;width:100px;height:25px;text-align:center;}
 
-option.word_select_selection, select.word_select_selection{font-size:18px;background-color:var(--textarea_bg_color);color:var(--textarea_text_color);}
+option.word_select_selection, select.word_select_selection{background-color:var(--textarea_bg_color);color:var(--textarea_text_color);}
 
 select.correct{color:var(--dali_correct_color) !important;TEXT-DECORATION:NONE;}
 td.correct, input.correct{color:var(--dali_correct_color) !important;TEXT-DECORATION:NONE;}

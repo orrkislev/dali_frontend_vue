@@ -60,7 +60,7 @@ function check() {
 
 <template>
     <div>
-        <div v-for="index in gameManager.question.q.num_correct_a" class="">
+        <div v-for="index in gameManager.question.q.num_correct_a" class="question-section">
             <InputText type='text' v-model='answers[index - 1]' class="my-2" :disabled="inputColors[index-1] != null" 
                 :class="{ 
                     'btnFull-correct': inputColors[index-1] == 'success',

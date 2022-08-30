@@ -9,6 +9,7 @@ const api = useAPI()
 const emitter = useEmitter()
 
 emitter.subscribe('LIFELINE_STATS', lifeline_stats)
+emitter.subscribe("LIFELINE_5050", lifeline_5050)
 emitter.subscribe('CHECK_QUESTION', check)
 emitter.subscribe('SHOW_ANSWER', showAnswer)
 
@@ -28,6 +29,12 @@ async function lifeline_stats(){
         newAnswers.find(a=>a.id == stat.answer_id).stats[Math.abs(stat.select_id-2)] = stat.count
     })
     gameManager.question.answers = newAnswers
+}
+
+function lifeline_5050() {
+  let answerNumbers = Array(gameManager.question.answers.length).fill(0).map((_,i)=>i);
+  answerNumbers = answerNumbers.sort(() => Math.random() - 0.5).slice(0, Math.floor(newAnswers.length / 2))
+  answerNumbers.forEach(i => gameManager.question.answers[i].selected = gameManager.question.answers[i].correct);
 }
 
 function check(){
@@ -67,7 +74,7 @@ function select(answerIndex, val) {
 
 <template>
     <div >
-        <div v-for="(answer,index) in gameManager.question.answers" :key="index">
+        <div v-for="(answer,index) in gameManager.question.answers" :key="index" class="question-section">
             <div class='flex-1'> {{ answer.text }} </div>
             <div class='flex gap05'>
                 <action-button v-for="val in [0,1]" class="flex1" :key="val" :border="true" :center="true"

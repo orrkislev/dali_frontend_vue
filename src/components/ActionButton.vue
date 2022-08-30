@@ -85,16 +85,16 @@ export default {
   cursor: default;
 }
 .btnFull-correct { background: #ccff91;  }
-.btnFull-wrong { background: tomato; color: #222; }
+.btnFull-wrong { background: #ff6161; color: black; }
 .word_select_selection_right { background: #ccff91 !important; }
-.word_select_selection_wrong { background: tomato !important; color: #222; }
+.word_select_selection_wrong { background: #ff6161 !important; color: black; }
 .draggableItem-success { background: #ccff91 !important; }
-.draggableItem-fail { background: tomato !important; color: #222; }
+.draggableItem-fail { background: #ff6161 !important; color: black; }
 
 .btnFull:hover{ background-color: #d5d5d5; }
 .btnFull-main:hover{ background-color: #254c79; }
 .btnFull-correct:hover{ background-color: #ccff91; }
-.btnFull-wrong:hover{ background-color: tomato; }
+.btnFull-wrong:hover{ background-color: #de8c8c; }
 
 
 .btnFullIcon{ padding: 0 0 0 0.5em; }

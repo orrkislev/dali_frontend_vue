@@ -37,4 +37,10 @@ name:'QuestionPart'
 
 
 <style>
+  .question-section{
+    padding: 4px 2em;
+  }
+  .question-section:nth-child(odd) {
+    background: #f5f5f5;
+  }
 </style>

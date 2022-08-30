@@ -107,7 +107,9 @@ export default {
     }
     .media-area>.disableButtons {
       display: flex;
+      flex-direction: column;
       justify-content: center;
+      align-items: center;
     }
     .disableButtons a{
         pointer-events: none;

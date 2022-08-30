@@ -121,6 +121,10 @@ const useGameManager = defineStore('game', {
                 res = await api.post("quest/game_description/", {})
                 res = await api.post("quest/buttons/", postdata)
                 res = await api.post("quest/play/", { onlyData: true })
+                if (res.action == 'sruvey') {
+                    this.view = 'survey'
+                    return   
+                }
                 this.media.media = null
                 this.question = res
                 this.questionResult = {}
@@ -151,6 +155,10 @@ const useGameManager = defineStore('game', {
 
             const data = withData ? this.getPostDataForSubmitAndNext : {}
             const res = await api.post("quest/play/", data)
+            if (res.action == 'sruvey') {
+                this.view = 'survey'
+                return
+            }
             if (res.action == 'game ended') this.view = 'title'
             else if (res.action == 'next question') this.view = 'question'
             else if (res.action == 'media start') {

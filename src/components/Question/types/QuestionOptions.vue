@@ -68,7 +68,7 @@ function select(answerIndex, val) {
 
 <template>
   <div>
-    <div v-for="(answer, answerIndex) in gameManager.question.answers" :key="answerIndex" class='mb-2'>
+    <div v-for="(answer, answerIndex) in gameManager.question.answers" :key="answerIndex" class='mb-2 question-section'>
       <action-button :border="true" :indicator="answer.selected == 1 ? answer.result : null" :inactive="answer.inactive"
         :selected="answer.selected == 1" @click="select(answerIndex, 1)">
         <span v-append="answer.text">{{ answer.text }}</span>
@@ -97,4 +97,5 @@ export default {
   background-color: pink;
   border-radius: 999px;
 }
+
 </style>

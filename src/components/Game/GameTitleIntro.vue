@@ -12,16 +12,17 @@ import { useRoute } from "vue-router";
 const gameManager = useGameManager();
 const auth = useAuth();
 const route = useRoute();
+const isSEL = route.path.includes('/game_sel')
 
 const chooseTeacherGameType = ref(false)
 
-function getDescription() {
-	if (gameManager.game?.subj.description.length > 1)
-		return gameManager.game.subj.description;
-	if (gameManager.game?.game.description)
-		return gameManager.game.game.description;
-	return "no description";
-}
+// function getDescription() {
+// 	if (gameManager.game?.subj.description.length > 1)
+// 		return gameManager.game.subj.description.replace('\n', '<br>').replace('\r', '<br>');
+// 	if (gameManager.game?.game.description)
+// 		return gameManager.game.game.description.replace('\n', '<br>').replace('\r', '<br>');
+// 	return "no description";
+// }
 
 
 function startGame(gameType) {
@@ -52,7 +53,9 @@ function startMobileGame() {
 	<div id="task-main" v-if="gameManager.game">
 		<game-title-top>
 			<h3 v-if="gameManager.game?.extra.exam">בוחן</h3>
-			<div v-html="getDescription()"></div>
+			<div v-html="gameManager.game?.game.description"></div>
+			<div v-html="gameManager.game?.subj.description"></div>
+			
 			<div v-if="gameManager.game.sub_games.length > 0">
 				במשחק {{ gameManager.game.sub_games.length }} שלבים:
 				<div v-for="(subgame, i) in gameManager.game.sub_games" :key="i">
@@ -68,7 +71,7 @@ function startMobileGame() {
 						{{ level.title }}
 					</Button>
 				</div>
-				<div v-else-if="auth.isTeacherOrStaff && gameManager.game.allow_teacher_test" class="p-buttonset">
+				<div v-else-if="auth.isTeacherOrStaff && gameManager.game.allow_teacher_test && !isSEL" class="p-buttonset">
 					<template v-if="!chooseTeacherGameType">
 						<Button class="p-button-rounded px-6" @click="()=>startGame()">
 							התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
