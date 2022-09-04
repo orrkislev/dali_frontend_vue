@@ -71,7 +71,7 @@ function select(answerIndex, val) {
     <div v-for="(answer, answerIndex) in gameManager.question.answers" :key="answerIndex" class='mb-2 question-section'>
       <action-button :border="true" :indicator="answer.selected == 1 ? answer.result : null" :inactive="answer.inactive"
         :selected="answer.selected == 1" @click="select(answerIndex, 1)">
-        <span v-append="answer.text">{{ answer.text }}</span>
+        <span v-append="answer.text" v-html="answer.text"></span>
         <small v-if="answer.stats">&nbsp; ({{ answer.stats }})</small>
       </action-button>
     </div>

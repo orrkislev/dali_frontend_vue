@@ -75,7 +75,7 @@ function select(answerIndex, val) {
 <template>
     <div >
         <div v-for="(answer,index) in gameManager.question.answers" :key="index" class="question-section">
-            <div class='flex-1'> {{ answer.text }} </div>
+            <div class='flex-1' v-html="answer.text"> </div>
             <div class='flex gap05'>
                 <action-button v-for="val in [0,1]" class="flex1" :key="val" :border="true" :center="true"
                     :indicator="answer.selected==val ? answer.result : null"
