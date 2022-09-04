@@ -89,10 +89,9 @@ function getOptions(){
           <action-button v-for="(option, index) in getOptions()" :key="index" :border="true"
             :indicator="answer.selected == option.num ? answer.result : null"
             :inactive="answer.inactive ? answer.inactive[option.num] : null" :selected="answer.selected == option.num"
-            class="flex1" @click="select(answerIndex, option.num)">
-            {{ option.text }}
+            class="flex1" @click="select(answerIndex, option.num)"
+            v-html="option.text"></action-button>
             <small v-if="answer.stats">&nbsp; ({{ answer.stats[option.num] }})</small>
-          </action-button>
         </div>
         <div v-if="answer.result" v-bind:style="{ color: answer.result == 'success' ? 'green' : 'red' }"
           v-html="answer.feedback_text.text"></div>
