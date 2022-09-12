@@ -73,8 +73,14 @@ function select(answerIndex, val) {
   gameManager.question.answers[answerIndex].selected = val
 }
 
-function getOptions(){
-  return [...gameManager.question.options].sort((a,b)=>Math.random()-0.5)
+const options = ref([])
+function getOptions(anserIndex){
+  if (options.value[anserIndex]) return options.value[anserIndex]
+  else{
+    options.value[anserIndex] = [...gameManager.question.options].sort((a,b)=>Math.random()-0.5)
+    console.log(anserIndex)
+    return options.value[anserIndex]
+  }
 }
 
 </script>
@@ -86,7 +92,7 @@ function getOptions(){
       <div style="flex: 1">
         <span v-html="answer.text"></span>
         <div class="flex gap05">
-          <action-button v-for="(option, index) in getOptions()" :key="index" :border="true"
+          <action-button v-for="(option, index) in getOptions(answerIndex)" :key="index" :border="true"
             :indicator="answer.selected == option.num ? answer.result : null"
             :inactive="answer.inactive ? answer.inactive[option.num] : null" :selected="answer.selected == option.num"
             class="flex1" @click="select(answerIndex, option.num)"

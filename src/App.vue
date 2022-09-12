@@ -8,6 +8,7 @@ import Login from "./pages/login.vue";
 import { real_url } from "./utils/useAPI";
 import { useRoute } from "vue-router";
 import { watch } from "vue";
+import Mimshak from "./components/Mimshak.vue";
 
 const route = useRoute()
 const auth = useAuth()
@@ -25,15 +26,17 @@ document.head.appendChild(favicon);
 <template>
   <template v-if="auth.state == 'authenticated'">
     <template v-if="route.path.includes('/game_sel')">
-      <div id="allApp">
-        <div id="mainLayout">
-          <div style="flex:1;"></div>
-          <div id="mainContent" style="flex:6;">
-            <router-view></router-view>
-          </div>
-          <div style="flex:1;"></div>
-        </div>
-      </div>
+      <Mimshak>
+        <!-- <div id="allApp"> -->
+          <!-- <div id="mainLayout"> -->
+            <!-- <div style="flex:1;"></div> -->
+            <div id="mainContent" style="flex:6;">
+              <router-view></router-view>
+            </div>
+            <!-- <div style="flex:1;"></div> -->
+          <!-- </div> -->
+        <!-- </div> -->
+      </Mimshak>
     </template>
     <template v-else>
       <ConfirmDialog></ConfirmDialog>

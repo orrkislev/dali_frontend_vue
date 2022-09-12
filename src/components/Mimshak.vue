@@ -1,0 +1,79 @@
+<script setup>
+import useGameManager from '../utils/useGameManager';
+
+
+const gameManager = useGameManager()
+
+</script>
+
+
+<template>
+  <div id="mimshak_outer">
+    <div id="mimshak_top">
+      <div id="mimshak_top_right">
+        <img class="mimshak_logo" src="@/assets/home_top_logo.png" @click="startAuth" />
+        <img class="mimshak_logo" src="@/assets/home_top_logo.png" @click="startAuth" />
+      </div>
+      <div id="mimshak_top_left">
+        כמה מילים
+      </div>
+    </div>
+    <div id="mimshak_inner">
+      <div id="mimshak_game_titles" v-if="gameManager.game">
+        <div id="mimshak_game_title">{{ gameManager.game?.game.name }}</div>
+        בצע את הפעילות הבאה ולסיום לחץ פרסם
+      </div>
+      <div id="mimshak_dali_container">
+        <slot></slot>
+      </div>
+    </div>
+  </div>
+</template>
+
+
+<script>
+export default {
+  name: "Mimshak",
+};
+</script>
+
+
+<style>
+  #mimshak_outer {
+    background: white;
+    height: 100%;
+    width: 100%;
+    padding: 0 3em;
+  }
+  #mimshak_inner {
+    background: #F3F6FA;
+    border-radius: 1em;
+    padding: 2em;
+  }
+  #mimshak_top{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2em 0;
+  }
+  #mimshak_top_right{
+    display: flex;
+    gap: 3em;
+  }
+  .mimshak_logo {
+    height: 4em;
+    padding: 0.5em 1em;
+    border-radius: .6em;
+    box-shadow: 0px 3px 15px 5px rgba(0,0,0,0.1);
+  }
+  #mimshak_game_titles{
+    color: #394A66;
+  }
+  #mimshak_game_title{
+    font-size: 2em;
+    font-weight: bold;
+  }
+  #mimshak_dali_container{
+    margin: 2em 10em;
+  }
+</style>

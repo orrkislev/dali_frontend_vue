@@ -20,7 +20,6 @@ async function filterQuestion(){
         action: gameManager.question.filterQuest ? 'unfilter' : 'filter',
         quest_id: gameManager.question.q.id
     })
-    console.log(res)
     if (res.rc == 'success'){
         if (gameManager.question.filterQuest) gameManager.question.filterQuest = false
         else gameManager.question.filterQuest = true
@@ -28,8 +27,15 @@ async function filterQuestion(){
 }
 
 function skipQuestion(){
-    gameManager.lifeline_skip()
+    if (gameManager.question.question_num == gameManager.progress.progress.length) endGame()
+    else gameManager.lifeline_skip()
 }
+
+function getNextQuestionText(){
+    if (gameManager.question.question_num == gameManager.progress.progress.length) return 'סיום'
+    return 'לשאלה הבאה'
+}
+
 </script>
 
 
@@ -48,7 +54,7 @@ function skipQuestion(){
                 <div v-if="gameManager.question.too_few">{{ "סיננתם הרבה שאלות. לא ניתן לסנן שאלות נוספות" }}</div>
                 <div class='filteralert pulsing' v-if="gameManager.question.filterQuest">שימו לב: בחרתם להסיר שאלה זו. השאלה לא תופיע במשחקי תלמידים.</div>
                 <Divider />
-                <Button @click="skipQuestion" class="p-button-outlined p-button-sm">לשאלה הבאה</Button>
+                <Button @click="skipQuestion" class="p-button-outlined p-button-sm">{{ getNextQuestionText() }}</Button>
                 <Button @click="endGame" class="p-button-outlined p-button-sm">דלג לסוף המשחק</Button>
             </div>
         </div>
