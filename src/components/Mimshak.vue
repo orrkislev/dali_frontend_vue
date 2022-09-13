@@ -12,10 +12,10 @@ const gameManager = useGameManager()
     <div id="mimshak_top">
       <div id="mimshak_top_right">
         <img class="mimshak_logo" src="@/assets/home_top_logo.png" @click="startAuth" />
-        <img class="mimshak_logo" src="@/assets/home_top_logo.png" @click="startAuth" />
+        <img class="mimshak_logo" src="@/assets/mimshak_logo.png" @click="startAuth" />
       </div>
       <div id="mimshak_top_left">
-        כמה מילים
+        כלים שלובים
       </div>
     </div>
     <div id="mimshak_inner">
