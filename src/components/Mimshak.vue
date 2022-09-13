@@ -21,7 +21,7 @@ const gameManager = useGameManager()
     <div id="mimshak_inner">
       <div id="mimshak_game_titles" v-if="gameManager.game">
         <div id="mimshak_game_title">{{ gameManager.game?.game.name }}</div>
-        .בצעו את הפעילות הבאה ולסיום לחצו לפרסום<br/>
+        בצעו את הפעילות הבאה ולסיום לחצו לפרסום.<br/>
         תוכלו לזחק שוב ושוב עד שתצליחו ולפרסם את הציום הגבוה ביותר שתשיגו.
       </div>
       <div id="mimshak_dali_container">
