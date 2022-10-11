@@ -7,7 +7,7 @@ const gameManager = useGameManager()
 const api = useAPI()
 async function submit(val){
     await api.post_json(`statistics/student_target_game/`, {target:val})
-    gameManager.nextQuestion()
+    gameManager.nextQuestion(false)
 }
 </script>
 
