@@ -14,12 +14,21 @@ async function submit(val){
 <template>
     <div>
         <h3>לפני שמתחילים</h3>
-        <h4>מה היעד האישי שלך במשימה זו?</h4>
-
+        <h4>לפני שאתם ניגשים לענות על השאלות, הגדירו לעצמכם יעד למשימה.</h4>
+        <div class="flex">
+            זכרו, אתם יכולים לבצע את המשימה שוב ושוב בקצב שלכם עד להשגת היעד הרצוי. המורה תראה רק את הניקוד שתחליטו לפרסם.<br/>
+            נסו לענות לעצמכם על השאלות הבאות ואז בחרו בתשובה המתאימה:<br/>
+            </div>
+            <ul>
+                <li>עד כמה הנושא מעניין אותי?</li>
+                <li>עד כמה חשוב לי להצליח במשימה?</li>
+                <li>האם אסתפק בציון עובר או שארצה להשיג תוצאה יותר טובה? הכי טובה?</li>
+            </ul>
+            <br/>
         <div class="game-survey-buttons">
-            <div><ActionButton :center="true" :main="true" @click="submit('minimal')"> עובר </ActionButton></div>
-            <div><ActionButton :center="true" :main="true" @click="submit('good')"> טוב </ActionButton></div>
-            <div><ActionButton :center="true" :main="true" @click="submit('game_target')"> יעד המשימה </ActionButton></div>
+            <div><ActionButton :center="true" :main="true" @click="submit('minimal')"> עובר (60)</ActionButton></div>
+            <div><ActionButton :center="true" :main="true" @click="submit('good')"> טוב (80)</ActionButton></div>
+            <div><ActionButton :center="true" :main="true" @click="submit('game_target')"> מצויין (100)</ActionButton></div>
             <div><ActionButton :center="true" :main="true" @click="submit('none')"> לא יודע.ת </ActionButton></div>
         </div>
     </div>
