@@ -9,7 +9,7 @@ const gameManager = useGameManager();
     <div class="w-5 h-20rem ">
       <!-- <img :src="'http://da-li.co.il'+gameManager.game.game.game_icon_name" class='h-full bg-cover'/> -->
       <div
-        class="h-full bg-cover"
+        class="h-full bg-cover-orit"
         :style="{
           backgroundImage:
             'url(http://da-li.co.il' +

@@ -50,6 +50,6 @@ a {
 .h-full{
     background-repeat: no-repeat;
 }
-.bg-cover{
-    background-size: contain !important;
+.bg-cover-orit{
+    background-size: contain !important; 
 }
