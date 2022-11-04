@@ -46,3 +46,10 @@ a {
 .p-togglebutton {
     border-radius: 1em;
 }
+
+.h-full{
+    background-repeat: no-repeat;
+}
+bg-cover{
+    background-size: contain;
+}
