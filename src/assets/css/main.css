@@ -51,5 +51,5 @@ a {
     background-repeat: no-repeat;
 }
 bg-cover{
-    background-size: contain;
+    background-size: contain !important;
 }
