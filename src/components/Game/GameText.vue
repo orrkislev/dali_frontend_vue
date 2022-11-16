@@ -18,7 +18,7 @@ function nextQuestion() {
         <div id='task-main-top' style="padding:1em;">
             <div class='flex-column gap1'>
                 <div>
-                    קיראו את הטקסט הבא ואחר כך לחצו על 
+                    קראו את הטקסט הבא ואחר כך לחצו על
                     <strong>המשך לשאלות</strong>
                     כדי לענות על השאלות המתייחסות לטקסט
                 </div>
