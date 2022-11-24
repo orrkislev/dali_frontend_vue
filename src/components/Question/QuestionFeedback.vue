@@ -9,15 +9,29 @@ const emitter = useEmitter()
 
 function getHead() {
   let html = ''
-  if (gameManager.questionResult.result == 1) html += "תשובה נכונה!"
-  else if (gameManager.questionResult.result == 0) html += "תשובה לא נכונה"
-  else html += "תשובה חלקית"
-  html += '<br>'
-
+  let res_text = ''
+  let res_class  = ''
+  if (gameManager.questionResult.result == 1)
+  {
+    res_text = "תשובה נכונה!";
+    res_class = 'rescorrect';
+  }
+  else if (gameManager.questionResult.result == 0)
+  {
+    res_text = "תשובה לא נכונה";
+    res_class = 'resincorrect';
+  }
+  else
+  {
+    res_text = "תשובה חלקית";
+    res_class = 'respartial';
+  }
+  html = '<span class=' + res_class + '> ' + res_text + '</span><br/>';
   if (gameManager.questionResult.result > 0)
-    html += "קיבלת " + Math.ceil(gameManager.question.nextscore * gameManager.questionResult.result) + " נקודות!" + '<br>'
+    html += "<span class='p2k18pt'>קיבלת " + Math.ceil(gameManager.question.nextscore * gameManager.questionResult.result) + " נקודות!</span>" + '<br>'
 
-  if (['options', 'mouseselect'].includes(gameManager.question.q.type))
+  html += "<br/>"
+    if (['options', 'mouseselect'].includes(gameManager.question.q.type))
     html += gameManager.question.answers.find(a => a.selected == 1)?.feedback_text.text ?? ''
 
   return html
