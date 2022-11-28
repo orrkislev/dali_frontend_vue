@@ -13,7 +13,7 @@ emitter.subscribe("LIFELINE_5050", lifeline_5050)
 emitter.subscribe("CHECK_QUESTION", check);
 emitter.subscribe('SHOW_ANSWER', showAnswer)
 
-const answers = ref([])
+//const answers = ref([])
 initAnswers()
 
 function showAnswer() {
@@ -25,7 +25,7 @@ function showAnswer() {
 
 function initAnswers() {
     const abc = 'אבגדהוזחטיכ'
-    const newAnswers = [...gameManager.question.answers]
+    let newAnswers = [...gameManager.question.answers]
     newAnswers.forEach((a, i) => {
         a.letter = abc[i]
         a.coords = a.text.split(',').map(c => parseInt(c));
@@ -45,7 +45,7 @@ function initAnswers() {
         a.posx = x.toString() + "%"
         a.posy = y.toString() + "%"
     })
-    answers.value = newAnswers
+    gameManager.question.answers = newAnswers
 }
 
 
@@ -53,19 +53,35 @@ function getMouseSelectImageSrc(){
     return real_url + '/static/' + gameManager.question.mouseselectmedia; //.join('')
 }
 function select(answerIndex, val) {
-    answers.value.forEach(a => a.selected = 0)
-    answers.value[answerIndex].selected = val
+    let newAnswers = [...gameManager.question.answers]
+    newAnswers.forEach(a => a.selected = 0)
+    newAnswers[answerIndex].selected = val
+    gameManager.question.answers = newAnswers
+    //answers.value.forEach(a => a.selected = 0)
+    //answers.value[answerIndex].selected = val
 }
 function lifeline_stats(){
-    answers.value.forEach(answer => answer.stats = answer.chosen)
+    let newAnswers = [...gameManager.question.answers];
+    newAnswers.forEach((answer) => (answer.stats = answer.chosen));
+    gameManager.question.answers = newAnswers;
+    //gameManager.question.answers.value.forEach(answer => answer.stats = answer.chosen)
 }
 function lifeline_5050(){
-    let grayableAnswers = answers.value.filter(a => a.correct != 1).sort(() => Math.random() - 0.5)
-    grayableAnswers.slice(0, Math.floor(answers.value.length / 2)).forEach(a => a.inactive = true)
+    let newAnswers = [...gameManager.question.answers];
+    let grayableAnswers = newAnswers
+        .filter((a) => a.correct != 1)
+        .sort(() => Math.random() - 0.5);
+    grayableAnswers
+        .slice(0, Math.floor(newAnswers.length / 2))
+        .forEach((a) => (a.inactive = true));
+    gameManager.question.answers = newAnswers;
+    //let grayableAnswers = gameManager.question.answers.value.filter(a => a.correct != 1).sort(() => Math.random() - 0.5)
+    //grayableAnswers.slice(0, Math.floor(answegameManager.question.answersrs.value.length / 2)).forEach(a => a.inactive = true)
 }
 function check(){
+    let newAnswers = [...gameManager.question.answers];
     let result = 0
-    answers.value.forEach((a, i) => {
+    newAnswers.forEach((a, i) => {
         if (a.selected == a.correct) {
             result++
             a.result = 'success'
@@ -74,12 +90,18 @@ function check(){
         }
         a.inactive = true
     })
-    result = (result == this.answers.length) ? 1 : 0
+    gameManager.question.answers = newAnswers;
+    result = result == gameManager.question.answers.length ? 1 : 0;
 
-    selectedAnswer = this.answers.find(a => a.selected == 1)
-    let answerlist
-    if (selectedAnswer) answerlist = [{ id: selectedAnswer.id, res: result }]
-    else answerlist = [{ id: -1, res: result }]
+    //result = (result == this.answers.length) ? 1 : 0
+
+    let answerlist = [];
+    let selectedAnswer = gameManager.question.answers.find((a) => a.selected == 1);
+    if (selectedAnswer) answerlist = [{ id: selectedAnswer.id, res: result }];
+
+    //selectedAnswer = this.answers.find(a => a.selected == 1)
+    //if (selectedAnswer) answerlist = [{ id: selectedAnswer.id, res: result }]
+    //else answerlist = [{ id: -1, res: result }]
 
     gameManager.submitQuestion({ result, answerlist })
 }
@@ -90,12 +112,12 @@ function check(){
     <div class="flex flex-column gap05">
         <div style='position: relative; margin-bottom: 3em;'>
             <img id='mouseselectimage' v-bind:src="getMouseSelectImageSrc()">
-            <div class='mouseselectmarker' v-for="(answer, answerIndex) in answers" style='position:absolute;'
+            <div class='mouseselectmarker' v-for="(answer, answerIndex) in gameManager.question.answers" style='position:absolute;'
                 v-bind:style="{ top: answer.posy, left: answer.posx }">
                 {{ answer.letter }}
             </div>
         </div>
-        <div v-for="(answer, answerIndex) in answers" class="question-section">
+        <div v-for="(answer, answerIndex) in gameManager.question.answers" :key="answerIndex" class="question-section">
             <div class="flex1">
                 <ActionButton :border="true" :indicator="answer.selected == 1 ? answer.result : null"
                     :inactive="answer.inactive" :selected="answer.selected == 1" @click="select(answerIndex, 1)">
@@ -110,7 +132,8 @@ function check(){
 
 <script>
 export default {
-    name: 'QuestionMouseSelect'
+    components: { ActionButton },
+    name: 'QuestionMouseSelect',
 };
 </script>
 

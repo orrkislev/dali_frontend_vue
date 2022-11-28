@@ -22,7 +22,7 @@ const gameManager = useGameManager()
     <QuestionSelection        v-else-if="gameManager.question?.q?.type=='selection'"  />
     <QuestionWordSelect       v-else-if="gameManager.question?.q?.type=='wordselect'"  />
     <QuestionShortopen        v-else-if="gameManager.question?.q?.type=='shortopen'"  />
-    <QuestionMouseSelect      v-else-if="gameManager.question?.q?.type=='mouseselect'"  />
+    <QuestionMouseSelect      v-else-if="gameManager.question?.q?.type=='mouseselect'" :key="gameManager.question?.q?.id"  />
     <QuestionLinesselect      v-else-if="gameManager.question?.q?.type=='lineselect'"  />
     <div v-else></div>
 </template>
