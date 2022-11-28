@@ -27,7 +27,7 @@ function getHead() {
     res_class = 'respartial';
   }
   html = '<span class=' + res_class + '> ' + res_text + '</span><br/>';
-  if (gameManager.questionResult.result > 0)
+  if ((gameManager.questionResult.result > 0) && (gameManager.question.nextscore > 0))
     html += "<span class='p2k18pt'>קיבלת " + Math.ceil(gameManager.question.nextscore * gameManager.questionResult.result) + " נקודות!</span>" + '<br>'
 
   html += "<br/>"
