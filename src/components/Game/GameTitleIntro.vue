@@ -53,9 +53,8 @@ function startMobileGame() {
 	<div id="task-main" v-if="gameManager.game">
 		<game-title-top>
 			<h3 v-if="gameManager.game?.extra.exam">בוחן</h3>
-			<div v-html="gameManager.game?.game.description"></div>
-			<div v-html="gameManager.game?.subj.description"></div>
-			
+			<div v-if="gameManager.game?.game.description" v-html="gameManager.game?.game.description"></div>
+			<div v-else v-html="gameManager.game?.subj.description"></div>
 			<div v-if="gameManager.game.sub_games.length > 0">
 				במשחק {{ gameManager.game.sub_games.length }} שלבים:
 				<div v-for="(subgame, i) in gameManager.game.sub_games" :key="i">
