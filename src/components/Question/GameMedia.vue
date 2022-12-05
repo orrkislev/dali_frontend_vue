@@ -43,7 +43,14 @@ function closeMedia(){
 
 function editMediaForDevelopment(media){
   //TODO update when production
-  if (process.env.NODE_ENV=='development') return media.split('/static/').join('http://da-li.co.il/static/') 
+  //if (process.env.NODE_ENV=='development') return media.split('/static/').join('http://da-li.co.il/static/') 
+  //return media
+
+  var mymedia = media.split('/static/').join('http://da-li.co.il/static/') //TODO update when production
+  //return media.split('/static/').join('http://da-li.co.il/static/') //TODO update when production
+  var node = document.createElement("div");
+  node.innerHTML = media;
+  nodeScriptReplace(node);
   return media
 }
 

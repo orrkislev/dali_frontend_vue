@@ -78,7 +78,7 @@ function getOptions(anserIndex){
   if (options.value[anserIndex]) return options.value[anserIndex]
   else{
     options.value[anserIndex] = [...gameManager.question.options].sort((a,b)=>Math.random()-0.5)
-    console.log(anserIndex)
+    //console.log(anserIndex)
     return options.value[anserIndex]
   }
 }
