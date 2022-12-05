@@ -54,6 +54,42 @@ function editMediaForDevelopment(media){
   return media
 }
 
+// TODO: move to utils
+// Parse scripts within a node (question media) and create script elements
+// Taken from https://stackoverflow.com/questions/1197575/can-scripts-be-inserted-with-innerhtml
+function nodeScriptReplace(node,parentobj) 
+{
+  console.log('start');
+  if ( nodeScriptIs(node) === true ) {
+    console.log('found');
+    document.body.appendChild(nodeScriptClone(node));
+  }
+  else {
+    var i = -1, children = node.childNodes;
+    while ( ++i < children.length ) {
+      nodeScriptReplace( children[i] );
+    }
+  }
+
+  return node;
+}
+function nodeScriptClone(node){
+  var script  = document.createElement("script");
+  script.text = node.innerHTML;
+
+  var i = -1, attrs = node.attributes, attr;
+  while ( ++i < attrs.length ) {                                    
+    script.setAttribute( (attr = attrs[i]).name, attr.value );
+  }
+  return script;
+}
+
+function nodeScriptIs(node) {
+        return node.tagName === 'SCRIPT';
+}
+
+
+
 
 </script>
 
