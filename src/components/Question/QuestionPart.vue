@@ -15,16 +15,16 @@ const gameManager = useGameManager()
 
 
 <template>
-    <LashonDragToTableShuffle v-if="gameManager.question?.q?.display_template=='lashon_drag_2table_shuffle'"  />    
-    <LashonDragToTableShuffleHide v-else-if="gameManager.question?.q?.display_template=='lashon_2table_shuffle_hide'"  />
-    <QuestionOptions          v-else-if="gameManager.question?.q?.type=='options'"  />                                  
-    <QuestionYesNo            v-else-if="gameManager.question?.q?.type=='yesno'"  />
-    <QuestionSelection        v-else-if="gameManager.question?.q?.type=='selection'"  />
-    <QuestionWordSelect       v-else-if="gameManager.question?.q?.type=='wordselect'"  />
-    <QuestionShortopen        v-else-if="gameManager.question?.q?.type=='shortopen'"  />
+    <LashonDragToTableShuffle v-if="gameManager.question?.q?.display_template=='lashon_drag_2table_shuffle'"  :key="gameManager.question?.q?.id" />
+    <LashonDragToTableShuffleHide v-else-if="gameManager.question?.q?.display_template=='lashon_2table_shuffle_hide'"  :key="gameManager.question?.q?.id" />
+    <QuestionOptions          v-else-if="gameManager.question?.q?.type=='options'"  :key="gameManager.question?.q?.id"  />
+    <QuestionYesNo            v-else-if="gameManager.question?.q?.type=='yesno'"  :key="gameManager.question?.q?.id"  />
+    <QuestionSelection        v-else-if="gameManager.question?.q?.type=='selection'"   :key="gameManager.question?.q?.id"  />
+    <QuestionWordSelect       v-else-if="gameManager.question?.q?.type=='wordselect'"  :key="gameManager.question?.q?.id"  />
+    <QuestionShortopen        v-else-if="gameManager.question?.q?.type=='shortopen'"  :key="gameManager.question?.q?.id"  />
     <QuestionMouseSelect      v-else-if="gameManager.question?.q?.type=='mouseselect'" :key="gameManager.question?.q?.id"  />
-    <QuestionLinesselect      v-else-if="gameManager.question?.q?.type=='lineselect'"  />
-    <div v-else></div>
+    <QuestionLinesselect      v-else-if="gameManager.question?.q?.type=='lineselect'"  :key="gameManager.question?.q?.id"  />
+    <div v-else>מצטערים - סוג השאלה לא נתמך  באתר זה.</div>
 </template>
 
 
