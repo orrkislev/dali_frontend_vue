@@ -11,16 +11,20 @@ onBeforeUnmount(() => {
   scriptTags.value.forEach((tag) => document.body.removeChild(tag));
 });
 
-props.htmlWithScripts.split("<script>").forEach((mediaPart) => {
-  const partSplit = mediaPart.split("<" + "/script>");
-  if (partSplit.length == 2) {
-    const scriptTag = document.createElement("script");
-    scriptTag.setAttribute("charset", "utf-8");
-    scriptTag.text = partSplit[0];
-    document.body.appendChild(scriptTag);
-    scriptTags.value.push(scriptTag);
+//onBeforeMount(() => {
+  props.htmlWithScripts.split("<script>").forEach((mediaPart) => {
+    //console.log('madiaPart=' + mediaPart);
+    const partSplit = mediaPart.split("<" + "/script>");
+    if (partSplit.length == 2) {
+      console.log('adding script');
+      const scriptTag = document.createElement("script");
+      scriptTag.setAttribute("charset", "utf-8");
+      scriptTag.text = partSplit[0];
+      document.body.appendChild(scriptTag);
+      scriptTags.value.push(scriptTag);
   }
 });
+
 
 </script>
 

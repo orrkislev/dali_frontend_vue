@@ -45,12 +45,13 @@ function editMediaForDevelopment(media){
   //TODO update when production
   //if (process.env.NODE_ENV=='development') return media.split('/static/').join('http://da-li.co.il/static/') 
   //return media
-
+  console.log('editMediaForDevelopment');
   var mymedia = media.split('/static/').join('http://da-li.co.il/static/') //TODO update when production
   //return media.split('/static/').join('http://da-li.co.il/static/') //TODO update when production
-  var node = document.createElement("div");
-  node.innerHTML = media;
-  nodeScriptReplace(node);
+  //var node = document.createElement("div");
+  //node.setAttribute("id","this_is_me");
+  //node.innerHTML = media;
+  //nodeScriptReplace(node);
   return media
 }
 
@@ -59,7 +60,7 @@ function editMediaForDevelopment(media){
 // Taken from https://stackoverflow.com/questions/1197575/can-scripts-be-inserted-with-innerhtml
 function nodeScriptReplace(node,parentobj) 
 {
-  console.log('start');
+  console.log('start nodeScriptReplace');
   if ( nodeScriptIs(node) === true ) {
     console.log('found');
     document.body.appendChild(nodeScriptClone(node));
