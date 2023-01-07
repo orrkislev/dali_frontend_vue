@@ -28,10 +28,10 @@ const useAuth = defineStore('auth', {
             this.state = 'authenticated'
         },
         async login(username, password) {
-            if (username == '') {
+            /*if (username == '') {
                 username = "mora21"
                 password = "orit2345"
-            }
+            }*/
             const api = useAPI()
             let response = await api.post('students/pre_login/', {
                 'go_normal': 1,
