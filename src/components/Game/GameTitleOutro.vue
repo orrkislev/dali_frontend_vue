@@ -23,16 +23,27 @@ function restartGame() {
   gameManager.loadGameData({taskID: route.params.taskid, extra:''})
   gameManager.startGame();
 }
-async function publish() {
-  let res = await api.post("statistics/publish/",{id: gameManager.question.publishID[0]}).then((res) => {
+async function publish(is_publish) {
+  let res = await api.post("statistics/publish/",{id: gameManager.question.publishID[0],publish:is_publish}).then((res) => {
     if (res.external_continue_url)
     {
       window.location.href = res.external_continue_url;
     }
-    isPublished.value = true;
+    if (is_publish) isPublished.value = true;
+    else backToGamePage()
   });
 }
-
+/*
+async function complete() {
+  let res = await api.post("statistics/publish/",{id: gameManager.question.publishID[0],publish:false}).then((res) => {
+    if (res.external_continue_url)
+    {
+      window.location.href = res.external_continue_url;
+    }
+    else backToGamePage()
+  });
+}
+*/
 function backToGamePage() {
   gameManager.question=null
 }
@@ -45,10 +56,11 @@ function backToGamePage() {
         <Knob :modelValue="gameManager.question.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
         <div class="flex flex-column gap05">
           <Button v-if="!gameManager.game.extra.exam && !gameManager.extra.teacher" class="p-button-rounded px-6 p-button-lg" 
-            :disabled="isPublished" @click="publish"
+            :disabled="isPublished" @click="publish(true)"
             :class="{'p-button-warning': isPublished}">
             {{ isPublished ? 'פורסם' : 'פרסם' }}
           </Button>
+          <ActionButton v-if="gameManager.sel && !isPublished" :border="true" :center="true" @click="publish(false)" style="minWidth:100%">סיום ללא פרסום</ActionButton> 
           <!-- <Button v-if="!gameManager.game.extra.exam" class="p-button-secondary p-button-rounded px-6 p-button-sm" @click="restartGame">לשחק שוב</Button> -->
           <ActionButton :border="true" :center="true" @click="backToGamePage" style="minWidth:100%">חזרה לדף המשימה</ActionButton>
         </div>

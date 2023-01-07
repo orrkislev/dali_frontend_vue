@@ -1,5 +1,8 @@
 import { defineStore } from 'pinia'
 import useAPI from './useAPI';
+import { useRouter } from 'vue-router';
+
+
 
 const useGameManager = defineStore('game', {
     state: () => ({
@@ -9,7 +12,8 @@ const useGameManager = defineStore('game', {
         progress: null,
         view: null,
         media: {media:null, open:false},
-        extra:{}
+        extra:{},
+        sel: false,
     }),
     getters: {
         getPostDataForSubmitAndNext: state => {
@@ -32,10 +36,13 @@ const useGameManager = defineStore('game', {
     actions: {
         async loadGameData({ taskID, extra }) {
             const api = useAPI()
+            const router = useRouter()
             let res = await api.post_json('tasks/task_page/', { 'game_id': taskID })
             res.extra = extra
+            if (router.currentRoute._value.path.search('sel') > 0) this.sel = true
             this.game = res
-            if (res.game.gameType != 'trivia') console.log('SPECIAL GAMETYPE:', res.game.gameType)
+            if (res.game.gameType != 'trivia') 
+                console.log('SPECIAL GAMETYPE:', res.game.gameType)
             this.view = 'title'
         },
         async startGame(level = null, restart = false, extra = {}) {
