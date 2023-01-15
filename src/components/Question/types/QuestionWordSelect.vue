@@ -49,23 +49,40 @@ function fillCorrectAnswer(a, i) {
 
 function check() {
   let result = 0;
+  const answerlist = []
   gameManager.question.wordSelect[1].forEach((a, i) => {
     let input = "";
     let el = $("#selection" + (i + 1));
-    if (el.attr("type") == "text") input = el.val();
-    else input = $("#selection" + (i + 1) + " option:selected").text();
-    input = input.trim();
-
+    const answerListData = {
+            id: i, //gameManager.question.answers[i].id,
+            res: false,
+            val: '-3',
+            text: '',
+        }
+    if (el.attr("type") == "text") 
+    {
+      input = el.val();
+      answerListData.val = '-4'; // This is a code for text
+    } 
+    else 
+    { 
+      input = $("#selection" + (i + 1) + " option:selected").text().trim();
+      if (input != 'בחירה')
+        answerListData.val = '-5'; // This is a code to search for the ID in the server for qeest_statistics
+    }
+    answerListData.text = input;
     const availableAnswers = a.split(",").map((b) => b.trim());
     if (availableAnswers.includes(input)) {
       result++;
       el.addClass("word_select_selection_right");
+      answerListData.res = true;
     } else {
       el.addClass("word_select_selection_wrong");
     }
+    answerlist[i] = answerListData
   });
   result = result / gameManager.question.wordSelect[1].length;
-  gameManager.submitQuestion({ result });
+  gameManager.submitQuestion({ result, answerlist });
 }
 </script>
 

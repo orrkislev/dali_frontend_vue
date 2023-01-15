@@ -53,7 +53,6 @@ function check() {
   let answerlist = [];
   let selectedAnswer = gameManager.question.answers.find((a) => a.selected == 1);
   if (selectedAnswer) answerlist = [{ id: selectedAnswer.id, res: result }];
-
   gameManager.submitQuestion({ result, answerlist });
 }
 

@@ -94,8 +94,8 @@ function getOptions(anserIndex){
         <div class="flex gap05">
           <action-button v-for="(option, index) in getOptions(answerIndex)" :key="index" :border="true"
             :indicator="answer.selected == option.num ? answer.result : null"
-            :inactive="answer.inactive ? answer.inactive[option.num] : null" :selected="answer.selected == option.num"
-            class="flex1" @click="select(answerIndex, option.num)"
+            :inactive="answer.inactive ? answer.inactive[option.num] : null" :selected="answer.selected == option.id"
+            class="flex1" @click="select(answerIndex, option.id)"
             v-html="option.text"></action-button>
             <small v-if="answer.stats">&nbsp; ({{ answer.stats[option.num] }})</small>
         </div>

@@ -35,15 +35,16 @@ function check() {
     const answerlist = []
     inputAnswers.forEach((a,i) => {
         const answerListData = {
-            id: gameManager.question.answers[i].id,
+            id: '0', //gameManager.question.answers[i].id,
             res: false,
-            val: a
+            text: a
         }
         if (availableAnswers.includes(a)) {
             availableAnswers.splice(availableAnswers.indexOf(a), 1)
             inputColors.value[i] = 'success'
             result++
             answerListData.res = true
+            answerListData.id = gameManager.question.answers[i].id
         } else {
             inputColors.value[i] = 'fail'
         }

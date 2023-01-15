@@ -17,8 +17,9 @@ const useGameManager = defineStore('game', {
     }),
     getters: {
         getPostDataForSubmitAndNext: state => {
+
             if (!state.questionResult) return false
-            return {
+            let data = {
                 in_question: 1,
                 correct: state.questionResult?.result ?? 0,
                 timer: 1,
@@ -28,9 +29,10 @@ const useGameManager = defineStore('game', {
                 ScoreChange: Math.ceil(state.question.nextscore * (state.questionResult.result ?? 0)),
                 type: state.question.q.type,
                 question_id: state.question.q.id,
-                answerlist: state.questionResult.answerlist ?? [],
+                answerlist: JSON.stringify(state.questionResult.answerlist ?? []),
                 onlyData: true
             }
+            return data
         },
     },
     actions: {
@@ -142,9 +144,9 @@ const useGameManager = defineStore('game', {
         async submitQuestion(questionResult) {
             this.questionResult = { ...this.questionResult, ...questionResult }
             if (this.progress.progress[0] == 'admin') return
-
             const data = this.getPostDataForSubmitAndNext
             const api = useAPI()
+            //const res = await api.post_special("quest/gamehead/", {'new_site_data':JSON.stringify(data)})
             const res = await api.post("quest/gamehead/", data)
             
             this.progress.score = res.score
