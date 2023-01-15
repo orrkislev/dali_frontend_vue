@@ -23,12 +23,12 @@ function login() {
                     <div>שם משתמש</div>
                     <InputText id="username" type="text" v-model="name" />
                     <div>סיסמא</div>
-                    <Password v-model="password" />
+                    <Password v-model="password" /><br/>
                     <Button label="כניסה" type="submit"/>
                 </div>
             </form>
-            <Divider />
-             <Button label="הזדהות אחידה" type="submit"/>
+            <!--<Divider />
+             <Button label="הזדהות אחידה" type="submit"/>-->
         </div>
     </div>
 </template>
