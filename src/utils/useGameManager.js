@@ -130,15 +130,7 @@ const useGameManager = defineStore('game', {
                 res = await api.post("quest/game_description/", {})
                 res = await api.post("quest/buttons/", postdata)
                 res = await api.post("quest/play/", { onlyData: true })
-                if (res.action == 'sruvey') {
-                    this.view = 'survey'
-                    return   
-                }
-                this.media.media = null
-                this.question = res
-                this.questionResult = {}
-                if (res.action == 'game ended') this.view = 'title'
-                else if (res.action == 'next question') this.view = 'question'
+                    if (this.handlePlay(res)) return
             } 
         },
         async submitQuestion(questionResult) {
@@ -146,7 +138,6 @@ const useGameManager = defineStore('game', {
             if (this.progress.progress[0] == 'admin') return
             const data = this.getPostDataForSubmitAndNext
             const api = useAPI()
-            //const res = await api.post_special("quest/gamehead/", {'new_site_data':JSON.stringify(data)})
             const res = await api.post("quest/gamehead/", data)
             
             this.progress.score = res.score
@@ -164,19 +155,8 @@ const useGameManager = defineStore('game', {
 
             const data = withData ? this.getPostDataForSubmitAndNext : {}
             const res = await api.post("quest/play/", data)
-            if (res.action == 'sruvey') {
-                this.view = 'survey'
-                return
-            }
-            if (res.action == 'game ended') this.view = 'title'
-            else if (res.action == 'next question') this.view = 'question'
-            else if (res.action == 'media start') {
-                this.view = 'media'
-                this.media.media = res.media
-            }
-            this.question = res
-            this.questionResult = {}
-            if (res.question_num) this.progress.progress[res.question_num - 1] = 'curr'
+                if (this.handlePlay(res)) return
+                if (res.question_num) this.progress.progress[res.question_num - 1] = 'curr'
         },
         async lifeline_retry() {
             const api = useAPI()
@@ -212,6 +192,22 @@ const useGameManager = defineStore('game', {
             const res = await api.post("quest/action/", { action: 'replace', onlyData: true })
             this.question = res
             this.questionResult = {}
+        },
+        handlePlay(res)  {
+            this.question = res
+            this.questionResult = {}
+            if (res.action == 'sruvey') {
+                this.view = 'survey'
+                return true
+            }
+            else if (res.action == 'media start') {
+                this.view = 'media-start'
+                this.media.media = res.media
+                return true
+            }
+            if (res.action == 'game ended') this.view = 'title'
+            else if (res.action == 'next question') this.view = 'question'
+            return false
         }
     }
 })
