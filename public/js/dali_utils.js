@@ -167,3 +167,15 @@ function show_static(content,div_id,close_popups,is_dialog, show_wait,post_app,p
       post_action_call();
 	});
 }
+
+openclose_vals = ['פתיחת טקסט חזרה','סגירת טקסט חזרה'];
+function openclose_reminder(obj_id)
+{
+  $("div#reminder_div_" + obj_id).toggle(
+      function ()
+      {
+        new_val = 1 - $("#openclose_reminder_button_" + obj_id).attr('myval');
+        $("#openclose_reminder_button_" + obj_id).attr('myval',new_val);
+        $("#openclose_reminder_button_" + obj_id).val(openclose_vals[new_val]);
+      });
+}
