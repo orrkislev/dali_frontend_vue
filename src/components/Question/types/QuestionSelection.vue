@@ -47,6 +47,7 @@ function check() {
   let newAnswers = [...gameManager.question.answers]
   let result = 0
   newAnswers.forEach((a, i) => {
+    console.log('rrr')
     if (a.selected == a.correct) {
       a.result = 'success'
       result++
@@ -62,15 +63,16 @@ function check() {
     return {
       id: a.id,
       res: a.result == 'success' ? 1 : 0,
-      val: a.selected
+      val: a.optionid
     }
   })
 
   gameManager.submitQuestion({ result, answerlist })
 }
 
-function select(answerIndex, val) {
+function select(answerIndex, val,id) {
   gameManager.question.answers[answerIndex].selected = val
+  gameManager.question.answers[answerIndex].optionid = id
 }
 
 const options = ref([])
@@ -94,8 +96,8 @@ function getOptions(anserIndex){
         <div class="flex gap05">
           <action-button v-for="(option, index) in getOptions(answerIndex)" :key="index" :border="true"
             :indicator="answer.selected == option.num ? answer.result : null"
-            :inactive="answer.inactive ? answer.inactive[option.num] : null" :selected="answer.selected == option.id"
-            class="flex1" @click="select(answerIndex, option.id)"
+            :inactive="answer.inactive ? answer.inactive[option.num] : null" :selected="answer.selected == option.num"
+            class="flex1" @click="select(answerIndex, option.num, option.id)"
             v-html="option.text"></action-button>
             <small v-if="answer.stats">&nbsp; ({{ answer.stats[option.num] }})</small>
         </div>
