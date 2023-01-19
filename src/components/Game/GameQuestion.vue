@@ -39,7 +39,8 @@ onBeforeRouteLeave(async (to, from) => {
 });
 
 function restartGame(){
-  gameManager.startGame({ restart: true });
+  gameManager.view = 'wait'
+  gameManager.startGame(false, true );
 }
 </script>
 
@@ -58,7 +59,7 @@ function restartGame(){
       <question-feedback />
     </div>
     <Divider align='right'>
-      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחל משחק מחדש" /> 
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחלת משחק חדש" /> 
     </Divider>
     <game-media />
   </div>

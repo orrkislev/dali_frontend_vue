@@ -26,6 +26,7 @@ const chooseTeacherGameType = ref(false)
 
 
 function startGame(gameType) {
+	gameManager.view = 'wait'
 	if (gameType == null){
 		if (auth.isTeacherOrStaff && gameManager.game.classData?.filtered_game){
 			chooseTeacherGameType.value = true
@@ -73,18 +74,18 @@ function startMobileGame() {
 				<div v-else-if="auth.isTeacherOrStaff && gameManager.game.allow_teacher_test && !isSEL" class="p-buttonset">
 					<template v-if="!chooseTeacherGameType">
 						<Button class="p-button-rounded px-6" @click="()=>startGame()">
-							התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
+							התחלת בוחן <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
 						</Button>
 						<Button class="p-button-rounded p-button-secondary" @click="startTeacherWalkthrough"> מעבר מורה </Button>
 					</template>
 					<template v-else>
-						<Button class="p-button-rounded p-button-secondary" @click="()=>startGame('filtered')">  התחל - משחק מסונן</Button>
-						<Button class="p-button-rounded" @click="()=>startGame('normal')"> התחל - משחק מלא</Button>
+						<Button class="p-button-rounded p-button-secondary" @click="()=>startGame('filtered')">  התחלה משחק מסונן</Button>
+						<Button class="p-button-rounded" @click="()=>startGame('normal')"> התחלה - משחק מלא</Button>
 					</template>
 				</div>
 				<div v-else>
 					<Button class="p-button-rounded px-8" @click="()=>startGame()">
-						התחל <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
+						התחלת משחק <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
 					</Button>
 				</div>
 			</div>
