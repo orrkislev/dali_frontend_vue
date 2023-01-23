@@ -3,6 +3,7 @@ import { onMounted, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import useAPI from '../../utils/useAPI';
 import useAuth from '../../utils/useAuth';
+import useEmitter from "../../utils/useEmmiter";
 
 const props = defineProps({
     publishedFirst: { type: Boolean, default: false },
@@ -11,12 +12,16 @@ const props = defineProps({
 const api = useAPI()
 const route = useRoute()
 const data = ref(null)
+const emitter = useEmitter()
+emitter.subscribe('UPDATE_GAMELIST', updateGameList)
 
 watch(props, (newVal, oldVal) => {
     if (newVal.publishedFirst) data.value[0].publish = true
 })
 
-onMounted(() => {
+onMounted(() => { updateGameList() })
+
+function updateGameList() {
     api.post(`statistics/usergamedetails/${route.params.taskid}/`, {}).then((res) => {
         if (res.mygames && res.mygames.length > 0) {
             res.mygames.sort((a, b) => new Date(b.date) - new Date(a.date))
@@ -26,7 +31,7 @@ onMounted(() => {
             data.value = res.mygames
         }
     })
-})
+}
 
 function publish(id) {
     var stat =  data.value.find(game => game.id == id).publish;
