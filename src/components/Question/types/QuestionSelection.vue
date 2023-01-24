@@ -47,7 +47,6 @@ function check() {
   let newAnswers = [...gameManager.question.answers]
   let result = 0
   newAnswers.forEach((a, i) => {
-    console.log('rrr')
     if (a.selected == a.correct) {
       a.result = 'success'
       result++
