@@ -24,7 +24,8 @@ const initialValues = { ...lifelines.value };
 function activateLifeline(name) {
   if (lifelines.value[name].active) {
     let newLifelines = { ...lifelines.value };
-    if (name!=='retry') newLifelines[name].active = false;
+    //if (name!=='retry') // In future, we will allow  multiple retreis with no change in grade. This can be a new action to the server.
+    newLifelines[name].active = false;
     lifelines.value = newLifelines;
   } else if (gameManager.progress.bonus) {
     let newProgress = { ...gameManager.progress };
@@ -34,7 +35,7 @@ function activateLifeline(name) {
   if (name == "5050") lifeline_5050();
   if (name == "stats") lifeline_stats();
   if (name == "retry") gameManager.lifeline_retry();
-  if (name == "skip") gameManager.lifeline_skip();
+  if (name == "skip") gameManager.lifeline_skip();  
   if (name == "replace") gameManager.lifeline_replace();
 }
 
