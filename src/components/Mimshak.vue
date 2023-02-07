@@ -1,5 +1,6 @@
 <script setup>
 import useGameManager from '../utils/useGameManager';
+import SendComment from "../components/SideBar/SendComment.vue";
 
 
 const gameManager = useGameManager()
@@ -29,6 +30,7 @@ const gameManager = useGameManager()
         <slot></slot>
       </div>
     </div>
+    <div class='centerdiv' style="display:table;border: 2px solid #3a7fce;border-radius:20px;margin:20px;"><send-comment /></div>
   </div>
 </template>
 
