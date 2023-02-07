@@ -38,17 +38,20 @@ function lifeline_5050() {
 function check() {
   let newAnswers = [...gameManager.question.answers];
   let result = 0;
-  newAnswers.forEach((a, i) => {
+  newAnswers.every((a, i) => { // Every allows us to break when a correct answer is found. Useful when there re multiple correct answers.
     if (a.selected == a.correct) {
       result++;
       a.result = "success";
+      return false;
     } else {
       a.result = "fail";
+      return true;
     }
     a.inactive = true;
   });
   gameManager.question.answers = newAnswers;
-  result = result == gameManager.question.answers.length ? 1 : 0;
+  console.log('result=' + result)
+  //result = result == gameManager.question.answers.length ? 1 : 0;
 
   let answerlist = [];
   let selectedAnswer = gameManager.question.answers.find((a) => a.selected == 1);
