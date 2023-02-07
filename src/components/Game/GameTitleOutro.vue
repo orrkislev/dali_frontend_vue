@@ -7,10 +7,14 @@ import { onBeforeRouteLeave, useRoute } from 'vue-router';
 import GameTitleTop from './GameTitleTop.vue';
 import GameManageClasses from './teachers/GameManageClasses.vue';
 import ActionButton from '../ActionButton.vue';
+import useEmitter from "src/utils/useEmmiter";
 
 const api = useAPI();
 const gameManager = useGameManager()
 const route = useRoute()
+const emitter = useEmitter()
+
+emitter.subscribe("PUBLISH_FROM_LIST",handle_publish_from_list)
 
 onBeforeRouteLeave(async (to, from) => {
   gameManager.question = null
@@ -33,20 +37,29 @@ async function publish(is_publish) {
     {
       window.location.href = res.external_continue_url;
     }
-    if (is_publish) isPublished.value = true;
-    //else backToGamePage()
-
-    if (gameManager.game.sel_group_game) 
+    if (is_publish==true) 
     {
-      showPublishID(res.id)
+      isPublished.value = true;
+      if (gameManager.game.sel_group_game) 
+      {
+        showPublishID(res.id)
+      }
     }
     
   });
 }
 
+function handle_publish_from_list(params) {
+  console.log(888)
+  if (params.status)
+    if (gameManager.game.sel_group_game) 
+      {
+        showPublishID(params.id)
+      }
+}
+
 function showPublishID(id)
 {
-  
   popUpData.value = id
   displayDialog.value = true
 }

@@ -11,7 +11,8 @@ const gameManager = useGameManager();
 const emitter = useEmitter()
 emitter.subscribe("SHOW_MEDIA", showMedia);
 
-function showMedia(feedback){    
+function showMedia(feedback){
+  // the feedback is received as object. Can fix with JSON.stringify in the emitter
   openMedia()
   feedback = gameManager.question.q.feedback_general
   let scroll_to = null;

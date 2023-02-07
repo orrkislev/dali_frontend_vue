@@ -13,7 +13,8 @@ export default function useEmitter() {
         })
     }
 
-    const emit = (emitName) => emitter.emit(emitName)
+    const emit = (emitName,params) => emitter.emit(emitName,params)
 
-    return { subscribe, emit }
+
+    return { subscribe, emit}
 }

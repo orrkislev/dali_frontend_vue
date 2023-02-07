@@ -35,10 +35,11 @@ function updateGameList() {
 
 function publish(id) {
     var stat =  data.value.find(game => game.id == id).publish;
-    console.log('stat =' + stat + "not stat = " + !stat);
     api.post('statistics/publish/', { id ,'type':'switch'}).then((res) => {
             data.value.find(game => game.id == id).publish = !stat
+            emitter.emit("PUBLISH_FROM_LIST", {'status':!stat, 'id':res.id})
     })
+    
 }
 </script>
 

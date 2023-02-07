@@ -59,10 +59,9 @@ function startMobileGame() {
 }
 
 
-function groupPublishGame()
+async function groupPublishGame()
 {
-	console.log('ddd')
-	api.post(`statistics/publishgroup/`, {'id':publishID.value,'publish':'true'}).then((res) => {
+		api.post(`statistics/publishgroup/`, {'id':publishID.value,'publish':'true'}).then((res) => {
     	if (res.external_continue_url){
 			window.location.href = res.external_continue_url;
 		}
@@ -78,6 +77,15 @@ function groupPublishGame()
 			groupPublishSuccess.value = false
 		}
 	})
+}
+
+async function endTask() {
+  let res = await api.post("statistics/publish/",{id: 0,publish:'endgame'}).then((res) => {
+    if (res.external_continue_url)
+    {
+      window.location.href = res.external_continue_url;
+    } 
+  });
 }
 
 function publishDialogStatus(mode)
@@ -138,9 +146,10 @@ function publishDialogStatus(mode)
 						הכניסו את הקוד המשותף והפרסום יירשם לכל אחד ואחת מכם.<br/>
 						<br/>
 						בהצלחה.<br/></div>
-						<div class="p-buttonset">
+						<div class="p-buttonset" style="display:flex;">
 						<Button class="p-button-rounded px-6" @click="()=>startGame()">התחלת משחק</Button>
 						<Button class="p-button-rounded p-button-secondary" @click="publishDialogStatus(true)">פרסום קבוצתי</Button>
+						<Button @click="endTask()" class="btnFull p-button-warning p-button-rounded btnFull-center">סיום</Button>
 						</div>
 						<Dialog header="פרסום קבוצתי" v-model:visible="displayPublishDialog" modal>
 							הכניסו את מספר הפרסום שקיבלתם במחשב שבו שיחקתם את המשחק הקבוצתי:<br/>
