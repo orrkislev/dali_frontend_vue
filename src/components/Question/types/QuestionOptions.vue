@@ -39,7 +39,7 @@ function check() {
   let newAnswers = [...gameManager.question.answers];
   let result = 0;
   newAnswers.every((a, i) => { // Every allows us to break when a correct answer is found. Useful when there re multiple correct answers.
-    if (a.selected == a.correct) {
+    if (a.selected * a.correct == 1) {
       result++;
       a.result = "success";
       return false;
