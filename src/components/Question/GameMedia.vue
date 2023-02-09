@@ -109,7 +109,7 @@ function nodeScriptIs(node) {
 
     <div v-if="gameManager.question.q.type != 'mouseselect'">
       <div v-for="(qmedia, i) in gameManager.question?.medias" :key="i" class='w-8 mx-auto media-area'>
-        <AjaxViewer :htmlWithScripts="editMediaForDevelopment(qmedia)" />
+        <AjaxViewer :htmlWithScripts="editMediaForDevelopment(qmedia)" :key="gameManager.question.q.id+'&'+i" />
       </div>
     </div>
   </div>
