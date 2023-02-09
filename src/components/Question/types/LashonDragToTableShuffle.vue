@@ -15,7 +15,7 @@ lists.value[0] = {title:"מחסן",list:gameManager.question.answers.map(answer=
     return {text:answer.text, result:null}
 })}
 gameManager.question.options.forEach(option => {
-    lists.value.push({title:option.text,list:[{text:'', result:null}]})
+    lists.value.push({title:option.text,code:option.num, list:[{text:'', result:null}]})
 });
 
 function onDrop(listIndex, dropResult) {
@@ -45,12 +45,13 @@ function showAnswer(){
 function check(){
   let result = 0;
   let answerlist = [];
+  console.log('ttt')
   for (let i=0;i<lists.value.length;i++){
     for (const item of lists.value[i].list){
         const answer = gameManager.question.answers.find(answer=>answer.text==item.text)
         if (!answer) continue;
         const answerListData = { id: answer.id, res: false, val: i}
-        if ((answer.correct==-1 && i==0) || answer.correct == i){
+        if ((answer.correct==-1 && i==0) || answer.correct == lists.value[i].code){
             item.result = "success"
             answerListData.res = true
             result++
