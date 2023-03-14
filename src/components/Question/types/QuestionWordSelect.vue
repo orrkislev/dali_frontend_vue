@@ -88,7 +88,9 @@ function check() {
 
 
 <template>
-  <div></div>
+  <div v-html="gameManager.question.q.text_before"></div>
+  <div v-html="gameManager.question.wordSelect[0]"></div>
+
 </template>
 
 

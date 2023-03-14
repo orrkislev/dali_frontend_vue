@@ -6,17 +6,10 @@ const gameManager = useGameManager()
 
 
 <template>
-  <div v-if="gameManager.question">
-    <div v-if="gameManager.question?.q.type == 'wordselect'">
-      <div v-html="gameManager.question.q.text_before"></div>
-      <div v-html="gameManager.question.wordSelect[0]"></div>
-    </div>
-
-    <div v-else>
+  <div >
       <div v-html="gameManager.question?.q.text_before"></div>
       <div v-html="gameManager.question?.q.text"></div>
       <div v-html="gameManager.question?.q.text_after"></div>
-    </div>
   </div>
 </template>
 
