@@ -27,23 +27,8 @@ function current_q_component() {
 </script>
 
 <template>
-  <component v-bind:is="current_q_component()"> </component>
+  <component v-bind:is="current_q_component()" :key="gameManager.question?.q?.id"> </component>
 </template>
-
-<!--
-<template>
-    <LashonDragToTableShuffle v-if="gameManager.question?.q?.display_template=='lashon_drag_2table_shuffle'"  :key="gameManager.question?.q?.id" />
-    <LashonDragToTableShuffleHide v-else-if="gameManager.question?.q?.display_template=='lashon_2table_shuffle_hide'"  :key="gameManager.question?.q?.id" />
-    <QuestionOptions          v-else-if="gameManager.question?.q?.type=='options'"  :key="gameManager.question?.q?.id"  />
-    <QuestionYesNo            v-else-if="gameManager.question?.q?.type=='yesno'"  :key="gameManager.question?.q?.id"  />
-    <QuestionSelection        v-else-if="gameManager.question?.q?.type=='selection'"   :key="gameManager.question?.q?.id"  />
-    <Questionwordselect       v-else-if="gameManager.question?.q?.type=='wordselect'"  :key="gameManager.question?.q?.id"  />
-    <QuestionShortopen        v-else-if="gameManager.question?.q?.type=='shortopen'"  :key="gameManager.question?.q?.id"  />
-    <QuestionMouseSelect      v-else-if="gameManager.question?.q?.type=='mouseselect'" :key="gameManager.question?.q?.id"  />
-    <QuestionLinesselect      v-else-if="gameManager.question?.q?.type=='linesselect'"  :key="gameManager.question?.q?.id"  />
-    <div v-else>מצטערים - סוג השאלה לא נתמך  באתר זה.</div>
-</template>
--->
 
 <script>
 export default {
