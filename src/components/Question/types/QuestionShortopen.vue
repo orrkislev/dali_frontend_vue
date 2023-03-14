@@ -74,7 +74,7 @@ function check() {
 
 <script>
 export default {
-    name: 'QuestionShortopen'
+    name: 'Question_shortopen'
 };
 </script>
 

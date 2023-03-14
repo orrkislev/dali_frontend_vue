@@ -84,7 +84,7 @@ function select(answerIndex, val) {
 <script>
 export default {
   components: { ActionButton },
-  name: "QuestionOptions",
+  name: "Question_options", 
 };
 </script>
 

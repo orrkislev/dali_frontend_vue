@@ -133,7 +133,7 @@ function check(){
 <script>
 export default {
     components: { ActionButton },
-    name: 'QuestionMouseSelect',
+    name: 'Question_mouseselect',
 };
 </script>
 

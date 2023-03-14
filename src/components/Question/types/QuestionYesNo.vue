@@ -97,7 +97,7 @@ function select(answerIndex, val) {
 <script>
 export default {
   components: { ActionButton },
-name:'QuestionYesNo'
+name:'Question_yesno'
 };
 </script>
 

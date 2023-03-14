@@ -88,15 +88,13 @@ function check() {
 
 
 <template>
-  <div v-html="gameManager.question.q.text_before"></div>
   <div v-html="gameManager.question.wordSelect[0]"></div>
-
 </template>
 
 
 <script>
 export default {
-  name: "QuestionWordSelect",
+  name: "Question_wordSelect",
 };
 </script>
 

@@ -110,7 +110,7 @@ function getOptions(anserIndex){
 
 <script>
 export default {
-  name: "QuestionSelection",
+  name: "Question_selection", 
 };
 </script>
 
