@@ -63,14 +63,17 @@ function check() {
     {
       input = el.val();
       answerListData.val = '-4'; // This is a code for text
+      answerListData.text = input;
     } 
     else 
     { 
       input = $("#selection" + (i + 1) + " option:selected").text().trim();
       if (input != 'בחירה')
+      {
         answerListData.val = '-5'; // This is a code to search for the ID in the server for qeest_statistics
+        answerListData.text = input;
+      }
     }
-    answerListData.text = input;
     const availableAnswers = a.split(",").map((b) => b.trim());
     if (availableAnswers.includes(input)) {
       result++;
