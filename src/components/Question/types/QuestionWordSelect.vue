@@ -41,7 +41,7 @@ function fillCorrectAnswer(a, i) {
   if (el.attr("type") == "text") el.val(a.split(",")[0])
   else {
     $(`#selection${i + 1} > .word_select_selection`).each((j, e) => {
-      if (e.text == a)
+      if (e.text == a.trim().replace(/\\/g, ''))
         $(`#selection${i + 1}>option:eq(${j + 1})`).prop('selected', true);
     })
   }

@@ -21,10 +21,10 @@ function showAnswer() {
 function fillCorrectAnswer(a, i) {
   console.log('rrr')
   let el = $("#selection" + (i ));
-  if (el.attr("type") == "text") el.val(a.split(",")[0])
+  if (el.attr("type") == "text") el.val(a.split(",")[0].trim().replace(/\\/g, ''))
   else {
     $(`#selection${i} > .word_select_selection`).each((j, e) => {
-      if (e.text == a)
+      if (e.text == a.trim().replace(/\\/g, ''))
         $(`#selection${i }>option:eq(${j + 1})`).prop('selected', true);
     })
   }
@@ -44,20 +44,20 @@ function check() {
       let el = $('#selection' + i)
       if (el.attr('type') == 'text')
       {
-         input = el.val()
+         input = el.val().trim().replace(/\\/g, '')
          answerListData.val = '-4'; // This is a code for text
          answerListData.text = input;
       } 
       else 
       {
-        input = $('#selection' + i + ' option:selected').text().trim()
+        input = $('#selection' + i + ' option:selected').text().trim().replace(/\\/g, '')
         if (input != 'בחירה')
         {
           answerListData.val = '-5'; // This is a code to search for the ID in the server for qeest_statistics
           answerListData.text = input;
         }
       }
-      const availableAnswers = a.split(",").map((b) => b.trim());
+      const availableAnswers = a.split(",").map((b) => b.trim().replace(/\\/g, ''));
       if (availableAnswers.includes(input)) {
           result++
           answerListData.res = true;
