@@ -74,7 +74,8 @@ function check() {
         answerListData.text = input;
       }
     }
-    const availableAnswers = a.split(",").map((b) => b.trim());
+    const availableAnswers = a.split(",").map((b) => b.trim().replace(/\\/g, ''));
+    console.log('input=' + input + ", availableAnswers=" + availableAnswers)
     if (availableAnswers.includes(input)) {
       result++;
       el.addClass("word_select_selection_right");
