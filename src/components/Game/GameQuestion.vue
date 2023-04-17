@@ -53,10 +53,10 @@ function restartGame(){
       <game-lifelines/>
     </Divider>
     <div class='flex flex-column gap1 px-5'>
-      <question-content />
-      <question-part />
-      <game-buttons />
-      <question-feedback />
+      <question-content :key="gameManager.question.question_num"/>
+      <question-part :key="gameManager.question.question_num" />
+      <game-buttons :key="gameManager.question.question_num"/>
+      <question-feedback :key="gameManager.question.question_num"/>
     </div>
     <Divider align='right'>
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחלת משחק חדש" /> 
