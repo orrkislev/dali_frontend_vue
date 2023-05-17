@@ -13,13 +13,23 @@ const emitter = useEmmiter();
 
 
 const lifelines = ref({
-  skip: { text:'', name:'דלג',icon: "forward", active: true, default: true, afterQ: false, qadmin:false},
-  retry: { text:'', name:'נסה שוב',icon: "undo",active: true, default: false, afterQ: true },
-  replace: { text:'', name:'החלף שאלה',icon: "random", active: true, default: true, afterQ: false, qadmin:false},
-  stats: { text:'', name:'סטטיסטיקה', icon: "chart-bar", active: true, default: true, afterQ: false,shortopen:false },
-  5050: { text:'', name:'50:50', icon: "balance-scale", active: true, default: true, afterQ: false, yesno: false,},
+  skip: { text:'', name:'דלג',icon: "forward", active: true, default: true, afterQ: false, qadmin:false,dbname:'skip'},
+  retry: { text:'', name:'נסה שוב',icon: "undo",active: true, default: false, afterQ: true ,dbname:'retry'},
+  replace: { text:'', name:'החלף שאלה',icon: "random", active: true, default: true, afterQ: false, qadmin:false,dbname:'replace'},
+  stats: { text:'', name:'סטטיסטיקה', icon: "chart-bar", active: true, default: true, afterQ: false,shortopen:false,dbname:'statistics' },
+  5050: { text:'', name:'50:50', icon: "balance-scale", active: true, default: true, afterQ: false, yesno: false,dbname:'fifty'},
 });
-const initialValues = { ...lifelines.value };
+
+// Remove lifeliens that are not registred for this game
+function setGameLinfelines() { 
+  for (var line in lifelines.value) {
+    if (!gameManager.game.game[lifelines.value[line].dbname])
+      delete(lifelines.value[line])
+  }
+  return { ...lifelines.value }
+ };
+
+const initialValues = setGameLinfelines();
 
 function activateLifeline(name) {
   if (lifelines.value[name].active) {
@@ -67,7 +77,6 @@ function lifeline_stats() {
   gameManager.questionResult = questionResult;
 }
 function lifeline_5050() {
-  console.log("50:50");
   emitter.emit("LIFELINE_5050");
   const questionResult = { ...gameManager.questionResult };
   questionResult.used5050 = true;
