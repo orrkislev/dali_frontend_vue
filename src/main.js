@@ -17,8 +17,7 @@ app.use(router)
 app.use(VueAppend)
 initPrimevue(app)
 
-
-app.mount('#app');
+app.mount('#daliApp');
 
 window.$ = window.jQuery = require('jquery');
 
