@@ -5,6 +5,7 @@ import useGameManager from 'src/utils/useGameManager'
 import ActionButton from '../ActionButton.vue';
 import useAuth from '../../utils/useAuth';
 import { storeToRefs } from 'pinia';
+import SideBarStaff from "./Question4Staff.vue";
 
 const gameManager = useGameManager()
 const emitter = useEmitter()
@@ -36,11 +37,16 @@ function skipQuestion(){
 
 
 <template>
+    <div>
 <div class="flex justify-content-between">
     <div class="flex ">
         <action-button v-if="gameManager.questionResult?.result==null" :center="true" :main="true" @click="submitQuestion"> בדיקה </action-button>
         <action-button v-else :center="true" :main="true" @click="nextQuestion"> {{ getNextQuestionText() }} </action-button>
         <action-button v-if="(auth.isTeacherOrStaff && gameManager.extra.teacher) || gameManager.progress.progress[0]=='admin'" :center="true" :border="true" @click="showAnswer"> הצגת תשובה </action-button>
+    </div>
+</div>
+<div class='question_staff_area' v-if="(auth.isTeacherOrStaff && gameManager.extra.teacher) || gameManager.progress.progress[0]=='admin'">
+            <SideBarStaff></SideBarStaff>
     </div>
 </div>
 </template>
@@ -55,4 +61,5 @@ name:'GameButtons'
 
 
 <style>
+div.question_staff_area{border:2px solid #e2dee8;border-radius:1em;margin-top:1em;padding:1em;}
 </style>

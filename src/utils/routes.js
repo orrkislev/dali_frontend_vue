@@ -27,6 +27,7 @@ const routes = [
     { path: '/game_sel/:taskid/:questionid', component: Game},
     { path: '/game/:taskid', component: Game},
     { path: '/game/:taskid/:questionid', component: Game},
+    { path: '/gameonly/:taskid', component: Game},
 
     { path: '/manage/classes', component: Classes},
     { path: '/manage/classes/:classid', component: Class},

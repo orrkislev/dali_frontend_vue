@@ -1,9 +1,12 @@
 <script setup>
 import useAuth from '../utils/useAuth';
+import GameWait from '../components/Game/GameWait.vue'
+import { useRoute } from "vue-router";
 
 
 const auth = useAuth()
 auth.getUserdata()
+const route = useRoute()
 
 function login(){
     auth.startLogin()
@@ -12,6 +15,12 @@ function login(){
 
 
 <template>
+    <template v-if="route.path.includes('/gameonly')">
+        <div>
+            <game-wait></game-wait>
+        </div>
+    </template>
+    <template v-else>
     <div id="landing" class="grid grid-nogutter row-gap-5 overflow-x-hidden">
         <div class="col-12 h-8rem"></div>
 
@@ -212,6 +221,7 @@ function login(){
 
         <div class="col-12 h-8rem"></div>
     </div>
+    </template> 
 </template>
 
 
