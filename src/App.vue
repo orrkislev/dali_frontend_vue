@@ -25,7 +25,12 @@ document.head.appendChild(favicon);
 
 <template>
   <template v-if="auth.state == 'authenticated'">
-    <template v-if="route.path.includes('/game_sel')">
+    <template v-if="route.path.includes('/gameonly')">
+      <div id="mainContent">
+        <router-view></router-view>
+      </div>
+    </template>
+    <template v-else-if="route.path.includes('/game_sel')">
       <Mimshak>
         <!-- <div id="allApp"> -->
           <!-- <div id="mainLayout"> -->
