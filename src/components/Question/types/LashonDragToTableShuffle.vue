@@ -14,8 +14,16 @@ const gameManager = useGameManager()
 lists.value[0] = {title:"מחסן",list:gameManager.question.answers.map(answer=>{
     return {text:answer.text, result:null}
 })}
+//if (!gameManager.question.q.display_template=='lashon_2table_shuffle_hide') // Do not fill the titles - leave them blanks. they will be filled by the student
+     //       gameManager.titles = Array(gameManager.question.options.length).fill(0).map(x=>'')
+
 gameManager.question.options.forEach(option => {
-    lists.value.push({title:option.text,code:option.num, list:[{text:'', result:null}]})
+    let listValue = {title:option.text,code:option.num, list:[{text:'', result:null}]}
+    if (gameManager.question.q.display_template=='lashon_2table_shuffle_hide') 
+        var userTitle = '' // Let the user set the title
+    else
+        var userTitle = option.text
+    lists.value.push({title:option.text,code:option.num, list:[{text:'', result:null}],userTitle:userTitle})
 });
 
 function onDrop(listIndex, dropResult) {
@@ -42,26 +50,32 @@ function showAnswer(){
     // TODO
 }
 
+
 function check(){
   let result = 0;
   let answerlist = [];
-  console.log('ttt')
   for (let i=0;i<lists.value.length;i++){
     for (const item of lists.value[i].list){
         const answer = gameManager.question.answers.find(answer=>answer.text==item.text)
         if (!answer) continue;
         const answerListData = { id: answer.id, res: false, val: i}
-        if ((answer.correct==-1 && i==0) || answer.correct == lists.value[i].code){
+        if (answer.correct <= 0) // 0 or lower means that the item should not be draggeed at all. If it was, we add 1 to the total required_answers
+            if (i == 0) 
+                result++ // not dragged - this is good
+            else 
+                item.result = "fail" // dragged - failure
+        else if (lists.value[answer.correct].title == lists.value[i].userTitle){ // we make sure that the text are identical. if this is a "hide", then the title comes from the user. If not - it is a copy of title
             item.result = "success"
             answerListData.res = true
             result++
-        } else {
+            } 
+        else 
             item.result = "fail"
-        }
         answerlist.push(answerListData)
     }
   }
-  result = result / gameManager.question.answers.length
+  console.log('rsult=' + result + ", required_answers=" + gameManager.question.answers.length)
+  result = result / gameManager.question.answers.length 
   gameManager.submitQuestion({ result, answerlist });
 }
 
@@ -70,7 +84,10 @@ function check(){
 
 <template>
     <div class="group" v-for="list, listIndex in lists">
-        <h3>{{list.title}}</h3>
+        <h3>
+            <input v-if="(gameManager.question.q.display_template=='lashon_2table_shuffle_hide') && (listIndex > 0)" type='text' v-model="list.userTitle">
+            <span v-else>{{ list.title }}</span>
+        </h3>
         <Container 
             group-name="1" 
             drag-class="opacity-ghost" 
@@ -82,7 +99,7 @@ function check(){
                 <div v-if="item" class="draggable-item" :class="{ 
                     'btnFull-correct': item.result == 'success',
                     'btnFull-wrong': item.result == 'fail'}">
-                    {{ item.text }}
+                    {{ item.text }} 
                 </div>
             </Draggable>
         </Container>
@@ -92,7 +109,7 @@ function check(){
 
 <script>
 export default {
-    name: 'LashonDragToTableShuffle'
+    name: 'lashon_drag_2table_shuffle' 
 };
 </script>
 
