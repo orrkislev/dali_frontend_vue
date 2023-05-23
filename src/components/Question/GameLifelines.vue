@@ -21,15 +21,19 @@ const lifelines = ref({
 });
 
 // Remove lifeliens that are not registred for this game
-function setGameLinfelines() { 
-  for (var line in lifelines.value) {
-    if (!gameManager.game.game[lifelines.value[line].dbname])
-      delete(lifelines.value[line])
+function setGameLifeLines() {
+  console.log('ff')
+  if (gameManager.game)
+  {
+    for (var line in lifelines.value) {
+      if (!gameManager.game.game[lifelines.value[line].dbname])
+        delete(lifelines.value[line])
+    }
   }
   return { ...lifelines.value }
  };
 
-const initialValues = setGameLinfelines();
+const initialValues = setGameLifeLines();
 
 function activateLifeline(name) {
   if (lifelines.value[name].active) {
