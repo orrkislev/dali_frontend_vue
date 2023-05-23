@@ -5,7 +5,8 @@ import useGameManager from 'src/utils/useGameManager'
 import ActionButton from '../ActionButton.vue';
 import useAuth from '../../utils/useAuth';
 import { storeToRefs } from 'pinia';
-import SideBarStaff from "./Question4Staff.vue";
+import Question4TeacherPass from "./Question4TeacherPass.vue";
+import Question4Staff from "./Question4Staff.vue";
 
 const gameManager = useGameManager()
 const emitter = useEmitter()
@@ -25,6 +26,7 @@ function submitQuestion() {
     emitter.emit('CHECK_QUESTION')
 }
 function nextQuestion(){
+    console.log('ttt')
     gameManager.nextQuestion()
 }
 function showAnswer(){
@@ -38,17 +40,20 @@ function skipQuestion(){
 
 <template>
     <div>
-<div class="flex justify-content-between">
-    <div class="flex ">
-        <action-button v-if="gameManager.questionResult?.result==null" :center="true" :main="true" @click="submitQuestion"> בדיקה </action-button>
-        <action-button v-else :center="true" :main="true" @click="nextQuestion"> {{ getNextQuestionText() }} </action-button>
-        <action-button v-if="(auth.isTeacherOrStaff && gameManager.extra.teacher) || gameManager.progress.progress[0]=='admin'" :center="true" :border="true" @click="showAnswer"> הצגת תשובה </action-button>
+        <div class="flex justify-content-between">
+            <div class="flex ">
+                <action-button v-if="gameManager.questionResult?.result==null" :center="true" :main="true" @click="submitQuestion"> בדיקה </action-button>
+                <action-button v-else :center="true" :main="true" @click="nextQuestion"> {{ getNextQuestionText() }} </action-button>
+                <action-button v-if="(auth.isTeacherOrStaff && gameManager.extra.teacher) || gameManager.progress.progress[0]=='admin' || (auth.isStaff)" :center="true" :border="true" @click="showAnswer"> הצגת תשובה </action-button>
+            </div>
+        </div>
+        <div class='question_staff_area' v-if="(auth.isTeacherOrStaff && gameManager.extra.teacher) || (gameManager.progress.progress[0]=='admin')">
+            <Question4TeacherPass></Question4TeacherPass>
+        </div>
+        <div class='question_staff_area' v-if="auth.isStaff">
+            <Question4Staff></Question4Staff>
+        </div>
     </div>
-</div>
-<div class='question_staff_area' v-if="(auth.isTeacherOrStaff && gameManager.extra.teacher) || gameManager.progress.progress[0]=='admin'">
-            <SideBarStaff></SideBarStaff>
-    </div>
-</div>
 </template>
 
 
