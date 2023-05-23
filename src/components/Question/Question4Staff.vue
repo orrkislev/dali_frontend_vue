@@ -22,7 +22,7 @@ function skipQuestion(){
         <h4 style="margin-bottom: 0;"> מידע לצוות</h4>
         <div v-if="gameManager.question.q?.id">
             שאלה: {{ gameManager.question.q.id }}, 
-            סוג שאלה: {{ gameManager.question.q.type ?? gameManager.question.q.display_template }}, 
+            סוג שאלה: {{ gameManager.question.q.display_template ?? gameManager.question.q.type }}, 
             רמת קושי: {{ gameManager.question.q.level }}, 
             סטטוס: {{ gameManager.question.q.status }}<br/>
             נושאים: {{ gameManager.question.q.subject }}, {{ gameManager.question.q.subject2 }}<br/>
