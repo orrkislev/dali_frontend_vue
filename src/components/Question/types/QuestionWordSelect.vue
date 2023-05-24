@@ -50,42 +50,60 @@ function fillCorrectAnswer(a, i) {
 function check() {
   let result = 0;
   const answerlist = []
+  let answers_num = 0;
   gameManager.question.wordSelect[1].forEach((a, i) => {
-    let input = "";
-    let el = $("#selection" + (i + 1));
-    const answerListData = {
-            id: i, //gameManager.question.answers[i].id,
-            res: false,
-            val: '-3',
-            text: '',
-        }
-    if (el.attr("type") == "text") 
+        // check if this is a combined selection or a single one
+        const regexp = /\[(.*?)\]/g
+    var corrects = a.match(regexp)
+    let combined = true;
+    let end = "";
+    if (!corrects) {combined = false; corrects = [a]; var text = a;}
+    const loopsize = corrects.length; // we keep it as we remove items from corrects once they are found, but need to keep the loop size intact.
+    for (let p=0;p<loopsize;p++)
     {
-      input = el.val();
-      answerListData.val = '-4'; // This is a code for text
-      answerListData.text = input;
-    } 
-    else 
-    { 
-      input = $("#selection" + (i + 1) + " option:selected").text().trim();
-      if (input != 'בחירה')
+      if (combined) {end = "_" + p; }
+      let input = "";
+      let el = $('#selection' + (i + 1) + end)
+      const answerListData = {
+              id: i, //gameManager.question.answers[i].id,
+              res: false,
+              val: '-3',
+              text: '',
+          }
+      if (el.attr("type") == "text") 
       {
-        answerListData.val = '-5'; // This is a code to search for the ID in the server for qeest_statistics
+        input = el.val();
+        answerListData.val = '-4'; // This is a code for text
         answerListData.text = input;
+      } 
+      else 
+      { 
+        input = $('#selection' + (i + 1) + end + ' option:selected').text().trim()
+        if (input != 'בחירה')
+        {
+          answerListData.val = '-5'; // This is a code to search for the ID in the server for qeest_statistics
+          answerListData.text = input;
+        }
       }
+      for (let c in corrects)
+      {
+          if (combined) {var text = corrects[c].substring(1,corrects[c].length-1)};
+          let availableAnswers = text.split(',').map(b=>b.trim().replace(/\\/g, ''))
+          if (availableAnswers.includes(input)) {
+              result++
+              el.addClass('word_select_selection_right')
+              answerListData.res = 1;
+              corrects.splice(c,1);
+              break;
+          }
+      }
+      if (!answerListData.res == 1)
+        el.addClass('word_select_selection_wrong')
+      answerlist[answers_num] = answerListData
+      answers_num ++;
     }
-    const availableAnswers = a.split(",").map((b) => b.trim().replace(/\\/g, ''));
-    console.log('input=' + input + ", availableAnswers=" + availableAnswers)
-    if (availableAnswers.includes(input)) {
-      result++;
-      el.addClass("word_select_selection_right");
-      answerListData.res = true;
-    } else {
-      el.addClass("word_select_selection_wrong");
-    }
-    answerlist[i] = answerListData
-  });
-  result = result / gameManager.question.wordSelect[1].length;
+  })
+  result = result / answers_num;
   gameManager.submitQuestion({ result, answerlist });
 }
 </script>
