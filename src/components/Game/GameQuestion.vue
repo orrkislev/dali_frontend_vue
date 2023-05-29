@@ -13,18 +13,25 @@ import useGameManager from 'src/utils/useGameManager';
 import useAPI from "../../utils/useAPI";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
+
 const gameManager = useGameManager()
 const confirm = useConfirm();
 const api = useAPI();
 
+const exit_message = "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהמשחק?"
+const exit_header = "יציאה מהמשחק"
+const exit_icon = "pi pi-exclamation-triangle"
+const exit_acceptLabel = 'כן, לצאת'
+const exit_rejectLabel = 'ביטול'
+
 onBeforeRouteLeave(async (to, from) => {
   return await new Promise((resolve) => {
     confirm.require({
-      message: "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהמשחק?",
-      header: "יציאה מהמשחק",
-      icon: "pi pi-exclamation-triangle",
-      acceptLabel:'כן, לצאת',
-      rejectLabel:'ביטול',
+      message: exit_message,
+      header: exit_header,
+      icon: exit_icon,
+      acceptLabel: exit_acceptLabel,
+      rejectLabel: exit_rejectLabel,
       accept: () => {
         gameManager.$reset()
         api.post_json("quest/action/", {action: "endgame"}).then(res => {
@@ -41,6 +48,22 @@ onBeforeRouteLeave(async (to, from) => {
 function restartGame(){
   gameManager.view = 'wait'
   gameManager.startGame(false, true );
+}
+
+async function gotoTaskPage(){
+  return await new Promise((resolve) => {
+    confirm.require({
+      message: exit_message,
+      header: exit_header,
+      icon: exit_icon,
+      acceptLabel: exit_acceptLabel,
+      rejectLabel: exit_rejectLabel,
+      accept: () => {
+        gameManager.view = 'title'
+        },
+      reject: () => {
+      }})
+    })    
 }
 </script>
 
@@ -60,6 +83,7 @@ function restartGame(){
     </div>
     <Divider align='right'>
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחלת משחק חדש" /> 
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="gotoTaskPage" label="חזרה לדף המשימה" /> 
     </Divider>
     <game-media />
   </div>
