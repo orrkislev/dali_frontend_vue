@@ -13,7 +13,6 @@ import useGameManager from 'src/utils/useGameManager';
 import useAPI from "../../utils/useAPI";
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-
 const gameManager = useGameManager()
 const confirm = useConfirm();
 const api = useAPI();
@@ -65,8 +64,13 @@ async function gotoTaskPage(){
       }})
     })    
 }
-</script>
 
+async function end_game(){
+  await api.post("quest/action/", {action: "endgame"})
+  gameManager.view = 'title' 
+  gameManager.question.action = 'game ended'
+}
+</script>
 
 <template>
   <div class="flex-column gap2">
@@ -82,7 +86,8 @@ async function gotoTaskPage(){
       <question-feedback :key="gameManager.question.question_num"/>
     </div>
     <Divider align='right'>
-      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחלת משחק חדש" /> 
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחלת משחק חדש" />
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="end_game" label="סיום משחק" />  
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="gotoTaskPage" label="חזרה לדף המשימה" /> 
     </Divider>
     <game-media />
