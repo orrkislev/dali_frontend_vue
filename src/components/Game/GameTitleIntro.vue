@@ -19,7 +19,7 @@ const isSEL = route.path.includes('/game_sel')
 const api = useAPI()
 const emitter = useEmitter()
 
-const chooseTeacherGameType = ref(false)
+var chooseTeacherGameType = ref(false)
 const displayPublishDialog = ref(false)
 const publishID  = ref("")
 const groupPublishErrorMessage = ref("")
@@ -38,7 +38,7 @@ function startGame(gameType) {
 	gameManager.view = 'wait'
 	if (gameType == null){
 		if (auth.isTeacherOrStaff && gameManager.game.classData?.filtered_game){
-			chooseTeacherGameType.value = true
+			chooseTeacherGameType = true
 		} else {
 			gameManager.startGame();
 		}
@@ -118,17 +118,17 @@ function publishDialogStatus(mode)
 						{{ level.title }}
 					</Button>
 				</div>
-				<div v-else-if="auth.isTeacherOrStaff && gameManager.game.allow_teacher_test && !isSEL" class="p-buttonset">
-					<template v-if="!chooseTeacherGameType">
+				<div v-else-if="auth.isTeacherOrStaff && !isSEL" class="p-buttonset">
+					<template v-if="!gameManager.game.classData?.filtered_game">
 						<Button class="p-button-rounded px-6" @click="()=>startGame()">
 							התחלת משחק <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
 						</Button>
-						<Button class="p-button-rounded p-button-secondary" @click="startTeacherWalkthrough"> מעבר מורה </Button>
 					</template>
 					<template v-else>
-						<Button class="p-button-rounded p-button-secondary" @click="()=>startGame('filtered')">  התחלה משחק מסונן</Button>
-						<Button class="p-button-rounded" @click="()=>startGame('normal')"> התחלה - משחק מלא</Button>
+						<Button class="p-button-rounded p-button-secondary" @click="()=>startGame('filtered')">משחק מסונן</Button>
+						<Button class="p-button-rounded" @click="()=>startGame('normal')">משחק מלא</Button>
 					</template>
+					<Button v-if="gameManager.game.allow_teacher_test" class="p-button-rounded p-button-secondary" @click="startTeacherWalkthrough"> מעבר מורה </Button>
 				</div>
 				<div v-else>
 					<template v-if="gameManager.game.sel_group_game && isSEL">

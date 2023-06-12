@@ -51,20 +51,7 @@ const useGameManager = defineStore('game', {
             this.extra = extra
             this.question = null
             this.questionResult = null
-            let newProgress = {
-                progress: Array(this.game.game.NumQuestions).fill('notyet'),
-                score: 0,
-                bonus: false
-            }
-            if (extra?.teacher) newProgress.progress = Array(this.game.num_q_for_teacher).fill('notyet')
-            if (level) {
-                const levelQuestionSum = this.game.sub_games.find(sg => sg.order == level.order).game.NumQuestions
-                newProgress.progress = Array(levelQuestionSum).fill('notyet'),
-                    newProgress.level = level.order
-            }
-            newProgress.progress[0] = 'curr'
-            this.progress = newProgress
-
+            
             // START A NORMAL GAME
             let postdata = {
                 game: this.game.game.id,
@@ -117,10 +104,30 @@ const useGameManager = defineStore('game', {
             }
 
             // START GAME
+            console.log('ddd')
             res = await api.post("quest/gamehead/", { 'master': 1 })
             postdata.purpose = ''
             postdata.gametype = this.extra.teacher ? 'teacher_test' : 'start_normal'
             res = await api.post("quest/gamehead/", postdata)
+            if ('nof_questions' in res) // happens when filtered game - the number may be lower then the game's normal number
+            {
+                this.game.game.NumQuestions = res.nof_questions
+                console.log('updted to ' + res.nof_questions + 'questions')
+            }
+            let newProgress = {
+                progress: Array(this.game.game.NumQuestions).fill('notyet'),
+                score: 0,
+                bonus: false
+            }
+            if (extra?.teacher) newProgress.progress = Array(this.game.num_q_for_teacher).fill('notyet')
+            if (level) {
+                const levelQuestionSum = this.game.sub_games.find(sg => sg.order == level.order).game.NumQuestions
+                newProgress.progress = Array(levelQuestionSum).fill('notyet'),
+                    newProgress.level = level.order
+            }
+            newProgress.progress[0] = 'curr'
+            this.progress = newProgress
+
             // SHOW MEDIA BEFORE QUESTION?
             if ('media' in res) {
                 this.view = 'media-start'
