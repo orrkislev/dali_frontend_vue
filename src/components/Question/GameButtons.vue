@@ -22,11 +22,11 @@ function getNextQuestionText(){
     if (gameManager.question.question_num == gameManager.progress.progress.length) return 'סיום'
     return 'לשאלה הבאה'
 }
+
 function submitQuestion() {
     emitter.emit('CHECK_QUESTION')
 }
 function nextQuestion(){
-    console.log('ttt')
     gameManager.nextQuestion()
 }
 function showAnswer(){
