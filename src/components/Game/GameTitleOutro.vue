@@ -81,7 +81,7 @@ function backToGamePage() {
 <template>
   <div id="task-main">
     <GameTitleTop >
-        <Knob :modelValue="gameManager.question.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
+        <Knob :modelValue="gameManager.progress.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
         <div class="flex flex-column gap05">
           <Button v-if="!gameManager.game.extra.exam && !gameManager.extra.teacher" class="btnFull p-button-rounded px-6 btnFull-center"  style="minWidth:100%"
             :disabled="isPublished" @click="publish(true)"
