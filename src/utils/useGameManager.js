@@ -41,7 +41,8 @@ const useGameManager = defineStore('game', {
             const router = useRouter()
             let res = await api.post_json('tasks/task_page/', { 'game_id': taskID })
             res.extra = extra
-            if (router.currentRoute._value.path.search('sel') > 0) this.sel = true
+            if (router)
+                if (router.currentRoute._value.path.search('sel') > 0) this.sel = true
             this.game = res
             if (res.game.gameType != 'trivia') 
                 console.log('SPECIAL GAMETYPE:', res.game.gameType)
