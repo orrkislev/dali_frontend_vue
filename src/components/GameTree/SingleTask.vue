@@ -4,6 +4,9 @@ import { real_url } from 'src/utils/useAPI';
 import { useRouter } from 'vue-router';
 import useAuth from '../../utils/useAuth';
 import useBrowseManager from '../../utils/useBrowseManager';
+import { propsToAttrMap } from '@vue/shared';
+import daliKnob  from '../../pages/daliKnob.vue';
+
 
 const auth = useAuth()
 const props = defineProps({
@@ -24,6 +27,14 @@ let clickAction = goToGamePage
 if (props.action == 'ADD_TASK') clickAction = addTask
 else if (props.action == 'ADD_EXAM') clickAction = addExam
 
+let calcMax = Math.max(props.score,props.target)
+
+if (props.score = NaN) {
+    calcScore = 0
+    calcMax = 0
+}
+let scoreColor = "#e94f5b" 
+if (props.score > 60) scoreColor = "var(--primary-color)" 
 function goToGamePage() {
   router.push({
     path: '/game/' + props.task.id,
@@ -91,7 +102,7 @@ const actionToggleIsChecked = computed(() => {
                         
                     </div>
                 </div>
-                <Knob v-if="!action && auth.username && !auth.isTeacherOrStaff" :modelValue="score" :min="0" :max="target" disabled :size="80" />
+                <daliKnob v-if="!action && auth.username && !auth.isTeacherOrStaff" :score="score" :max="target" :size="80" :strokeWidth="15"/>
             </div>
         </div>
     <!-- </router-link> -->

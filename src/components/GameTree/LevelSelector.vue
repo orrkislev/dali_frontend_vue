@@ -1,9 +1,13 @@
 <script setup>
 import useAPI from "src/utils/useAPI";
 import useBrowseManager from "src/utils/useBrowseManager";
+import useAuth from '../../utils/useAuth';
+import daliKnob  from '../../pages/daliKnob.vue';
+
 
 const browseManager = useBrowseManager();
 const api = useAPI();
+const auth = useAuth()
 
 api.post_json("tasks/subjects_list/", {}).then((p) => {
   browseManager.level_list = p.list;
@@ -18,14 +22,17 @@ function chooseSubject(id) {
 <template>
   <div>
     <div id="subjectlist">
-      <div
+      <div 
         v-for="(a, i) in browseManager.level_list"
         :key="i"
-        class="subjectlist-element"
+        class="subjectlist-element centerdiv"
         :class="{'subjectlist-element-selected':browseManager.curr_level==a.id}"
         @click="chooseSubject(a.id)"
       >
         {{ a.name }}
+        <br/>
+        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff" 
+         :score="61" :min="0" :max="100" :size="25" :strokeWidth="10"/>
       </div>
     </div>
   </div>

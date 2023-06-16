@@ -2,10 +2,13 @@
 import { storeToRefs } from "pinia";
 import useAPI from "src/utils/useAPI";
 import useBrowseManager from "src/utils/useBrowseManager";
+import useAuth from '../../utils/useAuth';
 import { watch } from "vue";
+import daliKnob  from '../../pages/daliKnob.vue';
 
 const browseManager = useBrowseManager();
 const api = useAPI();
+const auth = useAuth()
 
 const { curr_level } = storeToRefs(browseManager);
 watch(curr_level, newCurrState=>{
@@ -25,15 +28,21 @@ function chooseSubject(id) {
 
 <template>
   <div id="subject_selector">
-    <div
+    <table cellspacing="0" cellpadding="0">
+    <tr
       v-for="(a, i) in browseManager.subject_list"
       :key="i"
       @click="chooseSubject(a.id)"
       class="subject_selector_item"
       :class="{ subject_selector_item_selected: browseManager.curr_subject==a.id }"
-    >
-      {{ a.name }}
-    </div>
+      >
+      <td>{{ a.name }}</td>
+      <td>
+        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff" 
+        :score="40" :min="0" :max="100" disabled :size="33"  :strokeWidth="10"/>
+      </td>
+    </tr>
+  </table>
   </div>
 </template>
 
