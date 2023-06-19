@@ -1,7 +1,13 @@
-import { defineStore } from 'pinia'
+  import { defineStore } from 'pinia'
 
-export const base_url = process.env.NODE_ENV=='development' ? 'http://localhost:8200/' : './'
-export const real_url = process.env.NODE_ENV=='development' ? 'https://da-li.co.il/' : './'
+//export const base_url = process.env.NODE_ENV=='development' ? 'http://localhost:8200/' : './'
+//export const real_url = process.env.NODE_ENV=='development' ? 'https://da-li.co.il/' : './'export const base_url =  'https://da-li.co.il/'
+
+export const real_url =  'https://da-li.co.il/'
+export const base_url =  'https://da-li.co.il/'
+
+//export const base_url =  'http://localhost:8200/'
+//export const real_url =  'http://localhost:8200/'
 
 function getCookie(name) {
     var value = "; " + document.cookie;
@@ -56,13 +62,19 @@ const useAPI = defineStore('api', {
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                     'x-csrftoken': token,
+//                    "Access-Control-Allow-Origin": "*", // dEBUG
                 },
                 body: postData,
             })
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) return response.json();
             else return response.text()
-        }
+        },
+        /*
+        async post_special(url, data) {
+            data = JSON.parse(data['new_site_data'])
+            return this.post(url,data)
+        }*/
     }
 })
 
