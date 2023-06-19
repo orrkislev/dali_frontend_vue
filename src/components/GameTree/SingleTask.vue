@@ -102,7 +102,7 @@ const actionToggleIsChecked = computed(() => {
                         
                     </div>
                 </div>
-                <daliKnob v-if="!action && auth.username && !auth.isTeacherOrStaff" :score="score" :max="target" :size="80" :strokeWidth="15"/>
+                <daliKnob v-if="!action && auth.username && !auth.isTeacherOrStaff" :score="score" :max="target" :size="80" :strokeWidth="14" :key="task.id"/>
             </div>
         </div>
     <!-- </router-link> -->

@@ -38,8 +38,8 @@ function chooseSubject(id) {
       >
       <td>{{ a.name }}</td>
       <td>
-        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff" 
-        :score="40" :min="0" :max="100" disabled :size="33"  :strokeWidth="10"/>
+        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a.score > 0"  
+        :score="a.score" :min="0" :max="100" disabled :size="33"  :strokeWidth="10" :mycolor="'darkgray'" :key="a.id"/>
       </td>
     </tr>
   </table>

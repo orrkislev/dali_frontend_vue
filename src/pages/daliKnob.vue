@@ -5,6 +5,7 @@ const props = defineProps({
     max: {type:Number, default: 100},
     size: {type:Number, default: 80},
     strokeWidth: {type:Number, default: 14},
+    mycolor: {type:String, default:"var(--surface-border, LightGray)"},
 })
 
 console.log('ggg')
@@ -21,7 +22,7 @@ if (props.score > 60) scoreColor = "var(--primary-color)"
 
 <template>
 <div>
-    <Knob :modelValue="score" :min="0" :max="calcMax" disabled :size="size" :valueColor="scoreColor" :strokeWidth="strokeWidth"/>
+    <Knob :modelValue="score" :min="0" :max="calcMax" disabled :size="size" :valueColor="scoreColor" :strokeWidth="strokeWidth" :rangeColor="mycolor"/>
 </div>
 </template>
 
