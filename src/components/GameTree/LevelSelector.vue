@@ -31,7 +31,7 @@ function chooseSubject(id) {
       >
         {{ a.name }}
         <br/>
-        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a.score > 0" 
+        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a?.score > 0" 
          :score="a.score" :min="0" :max="100" :size="25" :strokeWidth="13" :mycolor="'black'" :key="a.id"  />
       </div>
     </div>

@@ -12,7 +12,7 @@ const auth = useAuth()
 
 const { curr_level } = storeToRefs(browseManager);
 watch(curr_level, newCurrState=>{
-  if (newCurrState != -1)
+  //if (newCurrState != -1)
     api
       .post_json("tasks/subjects_list/", { parent_id: newCurrState })
       .then((p) => {
@@ -38,7 +38,7 @@ function chooseSubject(id) {
       >
       <td>{{ a.name }}</td>
       <td>
-        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a.score > 0"  
+        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a?.score > 0"  
         :score="a.score" :min="0" :max="100" disabled :size="33"  :strokeWidth="10" :mycolor="'darkgray'" :key="a.id"/>
       </td>
     </tr>

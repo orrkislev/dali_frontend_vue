@@ -27,14 +27,6 @@ let clickAction = goToGamePage
 if (props.action == 'ADD_TASK') clickAction = addTask
 else if (props.action == 'ADD_EXAM') clickAction = addExam
 
-let calcMax = Math.max(props.score,props.target)
-
-if (props.score = NaN) {
-    calcScore = 0
-    calcMax = 0
-}
-let scoreColor = "#e94f5b" 
-if (props.score > 60) scoreColor = "var(--primary-color)" 
 function goToGamePage() {
   router.push({
     path: '/game/' + props.task.id,
