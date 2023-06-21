@@ -22,18 +22,21 @@ function chooseSubject(id) {
 <template>
   <div>
     <div id="subjectlist">
-      <div 
-        v-for="(a, i) in browseManager.level_list"
-        :key="i"
-        class="subjectlist-element centerdiv"
-        :class="{'subjectlist-element-selected':browseManager.curr_level==a.id}"
-        @click="chooseSubject(a.id)"
-      >
-        {{ a.name }}
-        <br/>
-        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a?.score > 0" 
-         :score="a.score" :min="0" :max="100" :size="25" :strokeWidth="13" :mycolor="'black'" :key="a.id"  />
-      </div>
+      <table>
+        <tr>
+          <td v-for="(a, i) in browseManager.level_list"
+          :key="i"
+          class="subjectlist-element centerdiv"
+          :class="{'subjectlist-element-selected':browseManager.curr_level==a.id}"
+          @click="chooseSubject(a.id)"
+        >
+          {{ a.name }}</td>
+        </tr>
+        <tr><td v-for="(a, i) in browseManager.level_list" class="centerdiv">
+          <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a?.score > 0" 
+          :score="a.score" :min="0" :max="100" :size="25" :strokeWidth="13" :mycolor="'black'" :key="a.id"  /></td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
