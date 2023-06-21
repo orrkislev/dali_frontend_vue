@@ -22,17 +22,19 @@ function chooseSubject(id) {
 <template>
   <div>
     <div id="subjectlist">
-      <table>
+      <table cellspacing="0" >
         <tr>
           <td v-for="(a, i) in browseManager.level_list"
           :key="i"
-          class="subjectlist-element centerdiv"
+          class="subjectlist-element centerdiv subjname-line"
           :class="{'subjectlist-element-selected':browseManager.curr_level==a.id}"
           @click="chooseSubject(a.id)"
         >
           {{ a.name }}</td>
         </tr>
-        <tr><td v-for="(a, i) in browseManager.level_list" class="centerdiv">
+        <tr><td v-for="(a, i) in browseManager.level_list" 
+          class="subjectlist-element centerdiv knob-line"
+          @click="chooseSubject(a.id)">
           <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a?.score > 0" 
           :score="a.score" :min="0" :max="100" :size="25" :strokeWidth="13" :mycolor="'black'" :key="a.id"  /></td>
         </tr>
@@ -58,14 +60,24 @@ export default {
   cursor: pointer;
   font-size: 1.1em;
   transition: all 150ms ease;
+  border-left: 1px solid white;
 }
-.subjectlist-element:first-of-type {
+.subjname-line:first-of-type {
   padding-right: 1em;
-  border-radius: 0 0.5em 0.5em 0;
+  border-radius: 0 0.5em 0 0;
 }
-.subjectlist-element:last-of-type {
+.subjname-line:last-of-type {
   padding-left: 1em;
-  border-radius: 0.5em 0 0 0.5em;
+  border-radius: 0.5em 0 0 0;
+}
+
+.knob-line:first-of-type {
+  padding-right: 1em;
+  border-radius: 0 0 0.5em 0;
+}
+.knob-line:last-of-type {
+  padding-left: 1em;
+  border-radius: 0 0 0 0.5em;
 }
 
 .subjectlist-element:hover {
