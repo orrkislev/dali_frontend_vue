@@ -5,7 +5,7 @@ import GameTree from 'src/components/GameTree/GameTree.vue';
 
 <template>
   <div>
-    <h2>כל המשימות</h2>
+    <h2 class="centerdiv">מאגר המשימות</h2>
     <game-tree />
   </div>
 </template>

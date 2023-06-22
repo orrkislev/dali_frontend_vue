@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 
 const useBrowseManager = defineStore('browser', {
     state: () => ({
-        level_list: [], curr_level: -1,
+        level_list: [], curr_level: -1, curr_item: {},
         subject_list: [], curr_subject: -1,
         game_list: null, curr_game: -1,
         openTasks: { tasks: [], more: [], classes:[] },

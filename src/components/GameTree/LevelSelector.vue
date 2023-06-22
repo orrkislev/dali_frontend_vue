@@ -3,42 +3,47 @@ import useAPI from "src/utils/useAPI";
 import useBrowseManager from "src/utils/useBrowseManager";
 import useAuth from '../../utils/useAuth';
 import daliKnob  from '../../pages/daliKnob.vue';
+import Dropdown from 'primevue/dropdown';
 
 
 const browseManager = useBrowseManager();
 const api = useAPI();
 const auth = useAuth()
+let currentLevel = {}
 
 api.post_json("tasks/subjects_list/", {}).then((p) => {
   browseManager.level_list = p.list;
   browseManager.curr_level = p.selected_id;
 });
 
+function chooseLLevel(item) {
+  console.log('here')
+  browseManager.curr_level = item.value.id;
+  browseManager.curr_item = item.value;
+}
 function chooseSubject(id) {
   browseManager.curr_level = id;
 }
+
+
 </script>
 
 <template>
   <div>
     <div id="subjectlist">
-      <table cellspacing="0" >
-        <tr>
-          <td v-for="(a, i) in browseManager.level_list"
-          :key="i"
-          class="subjectlist-element centerdiv subjname-line"
-          :class="{'subjectlist-element-selected':browseManager.curr_level==a.id}"
-          @click="chooseSubject(a.id)"
-        >
-          {{ a.name }}</td>
-        </tr>
-        <tr><td v-for="(a, i) in browseManager.level_list" 
-          class="subjectlist-element centerdiv knob-line"
-          @click="chooseSubject(a.id)">
-          <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a?.score > 0" 
-          :score="a.score" :min="0" :max="100" :size="25" :strokeWidth="13" :mycolor="'black'" :key="a.id"  /></td>
-        </tr>
-      </table>
+      <div style="float:right;width:25%">
+        <Dropdown  :options="browseManager.level_list" optionLabel="name" placeholder="בחרו נושא ראשי"  @change="chooseLLevel">
+          <template #option="slotProps">
+            <div :class="{summary_success : slotProps.option.score == slotProps.option.target}">{{ slotProps.option.name }}</div>
+          </template>  
+        </Dropdown>
+      </div>
+      <div class="LevelSelected" style="float:left;width:75%">
+        <span style="float:right;">{{ browseManager.curr_item?.name }}</span>
+        <span style="float:left;" :class="{summary_success : browseManager.curr_item.score == browseManager.curr_item.target}">
+          {{ browseManager.curr_item?.target }} / {{ browseManager.curr_item?.score }}
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -53,7 +58,11 @@ export default {
 #subjectlist {
   display: flex;
   justify-content: center;
+  background-color: var(--gray-100);
+  border-radius: 10px;
+  padding:10px;
 }
+.LevelSelected {font-size:2em;}
 .subjectlist-element {
   background: #ddd;
   padding: 0.2em 0.5em;

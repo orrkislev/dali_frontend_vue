@@ -63,7 +63,8 @@ const actionToggleIsChecked = computed(() => {
 
 <template>
     <!-- <router-link :to="'/game/' + task.id"> -->
-        <div class='task' @click="clickAction">
+        <div class='task' @click="clickAction"
+            :class="{ summary_task: task.authorization_type =='summary' }">
             <div class='flex justify-content-between'>
                 <div v-if="action" class='action'>
                 <ToggleButton v-model="actionToggleIsChecked"
@@ -73,13 +74,19 @@ const actionToggleIsChecked = computed(() => {
                             />
             </div>
                 <div class='flex flex-1'>
-                    <div class='task-img' v-bind:style="{backgroundImage: 'url('+real_url+task.icon+')'}"></div>
-                    <div class='task-content'>
-                        <div v-if="category" class='task-ribbon'>
+                    <div v-if="task.domain != 'לשון'" class='task-img' v-bind:style="{backgroundImage: 'url('+real_url+task.icon+')'}"></div>
+                    <div v-else-if="task.authorization_type =='summary'" class='task-ribbon'>
                             <div class='task-ribbon-text'>
-                                {{ category }}
+                                משימת סיכום
                             </div>
-                        </div>
+                    </div>
+                    <div v-if="task.category" class='task-ribbon'>
+                            <div class='task-ribbon-text'>
+                                {{ task.category }}
+                            </div>
+                    </div>
+                    <div class='task-content'>
+                        
                         <div class='task-content-name'>{{ task.name }}</div>
                         <div class='task-content-bottom'>
                             <div class='task-content-bottom-marker'>
@@ -117,6 +124,10 @@ export default {
         transition: all 150ms ease-in-out;
         padding-left: 2em;
     }
+    .summary_task {
+        background-color: var(--gray-100);
+    }
+    
     .task:hover{
         box-shadow: rgba(0,0,0,0.3) 1px 6px 4px;
     }
@@ -149,17 +160,17 @@ export default {
     .task-ribbon{
         position: absolute;
         top: 0px;
-        left: 0px;
+        right: 100px;
         width: 50%;
         height: 100%;
         overflow: hidden;
     }
     .task-ribbon-text{
-        transform: translateY(-10%) translateX(1px) rotate(-45deg);
+        transform: translateY(45%) translateX(1px) rotate(-45deg);
         margin-top: 20px;
         width: 150%;
         text-align: center;
-        background-color: orange;
+        background-color: var(--gray-400);
     }
     .task-content-name{
         font-size: larger;

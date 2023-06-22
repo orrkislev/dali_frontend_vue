@@ -28,7 +28,8 @@ function chooseSubject(id) {
 
 <template>
   <div id="subject_selector">
-    <table cellspacing="0" cellpadding="0">
+    <h3 class = 'centerdiv'>תת נושא</h3>
+    <table class="subject_selector_item" cellspasing="0">
     <tr
       v-for="(a, i) in browseManager.subject_list"
       :key="i"
@@ -38,8 +39,10 @@ function chooseSubject(id) {
       >
       <td>{{ a.name }}</td>
       <td>
-        <daliKnob v-if="auth.username && !auth.isTeacherOrStaff && a?.score > 0"  
-        :score="a.score" :min="0" :max="100" disabled :size="33"  :strokeWidth="10" :mycolor="'darkgray'" :key="a.id"/>
+        <span class='summary_title'> משימות סיכום:<br/></span>
+        <span class='summary_res' :class="{summary_success : a.score == a.target}">
+           {{ a.target }} / {{ a.score }} 
+      </span>
       </td>
     </tr>
   </table>
@@ -57,17 +60,21 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 0.2em;
+  background-color: var(--gray-200);
+  border-radius: 10px;
 }
-.subject_selector_item {
+table.subject_selector_item{border-collapse: collapse;}
+tr.subject_selector_item {
   border-radius: 0.2em;
   cursor: pointer;
   font-size: 1.1em;
   transition: all 150ms ease;
   padding-left: 2.5em;
   padding-right: 0.5em;
+  border-bottom: 1px solid white;
 }
 
-.subject_selector_item:hover {
+tr.subject_selector_item:hover {
   background: #99a;
 }
 .subject_selector_item:active {
@@ -79,4 +86,7 @@ export default {
   background: orange;
   color:darkred;
 }
+.summary_title {font-size:10px;}
+.summary_res {font-size:20px;}
+.summary_success{color: var(--dali_correct_color);}
 </style>

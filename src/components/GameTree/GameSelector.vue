@@ -30,18 +30,19 @@ function getGamesData(subjectID) {
 
 <template>
   <div id="gameselector" v-if="browseManager.game_list != null">
-    <!-- <single-task v-if="gameData.game_in_class != null"
+    <!--<single-task v-if="gameData.game_in_class != null"
              :task="gameData.game_in_class" :category="'משחק כיתתי'"
              @click="OpenGameInclass()">
-        </single-task> -->
-    <!-- <template v-if="gameData.open_exams.length > 0">
+        </single-task>-->
+    <!--<template v-if="gameData.open_exams.length > 0">
             <single-task v-for="exam in gameData.open_exams" :key="exam.game_id"
                 :task="exam" :exam="true" :category="'בוחן'"
                 :played="gameData.played_games.includes(exam.game_id)" 
                 :assigned="gameData.extra_games_info.includes(exam.game_id)"
                 @click="selectTask(exam.game_id, {exam:exam.exam_id})">
             </single-task>
-        </template> -->
+        </template>-->
+    <h3 class = 'centerdiv'>משחקים</h3>
     <single-task v-for="task in browseManager.game_list.list" :key="task.id" :task="task" :category="null"
       :played="browseManager.game_list.played_games.includes(task.id)"
       :assigned="browseManager.game_list.extra_games_info.includes(task.id)"
@@ -66,5 +67,9 @@ export default {
   flex-direction: column;
   gap: 0.5em;
   flex: 1;
+  border-radius: 10px;
+  padding: 10px;
+  border: 1px solid var(--gray-500)
 }
+
 </style>
