@@ -17,7 +17,7 @@ if (props.score !== NaN) {
     calcMax = Math.max(props.score,props.max)
 } 
 
-if (props.score > 60)  scoreColor = "var(--primary-color)" 
+if (props.score > 60)  scoreColor = "#4caf50"  
 //console.log('score=' + props.score + ", calcScore=" + calcScore + ', calcMax=' +calcMax )
 
 </script>
