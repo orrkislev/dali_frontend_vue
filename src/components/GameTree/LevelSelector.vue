@@ -40,7 +40,7 @@ function chooseSubject(id) {
       </div>
       <div class="LevelSelected" style="float:left;width:75%">
         <span style="float:right;">{{ browseManager.curr_item?.name }}</span>
-        <span style="float:left;" :class="{summary_success : browseManager.curr_item.score == browseManager.curr_item.target}">
+        <span v-if="browseManager.curr_item.target" style="float:left;" :class="{summary_success : browseManager.curr_item.score == browseManager.curr_item.target}">
           {{ browseManager.curr_item?.target }} / {{ browseManager.curr_item?.score }}
         </span>
       </div>

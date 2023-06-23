@@ -125,7 +125,7 @@ export default {
         padding-left: 2em;
     }
     .summary_task {
-        background-color: var(--gray-100);
+        background-color: var(--gray-300);
     }
     
     .task:hover{

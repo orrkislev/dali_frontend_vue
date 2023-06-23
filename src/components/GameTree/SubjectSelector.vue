@@ -38,11 +38,9 @@ function chooseSubject(id) {
       :class="{ subject_selector_item_selected: browseManager.curr_subject==a.id }"
       >
       <td>{{ a.name }}</td>
-      <td>
-        <span class='summary_title'> משימות סיכום:<br/></span>
-        <span class='summary_res' :class="{summary_success : a.score == a.target}">
-           {{ a.target }} / {{ a.score }} 
-      </span>
+      <td v-if="a.target" class="summary_res_td">
+        <span class='summary_res' :class="{summary_success : a.score == a.target}">{{ a.target }} / {{ a.score }} <br/></span>
+        <span class='summary_title'> משימות סיכום</span>
       </td>
     </tr>
   </table>
@@ -63,7 +61,7 @@ export default {
   background-color: var(--gray-200);
   border-radius: 10px;
 }
-table.subject_selector_item{border-collapse: collapse;}
+table.subject_selector_item{border-collapse: collapse; min-width:250px;}
 tr.subject_selector_item {
   border-radius: 0.2em;
   cursor: pointer;
@@ -77,6 +75,7 @@ tr.subject_selector_item {
 tr.subject_selector_item:hover {
   background: #99a;
 }
+td.summary_res_td {float:left;padding-left:10px;}
 .subject_selector_item:active {
   background: darkgoldenrod;
 }
