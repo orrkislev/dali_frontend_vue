@@ -38,21 +38,37 @@ function rowClick(event) {
 <template>
     <div v-if="auth.userData.status == 'no_class' || data?.length==0">
         <div class="text-center">
-            <div class="text-4xl">לא נמצאה כיתה לך</div>
-            <div style="margin-top:-1em;">נצטרך להגדיר כיתה לך</div>
+            <div class="text-2xl">  עדיין אין לך קבוצות לימוד בשנת הלימודים הנוכחית.<br/><br/></div>
+            <div class="text-1xl"> מומלץ להגדיר כיתות / קבוצות לימוד לפני כניסה ראשונה של תלמידים למערכת<br/>
+                 - בחרו ב"ניהול כיתות" בתפריט הראשי.
+            </div>
             <Classes />
         </div>
     </div>
     <div v-else-if="auth.userData.status == 'no_students'">
         <div class="text-center">
-            <div class="text-4xl">לא נמצאו תלמידים לכיתה לך</div>
-            <div style="margin-top:-1em;">נצטרך להגדיר תלמידים לכיתה לך</div>
+            <div class="text-2xl">עדיין אין לך תלמידים רשומים.</div>
+            <br/><br/>
+            <div style="margin-top:-1em;"> מומלץ לתת לתלמידים משימה של כניסה ראשונית לאתר - על מנת לא להשקיע בכך זמן בשיעור.<br/>
+                <br/>
+                לכניסה דרך הזדהות אחידה - שילחו לתלמידים את הקישור לסרטון ההדרכה  
+                <button class="p-button-sm p-button-outlined p-button-rounded" value='העתקת קישור' onclick="copy_text_2clipboard('https://www.youtube.com/embed/bDAEJO7VDMI')">העתקת קישור</button><br/><br/>
+                <iframe width='400' height='300' src='https://www.youtube.com/embed/bDAEJO7VDMI' frameborder='0' allowfullscreen></iframe>
+                <br/>
+            </div>
         </div>
     </div>
     <div v-else-if="auth.userData.status == 'no_tasks'">
         <div class="text-center">
-            <div class="text-4xl">לא נמצאו משימות לכיתה לך</div>
-            <div style="margin-top:-1em;">נצטרך להגדיר משימות לכיתה לך</div>
+            <div class="text-4xl">  לכיתות שלך אין משימות.</div>
+            <div style="margin-top:-1em;">  <br/><br/>
+                תלמידים שייכנסו לאתר לא ייראו משימות ולא יוכלו לשחק. 
+                <br>
+                לחצו על  "משימות לכיתות" בתפריט הראשי על מנת לפתוח משימות לכיתות.<br/>
+                צפו  
+                <a href="javascript:show_video_item('5Acn5BaDMxQ')">בסרטון הדרכה קצר</a>
+                כיצד לנהל משימות לכיתות.
+                </div>
         </div>
     </div>
     <div class="home-teacher" v-else-if="data">

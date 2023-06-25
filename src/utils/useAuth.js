@@ -11,7 +11,8 @@ const useAuth = defineStore('auth', {
     }),
     getters: {
         isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.role),
-        isStaff: (state) => ['stuff'].includes(state.role)
+        isStaff: (state) => ['stuff'].includes(state.role),
+        isStudent: (state) => ['student','independant'].includes(state.role),
     },
     actions: {
         startLogin(){

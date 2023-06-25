@@ -179,3 +179,31 @@ function openclose_reminder(obj_id)
         $("#openclose_reminder_button_" + obj_id).val(openclose_vals[new_val]);
       });
 }
+
+function show_video_item(code,size)
+{
+  if (size === undefined) size = 1;
+  width = 400 * size;
+  height = 300 * size;
+  video_display=true;
+  news_popup = "<iframe id='news_video_player' width='" + width + "' height='" + height + "' src='http://www.youtube.com/embed/" + code + "' frameborder='0' allowfullscreen> </iframe>";
+  $('div#media_enlarge_view').html(news_popup);
+  $('div#media_enlarge_view').dialog('open');
+  $('div#media_enlarge_view').on( "dialogbeforeclose", function()
+  {
+    video_display=false;
+    $('#news_video_player').attr("src","");
+    return true;
+  });  
+}
+
+function copy_text_2clipboard(text)
+{
+  if (!navigator.clipboard) 
+  {
+    fallbackCopyTextToClipboard(text);
+    return;
+  }
+  navigator.clipboard.writeText(text);
+}
+

@@ -3,18 +3,24 @@ import { NButton, NDropdown } from "naive-ui";
 import { storeToRefs } from "pinia";
 import useAuth from 'src/utils/useAuth';
 import { ref, watch } from 'vue-demi';
+import { useRouter } from 'vue-router';
 
 const auth = useAuth()
+const router = useRouter()
 
 const options = ref([
-  { key: "1", label: "התנתק", disabled: false},
+  { key: "1", label: "פרופיל", disabled: false},
+  { key: "2", label: "התנתק", disabled: false},
 ]);
 
 const { username } = storeToRefs(auth)
 watch(username, newVal => options.value[0].disabled = newVal==null)
 
 function SelectUserOption(key) {
-  if (key=="1") {
+  if (key=='1') {
+    router.push({path: '/profile'})
+  }
+  if (key=="2") {
     auth.logout()
   }
 }
@@ -49,8 +55,13 @@ function SelectUserOption(key) {
 
         <n-dropdown trigger="hover" @select="SelectUserOption" :options="options">
           <NButton round secondary color="#ffffff">
-            <router-link v-if="auth.username" to="/profile">{{ auth.username }}</router-link>
+            <span v-if="auth.username" > {{ auth.username }}</span>
             <router-link v-else to="/login">{{ 'LOGIN' }}</router-link>
+            <!--
+
+            <router-link v-if="auth.username" >{{ auth.username }}</router-link>
+            
+            -->
           </NButton>
         </n-dropdown>
       </div>

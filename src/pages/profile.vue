@@ -4,6 +4,7 @@ import ProfileSection from '../components/profile/ProfileSection.vue';
 import useAuth from '../utils/useAuth';
 import { ref } from "vue";
 import useAPI, { real_url } from '../utils/useAPI';
+import Footer from "../components/Footer.vue";
 
 const auth = useAuth()
 const router = useRouter()
@@ -75,8 +76,14 @@ function showAllBadges(){
 
         <ProfileSection v-if="auth.userData.saml_login!='True'" name='סיסמא' :button='true' val='*********' @click='showPassAlert'></ProfileSection>
 
-        <ProfileSection name='בית ספר' :val='auth.userData.school'></ProfileSection>
-        <ProfileSection name='כיתה' :button='true' :val="auth.userData.class" @click='showClassAlert'></ProfileSection>
+        <div v-if="auth.userData.role == 'student'">
+            
+            <ProfileSection name='כיתה' :button='true' :val="auth.userData.class" @click='showClassAlert'></ProfileSection>
+        </div>
+        <div v-if="auth.userData.role == 'teacher'">
+            <ProfileSection name='בית ספר' :val='auth.userData.school'></ProfileSection>
+        </div>
+        <Footer />
     </div>
 </template>
 

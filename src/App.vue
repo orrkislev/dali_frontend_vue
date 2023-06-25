@@ -1,7 +1,7 @@
 <script setup>
 import Header from "./components/Header.vue";
 import SideBar from "./components/SideBar/SideBar.vue";
-import Footer from "./components/Footer.vue";
+
 import Landing from "./pages/landing.vue";
 import useAuth from "./utils/useAuth";
 import Login from "./pages/login.vue";
@@ -55,7 +55,6 @@ document.head.appendChild(favicon);
             <side-bar />
           </div>
         </div>
-        <Footer />
       </div>
     </template>
   </template>

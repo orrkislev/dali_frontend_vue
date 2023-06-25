@@ -11,13 +11,16 @@ const selected = ref(null)
 
 
 api.post_json('review/survey_2_student/', {}).then(res => {
-    const maxCount = res.answers.reduce((acc, cur) => {
-        return acc > cur.count ? acc : cur.count
-    }, 0)
-    res.answers.forEach(ans => {
-        ans.val = ans.count / maxCount * 100
-    })
-    data.value = res
+    if (res.answers)
+    {
+        const maxCount = res.answers.reduce((acc, cur) => {
+            return acc > cur.count ? acc : cur.count
+        }, 0)
+        res.answers.forEach(ans => {
+            ans.val = ans.count / maxCount * 100
+        })
+        data.value = res
+    }
 })
 
 function answerSurvey(id) {
