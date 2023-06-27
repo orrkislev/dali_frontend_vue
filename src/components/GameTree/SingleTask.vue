@@ -5,7 +5,7 @@ import { useRouter } from 'vue-router';
 import useAuth from '../../utils/useAuth';
 import useBrowseManager from '../../utils/useBrowseManager';
 import { propsToAttrMap } from '@vue/shared';
-import daliKnob  from '../../pages/daliKnob.vue';
+import daliKnob  from '../../utils/daliKnob.vue';
 
 
 const auth = useAuth()

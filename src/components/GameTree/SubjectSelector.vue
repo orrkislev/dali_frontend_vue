@@ -4,7 +4,7 @@ import useAPI from "src/utils/useAPI";
 import useBrowseManager from "src/utils/useBrowseManager";
 import useAuth from '../../utils/useAuth';
 import { watch } from "vue";
-import daliKnob  from '../../pages/daliKnob.vue';
+import daliKnob  from '../../utils/daliKnob.vue';
 
 const browseManager = useBrowseManager();
 const api = useAPI();
