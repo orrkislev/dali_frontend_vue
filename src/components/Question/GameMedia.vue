@@ -5,6 +5,7 @@ import useEmitter from "src/utils/useEmmiter";
 import ActionButton from "../ActionButton.vue";
 import AjaxViewer from "../AjaxViewer.vue";
 import { notificationDark } from "naive-ui";
+import { base_url } from "../../utils/useAPI";
 
 const gameManager = useGameManager();
 
@@ -44,11 +45,11 @@ function closeMedia(){
 
 function editMediaForDevelopment(media){
   //TODO update when production
-  //if (process.env.NODE_ENV=='development') return media.split('/static/').join('http://da-li.co.il/static/') 
+  //if (process.env.NODE_ENV=='development') return media.split('/static/').join(base_url + '/static/') 
   //return media
   console.log('editMediaForDevelopment');
-  var mymedia = media.split('/static/').join('http://da-li.co.il/static/') //TODO update when production
-  //return media.split('/static/').join('http://da-li.co.il/static/') //TODO update when production
+  var mymedia = media.split('/static/').join(base_url + '/static/') //TODO update when production
+  //return media.split('/static/').join(base_url + '/static/') //TODO update when production
   //var node = document.createElement("div");
   //node.setAttribute("id","this_is_me");
   //node.innerHTML = media;
