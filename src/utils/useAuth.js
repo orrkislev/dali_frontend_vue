@@ -20,8 +20,8 @@ const useAuth = defineStore('auth', {
         },
         async getUserdata(){
             const api = useAPI()
-            let response = await api.get('students/userdata')
-            response = await response.json()
+            let response = await api.post('students/userdata/',{})
+            response = await response //.json()
             if (response==false) return
             this.role = response.role
             this.username = response.name
