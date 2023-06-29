@@ -10,9 +10,10 @@ const useAuth = defineStore('auth', {
         userData:null
     }),
     getters: {
-        isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.role),
-        isStaff: (state) => ['stuff'].includes(state.role),
-        isStudent: (state) => ['student','independant'].includes(state.role),
+        isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.userData.role),
+        isStaff: (state) => ['stuff'].includes(state.userData.role),
+        isStudent: (state) => ['student','independant'].includes(state.userData.role),
+        showIntro: (state) => state.userData.welcome_message,
     },
     actions: {
         startLogin(){
@@ -21,9 +22,9 @@ const useAuth = defineStore('auth', {
         async getUserdata(){
             const api = useAPI()
             let response = await api.post('students/userdata/',{})
-            response = await response //.json()
-            if (response==false) return
-            this.role = response.role
+            response = await response //.json() 
+            if (response==false)
+                return
             this.username = response.name
             this.userData = response
             this.state = 'authenticated'
@@ -45,10 +46,10 @@ const useAuth = defineStore('auth', {
         },
         async logout() {
             const api = useAPI()
-            await api.get('students/logout')
-            this.role = null
+            console.log('logout')
             this.username = null
             this.state = null
+            await api.get('students/logout')            
         },
         register() {
 

@@ -4,25 +4,46 @@ import { storeToRefs } from "pinia";
 import useAuth from 'src/utils/useAuth';
 import { ref, watch } from 'vue-demi';
 import { useRouter } from 'vue-router';
+import useEmitter from 'src/utils/useEmmiter';
+import Help from 'src/pages/help.vue';
 
 const auth = useAuth()
 const router = useRouter()
+const emitter = useEmitter()
 
 const options = ref([
   { key: "1", label: "פרופיל", disabled: false},
-  { key: "2", label: "התנתק", disabled: false},
+  { key: "2", label: "הדרכה", disabled: false},
+  { key: "3", label: "הדרכה בסיסית", disabled: false},
+  { key: "9", label: "התנתקות", disabled: false},
 ]);
 
 const { username } = storeToRefs(auth)
 watch(username, newVal => options.value[0].disabled = newVal==null)
 
+function showHelp(type){
+  emitter.emit('SHOW_HELP',{'type':type})
+      
+}
+
 function SelectUserOption(key) {
-  if (key=='1') {
-    router.push({path: '/profile'})
-  }
-  if (key=="2") {
-    auth.logout()
-  }
+    switch (key){
+      case "1":
+        router.push({path: '/profile'})
+        break;
+      case "2":
+        showHelp('guide')
+        break;
+      case "3":
+        showHelp('intro')
+        break;
+      
+      case "9":
+        auth.logout()
+        break;
+      default: 
+        console.log('SelectUserOption not found')
+    }
 }
 </script>
 
@@ -49,8 +70,8 @@ function SelectUserOption(key) {
         </NButton>
       </div>
       <div id="header_left">
-        <NButton round secondary color="#ffffff">
-          <router-link to="/help">עזרה</router-link>
+        <NButton round secondary color="#ffffff" @click="showHelp">
+          עזרה
         </NButton>
 
         <n-dropdown trigger="hover" @select="SelectUserOption" :options="options">
@@ -66,13 +87,14 @@ function SelectUserOption(key) {
         </n-dropdown>
       </div>
     </div>
+    <Help :title="'guide'"/>
   </div>
 </template>
 
 
 <script>
 export default {
-  name: "Header",
+  name: "Header",   
 };
 </script>
 

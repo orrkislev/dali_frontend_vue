@@ -34,7 +34,6 @@ const routes = [
     { path: '/manage/tasks', component: Tasks},
     { path: '/manage/exams', component: Exams},
     
-    { path: '/help', component: Help },
     { path: '/legal', component: Legal },
 
     { path: '/qadmin/:id', component: Qadmin },
