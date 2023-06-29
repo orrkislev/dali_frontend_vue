@@ -3,11 +3,15 @@ import SideBarUser from "./SideBarUser.vue";
 import Survey from "./Survey.vue";
 import SendComment from "./SendComment.vue";
 import SideBarBest from "./SideBarBest.vue";
+import useBrowseManager from 'src/utils/useBrowseManager';
+
+const browseManager = useBrowseManager();
+
 </script>
 
 
 <template>
-  <div id="sidebar">
+  <div v-if="!browseManager.isMobile" id="sidebar">
     <side-bar-user />
     <send-comment />
     <survey />

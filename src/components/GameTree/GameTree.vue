@@ -2,13 +2,18 @@
 import LevelSelector from './LevelSelector.vue';
 import SubjectSelector from './SubjectSelector.vue'
 import GameSelector from './GameSelector.vue'
+import useBrowseManager from 'src/utils/useBrowseManager';
+
+const browseManager = useBrowseManager();
+
 </script>
 
 <template>
   <div>
       <level-selector />
+      <subject-selector v-if="browseManager.isMobile"/>
       <div id='subject_game_selection'>
-        <subject-selector />
+        <subject-selector v-if="!browseManager.isMobile"/>
         <game-selector />
       </div>
   </div>

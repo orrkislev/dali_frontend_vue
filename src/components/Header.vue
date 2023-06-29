@@ -6,10 +6,13 @@ import { ref, watch } from 'vue-demi';
 import { useRouter } from 'vue-router';
 import useEmitter from 'src/utils/useEmmiter';
 import Help from 'src/pages/help.vue';
+import useBrowseManager from 'src/utils/useBrowseManager';
 
+const browseManager = useBrowseManager();
 const auth = useAuth()
 const router = useRouter()
 const emitter = useEmitter()
+
 
 const options = ref([
   { key: "1", label: "פרופיל", disabled: false},
@@ -59,18 +62,21 @@ function SelectUserOption(key) {
         <NButton round secondary color="#ffffff">
           <router-link to="/allgames">מאגר משימות</router-link>
         </NButton>
-        <NButton round secondary color="#ffffff" v-if="auth.isTeacherOrStaff">
+        <template v-if="browseManager.isMobile"><br/></template>
+        <template v-if="auth.isTeacherOrStaff">
+        <NButton round secondary color="#ffffff">
           <router-link to="/manage/tasks">משימות לכיתות</router-link>
         </NButton>
-        <NButton round secondary color="#ffffff" v-if="auth.isTeacherOrStaff">
+        <NButton round secondary color="#ffffff">
           <router-link to="/manage/exams">בחנים לכיתות</router-link>
         </NButton>
-        <NButton round secondary color="#ffffff" v-if="auth.isTeacherOrStaff">
+        <NButton round secondary color="#ffffff">
           <router-link to="/manage/classes">ניהול כיתות</router-link>
         </NButton>
+        </template>
       </div>
       <div id="header_left">
-        <NButton round secondary color="#ffffff" @click="showHelp">
+        <NButton v-if="!browseManager.isMobile" round secondary color="#ffffff" @click="showHelp">
           עזרה
         </NButton>
 
@@ -121,7 +127,6 @@ export default {
   font-size: 110%;
 }
 #header_right {
-  display: flex;
   gap: 1.5em;
   flex: 1;
 }
