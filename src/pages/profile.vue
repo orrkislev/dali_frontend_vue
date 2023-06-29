@@ -83,6 +83,7 @@ function showAllBadges(){
         <div v-if="auth.userData.role == 'teacher'">
             <ProfileSection name='בית ספר' :val='auth.userData.school'></ProfileSection>
         </div>
+        <br/><br/>
         <Footer />
     </div>
 </template>
