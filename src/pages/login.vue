@@ -9,8 +9,11 @@ const router = useRouter()
 const name = ref("")
 const password = ref("")
 
-function login() {
-    auth.login(name.value, password.value);
+
+async function login() {
+    let res = await auth.login(name.value, password.value);
+    if (res.status !== 'success')
+        $vm.data.error = 'פרטי הכניסה לא תקינים'
 }
 </script>
 
@@ -23,10 +26,11 @@ function login() {
                     <div>שם משתמש</div>
                     <InputText id="username" type="text" v-model="name" />
                     <div>סיסמא</div>
-                    <Password v-model="password" /><br/>
+                    <Password v-model="password" toggleMask  />
                     <Button label="כניסה" type="submit"/>
                 </div>
             </form>
+            <div v-if="error">{{ error }}</div>
             <!--<Divider />
              <Button label="הזדהות אחידה" type="submit"/>-->
         </div>
@@ -37,6 +41,9 @@ function login() {
 <script>
 export default {
     name: "login",
+    data: () => ({
+     error: null
+    })
 };
 </script>
 
