@@ -50,7 +50,7 @@ function updateClassTask(class_id,game_id){
         <PageTitle title="בחנים לכיתות" subtitle="המשימות שבחרת לכיתות" />
         <div style="width:65%;">
             <DataTable :value="getTableData()" stripedRows showGridlines class="p-datatable-sm" autoLayout>
-                <Column field="name" header="" bodyClass="text-right p-2">
+                <Column field="name" header="משימה" bodyClass="text-right p-2">
                     <template #body="slotProps">
                         <router-link :to="'/game/'+slotProps.data.id">
                             {{ slotProps.data.name }} 
