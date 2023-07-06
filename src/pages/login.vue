@@ -41,9 +41,9 @@ export default {
     }),
     methods:
     {
-        login: function()
+        async login()
         {
-            let res = this.auth.login(this.name, this.password);
+            const res = await this.auth.login(this.name, this.password);
             if (res.status !== 'success')
                 this.$data.error = 'פרטי הכניסה לא תקינים'
         }
