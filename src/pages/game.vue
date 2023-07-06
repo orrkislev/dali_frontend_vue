@@ -6,7 +6,7 @@ import GameTitleIntro from 'src/components/Game/GameTitleIntro.vue'
 import GameTitleOutro from 'src/components/Game/GameTitleOutro.vue'
 import GameText from '../components/Game/GameText.vue'
 import GameSurvey from '../components/Game/GameSurvey.vue'
-import GameWait from '../components/Game/GameWait.vue'
+import DaliWait from 'src/utils/DaliWait.vue'
 
 const route = useRoute()
 const gameManager = useGameManager()
@@ -30,7 +30,7 @@ function resetGame(){
         <game-title-outro v-else-if="gameManager.view=='title' && gameManager.question.action=='game ended'"></game-title-outro>
         <game-text v-else-if="gameManager.view=='media-start'"></game-text>
         <game-survey v-else-if="gameManager.view=='survey'"></game-survey>
-        <game-wait v-else-if="gameManager.view=='wait'"></game-wait>
+        <DaliWait v-else-if="gameManager.view=='wait'" :title="'המשחק יתחיל מייד'"></DaliWait>
         <div v-else>{{ resetGame() }}</div>
     </div>
 </template>
