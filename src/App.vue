@@ -4,7 +4,6 @@ import SideBar from "./components/SideBar/SideBar.vue";
 
 import Landing from "./pages/landing.vue";
 import useAuth from "./utils/useAuth";
-import Login from "./pages/login.vue";
 import { real_url } from "./utils/useAPI";
 import { useRoute } from "vue-router";
 import { watch } from "vue";
@@ -19,7 +18,6 @@ favicon.rel = 'icon';
 favicon.type = "image/x-icon"
 favicon.href = real_url + './favicon.ico';
 document.head.appendChild(favicon);
-
 </script>
 
 
@@ -57,9 +55,6 @@ document.head.appendChild(favicon);
         </div>
       </div>
     </template>
-  </template>
-  <template v-else-if="auth.state == 'login'">
-    <Login />
   </template>
   <template v-else>
     <Landing />
