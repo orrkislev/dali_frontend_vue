@@ -7,14 +7,18 @@ const props = defineProps({
 const mediaRef = ref();
 const scriptTags = ref([]);
 
+/*
 onBeforeUnmount(() => {
   scriptTags.value.forEach((tag) => document.body.removeChild(tag));
 });
+*/
 
 //onBeforeMount(() => {
+  //console.log("props.htmlWithScripts = " + props.htmlWithScripts)
   props.htmlWithScripts.split("<script>").forEach((mediaPart) => {
-    //console.log('madiaPart=' + mediaPart);
+    console.log('mediaPart=' + mediaPart);
     const partSplit = mediaPart.split("<" + "/script>");
+    //console.log('partSplit=' + partSplit[0]);
     if (partSplit.length == 2) {
       console.log('adding script');
       const scriptTag = document.createElement("script");
