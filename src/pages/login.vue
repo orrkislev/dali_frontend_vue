@@ -9,24 +9,19 @@ const router = useRouter()
 const name = ref("")
 const password = ref("")
 
-
-async function login() {
-    let res = await auth.login(name.value, password.value);
-    if (res.status !== 'success')
-        $vm.data.error = 'פרטי הכניסה לא תקינים'
-}
 </script>
 
 
 <template>
-    <div class="flex w-screen h-screen justify-content-center align-items-center">
-        <div class="bg-white border-round shadow p-5 w-5">
+    <div class="flex justify-content-center align-items-center">
+        <div class="bg-white border-round shadow p-5">
             <form @submit.prevent="login">
                 <div class="flex flex-column">
                     <div>שם משתמש</div>
                     <InputText id="username" type="text" v-model="name" />
                     <div>סיסמא</div>
                     <Password v-model="password" toggleMask  />
+                    <br/>
                     <Button label="כניסה" type="submit"/>
                 </div>
             </form>
@@ -43,8 +38,18 @@ export default {
     name: "login",
     data: () => ({
      error: null
-    })
+    }),
+    methods:
+    {
+        login: function()
+        {
+            let res = this.auth.login(this.name, this.password);
+            if (res.status !== 'success')
+                this.$data.error = 'פרטי הכניסה לא תקינים'
+        }
+    }
 };
+
 </script>
 
 

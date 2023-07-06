@@ -2,15 +2,16 @@
 import useAuth from '../utils/useAuth';
 import GameWait from '../components/Game/GameWait.vue'
 import { useRoute } from "vue-router";
+import Login from "../pages/login.vue";
+
+import { ref } from "vue";
 
 
 const auth = useAuth()
 auth.getUserdata()
 const route = useRoute()
+let loginvisible = ref(true);
 
-function login(){
-    auth.startLogin()
-}
 </script>
 
 
@@ -28,7 +29,7 @@ function login(){
             <div class="text-6xl font-bold w-7">חווית הוראה ולמידה חדשנית</div>
             <div class="text-2xl py-2 text-800 w-7">משימות ומשחקים ללימוד מדעים בחטיבת ביניים</div>
             <div class="flex gap-3">
-                <Button class="p-button-warning" @click="login">כניסה</Button>
+                <Button class="p-button-warning" @click="startlogin">כניסה</Button>
                 <Button class="p-button-raised p-button-secondary p-button-text" >צור קשר</Button>
             </div>
         </div>
@@ -221,13 +222,26 @@ function login(){
 
         <div class="col-12 h-8rem"></div>
     </div>
+    <Dialog v-model:visible="$data.loginvisible">
+      <Login />
+    </Dialog>
     </template> 
 </template>
 
 
 <script>
 export default {
-    name: 'Landing'
+    name: 'Landing',
+    data: () => ({
+        loginvisible: ref(false)
+    }),
+    methods: {
+        startlogin: function(){
+            this.auth.startLogin()
+            this.$data.loginvisible = ref(true)
+    }
+}
+
 };
 </script>
 

@@ -23,33 +23,35 @@ const useAuth = defineStore('auth', {
             const api = useAPI()
             let response = await api.post('students/userdata/',{})
             response = await response //.json() 
-            if (response==false)
+            if (response=='false')
                 return
             this.username = response.name
             this.userData = response
             this.state = 'authenticated'
         },
         async login(username, password) {
-            /*if (username == '') {
-                username = "mora21"
-                password = "orit2345"
-            }*/
             const api = useAPI()
-            let response = await api.post('students/pre_login/', {
+            let response = await api.post('students/vue_login/', {
                 'go_normal': 1,
                 'username': username,
                 'password': password,
                 'next': '/',
             })
-            this.getUserdata()
+            if (response.status == 'success')
+            {
+                this.getUserdata()
+            }
             return response
         },
         async logout() {
             const api = useAPI()
-            console.log('logout')
-            this.username = null
-            this.state = null
-            await api.get('students/logout')            
+            let response = await api.post('students/logout/', { onlyData: true })
+            if (response.status == 'success')
+            {
+                this.username = null
+                this.userData = null
+                this.state = null
+            }           
         },
         register() {
 
