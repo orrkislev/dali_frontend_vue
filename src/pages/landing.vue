@@ -1,6 +1,5 @@
 <script setup>
 import useAuth from '../utils/useAuth';
-import GameWait from '../components/Game/GameWait.vue'
 import { useRoute } from "vue-router";
 import Login from "../pages/login.vue";
 
