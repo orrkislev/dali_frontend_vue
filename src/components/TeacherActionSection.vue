@@ -17,7 +17,7 @@ function click() {
       <div class="teacher_section_subtitle">{{ subtitle }}</div>
       <div class="teacher_section_content">
         <div class="teacher_section_content_text">{{ text }} </div>
-        <div class="teacher_section_content_action">
+        <div v-if="action_label" class="teacher_section_content_action">
           <ActionButton :center='true' :border="true" @click="click" :inactive="disabled">{{ action_label }}</ActionButton>
         </div>
       </div>
