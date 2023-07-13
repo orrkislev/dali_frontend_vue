@@ -17,7 +17,8 @@ const props = defineProps({
     category: String,
     score: {type:Number , default:0},
     target:Number,
-    action:String
+    action:String,
+    purpose: String,
   })
 
 const router = useRouter()
@@ -26,6 +27,7 @@ const browseManager = useBrowseManager();
 let clickAction = goToGamePage
 if (props.action == 'ADD_TASK') clickAction = addTask
 else if (props.action == 'ADD_EXAM') clickAction = addExam
+else if (props.purpose == 'REPORT') clickAction = showReport
 
 function goToGamePage() {
   router.push({
@@ -52,6 +54,11 @@ function addExam(){
     else browseManager.openExams.more.push({id:props.task.id,name:props.task.name})
 }
 
+function showReport()
+{
+
+}
+
 const actionToggleIsChecked = computed(() => {
     if (props.action == 'ADD_TASK') 
         return browseManager.openTasks.tasks.map(t => t.id).includes(props.task.id) || browseManager.openTasks.more.map(t => t.id).includes(props.task.id)
@@ -67,7 +74,7 @@ const actionToggleIsChecked = computed(() => {
             :class="{ summary_task: task.authorization_type =='summary' }">
             <div class='flex justify-content-between'>
                 <div v-if="action" class='action'>
-                <ToggleButton v-model="actionToggleIsChecked"
+                <ToggleButton v-if="!purpose=='REPORT'" v-model="actionToggleIsChecked"
                             onIcon="pi pi-check" offIcon="pi pi-times" 
                             class="p-button-sm border-transparent" 
                             :style="{backgroundColor:actionToggleIsChecked ? 'orange' : 'white'}"
@@ -88,12 +95,12 @@ const actionToggleIsChecked = computed(() => {
                     <div class='task-content'>
                         
                         <div class='task-content-name'>{{ task.name }}</div>
-                        <div class='task-content-bottom'>
+                        <div v-if="purpose!=='REPORT'" class='task-content-bottom'>
                             <div class='task-content-bottom-marker'>
                                 <div class='task-content-bottom-marker-circle' v-bind:style="{backgroundColor: played ? 'orange' : 'lightgray' }"></div>
                                 {{ played ? 'שיחקתי' : 'לא שיחקתי'}}
                             </div>
-                            <div class='task-content-bottom-marker'>
+                            <div v-if="purpose!=='REPORT'" class='task-content-bottom-marker'>
                                 <div class='task-content-bottom-marker-circle' v-bind:style="{backgroundColor: assigned ? 'orange' : 'lightgray' }"></div>
                                 {{ assigned ? 'פרסמתי' : 'לא פרסמתי'}}
                             </div>
