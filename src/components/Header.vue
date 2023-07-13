@@ -18,7 +18,7 @@ const options = ref([
   { key: "1", label: "פרופיל", disabled: false},
   { key: "2", label: "הדרכה", disabled: false},
   { key: "3", label: "הדרכה בסיסית", disabled: false},
-  { key: "9", label: "התנתקות", disabled: false},
+  { key: "9", label: "יציאה מהחשבון", disabled: false},
 ]);
 
 const { username } = storeToRefs(auth)
@@ -62,8 +62,7 @@ function SelectUserOption(key) {
         <NButton round secondary color="#ffffff">
           <router-link to="/allgames">מאגר משימות</router-link>
         </NButton>
-        <template v-if="browseManager.isMobile"><br/></template>
-        <template v-if="auth.isTeacherOrStaff">
+        <template v-if="auth.isTeacherOrStaff && !browseManager.isMobile">
         <NButton round secondary color="#ffffff">
           <router-link to="/manage/tasks">משימות לכיתות</router-link>
         </NButton>
@@ -129,6 +128,7 @@ export default {
 #header_right {
   gap: 1.5em;
   flex: 1;
+  display:contents;
 }
 #header_left {
   flex: 1;
