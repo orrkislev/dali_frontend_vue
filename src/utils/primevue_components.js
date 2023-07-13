@@ -8,6 +8,8 @@ import ConfirmationService from 'primevue/confirmationservice';
 
 import TabMenu from 'primevue/tabmenu';
 import DataTable from 'primevue/datatable';
+import ColumnGroup from 'primevue/columngroup';   // optional
+import Row from 'primevue/row';  
 import Column from 'primevue/column';
 import Button from "primevue/button";
 import Divider from "primevue/divider";
@@ -33,6 +35,8 @@ export default function initPrimevue(app){
 
     app.component('Column', Column);
     app.component('DataTable', DataTable);
+    app.component('ColumnGroup', ColumnGroup);
+    app.component('Row', Row);
     app.component('TabMenu', TabMenu);
     app.component('Button', Button);
     app.component('Divider', Divider);
