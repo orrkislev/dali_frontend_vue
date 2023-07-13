@@ -16,7 +16,7 @@ onBeforeUnmount(() => {
 //onBeforeMount(() => {
   //console.log("props.htmlWithScripts = " + props.htmlWithScripts)
   props.htmlWithScripts.split("<script>").forEach((mediaPart) => {
-    console.log('mediaPart=' + mediaPart);
+    //console.log('mediaPart=' + mediaPart);
     const partSplit = mediaPart.split("<" + "/script>");
     //console.log('partSplit=' + partSplit[0]);
     if (partSplit.length == 2) {
