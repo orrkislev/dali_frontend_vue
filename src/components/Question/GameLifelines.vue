@@ -22,7 +22,6 @@ const lifelines = ref({
 
 // Remove lifeliens that are not registred for this game
 function setGameLifeLines() {
-  console.log('ff')
   if (gameManager.game)
   {
     for (var line in lifelines.value) {
