@@ -14,6 +14,7 @@ const useGameManager = defineStore('game', {
         media: {media:null, open:false},
         extra:{},
         sel: false,
+        unauthorized_types: [],
     }),
     getters: {
         getPostDataForSubmitAndNext: state => {
@@ -85,8 +86,7 @@ const useGameManager = defineStore('game', {
 
             const api = useAPI()
             let res = await api.post('quest/start/', postdata)
-
-            // SHOULD SHOW LEVELS?
+           // SHOULD SHOW LEVELS?
             if (typeof (res) == "string") {
                 if (res.includes('ShowLevels')) {
                     this.view = 'title'
@@ -97,15 +97,20 @@ const useGameManager = defineStore('game', {
             }
 
             // FREE GAMES LEFT?
-            if (res.authorization?.allow === false) {
-                // commit("setAlert",{type:'not-allowed',text:res.authorization.text}) TODO Alert
+
+            if (res?.allow === false) {
+                alert('לא ניתן לשחק - סיימת את מכסת ' + res.max_allowed + ' המשחקים מסוג זה שניתן לשחק בתקופת הנסיון.')
+                 console.log('not allowed')
+                 this.view = 'title'
+                 if (! this.unauthorized_types.includes(this.game.game.authorization_type))
+                    this.unauthorized_types.push(this.game.game.authorization_type)
                 return
-            } else if (res.authorization?.max_allowed > res.authorization?.count) {
-                // commit("setAlert",{type:'games-left',games:res.authorization?.max_allowed - res.authorization?.count}) TODO Alert
+            } else if (res?.max_allowed == res?.count + 1) { // last game
+                //commit("setAlert",{type:'games-left',games:res.authorization?.max_allowed - res.authorization?.count})
+                console.log('last game')
             }
 
             // START GAME
-            console.log('ddd')
             res = await api.post("quest/gamehead/", { 'master': 1 })
             postdata.purpose = ''
             postdata.gametype = this.extra.teacher ? 'teacher_test' : 'start_normal'
@@ -113,7 +118,6 @@ const useGameManager = defineStore('game', {
             if ('nof_questions' in res) // happens when filtered game - the number may be lower then the game's normal number
             {
                 this.game.game.NumQuestions = res.nof_questions
-                console.log('updted to ' + res.nof_questions + 'questions')
             }
             let newProgress = {
                 progress: Array(this.game.game.NumQuestions).fill('notyet'),

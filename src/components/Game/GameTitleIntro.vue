@@ -163,9 +163,10 @@ function publishDialogStatus(mode)
 							</div>
 						</Dialog>
 					</template>
-					<Button v-else class="p-button-rounded px-8" @click="()=>startGame()">
+					<Button v-if="!gameManager.unauthorized_types.includes(gameManager?.game?.game.authorization_type)" class="p-button-rounded px-8" @click="()=>startGame()">
 						התחלת משחק <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
 					</Button>
+					<h3 v-else>לא ניתן לשחק - סיימת את מכסת משחקי הנסיון מסוג זה</h3>
 				</div>
 			</div>
 			<div v-else>
