@@ -32,7 +32,7 @@ onBeforeRouteLeave(async (to, from) => {
       acceptLabel: exit_acceptLabel,
       rejectLabel: exit_rejectLabel,
       accept: () => {
-        gameManager.$reset()
+        //gameManager.$reset() // TODO - are we sure? No need. And reset will reset the unauthorized list. not a big deal but better to keep it
         api.post_json("quest/action/", {action: "endgame"}).then(res => {
           resolve(true)
         })
@@ -86,9 +86,11 @@ async function end_game(){
       <question-feedback :key="gameManager.question.question_num"/>
     </div>
     <Divider align='right'>
+      <div v-if="gameManager.progress.progress[0]!='admin'">
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחלת משחק חדש" />
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="end_game" label="סיום משחק" />  
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="gotoTaskPage" label="חזרה לדף המשימה" /> 
+    </div>
     </Divider>
     <game-media />
   </div>
