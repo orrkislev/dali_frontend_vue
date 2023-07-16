@@ -1,8 +1,11 @@
 <script setup>
 import { ref } from 'vue';
 import useAPI from 'src/utils/useAPI';
+import { real_url } from "src/utils/useAPI";
+import ActionButton from '../ActionButton.vue';
 
 const api = useAPI()
+
 
 const props = defineProps({
   questions_list: {},
@@ -71,8 +74,13 @@ const props = defineProps({
         <span v-if="quest_data.q_array.length > 0">  
       {{  quest_data.q_array }}</span>
       <span v-else>
-        אין עדיין מידע עבור השאלה
+        תלמידים בכיתה עדיין לא ענו על השאלה<br/>
+        ולכן אין עדיין מידע עבורה
       </span>
+      <br/>
+      <div class="centerdiv" style="display:flex;margin-top:30px;">
+        <action-button  :main="true" :border="true" :center="true" @click="open_question">צפיה בשאלה המלאה</action-button>
+      </div>
     </Dialog >
 </div>
 </template>
@@ -97,8 +105,13 @@ export default {
       closeSingleQuestReport: function(){
         this.$data.quest_id = 0
         this.$data.displayQuestDialog = ref(false)
+      },
+      open_question: function() {
+        let url = "/#/qadmin/" + this.$data.quest_id;
+        window.open(url,'_target')
       }
     }
+    
 
 }
 </script>
