@@ -1,12 +1,15 @@
 <script setup>
 import { ref } from 'vue';
 import useAPI from "src/utils/useAPI";
+import { useRouter } from 'vue-router';
 import useBrowseManager from "src/utils/useBrowseManager";
 import DaliWait from 'src/utils/DaliWait.vue'
 import { real_url } from "src/utils/useAPI";
 
 
 const browseManager = useBrowseManager();
+const router = useRouter()
+
 const api = useAPI();
 const data = ref(null);
 const allkeys = ref(null);
@@ -23,10 +26,13 @@ api.post("tasks/full_task_tree/", {}).then(res=> {
   allkeys.value = keys
 });
 
+function goToGamePage(id) {
+      router.push({path: '/game/' + id})
+    }
 </script>
 
 <template>
-  <div id="alltree_div" style="width:48%;">
+  <div id="alltree_div" >
     <TreeTable v-if="data" v-model:expandedKeys="allkeys" :value="data">
       <Column  header="מצב" expander>
         <template #body="slotProps">
@@ -35,7 +41,9 @@ api.post("tasks/full_task_tree/", {}).then(res=> {
       </Column>
       <Column field="name" header="Name" >
         <template #body="slotProps">
-          <span :class="getNameClass(slotProps)">{{  slotProps.node.data.name }}</span>
+            <span v-if="isGame(slotProps)" :class="getNameClass(slotProps)" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }}</span>
+            <span v-else :class="getNameClass(slotProps)">{{  slotProps.node.data.name }}</span>
+          
         </template>
       </Column>
       <Column  header="הצלחה" >
@@ -52,9 +60,11 @@ api.post("tasks/full_task_tree/", {}).then(res=> {
 export default {
   name: "alltree",
   methods: {
+    isGame: function(obj){
+      return (obj.node.key.search('game') > -1)
+    },
     getStatClass: function(obj){
-      console.log('a')
-      if (obj.node.key.search('game') > -1) {       
+      if (this.isGame(obj)) {       
         if (obj.node.data.score == undefined) return 'not_started'
         if (obj.node.data.score > 60)  return 'success'
         return 'failure'
@@ -72,8 +82,8 @@ export default {
       if (obj.node.key.search('level2') > -1) return "level2"
       if (obj.node.data.authorization_type =='summary' ) return 'summary'
       return "game"
-    },
-  },
+    },   
+  }
 };
 </script>
 
@@ -85,4 +95,5 @@ div.stat_div{width:15px;}
 .level1{font-size:24px;font-weight: bold;}
 .level2{font-size: 24px;}
 .summary{text-decoration: underline;color:black;}
+.game, .summary{cursor: pointer;}
 </style>
