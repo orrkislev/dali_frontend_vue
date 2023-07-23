@@ -4,8 +4,20 @@ import Survey from "./Survey.vue";
 import SendComment from "./SendComment.vue";
 import SideBarBest from "./SideBarBest.vue";
 import useBrowseManager from 'src/utils/useBrowseManager';
+import useEmitter from "../../utils/useEmmiter";
 
 const browseManager = useBrowseManager();
+const emitter = useEmitter()
+
+emitter.subscribe('GAME_ENDED', sidebar_view_show);
+emitter.subscribe('GAME_STARTS', sidebar_view_hide)
+
+function sidebar_view_hide(){
+  $("#sidebar").hide(300)
+}
+function sidebar_view_show(){
+  $("#sidebar").show(300)
+}
 
 </script>
 
@@ -30,6 +42,7 @@ export default {
 
 <style>
 #sidebar {
+  /*visibility: hidden;*/
   width: 100%;
   height: 100%;
   flex: 1;

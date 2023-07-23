@@ -32,10 +32,11 @@ const groupPublishSuccess = ref(true)
 // 		return gameManager.game.game.description.replace('\n', '<br>').replace('\r', '<br>');
 // 	return "no description";
 // }
-
+emitter.emit('GAME_ENDED')
 
 function startGame(gameType) {
 	gameManager.view = 'wait'
+	emitter.emit('GAME_STARTS')
 	if (gameType == null){
 		if (auth.isTeacherOrStaff && gameManager.game.classData?.filtered_game){
 			chooseTeacherGameType = true
