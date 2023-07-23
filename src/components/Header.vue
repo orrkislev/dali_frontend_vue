@@ -60,6 +60,9 @@ function SelectUserOption(key) {
           <router-link to="/">בית</router-link>
         </NButton>
         <NButton round secondary color="#ffffff">
+          <router-link to="/alltree">עץ מלא</router-link>
+        </NButton>
+        <NButton round secondary color="#ffffff">
           <router-link to="/allgames">מאגר משימות</router-link>
         </NButton>
         <template v-if="auth.isTeacherOrStaff && !browseManager.isMobile">

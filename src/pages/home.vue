@@ -17,7 +17,8 @@ if (auth.showIntro)
   emitter.emit('SHOW_HELP',{'type':'intro'})
 }
 
-if (auth.isStudent) router.push('/allgames');
+//if (auth.isStudent) router.push('/allgames');
+if (auth.isStudent) router.push('/alltree');
 
 function shoehelp()
 {
