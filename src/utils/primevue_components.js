@@ -8,6 +8,7 @@ import ConfirmationService from 'primevue/confirmationservice';
 
 import TabMenu from 'primevue/tabmenu';
 import DataTable from 'primevue/datatable';
+import TreeTable from 'primevue/treetable';
 import ColumnGroup from 'primevue/columngroup';   // optional
 import Row from 'primevue/row';  
 import Column from 'primevue/column';
@@ -35,6 +36,7 @@ export default function initPrimevue(app){
 
     app.component('Column', Column);
     app.component('DataTable', DataTable);
+    app.component('TreeTable', TreeTable);
     app.component('ColumnGroup', ColumnGroup);
     app.component('Row', Row);
     app.component('TabMenu', TabMenu);
