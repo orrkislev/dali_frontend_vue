@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 
 import Home from 'src/pages/home.vue'
 import allgames from 'src/pages/allgames.vue'
+import alltree from 'src/pages/alltree.vue'
 import login from 'src/pages/login.vue'
 import Game from 'src/pages/game.vue'
 import Profile from 'src/pages/profile.vue'
@@ -20,6 +21,7 @@ import Qadmin from 'src/pages/qadmin.vue'
 const routes = [
     { path: '/', component: Home },
     { path: '/allgames', component: allgames },
+    { path: '/alltree', component: alltree },
     { path: '/login', component: login },
     { path: '/profile', component: Profile },
 
