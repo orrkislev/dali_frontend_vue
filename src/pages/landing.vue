@@ -2,6 +2,7 @@
 import useAuth from '../utils/useAuth';
 import { useRoute } from "vue-router";
 import Login from "../pages/login.vue";
+import DaliWait from 'src/utils/DaliWait.vue'
 
 import { ref } from "vue";
 
@@ -17,7 +18,7 @@ let loginvisible = ref(true);
 <template>
     <template v-if="route.path.includes('/gameonly')">
         <div>
-            <game-wait></game-wait>
+            <DaliWait :title="'אנא המתינו'"></DaliWait>
         </div>
     </template>
     <template v-else>
