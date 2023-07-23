@@ -92,7 +92,7 @@ body {
 }
 
 #mainLayout {
-  display: flex;
+  /*display: flex;*/
   gap: 1em;
 }
 
