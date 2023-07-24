@@ -3,11 +3,13 @@
 //export const base_url = process.env.NODE_ENV=='development' ? 'http://localhost:8200/' : './'
 //export const real_url = process.env.NODE_ENV=='development' ? 'https://da-li.co.il/' : './'export const base_url =  'https://da-li.co.il/'
 
-//export const real_url =  'https://da-li.co.il/'
-//export const base_url =  'https://da-li.co.il/'
+export const real_url =  'https://da-li.co.il/'
+export const base_url =  'https://da-li.co.il/'
 
-export const base_url =  'http://localhost:8200/'
-export const real_url =  'http://localhost:8200/'
+//export const base_url =  'http://localhost:8200/'
+//export const real_url =  'http://localhost:8200/'
+
+export const dali_internal_url = 'static/new_site/index.html'
 
 function getCookie(name) {
     var value = "; " + document.cookie;

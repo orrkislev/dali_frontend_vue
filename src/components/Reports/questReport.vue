@@ -1,11 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import useAPI from 'src/utils/useAPI';
-import { real_url } from "src/utils/useAPI";
+import { base_url } from "src/utils/useAPI";
+import { dali_internal_url } from "src/utils/useAPI";
+
 import ActionButton from '../ActionButton.vue';
 
 const api = useAPI()
-
 
 const props = defineProps({
   questions_list: {},
@@ -14,6 +15,11 @@ const props = defineProps({
   class_id: 0,
 })
 
+function open_question(id) {
+  console.log('ddd')
+  let url = base_url + dali_internal_url + "#/qadmin/" + id;
+  window.open(url,'_target')
+}
 
 </script>
 
@@ -79,7 +85,7 @@ const props = defineProps({
       </span>
       <br/>
       <div class="centerdiv" style="display:flex;margin-top:30px;">
-        <action-button  :main="true" :border="true" :center="true" @click="open_question">צפיה בשאלה המלאה</action-button>
+        <action-button  :main="true" :border="true" :center="true" @click="open_question(quest_id)">צפיה בשאלה המלאה</action-button>
       </div>
     </Dialog >
 </div>
@@ -106,10 +112,6 @@ export default {
         this.$data.quest_id = 0
         this.$data.displayQuestDialog = ref(false)
       },
-      open_question: function() {
-        let url = "/#/qadmin/" + this.$data.quest_id;
-        window.open(url,'_target')
-      }
     }
     
 
