@@ -133,7 +133,9 @@ export default {
     },
     computed: {
         tasks_list: function() {
-            return this.data.games_list.filter(t => !t.game.master)
+            if (this.data?.games_list)
+                return this.data?.games_list.filter(t => !t.game.master)
+            return false
         },
     }   
 };
