@@ -2,12 +2,15 @@
 import { ref } from 'vue-demi';
 import useAuth from 'src/utils/useAuth';
 import { useRouter } from 'vue-router';
+import useAPI from "src/utils/useAPI";
+import { base_url } from "../utils/useAPI";
 
 const auth = useAuth()
-const router = useRouter()
 
 const name = ref("")
 const password = ref("")
+const IDM_url = base_url + 'saml2/login/';
+const OWL_url = base_url + 'static/images/idm_owl.png'
 
 </script>
 
@@ -26,8 +29,8 @@ const password = ref("")
                 </div>
             </form>
             <div v-if="error">{{ error }}</div>
-            <!--<Divider />
-             <Button label="הזדהות אחידה" type="submit"/>-->
+            <Divider />
+            <a id='home_menu_idm_login'  :href="IDM_url"><img :src="OWL_url" style='width:50px;'/>כניסה בהזדהות אחידה</a>
         </div>
     </div>
 </template>
@@ -39,14 +42,12 @@ export default {
     data: () => ({
      error: null
     }),
-    methods:
-    {
-        async login()
-        {
+    methods: {
+        async login(){
             const res = await this.auth.login(this.name, this.password);
             if (res.status !== 'success')
                 this.$data.error = 'פרטי הכניסה לא תקינים'
-        }
+        },      
     }
 };
 
