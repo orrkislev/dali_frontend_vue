@@ -91,9 +91,6 @@ function nodeScriptIs(node) {
         return node.tagName === 'SCRIPT';
 }
 
-
-
-
 </script>
 
 
