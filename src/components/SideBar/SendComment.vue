@@ -4,6 +4,10 @@ import useAPI from '../../utils/useAPI';
 import useGameManager from '../../utils/useGameManager';
 import ButtonSmall from '../ButtonSmall.vue';
 
+const props = defineProps({
+    showIcon: {type:Boolean, default: false},
+})
+
 const displayDialog = ref(false);
 const comment_sent = ref(false);
 const comment = ref('');
@@ -42,7 +46,9 @@ async function send_comment(){
         </div>
         <div>אפשר לפנות אלינו גם בטלפון: 054-4453400 או במייל: <a href="mailTo:dali.k12.co.il@gmail.com" >dali.k12.co.il@gmail.com</a> </div>
     </Dialog>
-    <ButtonSmall @click="()=>displayDialog=true"> הערה למנהלי האתר </ButtonSmall>
+    <br/>
+    <span v-if="showIcon" @click="()=>displayDialog=true">&#9872; הערה</span>
+    <ButtonSmall :border="true" v-else @click="()=>displayDialog=true"> הערה למנהלי האתר </ButtonSmall>
 </template>
 
 

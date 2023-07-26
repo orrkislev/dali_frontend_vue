@@ -1,5 +1,6 @@
 <script setup>
 import useGameManager from 'src/utils/useGameManager'
+import SendComment from "src/components/SideBar/SendComment.vue";
 // import ProgressBar from 'primevue/progressbar';
 
 const gameManager = useGameManager()
@@ -15,6 +16,7 @@ const gameManager = useGameManager()
             </ProgressBar> -->
             <span v-if='gameManager.progress?.bonus' style="color:orange;"><i class="fa fa-sm fa-gift"></i>10+</span>
             {{ gameManager.progress?.score }} נקודות
+            <send-comment/>
         </div>
     </div>
 </template>
