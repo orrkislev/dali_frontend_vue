@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { useRouter } from 'vue-router';
 import useAPI from './useAPI';
 
 const useAuth = defineStore('auth', {
@@ -51,7 +50,7 @@ const useAuth = defineStore('auth', {
                 this.username = null
                 this.userData = null
                 this.state = null
-            }           
+            }
         },
         register() {
 
