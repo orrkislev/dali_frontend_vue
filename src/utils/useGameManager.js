@@ -179,11 +179,12 @@ const useGameManager = defineStore('game', {
             const action = this.extra.usedRetry ? 'retry_more' : 'retry'
             let res = await api.post("quest/action/", { action , onlyData: true })
             res = await api.post("quest/action/", { action: 'reshow', question_id: this.question.q.id, onlyData: true })
-            this.question = res
-            this.questionResult = {}
-
             if (!this.extra.usedRetry) this.extra.usedRetry = 0
             this.extra.usedRetry++
+            return this.handlePlay(res)
+            //this.question = res
+            //this.questionResult = {}
+
         },
         async lifeline_skip() {
             const api = useAPI()
@@ -196,14 +197,17 @@ const useGameManager = defineStore('game', {
             data.timer = -1
             data.action = 'skip'
             const res = await api.post("quest/action/", data)
-            this.question = res
-            this.questionResult = {}
+            return this.handlePlay(res)
+            //this.question = res
+            //this.questionResult = {}
         },
         async lifeline_replace() {
             const api = useAPI()
             const res = await api.post("quest/action/", { action: 'replace', onlyData: true })
-            this.question = res
-            this.questionResult = {}
+            return this.handlePlay(res)
+            //this.question = res
+            //this.questionResult = {}
+            //this.view = 'question'
         },
         handlePlay(res)  {
             this.question = res

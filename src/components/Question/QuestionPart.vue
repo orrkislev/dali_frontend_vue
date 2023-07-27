@@ -12,22 +12,23 @@ import Question_linesselect from './types/QuestionLinesselect.vue';
 
 const gameManager = useGameManager()
 
+console.log('loaded question part');
 const SUPPORTED_TEMPLATES = ['lashon_drag_2table_shuffle','lashon_2table_shuffle_hide'];
 const SUPPOTED_Q_TYPES = ['options','yesno','selection','wordselect','shortopen','mouseselect','linesselect'];
-function current_q_component() {
-                if (SUPPORTED_TEMPLATES.includes(gameManager.question?.q?.display_template))
-                    current_q_component = lashon_drag_2table_shuffle
-                else if (SUPPOTED_Q_TYPES.includes(gameManager.question?.q?.type)) current_q_component = "Question_" + gameManager.question?.q?.type
-                else current_q_component = '';
-
-            console.log('current_q_component=' + current_q_component)
-            return current_q_component
-            }
+function determine_current_q_component() {
+  let current_q_component = ''
+  if (SUPPORTED_TEMPLATES.includes(gameManager.question?.q?.display_template))
+      current_q_component = lashon_drag_2table_shuffle
+  else if (SUPPOTED_Q_TYPES.includes(gameManager.question?.q?.type)) current_q_component = "Question_" + gameManager.question?.q?.type
+  else current_q_component = '';
+  console.log('current_q_component=' + current_q_component)
+  return current_q_component
+}
 
 </script>
 
 <template>
-  <component v-bind:is="current_q_component()" :key="gameManager.question?.q?.id"> </component>
+  <component v-bind:is="determine_current_q_component()" :key="gameManager.question?.q?.id"> </component>
 </template>
 
 <script>
