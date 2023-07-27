@@ -1,4 +1,5 @@
 <script setup>
+import useEmitter from 'src/utils/useEmmiter';
 import GameTop from "../Question/GameTop.vue";
 import GameButtons from "../Question/GameButtons.vue";
 import GameLifelines from "../Question/GameLifelines.vue";
@@ -16,6 +17,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 const gameManager = useGameManager()
 const confirm = useConfirm();
 const api = useAPI();
+const emitter = useEmitter()
 
 const exit_message = "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהמשחק?"
 const exit_header = "יציאה מהמשחק"
@@ -34,6 +36,7 @@ onBeforeRouteLeave(async (to, from) => {
       accept: () => {
         //gameManager.$reset() // TODO - are we sure? No need. And reset will reset the unauthorized list. not a big deal but better to keep it
         api.post_json("quest/action/", {action: "endgame"}).then(res => {
+          emitter.emit('GAME_ENDED') // Sidebar back to normal
           resolve(true)
         })
       },
