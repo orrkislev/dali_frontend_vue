@@ -4,6 +4,7 @@ import { storeToRefs } from "pinia";
 import useAuth from 'src/utils/useAuth';
 import { ref, watch } from 'vue-demi';
 import { useRouter } from 'vue-router';
+import { real_url } from "src/utils/useAPI";
 import useEmitter from 'src/utils/useEmmiter';
 import Help from 'src/pages/help.vue';
 import useBrowseManager from 'src/utils/useBrowseManager';
@@ -48,6 +49,9 @@ function SelectUserOption(key) {
         console.log('SelectUserOption not found')
     }
 }
+function badgeURL(url){
+  return real_url + "static/" + url
+}
 </script>
 
 
@@ -78,12 +82,13 @@ function SelectUserOption(key) {
         </template>
       </div>
       <div id="header_left">
+        
         <NButton v-if="!browseManager.isMobile" round secondary color="#ffffff" @click="showHelp">
           עזרה
         </NButton>
-
         <n-dropdown trigger="hover" @select="SelectUserOption" :options="options">
           <NButton round secondary color="#ffffff">
+            <img :src="badgeURL(auth.userData.avatar_icon)" class="h-2rem " /> &nbsp;
             <span v-if="auth.username" > {{ auth.username }}</span>
             <router-link v-else to="/login">{{ 'LOGIN' }}</router-link>
             <!--
