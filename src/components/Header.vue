@@ -88,8 +88,10 @@ function badgeURL(url){
         </NButton>
         <n-dropdown trigger="hover" @select="SelectUserOption" :options="options">
           <NButton round secondary color="#ffffff">
-            <img :src="badgeURL(auth.userData.avatar_icon)" class="h-2rem " /> &nbsp;
-            <span v-if="auth.username" > {{ auth.username }}</span>
+            <img :src="badgeURL(auth.userData.avatar_icon)" class="h-2rem " /> &nbsp; 
+            <div v-if="auth.username" > 
+              <span>{{ auth.username }}</span>          
+            </div>
             <router-link v-else to="/login">{{ 'LOGIN' }}</router-link>
             <!--
 
