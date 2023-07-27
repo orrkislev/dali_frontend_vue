@@ -15,7 +15,15 @@ const router = useRouter()
 const auth = useAuth()
 const api = useAPI()
 
-// if (!auth.isTeacherOrStaff) router.push("/");
+if (!auth.isTeacherOrStaff) router.push("/");
+const displayDialog = ref(false)
+let popUpHeader = ref('')
+let popUpData = ref('')
+const game_name = ref("")
+const oldReport = ref(false)
+const wait = ref(false)
+let questions_list = ref([])
+
 
 const data = ref({})
 api.post_json('teachers/class_data/', { class_id: route.params.classid }).then(res => {
@@ -26,6 +34,38 @@ api.post('statistics/teacher_report/', { report_type:'tasks', class_id: route.pa
     data.value.games_list = res.games_list
 })
 
+async function show_report(report_type,report_title,game_id){
+    popUpHeader.value = report_title
+    wait.value = true
+    displayDialog.value = true
+    let params = { class_id: route.params.classid, report_type: report_type}
+    if (game_id !== undefined)
+        params['game_id']=game_id
+    const res = await api.post('statistics/teacher_report/', params)
+    popUpData.value = res
+    oldReport.value = true
+    wait.value = false
+}
+
+async function show_question_report(task)
+{
+    if (!task.use_subj_4quest_list && !task.allow_teacher_review) {
+        return show_report('diagnostics','דוח אבחון',task.id)
+    }
+    console.log('444')
+    wait.value = true
+    game_name.value = task.name
+    popUpHeader.value = 'דוח שאלות'
+    displayDialog.value = true
+    let params = { class: route.params.classid, game:task.id}
+    const res = await api.post('statistics/question_report/', params)
+    questions_list.value = res.games_array[0].list
+    oldReport.value = false
+    wait.value = false
+}
+function closeDialog() {
+    popUpData.value = {}
+}
 
 async function report_tasks_init() {
     
@@ -51,8 +91,6 @@ async function report_tasks_init() {
 
 onMounted (() => { report_tasks_init(); })
 
-
-
 </script>
 
 <template>
@@ -76,7 +114,8 @@ onMounted (() => { report_tasks_init(); })
             @click="show_report('full_diagnostics','דוח מצב')" />
         <TeacherActionSection title="פירוט משימות" subtitle="פירוט של המשימות" text="איזה משימות יש וכל זה" />
             <div class="taskListDiv">
-                <SingleTask v-for="task in tasks_list" @click="show_question_report(task.game)" class="SingleTasklist"
+                <!--<SingleTask v-for="task in tasks_list" @click="show_question_report(task.game)" class="SingleTasklist"-->
+                <SingleTask v-for="task in data?.games_list" @click="show_question_report(task.game)" class="SingleTasklist"
                     :key="task.game.id" :task="task.game" :category="null" :purpose="'REPORT'"/>
             </div>    
         <TeacherActionSection title="רשימת תלמידים" subtitle="רשימה של התלמידים" text="איזה תלמידים יש וכל זה"
@@ -88,56 +127,6 @@ onMounted (() => { report_tasks_init(); })
 <script>
 export default {
     name: 'Class',
-    data: () => ({
-        displayDialog: ref(false),
-        popUpHeader: '',
-        popUpData: {},
-        games_array: {},
-        oldReport: false,
-        wait: false,
-    }),
-    methods:
-    {
-        async show_report(report_type,report_title,game_id)
-        {
-            this.$data.popUpHeader = report_title
-            this.$data.wait = true
-            this.$data.displayDialog = true
-            let params = { class_id: this.route.params.classid, report_type: report_type}
-            if (game_id !== undefined)
-                params['game_id']=game_id
-            const res = await this.api.post('statistics/teacher_report/', params)
-            this.$data.popUpData = res
-            this.$data.oldReport = true
-            this.$data.wait = false
-        },
-        async show_question_report(task)
-        {
-            if (!task.use_subj_4quest_list && !task.allow_teacher_review) {
-                return this.show_report('diagnostics','דוח אבחון',task.id)
-            }
-            
-            this.$data.wait = true
-            this.$data.game_name = task.name
-            this.$data.popUpHeader = 'דוח שאלות'
-            this.$data.displayDialog = true
-            let params = { class: this.route.params.classid, game:task.id}
-            const res = await this.api.post('statistics/question_report/', params)
-            this.$data.questions_list = res.games_array[0].list
-            this.$data.oldReport = false
-            this.$data.wait = false
-        },
-        closeDialog() {
-            this.$data.popUpData = {}
-        },
-    },
-    computed: {
-        tasks_list: function() {
-            if (this.data?.games_list)
-                return this.data?.games_list.filter(t => !t.game.master)
-            return false
-        },
-    }   
 };
 
 </script>

@@ -1,7 +1,6 @@
 <script setup>
 import { ref } from 'vue';
 import useAPI from 'src/utils/useAPI';
-import { base_url } from "src/utils/useAPI";
 import { dali_internal_url } from "src/utils/useAPI";
 
 import ActionButton from '../ActionButton.vue';
@@ -13,11 +12,26 @@ const props = defineProps({
   game_name: '',
   game_id: 0,
   class_id: 0,
-})
+  })
+
+const quest_data = ref({})
+const  quest_id = ref(0)
+const displayQuestDialog = ref(false)
+
+async function singleQuestSelected(event) {
+  console.log('selected question ' + event.data.quest + ",id=" + event.data.quest_id);
+  quest_id.value = event.data.quest_id;
+  const res = await api.post('statistics/questiondetails/',{'id':event.data.quest_id});
+  quest_data.value = res
+  displayQuestDialog.value = true
+}
+function closeSingleQuestReport(){
+  quest_id.value = 0
+  displayQuestDialog.value = ref(false)
+}
 
 function open_question(id) {
-  console.log('ddd')
-  let url = base_url + dali_internal_url + "#/qadmin/" + id;
+  let url = dali_internal_url + "#/qadmin/" + id;
   window.open(url,'_target')
 }
 
@@ -94,26 +108,5 @@ function open_question(id) {
 <script>
 export default {
     name: 'questReport',
-    data: () => ({
-        quest_data: {},
-        quest_id: 0,
-        displayQuestDialog: ref(false),
-    }),
-    methods:
-    {
-      async singleQuestSelected(event) {
-        console.log('selected question ' + event.data.quest + ",id=" + event.data.quest_id);
-        this.$data.quest_id = event.data.quest_id;
-        const res = await this.api.post('statistics/questiondetails/',{'id':event.data.quest_id});
-        this.$data.quest_data = res
-        this.$data.displayQuestDialog = ref(true)
-      },
-      closeSingleQuestReport: function(){
-        this.$data.quest_id = 0
-        this.$data.displayQuestDialog = ref(false)
-      },
-    }
-    
-
 }
 </script>
