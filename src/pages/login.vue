@@ -5,10 +5,10 @@ import { useRouter } from 'vue-router';
 import useAPI from "src/utils/useAPI";
 import { base_url } from "../utils/useAPI";
 
-const auth = useAuth()
+//const auth = useAuth()
 
-const name = ref("")
-const password = ref("")
+//const name = ref("")
+//const password = ref("")
 const IDM_url = base_url + 'saml2/login/';
 const OWL_url = base_url + 'static/images/idm_owl.png'
 
@@ -35,16 +35,18 @@ const OWL_url = base_url + 'static/images/idm_owl.png'
     </div>
 </template>
 
-
 <script>
 export default {
     name: "login",
     data: () => ({
-     error: null
+        name : "",
+        password:  ref(""),
+        error: null,
     }),
     methods: {
         async login(){
-            const res = await this.auth.login(this.name, this.password);
+            const auth = useAuth()
+            const res = await auth.login(this.$data.name, this.$data.password);
             if (res.status !== 'success')
                 this.$data.error = 'פרטי הכניסה לא תקינים'
         },      

@@ -1,6 +1,6 @@
 <script setup>
-import useAuth from '../utils/useAuth';
 import { useRoute } from "vue-router";
+import useAuth from '../utils/useAuth';
 import Login from "../pages/login.vue";
 import DaliWait from 'src/utils/DaliWait.vue'
 
@@ -10,7 +10,6 @@ import { ref } from "vue";
 const auth = useAuth()
 auth.getUserdata()
 const route = useRoute()
-let loginvisible = ref(true);
 
 </script>
 
@@ -237,7 +236,9 @@ export default {
     }),
     methods: {
         startlogin: function(){
-            this.auth.startLogin()
+            const auth = useAuth()
+            auth.getUserdata()
+            auth.startLogin()
             this.$data.loginvisible = ref(true)
     }
 }
