@@ -32,14 +32,14 @@ function goToGamePage(id) {
 </script>
 
 <template>
-  <div id="alltree_div" >
+  <div id="alltree_div">
     <TreeTable v-if="data" v-model:expandedKeys="allkeys" :value="data">
       <Column  header="מצב" expander>
         <template #body="slotProps">
           <img :src="getStatImg(slotProps)" role="button" aria-describedby="a2" tabindex="0">
         </template>
       </Column>
-      <Column field="name" header="Name" >
+      <Column field="name" header="שם">
         <template #body="slotProps">
             <span v-if="isGame(slotProps)" :class="getNameClass(slotProps)" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }}</span>
             <span v-else :class="getNameClass(slotProps)">{{  slotProps.node.data.name }}</span>
@@ -79,21 +79,32 @@ export default {
     },
     getNameClass: function(obj){
       if (obj.node.key.search('level1') > -1) return "level1"
-      if (obj.node.key.search('level2') > -1) return "level2"
+      if (obj.node.key.search('level2') > -1) return "level2"     
       if (obj.node.data.authorization_type =='summary' ) return 'summary'
       return "game"
-    },   
+    },
+    isSummary: function(obj){
+      if (obj.node.data.authorization_type =='summary' ) return true
+      return false
+    },
   }
 };
 </script>
 
 <style>
+/*#alltree_div{width:48%}*/
+.p-treetable-wrapper{text-align: right !important;}
+.p-treetable .p-treetable-tbody > tr > td {border:none;padding:0.5rem 0 0.5rem 0;text-align:right;}
 .success{color:green;}
 .failure{color:red;}
 /*.not_started{color:blue;}*/
 div.stat_div{width:15px;}
 .level1{font-size:24px;font-weight: bold;}
-.level2{font-size: 24px;}
-.summary{text-decoration: underline;color:black;}
-.game, .summary{cursor: pointer;}
+.level2{font-size: 24px;margin-right: 20px;}
+.game, .summary{cursor: pointer;margin-right: 40px;}
+.summary{
+  /*text-decoration: underline;*/
+  color:black;
+  background-color: lightgrey;
+  }
 </style>
