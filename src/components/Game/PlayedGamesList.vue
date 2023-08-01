@@ -51,7 +51,7 @@ function publish(id) {
             <DataTable :value="data" class="w-6">
                 <Column field="date" header="תאריך" bodyClass="text-right p-2"> </Column>
                 <Column field="score" header="ניקוד" bodyClass="text-right p-2"> </Column>
-                <Column field="publish" header="פורסם" bodyClass="text-right p-2">
+                <Column field="publish" header="פורסם?" bodyClass="text-right p-2">
                     <template #body="slotProps">
                         <ToggleButton :modelValue="slotProps.data.publish" onIcon="pi pi-check" offIcon="pi pi-times"
                             class="p-button-sm border-transparent"
