@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 import useBrowseManager from "src/utils/useBrowseManager";
 import DaliWait from 'src/utils/DaliWait.vue'
 import { real_url } from "src/utils/useAPI";
+//import { FilterMatchMode } from 'primevue/api';
 
 
 const browseManager = useBrowseManager();
@@ -33,17 +34,25 @@ function goToGamePage(id) {
 
 <template>
   <div id="alltree_div">
-    <TreeTable v-if="data" v-model:expandedKeys="allkeys" :value="data">
+    <TreeTable v-if="data" v-model:expandedKeys="allkeys" :value="data" :filters="filters" :filterMode="filterMode">
+      <template #header>
+        <div class="text-right">
+          <div class="p-input-icon-left">
+            <i class="pi pi-search"></i>
+            <InputText v-model="filters['global']" placeholder="רישמו מילת חיפוש" />
+          </div>
+        </div>
+      </template>
       <Column  header="מצב" expander>
         <template #body="slotProps">
           <img :src="getStatImg(slotProps)" role="button" aria-describedby="a2" tabindex="0">
         </template>
       </Column>
+      <Column field="name" header="test"></Column>
       <Column field="name" header="שם">
         <template #body="slotProps">
             <span v-if="isGame(slotProps)" :class="getNameClass(slotProps)" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }}</span>
             <span v-else :class="getNameClass(slotProps)">{{  slotProps.node.data.name }}</span>
-          
         </template>
       </Column>
       <Column  header="הצלחה" >
@@ -59,6 +68,10 @@ function goToGamePage(id) {
 <script>
 export default {
   name: "alltree",
+  data() {
+    return {
+      filters: {},
+      }},
   methods: {
     isGame: function(obj){
       return (obj.node.key.search('game') > -1)
@@ -95,6 +108,7 @@ export default {
 /*#alltree_div{width:48%}*/
 .p-treetable-wrapper{text-align: right !important;}
 .p-treetable .p-treetable-tbody > tr > td {border:none;padding:0.5rem 0 0.5rem 0;text-align:right;}
+.p-treetable .p-treetable-thead > tr > th {text-align:right;}
 .success{color:green;}
 .failure{color:red;}
 /*.not_started{color:blue;}*/
