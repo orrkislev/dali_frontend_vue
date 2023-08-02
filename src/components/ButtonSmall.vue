@@ -1,4 +1,6 @@
 <script setup>
+import { ref } from 'vue';
+
 
 const emit = defineEmits(['click'])
 const props = defineProps({
@@ -6,6 +8,7 @@ const props = defineProps({
     primary: {type:Boolean, default: false},
     inactive: {type:Boolean, default: false},
     selected: {type:Boolean, default: false},
+    narrow: {type:String, default:false},
 })
 
 function click(event) {
@@ -19,8 +22,9 @@ function click(event) {
             'btnSmall-border': border, 
             'btnSmall-primary':primary,
             'btnFull-selected': selected,
-            'btnFull-inactive': inactive, 
-        }">
+            'btnFull-inactive': inactive,
+            'btnFull-narrow' : narrow,
+        }" >
         <slot></slot>
     </div>
 </template>
@@ -47,5 +51,8 @@ name:'ButtonSmall'
 }
 .btnSmall:hover{
     background: slategray;
+}
+.btnFull-narrow {
+    max-width: 10em;
 }
 </style>
