@@ -94,7 +94,7 @@ function NextGamePage() {
             :class="{'p-button-warning': isPublished}">
             {{ isPublished ? 'פורסם' : 'פרסום' }}
           </Button>
-          <div><ActionButton :border="true" :center="true" @click="restartGame" class="p-button-rounded" style="minWidth:100%">התחלת משחק חדש </ActionButton></div>
+          <div><ActionButton :border="true" :center="true" @click="restartGame" class="p-button-rounded" style="minWidth:100%">לשחק שוב</ActionButton></div>
           <div><ActionButton :border="true" :center="true" @click="backToGamePage" style="minWidth:100%">חזרה לדף המשימה</ActionButton></div>
           <div><ActionButton v-if="gameManager.game.next_game_id > 0" :border="true" :center="true" @click="NextGamePage" style="minWidth:100%">למשימה הבאה</ActionButton></div>
          <div><Button v-if="gameManager.sel" @click="publish('endgame')" style="minWidth:100%" class="btnFull p-button-warning p-button-rounded btnFull-center">סיום</Button></div>
