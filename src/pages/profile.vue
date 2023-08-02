@@ -4,7 +4,7 @@ import ProfileSection from '../components/profile/ProfileSection.vue';
 import useAuth from '../utils/useAuth';
 import { ref } from "vue";
 import useAPI, { real_url } from '../utils/useAPI';
-import Footer from "../components/Footer.vue";
+import ButtonSmall from 'src/components/ButtonSmall.vue';
 
 const auth = useAuth()
 const router = useRouter()
@@ -58,9 +58,11 @@ function showAllBadges(){
             <div v-if="showAllAvatars"  class="grid gap1 mt-2">
                 <div v-for="avatarSeries in allAvatars" class="avatarSeries p-2" @click="updateUserAvatar(avatarSeries.id)">
                     <div> {{ avatarSeries.name }} </div>
-                    <div class="flex">
-                        <div v-for="avatar in avatarSeries.avatars">
-                            <img :src="badgeURL(avatar.img)" class="h-3rem " />
+                    <div class="flex" >
+                        <div v-for="avatar in avatarSeries.avatars" class="allAvatarsDiv">
+                            <div class="imgEnvelopeDiv">
+                                <img :src="badgeURL(avatar.img)" class="allAvatarImg " />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -84,7 +86,7 @@ function showAllBadges(){
             <ProfileSection name='בית ספר' :val='auth.userData.school'></ProfileSection>
         </div>
         <br/><br/>
-        <Footer />
+        <ButtonSmall :border="true" :narrow="true" @click="()=>router.push('/legal')">תנאי שימוש</ButtonSmall>
     </div>
 </template>
 
@@ -106,4 +108,15 @@ name:'profile'
     .avatarSeries:hover{
         background-color: lightgrey;
     }
+    div.allAvatarsDiv{
+        position:relative;
+    }
+    .allAvatarImg{
+    }
+    .imgEnvelopeDiv
+    {
+        position: absolute;
+        bottom: 0;
+    }
+
 </style>
