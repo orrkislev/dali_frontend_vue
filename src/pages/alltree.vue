@@ -48,7 +48,6 @@ function goToGamePage(id) {
           <img :src="getStatImg(slotProps)" role="button" aria-describedby="a2" tabindex="0">
         </template>
       </Column>
-      <Column field="name" header="test"></Column>
       <Column field="name" header="שם">
         <template #body="slotProps">
             <span v-if="isGame(slotProps)" :class="getNameClass(slotProps)" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }}</span>
