@@ -20,6 +20,7 @@ async function send_comment(){
     if (gameManager.question && gameManager.question.q?.id) sendData.question_id = gameManager.question.q.id
     const res = await api.post('review/comment/', sendData)
     comment_sent.value = true
+    comment.value = ""
     setTimeout(()=>displayDialog.value = false ,500)
 }
 </script>
