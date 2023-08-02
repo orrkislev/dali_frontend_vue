@@ -23,6 +23,7 @@ function showAnswer() {
 }
 
 async function lifeline_stats() {
+  console.log('f*****')
   let newAnswers = [...gameManager.question.answers]
   const res = await api.post("quest/action/", { 'action': 'statistics', 'question_id': gameManager.question.q.id, })
   newAnswers.forEach(a => a.stats = Array(gameManager.question.options.length).fill(''))
@@ -93,12 +94,13 @@ function getOptions(anserIndex){
       <div style="flex: 1">
         <span v-html="answer.text"></span>
         <div class="flex gap05">
-          <action-button v-for="(option, index) in getOptions(answerIndex)" :key="index" :border="true"
+            <action-button v-for="(option, index) in getOptions(answerIndex)" :key="index" :border="true"
             :indicator="answer.selected == option.num ? answer.result : null"
             :inactive="answer.inactive ? answer.inactive[option.num] : null" :selected="answer.selected == option.num"
-            class="flex1" @click="select(answerIndex, option.num, option.id)"
-            v-html="option.text"></action-button>
+            class="flex1" @click="select(answerIndex, option.num, option.id)">
+            {{ option.text }}
             <small v-if="answer.stats">&nbsp; ({{ answer.stats[option.num] }})</small>
+          </action-button>
         </div>
         <div v-if="answer.result" v-bind:style="{ color: answer.result == 'success' ? 'green' : 'red' }"
           v-html="answer.feedback_text.text"></div>
