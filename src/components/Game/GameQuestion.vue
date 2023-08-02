@@ -47,9 +47,22 @@ onBeforeRouteLeave(async (to, from) => {
   });
 });
 
-function restartGame(){
-  gameManager.view = 'wait'
-  gameManager.startGame(false, true );
+async function restartGame(){
+  return await new Promise((resolve) => {
+    confirm.require({
+      message: exit_message,
+      header: exit_header,
+      icon: exit_icon,
+      acceptLabel: 'כן,משחק חדש',
+      rejectLabel: exit_rejectLabel,
+      accept: () => {
+        gameManager.view = 'wait'
+        gameManager.startGame(false, true );
+        },
+      reject: () => {
+      }})
+    })    
+  
 }
 
 async function gotoTaskPage(){
@@ -68,10 +81,26 @@ async function gotoTaskPage(){
     })    
 }
 
-async function end_game(){
+async function ask_end_game(){
+  return await new Promise((resolve) => {
+    confirm.require({
+      message: exit_message,
+      header: exit_header,
+      icon: exit_icon,
+      acceptLabel: exit_acceptLabel,
+      rejectLabel: exit_rejectLabel,
+      accept: () => {
+        end_game()
+      },
+      reject: () => {
+      }})
+    })
+}
+
+async function end_game() {
   await api.post("quest/action/", {action: "endgame"})
   gameManager.view = 'title' 
-  gameManager.question.action = 'game ended'
+  gameManager.question.action = 'game ended'      
 }
 </script>
 
@@ -91,7 +120,7 @@ async function end_game(){
     <Divider align='right'>
       <div v-if="gameManager.progress.progress[0]!='admin'">
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחלת משחק חדש" />
-      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="end_game" label="סיום משחק" />  
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="ask_end_game" label="סיום משחק" />  
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="gotoTaskPage" label="חזרה לדף המשימה" /> 
     </div>
     </Divider>
