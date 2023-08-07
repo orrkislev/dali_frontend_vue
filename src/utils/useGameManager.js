@@ -45,9 +45,11 @@ const useGameManager = defineStore('game', {
             if (router)
                 if (router.currentRoute._value.path.search('sel') > 0) this.sel = true
             this.game = res
-            if (res.game.gameType != 'trivia') 
-                console.log('SPECIAL GAMETYPE:', res.game.gameType)
-            this.view = 'title'
+            console.log('game type = ' + res.game.gameType)
+            if (res.game.gameType == 'lesson')
+                await this.startGame()
+            else
+                this.view = 'title'
         },
         async startGame(level = null, restart = false, extra = {}) {
             this.extra = extra
@@ -83,6 +85,7 @@ const useGameManager = defineStore('game', {
                     onlyData: true
                 }
             }
+            console.log('postdata='+postdata)
 
             const api = useAPI()
             let res = await api.post('quest/start/', postdata)
