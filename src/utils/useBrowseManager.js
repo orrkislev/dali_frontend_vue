@@ -10,6 +10,9 @@ const useBrowseManager = defineStore('browser', {
         curr_subject: -1,
         game_list: null, 
         curr_game: -1,
+        alltree: {},
+        allkeys: [],
+        my_tasks: "",
         openTasks: { tasks: [], more: [], classes:[] },
         openExams: { exams: [], more: [], classes:[] },
         isMobile: /Mobile/.test(navigator.userAgent)
