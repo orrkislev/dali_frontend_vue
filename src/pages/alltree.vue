@@ -34,7 +34,7 @@ api.post("tasks/full_task_tree/", {}).then(res=> {
   }
   current_action.value = 1
   browseManager.allkeys = keys
-  browseManager.my_tasks = "אנרג,תא"
+  browseManager.my_tasks = "המשימות שלי" //"אנרג,תא"
   filters.value = {'name':browseManager.my_tasks,'global':""} 
   browseManager.alltree = res
   
@@ -52,11 +52,15 @@ function switchFilterAction(){
     filters.value['name']=""
   }
   current_action.value = 1 - current_action.value
+  viewDescription.value = 0 // Do not show game description
 }
 
 function ShowDesrciption(id){
-  gameDescription.value = "this is a description for game " + id
-  viewDescription.value = id
+  if (viewDescription.value == id) return closeDescription
+  api.post('quest/game_details/',{'game_id':id}).then(p => {
+    gameDescription.value = p.text
+    viewDescription.value = id
+  })
 }
 
 function closeDescription(){
@@ -76,6 +80,11 @@ function closeDescription(){
             <InputText class="searchInputText" v-model="filters['global']" placeholder="רישמו מילת חיפוש" autofocus="autofocus"/>
             <ActionButton :center='false' :border="true" @click="switchFilterAction">{{ action_labels[current_action] }}</ActionButton>
           </div>
+            <div class="legendDiv">
+            <img :src="getImgbyName('lesson')" style="height:20px;"/> שיעור<br/>
+            <img :src="getImgbyName('game')" style="height:20px;"/> תרגול<br/>
+            <img :src="getImgbyName('summary')" style="height:20px;"/> תרגול מסכם<br/>
+          </div>
         </div>
       </template>
       <!--
@@ -90,15 +99,17 @@ function closeDescription(){
             <img v-if="isGame(slotProps)" :src="getImgName(slotProps)" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id)"/>
             <span v-if="isGame(slotProps)" :class="getNameClass(slotProps)" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }}</span>
             <span v-else :class="getNameClass(slotProps)">{{  slotProps.node.data.name }}</span>
-            <div v-if="viewDescription==slotProps.node.data.id">
-              {{  gameDescription }}
-              <action-button :border="true"  @click="closeDescription" icon="align-right">סגירה</action-button>
+            <div v-if="viewDescription==slotProps.node.data.id" class="gameDescriptionArea">
+              <div class="gameDescriptionDiv" v-html="gameDescription"></div>
+              <div>
+                <action-button :border="true" :center="true" @click="closeDescription" icon="align-right">סגירה</action-button>
+              </div>
             </div>
         </template>
       </Column>
       <Column  header="הצלחה" >
         <template #body="slotProps">
-          <span :class="getStatClass(slotProps)"> {{slotProps.node.data.target}} / {{slotProps.node.data.score}} </span>
+          <span :class="getStatClass(slotProps)"> {{slotProps.node.data.score}} / {{slotProps.node.data.target}} </span>
         </template>
       </Column>
     </TreeTable>
@@ -118,7 +129,7 @@ export default {
     },
     getStatClass: function(obj){
       if (this.isGame(obj)) {       
-        if (obj.node.data.score == undefined) return 'not_started'
+        if (obj.node.data.score == "-") return 'not_started'
         if (obj.node.data.score > 60)  return 'success'
         return 'failure'
         }
@@ -129,6 +140,9 @@ export default {
     getImgName:function(obj){
      let stat = this.getNameClass(obj)
      return real_url + "static/images/task_" + stat + ".jpg"
+    },
+    getImgbyName:function(name){
+      return real_url + "static/images/task_" + name + ".jpg"
     },
     /*
     getStatImg: function(obj){
@@ -153,12 +167,17 @@ export default {
 
 <style>
 /*#alltree_div{width:48%}*/
+div.p-treetable-header{display:grid;}
 .p-treetable-wrapper{text-align: right !important;}
-.p-treetable .p-treetable-tbody > tr > td {border:none;padding: 0px;text-align:right;}/*padding:0.5rem 0 0.5rem 0;*/
+.p-treetable .p-treetable-tbody > tr > td {border:none;padding: 0px;text-align:right;vertical-align: top;}/*padding:0.5rem 0 0.5rem 0;*/
 .p-treetable .p-treetable-thead > tr > th {text-align:right;}
 .success{color:green;}
 .failure{color:red;}
 /*.not_started{color:blue;}*/
+.p-treetable .p-treetable-tbody > tr > td:has(.success){direction:ltr;}
+.p-treetable .p-treetable-tbody > tr > td:has(.failure){direction:ltr;}
+.p-treetable .p-treetable-tbody > tr > td:has(.not_started){direction:ltr;}
+
 div.stat_div{width:15px;}
 .level1{font-size:24px;font-weight: bold;}
 .level2{font-size: 24px;margin-right: 20px;}
@@ -169,6 +188,13 @@ div.stat_div{width:15px;}
   background-color: lightgrey;
   }*/
 .searchInputText{margin-right:2em; margin-left: 5em;}
-div.searchDiv{display:flex;}
+div.searchDiv{display:flex;float:right;}
+div.legendDiv{float:left;}
 .eyeSearch{left:unset !important;}
+div.gameDescriptionDiv{padding-bottom:1em;}
+div.gameDescriptionArea{
+  margin:2em;
+  background-color:var(--surface-100);
+  padding: 2em;
+}
 </style>
