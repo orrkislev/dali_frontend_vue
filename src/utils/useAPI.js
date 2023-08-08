@@ -9,7 +9,7 @@ export const base_url =  'https://da-li.co.il/'
 //export const base_url =  'http://localhost:8200/'
 //export const real_url =  'http://localhost:8200/'
 
-export const dali_internal_url = 'static/new_site/index.html'
+export const dali_internal_url = base_url + 'static/new_site/index.html'
 
 function getCookie(name) {
     var value = "; " + document.cookie;
