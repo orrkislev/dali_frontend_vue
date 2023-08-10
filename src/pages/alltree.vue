@@ -9,9 +9,10 @@ import useGameManager from "src/utils/useGameManager";
 import useEmitter from 'src/utils/useEmmiter';
 import ActionButton from 'src/components/ActionButton.vue';
 import InputText from 'primevue/inputtext';
+import useAuth from "src/utils/useAuth";
 //import { FilterMatchMode } from 'primevue/api';
 
-
+const auth = useAuth();
 const browseManager = useBrowseManager();
 const router = useRouter()
 const gameManager = useGameManager();
@@ -24,6 +25,7 @@ const current_action = ref(null)
 const viewDescription = ref(false)
 const gameDescription = ref(null)
 
+browseManager.alltree = []
 api.post("tasks/full_task_tree/", {}).then(res=> {
   console.log('ddd')
   let keys = {}
@@ -34,8 +36,8 @@ api.post("tasks/full_task_tree/", {}).then(res=> {
   }
   current_action.value = 1
   browseManager.allkeys = keys
-  browseManager.my_tasks = "המשימות שלי" //"אנרג,תא"
-  filters.value = {'name':browseManager.my_tasks,'global':""} 
+  browseManager.my_tasks = "המשימות שלי" 
+  filters.value = {'global':""} 
   browseManager.alltree = res
   
 });
@@ -56,7 +58,7 @@ function switchFilterAction(){
 }
 
 function ShowDesrciption(id){
-  if (viewDescription.value == id) return closeDescription
+  if (viewDescription.value == id) return closeDescription()
   api.post('quest/game_details/',{'game_id':id}).then(p => {
     gameDescription.value = p.text
     viewDescription.value = id
@@ -87,18 +89,11 @@ function closeDescription(){
           </div>
         </div>
       </template>
-      <!--
-      <Column  header="מצב" expander>
-        <template #body="slotProps">
-          <img :src="getStatImg(slotProps)" role="button" aria-describedby="a2" tabindex="0">
-        </template>
-      </Column>
-      -->
       <Column field="name" header="שם" expander>
         <template #body="slotProps">
             <img v-if="isGame(slotProps)" :src="getImgName(slotProps)" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id)"/>
-            <span v-if="isGame(slotProps)" :class="getNameClass(slotProps)" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }}</span>
-            <span v-else :class="getNameClass(slotProps)">{{  slotProps.node.data.name }}</span>
+            <span v-if="isGame(slotProps)" :class="slotProps.node.type" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }} - {{slotProps.node.data.id}} </span>
+            <span v-else :class="slotProps.node.type">{{  slotProps.node.data.name }} </span>
             <div v-if="viewDescription==slotProps.node.data.id" class="gameDescriptionArea">
               <div class="gameDescriptionDiv" v-html="gameDescription"></div>
               <div>
@@ -107,7 +102,7 @@ function closeDescription(){
             </div>
         </template>
       </Column>
-      <Column  header="הצלחה" >
+      <Column  v-if="auth.isStudent" header="הצלחה" >
         <template #body="slotProps">
           <span :class="getStatClass(slotProps)"> {{slotProps.node.data.score}} / {{slotProps.node.data.target}} </span>
         </template>
@@ -138,28 +133,10 @@ export default {
       return 'failure'
     },
     getImgName:function(obj){
-     let stat = this.getNameClass(obj)
-     return real_url + "static/images/task_" + stat + ".jpg"
+     return real_url + "static/images/task_" + obj.node.type + ".jpg"
     },
     getImgbyName:function(name){
       return real_url + "static/images/task_" + name + ".jpg"
-    },
-    /*
-    getStatImg: function(obj){
-     let stat = this.getStatClass(obj)
-     return real_url + "static/images/stat_" + stat + ".png"
-    },
-    */
-    getNameClass: function(obj){
-      if (obj.node.key.search('level1') > -1) return "level1"
-      if (obj.node.key.search('level2') > -1) return "level2"     
-      if (obj.node.data.authorization_type =='summary' ) return 'summary'
-      if (obj.node.data.gameType == 'lesson') return 'lesson'
-      return "game"
-    },
-    isSummary: function(obj){
-      if (obj.node.data.authorization_type =='summary' ) return true
-      return false
     },
   },
 };
