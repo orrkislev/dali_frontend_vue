@@ -37,7 +37,7 @@ async function setOpen(){
 		class_id: props.id,
 		game_id: "all",
 		purpose: "register"})
-	props.isopen = res.status
+	props.isOpen = res.status
 }
 
 </script>
