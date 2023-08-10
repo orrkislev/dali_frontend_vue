@@ -24,22 +24,31 @@ const filters = ref({'name':"",'global':""})
 const current_action = ref(null)
 const viewDescription = ref(false)
 const gameDescription = ref(null)
+const current_tree = ref(null)
 
 browseManager.alltree = []
 api.post("tasks/full_task_tree/", {}).then(res=> {
-  console.log('ddd')
+  console.log('start keys')
+  /*
   let keys = {}
-  for (let d in res) {
-    keys[res[d]['key']]=true
-    for (let sd in res[d]['children'])
-      keys[res[d]['children'][sd]['key']]=true
+  for (let d in res['full']) {
+    keys[res['full'][d]['key']]=true
+    for (let sd in res['full'][d]['children'])
+      keys[res['full'][d]['children'][sd]['key']]=true
   }
-  current_action.value = 1
   browseManager.allkeys = keys
-  browseManager.my_tasks = "המשימות שלי" 
+  console.log('ebd keys')
+  */
+  browseManager.allkeys = res['trees_all_keys']
   filters.value = {'global':""} 
-  browseManager.alltree = res
-  
+  browseManager.alltree = res['full']
+  browseManager.mytasks = res['mytasks']
+  if (auth.isStudent) {
+    current_action.value = 1
+    current_tree.value = browseManager.mytasks
+  }
+  else
+  current_tree.value = browseManager.alltree
 });
 
 function goToGamePage(id) {
@@ -48,10 +57,10 @@ function goToGamePage(id) {
 
 function switchFilterAction(){
   if (current_action.value  == 0){
-    filters.value['name']=browseManager.my_tasks
+    current_tree.value=browseManager.my_tasks
   }
   else {
-    filters.value['name']=""
+    current_tree.value=browseManager.alltree
   }
   current_action.value = 1 - current_action.value
   viewDescription.value = 0 // Do not show game description
@@ -74,13 +83,17 @@ function closeDescription(){
 
 <template>
   <div id="alltree_div">
-    <TreeTable v-if="browseManager.alltree.length > 0" v-model:expandedKeys="browseManager.allkeys" :value="browseManager.alltree" :filters="filters" :filterMode="'lenient'">
+    <TreeTable v-if="browseManager.alltree.length > 0" v-model:expandedKeys="browseManager.allkeys" :value="current_tree" :filters="filters" :filterMode="'lenient'">
       <template #header>
         <div class="text-right">
           <div class="p-input-icon-right searchDiv">
             <i class="pi pi-search eyeSearch"></i>
             <InputText class="searchInputText" v-model="filters['global']" placeholder="רישמו מילת חיפוש" autofocus="autofocus"/>
-            <ActionButton :center='false' :border="true" @click="switchFilterAction">{{ action_labels[current_action] }}</ActionButton>
+            <!--<ActionButton :center='false' :border="true" @click="switchFilterAction">{{ action_labels[current_action] }}</ActionButton>-->
+            <div v-if="auth.isStudent" style="display:flex;">
+              <ActionButton :center='false' :border="true" :inactive="current_action=='0'" @click="switchFilterAction">מאגר מלא</ActionButton>
+              <ActionButton :center='false' :border="true" :inactive="current_action=='1'" @click="switchFilterAction">המשימות שלי</ActionButton>
+            </div>
           </div>
             <div class="legendDiv">
             <img :src="getImgbyName('lesson')" style="height:20px;"/> שיעור<br/>
@@ -143,7 +156,6 @@ export default {
 </script>
 
 <style>
-/*#alltree_div{width:48%}*/
 div.p-treetable-header{display:grid;}
 .p-treetable-wrapper{text-align: right !important;}
 .p-treetable .p-treetable-tbody > tr > td {border:none;padding: 0px;text-align:right;vertical-align: top;}/*padding:0.5rem 0 0.5rem 0;*/
@@ -159,11 +171,6 @@ div.stat_div{width:15px;}
 .level1{font-size:24px;font-weight: bold;}
 .level2{font-size: 24px;margin-right: 20px;}
 .game, .summary, .lesson{cursor: pointer;margin-right: 40px;}
-/*.summary{
-  /*text-decoration: underline;
-  color:black;
-  background-color: lightgrey;
-  }*/
 .searchInputText{margin-right:2em; margin-left: 5em;}
 div.searchDiv{display:flex;float:right;}
 div.legendDiv{float:left;}
