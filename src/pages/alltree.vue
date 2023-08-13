@@ -57,7 +57,7 @@ function goToGamePage(id) {
 
 function switchFilterAction(){
   if (current_action.value  == 0){
-    current_tree.value=browseManager.my_tasks
+    current_tree.value=browseManager.mytasks
   }
   else {
     current_tree.value=browseManager.alltree
@@ -91,14 +91,15 @@ function closeDescription(){
             <InputText class="searchInputText" v-model="filters['global']" placeholder="רישמו מילת חיפוש" autofocus="autofocus"/>
             <!--<ActionButton :center='false' :border="true" @click="switchFilterAction">{{ action_labels[current_action] }}</ActionButton>-->
             <div v-if="auth.isStudent" style="display:flex;">
-              <ActionButton :center='false' :border="true" :inactive="current_action=='0'" @click="switchFilterAction">מאגר מלא</ActionButton>
               <ActionButton :center='false' :border="true" :inactive="current_action=='1'" @click="switchFilterAction">המשימות שלי</ActionButton>
+              <ActionButton :center='false' :border="true" :inactive="current_action=='0'" @click="switchFilterAction">מאגר מלא</ActionButton>
             </div>
           </div>
             <div class="legendDiv">
             <img :src="getImgbyName('lesson')" style="height:20px;"/> שיעור<br/>
             <img :src="getImgbyName('game')" style="height:20px;"/> תרגול<br/>
             <img :src="getImgbyName('summary')" style="height:20px;"/> תרגול מסכם<br/>
+            <div v-if="auth.isStudent"><img  :src="getImgbyName('exam')" style="height:20px;"/> בוחן<br/></div>
           </div>
         </div>
       </template>
@@ -169,7 +170,7 @@ div.p-treetable-header{display:grid;}
 .p-treetable .p-treetable-tbody > tr > td:has(.not_started){direction:ltr;}
 
 div.stat_div{width:15px;}
-.level1{font-size:24px;font-weight: bold;}
+.top, .level1{font-size:24px;font-weight: bold;}
 .level2{font-size: 24px;margin-right: 20px;}
 .game, .summary, .lesson, .exam{cursor: pointer;margin-right: 40px;}
 .searchInputText{margin-right:2em; margin-left: 5em;}
