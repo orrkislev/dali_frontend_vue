@@ -66,9 +66,9 @@ function switchFilterAction(){
   viewDescription.value = 0 // Do not show game description
 }
 
-function ShowDesrciption(id){
+function ShowDesrciption(id,type){
   if (viewDescription.value == id) return closeDescription()
-  api.post('quest/game_details/',{'game_id':id}).then(p => {
+  api.post('quest/game_details/',{'game_id':id,'type':type}).then(p => {
     gameDescription.value = p.text
     viewDescription.value = id
   })
@@ -104,7 +104,7 @@ function closeDescription(){
       </template>
       <Column field="name" header="שם" expander>
         <template #body="slotProps">
-            <img v-if="isGame(slotProps)" :src="getImgName(slotProps)" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id)"/>
+            <img v-if="isGame(slotProps)" :src="getImgName(slotProps)" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
             <span v-if="isGame(slotProps)" :class="slotProps.node.type" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }}
               <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span></span>
             <span v-else :class="slotProps.node.type">{{  slotProps.node.data.name }} </span>
@@ -171,7 +171,7 @@ div.p-treetable-header{display:grid;}
 div.stat_div{width:15px;}
 .level1{font-size:24px;font-weight: bold;}
 .level2{font-size: 24px;margin-right: 20px;}
-.game, .summary, .lesson{cursor: pointer;margin-right: 40px;}
+.game, .summary, .lesson, .exam{cursor: pointer;margin-right: 40px;}
 .searchInputText{margin-right:2em; margin-left: 5em;}
 div.searchDiv{display:flex;float:right;}
 div.legendDiv{float:left;}
