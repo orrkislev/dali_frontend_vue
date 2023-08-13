@@ -105,7 +105,8 @@ function closeDescription(){
       <Column field="name" header="שם" expander>
         <template #body="slotProps">
             <img v-if="isGame(slotProps)" :src="getImgName(slotProps)" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id)"/>
-            <span v-if="isGame(slotProps)" :class="slotProps.node.type" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }} - {{slotProps.node.data.id}} </span>
+            <span v-if="isGame(slotProps)" :class="slotProps.node.type" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }}
+              <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span></span>
             <span v-else :class="slotProps.node.type">{{  slotProps.node.data.name }} </span>
             <div v-if="viewDescription==slotProps.node.data.id" class="gameDescriptionArea">
               <div class="gameDescriptionDiv" v-html="gameDescription"></div>
@@ -117,7 +118,7 @@ function closeDescription(){
       </Column>
       <Column  v-if="auth.isStudent" header="הצלחה" >
         <template #body="slotProps">
-          <span :class="getStatClass(slotProps)"> {{slotProps.node.data.score}} / {{slotProps.node.data.target}} </span>
+          <span v-if="slotProps.node.type !== 'lesson'" :class="[getStatClass(slotProps), slotProps.node.type]"> {{slotProps.node.data.score}} / {{slotProps.node.data.target}} </span>
         </template>
       </Column>
     </TreeTable>
