@@ -122,6 +122,7 @@ div.task_mng_div_teacher_True{border:2px solid var(--dali_correct_color);max-wid
 /****************************/
 .question_text{margin-top:8px;font-family:var(--questions_font_family);font-size:var(--questions_font_size);}
 body[school_lang=english] * .question_text{text-align:left;margin-left:30px;}
+select.word_select_selection{font-size:14px;height:22px;}
 
 .highlight_text{font-weight:bold;}
 .comment_text{color:var(--dali_correct_color);font-weight:bold;}
