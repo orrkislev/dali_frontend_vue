@@ -3,7 +3,6 @@ import useAPI from './useAPI';
 import { useRouter } from 'vue-router';
 
 
-
 const useGameManager = defineStore('game', {
     state: () => ({
         question: null,
@@ -17,6 +16,8 @@ const useGameManager = defineStore('game', {
         unauthorized_types: [],
     }),
     getters: {
+        isLesson: (state) => state.game.game.gameType == 'lesson',
+        isLashon: (state) => state.game.domain == 'לשון',
         getPostDataForSubmitAndNext: state => {
 
             if (!state.questionResult) return false
@@ -37,7 +38,13 @@ const useGameManager = defineStore('game', {
         },
     },
     actions: {
-        async loadGameData({ taskID, extra }) {
+        // Use the value in game.next_game_id to open the task page of the next game
+        NextGamePage: function() { 
+            this.view = 'wait'
+            this.question=null
+            this.loadGameData({taskID: this.game.next_game_id, extra:''})
+        },
+          async loadGameData({ taskID, extra }) {
             const api = useAPI()
             const router = useRouter()
             let res = await api.post_json('tasks/task_page/', { 'game_id': taskID })
@@ -140,7 +147,7 @@ const useGameManager = defineStore('game', {
             if ('media' in res) {
                 this.media.media = res.media
             }
-            if (('media' in res) && ((this.game.domain != 'לשון' ) || (this.game.game.gameType == 'lesson' ))) {
+            if (('media' in res) && ((this.game.domain != 'לשון' ) || (this.isLesson ))) {
                     this.view = 'media-start'
             // SHOW QUESTION
             } else {

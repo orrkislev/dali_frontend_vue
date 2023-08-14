@@ -2,13 +2,19 @@
 import useGameManager from '../../utils/useGameManager';
 import ActionButton from '../ActionButton.vue';
 import AjaxViewerVue from '../AjaxViewer.vue';
+import { useRouter } from 'vue-router';
 
 const gameManager = useGameManager()
+const router = useRouter()
 
 function nextQuestion() {
     gameManager.nextQuestion(false)
 }
 
+function showTree() {
+    console.log('fdf')
+    router.push({path: '/alltree'})
+}
 
 </script>
 
@@ -25,8 +31,10 @@ function nextQuestion() {
                 <AjaxViewerVue :htmlWithScripts="gameManager.media.media" />
             </div>
         </div>
-        <div class='flex-column gap05'>
-            <action-button :center="true" :main="true" @click="nextQuestion"> המשך לשאלות </action-button>
+        <div class='flex gap05'>
+            <action-button v-if="gameManager.isLashon" :center="true" :main="true" @click="gameManager.NextGamePage"> המשך לתרגול </action-button>
+            <action-button v-else :center="true" :main="true" @click="nextQuestion"> המשך לשאלות </action-button>
+            <action-button v-if="gameManager.isLesson" :center="true" :main="true" @click="showTree"> חזרה למאגר הנושאים </action-button>
         </div>
     </div>
 </template>

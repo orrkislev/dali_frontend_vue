@@ -121,7 +121,7 @@ async function end_game() {
       <div v-if="gameManager.progress.progress[0]!='admin'">
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחלת משחק חדש" />
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="ask_end_game" label="סיום משחק" />  
-      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="gotoTaskPage" label="חזרה לדף המשימה" /> 
+      <Button v-if="!gameManager.isLesson" class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="gotoTaskPage" label="חזרה לדף המשימה" /> 
     </div>
     </Divider>
     <game-media />
