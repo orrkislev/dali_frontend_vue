@@ -26,9 +26,9 @@ function skipQuestion(){
             רמת קושי: {{ gameManager.question.q.level }}, 
             סטטוס: {{ gameManager.question.q.status }}<br/>
             נושאים: {{ gameManager.question.q.subject }}, {{ gameManager.question.q.subject2 }}<br/>
-            <span style="font-weight: bold;">משוב כללי:</span> {{ gameManager.question.q.feedback_general.text }}<br/>
+            <span style="font-weight: bold;">משוב כללי:</span><span v-html="gameManager.question.q.feedback_general.text"></span><br/>
             <span v-for="a in gameManager.question.answers">
-                <span style="font-weight: bold;">{{a.text}}:</span>{{ a.feedback_text.text }}<br/>
+                <span style="font-weight: bold;">{{a.text}}:</span><span v-html="a.feedback_text.text"></span><br/>
             </span>
             <br/>
             <div class="flex">
