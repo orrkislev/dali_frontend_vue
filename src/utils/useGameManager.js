@@ -138,9 +138,11 @@ const useGameManager = defineStore('game', {
 
             // SHOW MEDIA BEFORE QUESTION?
             if ('media' in res) {
-                this.view = 'media-start'
                 this.media.media = res.media
-                // SHOW QUESTION
+            }
+            if (('media' in res) && ((this.game.domain != 'לשון' ) || (this.game.game.gameType == 'lesson' ))) {
+                    this.view = 'media-start'
+            // SHOW QUESTION
             } else {
                 res = await api.post("quest/game_description/", {})
                 res = await api.post("quest/buttons/", postdata)
