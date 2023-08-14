@@ -98,7 +98,7 @@ function nodeScriptIs(node) {
   <div>
     <div v-if="gameManager.media.media" id="gameMedia">
       <action-button v-if="gameManager.media.open" :border="true"  @click="closeMedia" icon="align-right">סגירה</action-button>
-      <action-button v-else :border="true"  @click="openMedia" icon="align-right">לצפייה חוזרת בטקסט</action-button>
+      <action-button v-else :border="true"  @click="openMedia" icon="align-right">לצפייה בטקסט</action-button>
       <div v-if="gameManager.media.open">
         <AjaxViewer :htmlWithScripts="gameManager.media.media" />
         <action-button :border="true"  @click="closeMedia" icon="align-right">סגירה</action-button>
