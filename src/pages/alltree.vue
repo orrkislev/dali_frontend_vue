@@ -10,7 +10,6 @@ import useEmitter from 'src/utils/useEmmiter';
 import ActionButton from 'src/components/ActionButton.vue';
 import InputText from 'primevue/inputtext';
 import useAuth from "src/utils/useAuth";
-//import { FilterMatchMode } from 'primevue/api';
 
 const auth = useAuth();
 const browseManager = useBrowseManager();
@@ -27,9 +26,19 @@ const gameDescription = ref(null)
 const current_tree = ref(null)
 
 let clickAction = goToGamePage
-if (route.path == '/manage/tasks') clickAction = addTask
-else if (route.path == '/manage/exams') clickAction = addExam
-else if (route.path == 'REPORT') clickAction = showReport
+let current_table = null
+let obj2map = null
+if (route.path == '/manage/tasks') {
+  clickAction = addtoTable
+  current_table = browseManager.openTasks.tasks
+  obj2map = browseManager.openTasks
+  }
+else if (route.path == '/manage/exams'){
+  clickAction = addtoTable
+  current_table = browseManager.openExams.exams
+  obj2map = browseManager.openExams
+} 
+
 
 browseManager.alltree = []
 api.post("tasks/full_task_tree/", {}).then(res=> {
@@ -49,28 +58,20 @@ function goToGamePage(id,name) {
   route.push({path: '/game/' + id})
 }
 
-function addTask(id,name) {
-  if (browseManager.openTasks.tasks.map(t => t.id).includes(id))
+/*
+  Support either tasks or exam tables
+  The deciusion is made according to the route at the start of the component 
+  The relevant browseManager objects are used
+  Note: The same functions are also in SingleTask - when we wil use it, better switch to a common function
+*/
+function addtoTable(id,name){
+  if (current_table.map(t => t.id).includes(id))
       return
-  const d = browseManager.openTasks.more.map(t => t.id)
+  const d = obj2map.more.map(t => t.id)
   const indexOf = d.indexOf(id)
-  if (indexOf != -1) browseManager.openTasks.more.splice(indexOf, 1)
-  else browseManager.openTasks.more.push({id:id,name:name})
+  if (indexOf != -1) obj2map.more.splice(indexOf, 1)
+  else obj2map.more.push({id:id,name:name})
 }
-
-function addExam(id,name){
-  if (browseManager.openExams.exams.map(t => t.id).includes(id))
-      return
-  const d = browseManager.openExams.more.map(t => t.id)
-  const indexOf = d.indexOf(id)
-  if (indexOf != -1) browseManager.openExams.more.splice(indexOf, 1)
-  else browseManager.openExams.more.push({id:id,name:name})
-}
-
-function showReport(id){
-
-}
-
 
 function switchFilterAction(){
   if (current_action.value  == 0){
