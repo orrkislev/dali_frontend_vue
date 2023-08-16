@@ -111,8 +111,9 @@ name:'profile'
     div.allAvatarsDiv{
         position:relative;
     }
+    /*
     .allAvatarImg{
-    }
+    }*/
     .imgEnvelopeDiv
     {
         position: absolute;
