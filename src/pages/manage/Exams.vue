@@ -1,4 +1,5 @@
 <script setup>
+import alltree from 'src/pages/alltree.vue';
 const api = useAPI()
 
 const browseManager = useBrowseManager()
@@ -77,7 +78,8 @@ function updateClassTask(class_id,game_id){
         </div>
         <Divider />
         <div class="teacher_section_title">הוספת בוחן</div>
-        <game-tree />
+        <alltree/>
+        <!--<game-tree /> in future - for science. -->
     </div>
 </template>
 

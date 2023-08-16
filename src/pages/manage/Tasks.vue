@@ -1,8 +1,11 @@
 <script setup>
 import PageTitle from '../../components/PageTitle.vue';
 import GameTree from '../../components/GameTree/GameTree.vue';
-const api = useAPI()
+import alltree from 'src/pages/alltree.vue';
+import useAPI from 'src/utils/useAPI';
+import useBrowseManager from '../../utils/useBrowseManager';
 
+const api = useAPI()
 const browseManager = useBrowseManager()
 
 api.post_json('tasks/tasks_table_data/',{purpose: "tasks_table"}).then(res=>{
@@ -76,16 +79,12 @@ function updateClassTask(class_id,game_id){
         </div>
         <Divider />
         <div class="teacher_section_title">הוספת משימה</div>
-        <game-tree />
+        <alltree/>
     </div>
 </template>
 
 
 <script>
-import useAPI from 'src/utils/useAPI';
-import { ref } from 'vue';
-import useBrowseManager from '../../utils/useBrowseManager';
-
 export default {
 name:'Tasks'
 };

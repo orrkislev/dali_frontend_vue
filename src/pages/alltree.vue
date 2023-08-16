@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import useAPI from "src/utils/useAPI";
-import { useRouter } from 'vue-router';
+import { useRoute } from "vue-router";
 import useBrowseManager from "src/utils/useBrowseManager";
 import DaliWait from 'src/utils/DaliWait.vue'
 import { real_url } from "src/utils/useAPI";
@@ -14,7 +14,7 @@ import useAuth from "src/utils/useAuth";
 
 const auth = useAuth();
 const browseManager = useBrowseManager();
-const router = useRouter()
+const route = useRoute()
 const gameManager = useGameManager();
 const emitter = useEmitter()
 
@@ -26,19 +26,13 @@ const viewDescription = ref(false)
 const gameDescription = ref(null)
 const current_tree = ref(null)
 
+let clickAction = goToGamePage
+if (route.path == '/manage/tasks') clickAction = addTask
+else if (route.path == '/manage/exams') clickAction = addExam
+else if (route.path == 'REPORT') clickAction = showReport
+
 browseManager.alltree = []
 api.post("tasks/full_task_tree/", {}).then(res=> {
-  console.log('start keys')
-  /*
-  let keys = {}
-  for (let d in res['full']) {
-    keys[res['full'][d]['key']]=true
-    for (let sd in res['full'][d]['children'])
-      keys[res['full'][d]['children'][sd]['key']]=true
-  }
-  browseManager.allkeys = keys
-  console.log('ebd keys')
-  */
   browseManager.allkeys = res['trees_all_keys']
   filters.value = {'global':""} 
   browseManager.alltree = res['full']
@@ -51,9 +45,32 @@ api.post("tasks/full_task_tree/", {}).then(res=> {
   current_tree.value = browseManager.alltree
 });
 
-function goToGamePage(id) {
-  router.push({path: '/game/' + id})
+function goToGamePage(id,name) {
+  route.push({path: '/game/' + id})
 }
+
+function addTask(id,name) {
+  if (browseManager.openTasks.tasks.map(t => t.id).includes(id))
+      return
+  const d = browseManager.openTasks.more.map(t => t.id)
+  const indexOf = d.indexOf(id)
+  if (indexOf != -1) browseManager.openTasks.more.splice(indexOf, 1)
+  else browseManager.openTasks.more.push({id:id,name:name})
+}
+
+function addExam(id,name){
+  if (browseManager.openExams.exams.map(t => t.id).includes(id))
+      return
+  const d = browseManager.openExams.more.map(t => t.id)
+  const indexOf = d.indexOf(id)
+  if (indexOf != -1) browseManager.openExams.more.splice(indexOf, 1)
+  else browseManager.openExams.more.push({id:id,name:name})
+}
+
+function showReport(id){
+
+}
+
 
 function switchFilterAction(){
   if (current_action.value  == 0){
@@ -106,9 +123,9 @@ function closeDescription(){
       <Column field="name" header="שם" expander>
         <template #body="slotProps">
             <img v-if="isGame(slotProps)" :src="getImgName(slotProps)" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
-            <span v-if="isGame(slotProps)" :class="slotProps.node.type" @click="goToGamePage(slotProps.node.data.id)">{{  slotProps.node.data.name }}
-              <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span></span>
+            <span v-if="isGame(slotProps)" :class="slotProps.node.type" @click="clickAction(slotProps.node.data.id,slotProps.node.data.name)">{{  slotProps.node.data.name }}</span>
             <span v-else :class="slotProps.node.type">{{  slotProps.node.data.name }} </span>
+            <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span>          
             <div v-if="viewDescription==slotProps.node.data.id" class="gameDescriptionArea">
               <div class="gameDescriptionDiv" v-html="gameDescription"></div>
               <div>
