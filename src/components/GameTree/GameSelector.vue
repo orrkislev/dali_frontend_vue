@@ -42,6 +42,13 @@ function getGamesData(subjectID) {
                 @click="selectTask(exam.game_id, {exam:exam.exam_id})">
             </single-task>
         </template>-->
+    <single-task v-for="task in browseManager.game_list.open_exams" :key="task.exam_id" :exam="true" :task="task" :category="null"
+      :played="browseManager.game_list.played_games.includes(task.id)"
+      :assigned="browseManager.game_list.extra_games_info.includes(task.id)"
+      :score="task.scores?.best ?? 0"
+      :target="task.target"
+      :action="action"
+    />
     <single-task v-for="task in browseManager.game_list.list" :key="task.id" :task="task" :category="null"
       :played="browseManager.game_list.played_games.includes(task.id)"
       :assigned="browseManager.game_list.extra_games_info.includes(task.id)"
