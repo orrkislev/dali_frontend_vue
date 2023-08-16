@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import useAPI from "src/utils/useAPI";
 import { useRoute } from "vue-router";
+import { useRouter } from 'vue-router';
 import useBrowseManager from "src/utils/useBrowseManager";
 import DaliWait from 'src/utils/DaliWait.vue'
 import { real_url } from "src/utils/useAPI";
@@ -14,6 +15,7 @@ import useAuth from "src/utils/useAuth";
 const auth = useAuth();
 const browseManager = useBrowseManager();
 const route = useRoute()
+const router = useRouter()
 const gameManager = useGameManager();
 const emitter = useEmitter()
 
@@ -39,6 +41,7 @@ else if (route.path == '/manage/exams'){
   obj2map = browseManager.openExams
 } 
 
+console.log('rrr')
 
 browseManager.alltree = []
 api.post("tasks/full_task_tree/", {}).then(res=> {
@@ -55,7 +58,7 @@ api.post("tasks/full_task_tree/", {}).then(res=> {
 });
 
 function goToGamePage(id,name) {
-  route.push({path: '/game/' + id})
+  router.push({path: '/game/' + id})
 }
 
 /*
