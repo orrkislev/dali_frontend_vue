@@ -1,16 +1,33 @@
 <script setup>
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import useAuth from '../utils/useAuth';
 import Login from "../pages/login.vue";
 import DaliWait from 'src/utils/DaliWait.vue'
 import idm from 'src/pages/idm.vue';
+import ActionButton from 'src/components/ActionButton.vue';
 import { ref } from "vue";
+import { base_url } from "src/utils/useAPI";
 
 
 const auth = useAuth()
 auth.getUserdata()
 const route = useRoute()
+const router = useRouter()
 
+const mode = ref("general")
+mode.value  = 'general'
+
+function switchmode(new_mode) {
+    mode.value = new_mode
+}
+
+function gotoscience(){
+    window.open(base_url,"_self")
+}
+
+function gotoGame(id){
+    router.push({path: '/game/' + id})
+}
 </script>
 
 
@@ -27,7 +44,9 @@ const route = useRoute()
         <div class="col-6 p-5 flex flex-column justify-content-center align-items-end text-left">
             <div class="text-6xl font-bold w-7">חווית הוראה ולמידה חדשנית</div>
             <div class="text-2xl py-2 text-800 w-7">משימות ומשחקים ללימוד מדעים בחטיבת ביניים</div>
-            <div class="flex gap-3">
+            <div class="text-2xl py-2 text-800 w-7">וללימוד לשון לקראת הבגרות</div>
+            
+            <div class="flex gap-3" style="margin-top:1em;">
                 <Button class="p-button-warning" @click="startlogin">כניסה</Button>
                 <idm/>
             </div>
@@ -42,171 +61,125 @@ const route = useRoute()
                 מערכת דע-לי מספקת דרך חווייתית ומהנה ללימוד ולתרגול מקצוע המדעים בחטיבת הביניים. שימוש בדע-לי מגביר את סקרנות התלמידים, והתרגול השוטף של הנושאים הנלמדים בכיתה מאפשר הבנה טובה יותר של החומר והטמעה שלו, ותורם להצלחת התלמידים במקצוע.
             </div>
         </div>
-
-        <div class="col-2 " />
-        <div class="col-8 grid mt-6 gap-row-3">
-            <div class="col-6 flex justify-content-center">
-                <div class="w-4 relative">
-                    <img src="@/assets/images/v401_8066.png" alt="" class="w-full">
-                    <div class="circle_background" />
-                </div>
-                <div class="flex flex-column justify-content-center mx-2">
-                    <div class="text-3xl font-bold">150+</div>
-                    <div class="text-600">נושאים שונים</div>
+        <template v-if="mode=='general'">
+            <div class="col-4 mt-8">
+                <div id="background-element-2" />
+                <div class="p-5 flex flex-column justify-content-center align-items-end text-left">
+                    <div class="text-3xl font-bold">למידע נוסף</div>
+                    <div class="text-2xl py-2 text-800">בחרו את תחום הדעת</div>
                 </div>
             </div>
-            <div class="col-6 flex justify-content-center">
-                <div class="w-4 relative">
-                    <img src="@/assets/images/v401_8066.png" alt="" class="w-full">
-                    <div class="circle_background" />
+            <div class="col-8 mt-8 flex gap-1 overflow-visible">
+                <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0" style="cursor: pointer;" @click="gotoscience()">
+                    <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
+                    <div class="areaSelect">
+                        מדעים
+                    </div>
                 </div>
-                <div class="flex flex-column justify-content-center mx-2">
-                    <div class="text-3xl font-bold">150+</div>
-                    <div class="text-600">נושאים שונים</div>
-                </div>
-            </div>
-            <div class="col-6 flex justify-content-center">
-                <div class="w-4 relative">
-                    <img src="@/assets/images/v401_8066.png" alt="" class="w-full">
-                    <div class="circle_background" />
-                </div>
-                <div class="flex flex-column justify-content-center mx-2">
-                    <div class="text-3xl font-bold">150+</div>
-                    <div class="text-600">נושאים שונים</div>
-                </div>
-            </div>
-            <div class="col-6 flex justify-content-center">
-                <div class="w-4 relative">
-                    <img src="@/assets/images/v401_8066.png" alt="" class="w-full">
-                    <div class="circle_background" />
-                </div>
-                <div class="flex flex-column justify-content-center mx-2">
-                    <div class="text-3xl font-bold">150+</div>
-                    <div class="text-600">נושאים שונים</div>
-                </div>
-            </div>
-        </div>
-
-
-
-        <div class="col-4 mt-8">
-            <div id="background-element-2" />
-            <div class="p-5 flex flex-column justify-content-center align-items-end text-left">
-                <div class="text-3xl font-bold">משחקים לדוגמא</div>
-                <div class="text-2xl py-2 text-800">משימות ומשחקים ללימוד מדעים בחטיבת ביניים</div>
-            </div>
-        </div>
-        <div class="col-8 mt-8 flex gap-1 overflow-visible">
-            <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0">
-                <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
-                <div class="p-3">
-                    <div class="text-600">מדעים ח</div>
-                    <div class="font-bold">משפחות כימיות</div>
-                    <div class="mt-2 text-sm">
-                        במשחק 7 שאלות
-
-                        • סידור היסודות בטבלה בטורים - מתכות, הלוגנים, גזים אצילים
-                        • פחמן - צורות שונות של סידור האטומים יוצר גרפיט, יהלום, פולרן - תכונותיהם
-                        • סימול יסודות בשפת הכימאים
+                <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0" style="cursor: pointer;" @click="switchmode('lashon')">
+                    <img src="@/assets/images/lashon.png" alt="" class="w-full">
+                    <div class="areaSelect">
+                        לשון
                     </div>
                 </div>
             </div>
-            <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0">
-                <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
-                <div class="p-3">
-                    <div class="text-600">מדעים ח</div>
-                    <div class="font-bold">משפחות כימיות</div>
-                    <div class="mt-2 text-sm">
-                        במשחק 7 שאלות
+            <div class="col-12 mt-8"></div>
+        </template>
+        <template v-else>
 
-                        • סידור היסודות בטבלה בטורים - מתכות, הלוגנים, גזים אצילים
-                        • פחמן - צורות שונות של סידור האטומים יוצר גרפיט, יהלום, פולרן - תכונותיהם
-                        • סימול יסודות בשפת הכימאים
+            <div class="col-2 " />
+            <div class="col-8 grid mt-6 gap-row-3">
+                <div class="col-6 flex justify-content-center">
+                    <div class="w-4 relative">
+                        <img src="@/assets/images/v401_8066.png" alt="" class="w-full">
+                        <div class="circle_background" />
+                    </div>
+                    <div class="flex flex-column justify-content-center mx-2">
+                        <div class="text-3xl font-bold">150+</div>
+                        <div class="text-600">נושאים שונים</div>
+                    </div>
+                </div>
+                <div class="col-6 flex justify-content-center">
+                    <div class="w-4 relative">
+                        <img src="@/assets/images/v401_8067.png" alt="" class="w-full">
+                        <div class="circle_background" />
+                    </div>
+                    <div class="flex flex-column justify-content-center mx-2">
+                        <div class="text-3xl font-bold">1500</div>
+                        <div class="text-600">שאלות</div>
+                    </div>
+                </div>
+                <div class="col-6 flex justify-content-center">
+                    <div class="w-4 relative">
+                        <img src="@/assets/images/v401_8068.png" alt="" class="w-full">
+                        <div class="circle_background" />
+                    </div>
+                    <div class="flex flex-column justify-content-center mx-2">
+                        <div class="text-3xl font-bold">200</div>
+                        <div class="text-600">במחיר שיעור פרטי בודד</div>
+                    </div>
+                </div>
+                <div class="col-6 flex justify-content-center">
+                    <div class="w-4 relative">
+                        <img src="@/assets/images/v401_8069.png" alt="" class="w-full">
+                        <div class="circle_background" />
+                    </div>
+                    <div class="flex flex-column justify-content-center mx-2">
+                        <div class="text-3xl font-bold">500</div>
+                        <div class="text-600">בתי ספר</div>
                     </div>
                 </div>
             </div>
-            <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0">
-                <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
-                <div class="p-3">
-                    <div class="text-600">מדעים ח</div>
-                    <div class="font-bold">משפחות כימיות</div>
-                    <div class="mt-2 text-sm">
-                        במשחק 7 שאלות
-
-                        • סידור היסודות בטבלה בטורים - מתכות, הלוגנים, גזים אצילים
-                        • פחמן - צורות שונות של סידור האטומים יוצר גרפיט, יהלום, פולרן - תכונותיהם
-                        • סימול יסודות בשפת הכימאים
-                    </div>
+            <div class="col-4 mt-8">
+                <div id="background-element-2" />
+                <div class="p-5 flex flex-column justify-content-center align-items-end text-left">
+                    <div class="text-3xl font-bold">תרגולים לדוגמא</div>
+                    <div class="text-2xl py-2 text-800">שיעורים ותרגולים ללימוש לשון לקראת בגרות</div>
                 </div>
             </div>
-            <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0">
-                <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
-                <div class="p-3">
-                    <div class="text-600">מדעים ח</div>
-                    <div class="font-bold">משפחות כימיות</div>
-                    <div class="mt-2 text-sm">
-                        במשחק 7 שאלות
-
-                        • סידור היסודות בטבלה בטורים - מתכות, הלוגנים, גזים אצילים
-                        • פחמן - צורות שונות של סידור האטומים יוצר גרפיט, יהלום, פולרן - תכונותיהם
-                        • סימול יסודות בשפת הכימאים
+            <div class="col-8 mt-8 flex gap-1 overflow-visible">
+                <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0" @click="gotoGame(214)">
+                    <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
+                    <div class="p-3">
+                        <div class="text-600">סימני הניקוד</div>
+                        <div class="font-bold">תרגול ברמה בסיסית</div>
+                        <div class="mt-2 text-sm">
+                            • מה זה זמן<br/>
+                            • מה זה גוף<br/>
+                            • תרגול בסיסי<br/>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+                <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0">
+                    <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
+                    <div class="p-3">
+                        <div class="text-600">מדעים ח</div>
+                        <div class="font-bold">משפחות כימיות</div>
+                        <div class="mt-2 text-sm">
+                            במשחק 7 שאלות
 
-        <div class="col-12 mt-8">
-            <div class="text-3xl font-bold mr-7 text-center">משימות בהמון נושאים </div>
-            <div class="text-2xl py-2 text-800 mr-7 text-center">כל החומר במדעים לכיתות ז-ח-ט</div>
-        </div>
-        <div class="col-12 mt-8">
-            <div class="font-bold mx-8 text-xl">מדעים לכיתה ח</div>
-            <div class="flex gap-3 text-xl mt-3">
-                <div class="bg-white border-round-1 px-5">חומרים</div>
-                <div class="bg-white border-round-1 px-5">התא</div>
-                <div class="bg-white border-round-1 px-5">אנרגיה חשמלית</div>
-                <div class="bg-white border-round-1 px-5">מערכות טכנולוגיות</div>
-                <div class="relative">
-                    <div class="bg-yellow-400 border-round-1 px-5">כוחות ותנועה</div>
-                    <div class="text-center fade-top absolute bottom-100 w-15rem">
-                        <div>כוחות בחיי היומום</div>
-                        <div>תנועה</div>
-                        <div>כוחות ושינוי</div>
-                    </div>
-                    <div class="text-center fade-bottom absolute top-100 w-15rem">
-                        <div>משקל ומסה</div>
-                        <div>כח לעומת אנרגיה</div>
-                        <div>לחץ</div>
+                            • סידור היסודות בטבלה בטורים - מתכות, הלוגנים, גזים אצילים
+                            • פחמן - צורות שונות של סידור האטומים יוצר גרפיט, יהלום, פולרן - תכונותיהם
+                            • סימול יסודות בשפת הכימאים
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white border-round-1 px-5">מערכות אקולוגיות </div>
-                <div class="bg-white border-round-1 px-5">גאוגרפיה</div>
-            </div>
-        </div>
-        <div class="col-12 mt-8">
-            <div class="font-bold mx-8 text-xl">מדעים לכיתה ט</div>
-            <div class="flex gap-3 text-xl mt-3">
-                <div class="bg-white border-round-1 px-5">גאוגרפיה</div>
-                <div class="bg-white border-round-1 px-5">מערכות ותהליכים ביצורים חיים</div>
-                <div class="relative">
-                    <div class="bg-yellow-400 border-round-1 px-5">אנרגיה ומערכות טכנולוגיות</div>
-                    <div class="text-center fade-top absolute bottom-100 w-15rem">
-                        <div>אנרגיית תנועה</div>
-                        <div>אנרגיית גובה</div>
-                        <div>המרות אנרגיה</div>
-                    </div>
-                    <div class="text-center fade-bottom absolute top-100 w-15rem">
-                        <div>הספק ונצילות</div>
-                        <div>אנרגיית חום</div>
-                        <div>חוק שימור האנרגיה</div>
+                <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0">
+                    <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
+                    <div class="p-3">
+                        <div class="text-600">מדעים ח</div>
+                        <div class="font-bold">משפחות כימיות</div>
+                        <div class="mt-2 text-sm">
+                            במשחק 7 שאלות
+
+                            • סידור היסודות בטבלה בטורים - מתכות, הלוגנים, גזים אצילים
+                            • פחמן - צורות שונות של סידור האטומים יוצר גרפיט, יהלום, פולרן - תכונותיהם
+                            • סימול יסודות בשפת הכימאים
+                        </div>
                     </div>
                 </div>
-                <div class="bg-white border-round-1 px-5">משימות זיוחדות</div>
-                <div class="bg-white border-round-1 px-5">חומרים</div>
-            </div>
-        </div>
-
-        <div class="col-12 mt-8"></div>
+                </div>
+        </template>
 
         <div class="col-6 p-5 mt-8 flex flex-column justify-content-center align-items-end text-left relative">
             <div class="text-2xl font-bold w-7 text-center">קצת עלינו</div>
@@ -214,6 +187,9 @@ const route = useRoute()
                 דע-לי היא מערכת המיועדת למורים ולתלמידים והמציעה כלי עזר ללימוד מדעים לחטיבות הביניים באמצעות משחקי שאלות ותשובות. השאלות מלוות בקישורים למולטימדיה (כגון תמונות, סרטונים והדמיות) המסייעים בהבנת החומר, והתשובות מלוות בהסברים מפורטים. המערכת מציעה מאגר גדול של משימות ושאלות המותאמות באופן מלא לתכנית הלימודים. המשימות מיועדות בעיקר לשמש כשיעורי בית או לצורך הכנה לבחינות.
             </div>
             <div id="background-element-3" />
+            <div style="margin-top: 2em;">
+                <action-button v-if="mode=='lashon'"  :center="true" :main="true" @click="switchmode('general')"> חזרה </action-button>
+            </div>
         </div>
         <div class="col-6 pl-5 relative" >
             <img src="@/assets/images/v401_8065.png" alt="" class="w-full">
@@ -309,4 +285,8 @@ export default {
 .border-round-1{ border-radius: 1em; }
 .fade-top{ mask-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,1)); }
 .fade-bottom{ mask-image: linear-gradient(to top, rgba(0,0,0,0), rgba(0,0,0,1)); }
+
+.areaSelect{font-size:42px;text-align: center;}
+.science{background-color:blue;}
+.lashon{background-color:green;}
 </style>
