@@ -1,10 +1,13 @@
 <script setup>
 import alltree from 'src/pages/alltree.vue';
+import { ref } from "vue";
 const api = useAPI()
 
 const browseManager = useBrowseManager()
 
+const ready = ref(false)
 api.post_json('tasks/tasks_table_data/',{purpose: "exams_table"}).then(res=>{
+    ready.value = true
     browseManager.openExams.classes = res.classes_list.map(cls=>{
         return {id:cls.id.toString(), name: cls.name}
     })
@@ -49,40 +52,42 @@ function updateClassTask(class_id,game_id){
 <template>
     <div>
         <PageTitle title="בחנים לכיתות" subtitle="המשימות שבחרת לתת לכיתות כבוחן מקוון" />
-        <div v-if="browseManager.openExams.exams.length == 0" class="normalred">
-            <br/>
-            עדיין לא נבחרו משימות לפתיחה כבוחן מקוון.<br/>
-             בחרו משימות מהמאגר ולאחר שהן מתווספות לטבלה לחצו על ה-X במשבצת המתאימה כדי לפתוח את המשימה לכיתה
+        <div v-if="ready">
+            <div v-if="browseManager.openExams.exams.length == 0" class="normalred">
+                <br/>
+                עדיין לא נבחרו משימות לפתיחה כבוחן מקוון.<br/>
+                בחרו משימות מהמאגר ולאחר שהן מתווספות לטבלה לחצו על ה-X במשבצת המתאימה כדי לפתוח את המשימה לכיתה
+            </div>
+            
+            <div style="width:65%;">
+                <DataTable :value="getTableData()" stripedRows showGridlines class="p-datatable-sm" autoLayout>
+                    <Column field="name" header="משימה" bodyClass="text-right p-2">
+                        <template #body="slotProps">
+                            <router-link :to="'/game/'+slotProps.data.id">
+                                {{ slotProps.data.name }} 
+                            </router-link>
+                        </template>
+                    </Column>
+                    <Column v-for="header,i in browseManager.openExams.classes" :key="header.id" :field="header.id" bodyClass="text-center p-0" headerClass="text-center">
+                        <template #header="column">
+                            <router-link :to="'/manage/classes/'+column.column.key">
+                                {{ browseManager.openExams.classes.find(cls => cls.id == column.column.key).name }} 
+                            </router-link>
+                        </template>
+                        <template #body="slotProps">
+                            <ToggleButton :modelValue="slotProps.data[header.id]" 
+                                onIcon="pi pi-check" offIcon="pi pi-times" 
+                                class="p-button-sm border-transparent" 
+                                :style="{backgroundColor:slotProps.data[header.id] ? 'orange' : 'white'}"
+                                @change = "(e)=>updateClassTask(header.id,slotProps.data.id)"
+                                />
+                        </template>
+                    </Column>
+                    
+                </DataTable>
+            </div>
+            <Divider />
         </div>
-        
-        <div style="width:65%;">
-            <DataTable :value="getTableData()" stripedRows showGridlines class="p-datatable-sm" autoLayout>
-                <Column field="name" header="משימה" bodyClass="text-right p-2">
-                    <template #body="slotProps">
-                        <router-link :to="'/game/'+slotProps.data.id">
-                            {{ slotProps.data.name }} 
-                        </router-link>
-                    </template>
-                </Column>
-                <Column v-for="header,i in browseManager.openExams.classes" :key="header.id" :field="header.id" bodyClass="text-center p-0" headerClass="text-center">
-                    <template #header="column">
-                        <router-link :to="'/manage/classes/'+column.column.key">
-                            {{ browseManager.openExams.classes.find(cls => cls.id == column.column.key).name }} 
-                        </router-link>
-                    </template>
-                    <template #body="slotProps">
-                        <ToggleButton :modelValue="slotProps.data[header.id]" 
-                            onIcon="pi pi-check" offIcon="pi pi-times" 
-                            class="p-button-sm border-transparent" 
-                            :style="{backgroundColor:slotProps.data[header.id] ? 'orange' : 'white'}"
-                            @change = "(e)=>updateClassTask(header.id,slotProps.data.id)"
-                            />
-                    </template>
-                </Column>
-                
-            </DataTable>
-        </div>
-        <Divider />
         <div class="teacher_section_title">הוספת בוחן</div>
         <alltree/>
         <!--<game-tree /> in future - for science. -->
