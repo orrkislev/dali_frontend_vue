@@ -110,9 +110,9 @@ function publishDialogStatus(mode)
 					שלב {{ i + 1 }} עם {{ subgame.game.NumQuestions }} שאלות
 				</div>
 			</div>
-			<div v-else> במשחק {{ gameManager.game?.game.NumQuestions }} שאלות </div>
+			<div v-else> במשחק {{ gameManager.game?.game.NumQuestions }} שאלות</div>
 
-			<div v-if="auth.username">
+			<div v-if="auth.username" style="margin-top:1em;">
 				<div v-if="gameManager.game?.levels" class="flex flex-column gap-2">
 					<Button class="p-button-rounded px-8" v-for="level in gameManager.game.levels" :key="level.order"
 						@click="startGame(level)">

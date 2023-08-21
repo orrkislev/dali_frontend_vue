@@ -7,7 +7,7 @@ const gameManager = useGameManager();
 
 <template>
   <div class="flex gap-1">
-    <div class="w-5 h-20rem ">
+    <div  v-if="!gameManager.isLashon" class="w-5 h-20rem ">
       <div
         class="h-full bg-cover-orit"
         :style="{
@@ -16,6 +16,7 @@ const gameManager = useGameManager();
         }"
       />
     </div>
+    
     <div class="flex justify-content-center w-8">
       <div class="flex flex-column px-4">
           <h1>{{ gameManager.game?.game.name }}</h1>
