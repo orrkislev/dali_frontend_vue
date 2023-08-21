@@ -3,7 +3,7 @@ import { useRoute } from "vue-router";
 import useAuth from '../utils/useAuth';
 import Login from "../pages/login.vue";
 import DaliWait from 'src/utils/DaliWait.vue'
-
+import idm from 'src/pages/idm.vue';
 import { ref } from "vue";
 
 
@@ -29,7 +29,7 @@ const route = useRoute()
             <div class="text-2xl py-2 text-800 w-7">משימות ומשחקים ללימוד מדעים בחטיבת ביניים</div>
             <div class="flex gap-3">
                 <Button class="p-button-warning" @click="startlogin">כניסה</Button>
-                <Button class="p-button-raised p-button-secondary p-button-text" >צור קשר</Button>
+                <idm/>
             </div>
         </div>
         <div class="col-6 pl-5 relative" >
