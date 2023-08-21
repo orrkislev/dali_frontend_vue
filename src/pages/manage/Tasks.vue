@@ -51,6 +51,11 @@ function updateClassTask(class_id,game_id){
 <template>
     <div>
         <PageTitle title="משימות לכיתות" subtitle="המשימות שבחרת לכיתות" />
+        <div v-if="browseManager.openTasks.tasks.length == 0" class="normalred">
+            <br/>
+            עדיין לא נבחרו משימות.<br/>
+             בחרו משימות מהמאגר ולאחר שהן מתווספות לטבלה לחצו על ה-X במשבצת המתאימה כדי לפתוח את המשימה לכיתה
+        </div>
         <div style="width:65%;">
             <DataTable :value="getTableData()" stripedRows showGridlines class="p-datatable-sm" autoLayout>
                 <Column field="name" header="משימה" bodyClass="text-right p-2">

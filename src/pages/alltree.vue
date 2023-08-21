@@ -41,8 +41,7 @@ else if (route.path == '/manage/exams'){
   obj2map = browseManager.openExams
 } 
 
-console.log('rrr')
-
+console.log('rerewr')
 browseManager.alltree = []
 api.post("tasks/full_task_tree/", {}).then(res=> {
   browseManager.allkeys = res['trees_all_keys']
@@ -57,8 +56,8 @@ api.post("tasks/full_task_tree/", {}).then(res=> {
   current_tree.value = browseManager.alltree
 });
 
-function goToGamePage(id,name) {
-  router.push({path: '/game/' + id})
+function goToGamePage(node) {
+  router.push({path: '/game/' + node.data.id})
 }
 
 /*
@@ -67,13 +66,18 @@ function goToGamePage(id,name) {
   The relevant browseManager objects are used
   Note: The same functions are also in SingleTask - when we wil use it, better switch to a common function
 */
-function addtoTable(id,name){
-  if (current_table.map(t => t.id).includes(id))
+function addtoTable(node){
+  if (current_table.map(t => t.id).includes(node.data.id))
       return
   const d = obj2map.more.map(t => t.id)
-  const indexOf = d.indexOf(id)
-  if (indexOf != -1) obj2map.more.splice(indexOf, 1)
-  else obj2map.more.push({id:id,name:name})
+  const indexOf = d.indexOf(node.data.id)
+  if (indexOf != -1) {
+    obj2map.more.splice(indexOf, 1)
+    node.selected = false
+  } else {
+      obj2map.more.push({id:node.data.id,name:node.data.name})
+      node.selected = true
+  } 
 }
 
 function switchFilterAction(){
@@ -110,6 +114,7 @@ function closeDescription(){
           <div class="p-input-icon-right searchDiv">
             <i class="pi pi-search eyeSearch"></i>
             <InputText class="searchInputText" v-model="filters['global']" placeholder="רישמו מילת חיפוש" autofocus="autofocus"/>
+            <action-button :border="true" :center="true" @click="filters['global']=''">ניקוי חיפוש</action-button>
             <!--<ActionButton :center='false' :border="true" @click="switchFilterAction">{{ action_labels[current_action] }}</ActionButton>-->
             <div v-if="auth.isStudent" style="display:flex;">
               <ActionButton :center='false' :border="true" :inactive="current_action=='1'" @click="switchFilterAction">המשימות שלי</ActionButton>
@@ -117,18 +122,19 @@ function closeDescription(){
             </div>
           </div>
             <div class="legendDiv">
-            <img :src="getImgbyName('lesson')" style="height:20px;"/> שיעור<br/>
-            <img :src="getImgbyName('game')" style="height:20px;"/> תרגול<br/>
-            <img :src="getImgbyName('summary')" style="height:20px;"/> תרגול מסכם<br/>
-            <div v-if="auth.isStudent"><img  :src="getImgbyName('exam')" style="height:20px;"/> בוחן<br/></div>
+              <div style="text-decoration:underline;">מקרא</div>
+              <img :src="getImgbyName('lesson')" style="height:20px;"/> שיעור<br/>
+              <img :src="getImgbyName('game')" style="height:20px;"/> תרגול<br/>
+              <img :src="getImgbyName('summary')" style="height:20px;"/> תרגול מסכם<br/>
+              <div v-if="auth.isStudent"><img  :src="getImgbyName('exam')" style="height:20px;"/> בוחן<br/></div>
           </div>
         </div>
       </template>
       <Column field="name" header="שם" expander>
         <template #body="slotProps">
             <img v-if="isGame(slotProps)" :src="getImgName(slotProps)" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
-            <span v-if="isGame(slotProps)" :class="slotProps.node.type" @click="clickAction(slotProps.node.data.id,slotProps.node.data.name)">{{  slotProps.node.data.name }}</span>
-            <span v-else :class="slotProps.node.type">{{  slotProps.node.data.name }} </span>
+            <span v-if="isTask(slotProps)" :class="[slotProps.node.type, slotProps.node.selected ? 'selected' :'' ]" @click="clickAction(slotProps.node)">{{  slotProps.node.data.name }}</span>
+            <span v-else :class="getItemClass(slotProps)">{{  slotProps.node.data.name }} </span>
             <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span>          
             <div v-if="viewDescription==slotProps.node.data.id" class="gameDescriptionArea">
               <div class="gameDescriptionDiv" v-html="gameDescription"></div>
@@ -155,6 +161,9 @@ export default {
     return {
       }},
   methods: {
+    isTask: function(obj){
+      return (['game','summary'].indexOf(obj.node.type) > -1)
+    },
     isGame: function(obj){
       return (obj.node.key.search('game') > -1)
     },
@@ -168,6 +177,12 @@ export default {
       if (obj.node.data.score == obj.node.data.target) return 'success'
       return 'failure'
     },
+    getItemClass: function(obj){
+      const route = useRoute()
+      if ((obj.node.type=='lesson') && (route.path == '/manage/tasks')) 
+        return 'lessn_noclick'
+      return obj.node.type
+    },
     getImgName:function(obj){
      return real_url + "static/images/task_" + obj.node.type + ".jpg"
     },
@@ -179,6 +194,7 @@ export default {
 </script>
 
 <style>
+div.p-treetable-wrapper{max-height: 700px;overflow-y: auto;}
 div.p-treetable-header{display:grid;}
 .p-treetable-wrapper{text-align: right !important;}
 .p-treetable .p-treetable-tbody > tr > td {border:none;padding: 0px;text-align:right;vertical-align: top;}/*padding:0.5rem 0 0.5rem 0;*/
@@ -194,7 +210,9 @@ div.stat_div{width:15px;}
 .top, .level1{font-size:24px;font-weight: bold;}
 .level2{font-size: 24px;margin-right: 20px;}
 .game, .summary, .lesson, .exam{cursor: pointer;margin-right: 40px;}
-.searchInputText{margin-right:2em; margin-left: 5em;}
+.lessn_noclick{margin-right: 40px;}
+.selected{background-color: #92c7d5;}
+.searchInputText{margin-right:2em; margin-left: 1em;}
 div.searchDiv{display:flex;float:right;}
 div.legendDiv{float:left;}
 .eyeSearch{left:unset !important;}

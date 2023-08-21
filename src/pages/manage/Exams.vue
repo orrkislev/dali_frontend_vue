@@ -48,7 +48,13 @@ function updateClassTask(class_id,game_id){
 
 <template>
     <div>
-        <PageTitle title="בחנים לכיתות" subtitle="המשימות שבחרת לכיתות" />
+        <PageTitle title="בחנים לכיתות" subtitle="המשימות שבחרת לתת לכיתות כבוחן מקוון" />
+        <div v-if="browseManager.openExams.exams.length == 0" class="normalred">
+            <br/>
+            עדיין לא נבחרו משימות לפתיחה כבוחן מקוון.<br/>
+             בחרו משימות מהמאגר ולאחר שהן מתווספות לטבלה לחצו על ה-X במשבצת המתאימה כדי לפתוח את המשימה לכיתה
+        </div>
+        
         <div style="width:65%;">
             <DataTable :value="getTableData()" stripedRows showGridlines class="p-datatable-sm" autoLayout>
                 <Column field="name" header="משימה" bodyClass="text-right p-2">
