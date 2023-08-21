@@ -67,6 +67,8 @@ function goToGamePage(node) {
   Note: The same functions are also in SingleTask - when we wil use it, better switch to a common function
 */
 function addtoTable(node){
+  if (node.type == 'lesson')
+    return
   if (current_table.map(t => t.id).includes(node.data.id))
       return
   const d = obj2map.more.map(t => t.id)
@@ -133,8 +135,8 @@ function closeDescription(){
       <Column field="name" header="שם" expander>
         <template #body="slotProps">
             <img v-if="isGame(slotProps)" :src="getImgName(slotProps)" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
-            <span v-if="isTask(slotProps)" :class="[slotProps.node.type, slotProps.node.selected ? 'selected' :'' ]" @click="clickAction(slotProps.node)">{{  slotProps.node.data.name }}</span>
-            <span v-else :class="getItemClass(slotProps)">{{  slotProps.node.data.name }} </span>
+            <span v-if="isGame(slotProps)" :class="[slotProps.node.type, slotProps.node.selected ? 'selected' :'', getItemClass(slotProps) ]" @click="clickAction(slotProps.node)">{{  slotProps.node.data.name }}</span>
+            <span v-else :class="slotProps.node.type">{{  slotProps.node.data.name }} </span>
             <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span>          
             <div v-if="viewDescription==slotProps.node.data.id" class="gameDescriptionArea">
               <div class="gameDescriptionDiv" v-html="gameDescription"></div>
@@ -179,7 +181,7 @@ export default {
     },
     getItemClass: function(obj){
       const route = useRoute()
-      if ((obj.node.type=='lesson') && (route.path == '/manage/tasks')) 
+      if ((obj.node.type=='lesson') && (route.path.indexOf('/manage/') > -1)) 
         return 'lessn_noclick'
       return obj.node.type
     },
@@ -210,7 +212,7 @@ div.stat_div{width:15px;}
 .top, .level1{font-size:24px;font-weight: bold;}
 .level2{font-size: 24px;margin-right: 20px;}
 .game, .summary, .lesson, .exam{cursor: pointer;margin-right: 40px;}
-.lessn_noclick{margin-right: 40px;}
+.lessn_noclick{cursor:unset;}
 .selected{background-color: #92c7d5;}
 .searchInputText{margin-right:2em; margin-left: 1em;}
 div.searchDiv{display:flex;float:right;}
