@@ -38,9 +38,8 @@ function rowClick(event) {
 <template>
     <div v-if="auth.userData.status == 'no_class' || data?.length==0">
         <div class="text-center">
-            <div class="text-2xl">  עדיין אין לך קבוצות לימוד בשנת הלימודים הנוכחית.<br/><br/></div>
+            <div class="text-2xl">  עדיין אין לך כיתות בשנת הלימודים הנוכחית.<br/></div>
             <div class="text-1xl"> מומלץ להגדיר כיתות / קבוצות לימוד לפני כניסה ראשונה של תלמידים למערכת<br/>
-                 - בחרו ב"ניהול כיתות" בתפריט הראשי.
             </div>
             <Classes />
         </div>
@@ -73,7 +72,7 @@ function rowClick(event) {
     </div>
     <div class="home-teacher" v-else-if="data">
         <DataTable :value="data" stripedRows showGridlines class="p-datatable-sm cursor-pointer" autoLayout rowHover @row-click="rowClick($event)">
-            <Column field="className" header="כיתה" bodyClass="text-right p-2"> </Column>
+            <Column field="className" header="כיתה" bodyClass="text-right p-2" style="font-weight:bold;"> </Column>
             <Column field="teachers_1" header="מורה 2" bodyClass="text-right p-2"> </Column>
             <Column field="teachers_2" header="מורה 3" bodyClass="text-right p-2"> </Column>
             <Column field="games" header="משימות" bodyClass="text-right p-2"> </Column>
@@ -81,6 +80,7 @@ function rowClick(event) {
             <Column field="plays" header="משחקים" bodyClass="text-right p-2"> </Column>
             <Column field="publish" header="פורסמו" bodyClass="text-right p-2"> </Column>
         </DataTable>
+        <div><br/>לחצו על שורה של כיתה על מנת לראות את הדוחות של אותה כיתה.</div>
     </div>
 </template>
 

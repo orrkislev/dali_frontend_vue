@@ -58,14 +58,14 @@ function updateClassTask(class_id,game_id){
         <PageTitle title="בחנים לכיתות" subtitle="המשימות שבחרת לתת לכיתות כבוחן מקוון" />
         <div v-if="ready">
             <div v-if="browseManager.openTasks.classes.length == 0" class="normalred">
-                עדיין אין לך קבוצות לימוד בשנת הלימודים הנוכחית.<br/>
-                על מנת לשייך כיתות, יש ללחות על כפתור "ניהול כיתות" בתפריט הראשי.<br/>
+                עדיין אין לך כיתות בשנת הלימודים הנוכחית.<br/>
+                על מנת להוסיף כיתות, יש ללחוץ על כפתור "ניהול כיתות" בתפריט הראשי.<br/>
             </div>
             <div v-else>
                 <div v-if="browseManager.openExams.exams.length == 0" class="normalred">
                     <br/>
                     עדיין לא נבחרו משימות לפתיחה כבוחן מקוון.<br/>
-                    בחרו משימות מהמאגר ולאחר שהן מתווספות לטבלה לחצו על ה-X במשבצת המתאימה כדי לפתוח את המשימה לכיתה
+                    בחרו משימות מהמאגר ולאחר שהן מתווספות לטבלה לחצו על ה-X במשבצת המתאימה כדי לפתוח את המשימה לכיתה.
                 </div>
                 <div style="width:65%;">
                     <DataTable :value="getTableData()" stripedRows showGridlines class="p-datatable-sm" autoLayout>
