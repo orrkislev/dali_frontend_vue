@@ -6,13 +6,15 @@ const useAuth = defineStore('auth', {
         state: null,
         username: null,
         role:null,
-        userData:null
+        userData:null,
+        locale:'science',
     }),
     getters: {
         isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.userData.role),
         isStaff: (state) => ['stuff'].includes(state.userData.role),
         isStudent: (state) => ['student','independant'].includes(state.userData.role),
         showIntro: (state) => state.userData.welcome_message,
+        getlocale: (state) => state.locale
     },
     actions: {
         startLogin(){
@@ -26,6 +28,7 @@ const useAuth = defineStore('auth', {
                 return
             this.username = response.name
             this.userData = response
+            this.locale = response.domain
             this.state = 'authenticated'
         },
         async login(username, password) {
