@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import useAPI from "src/utils/useAPI";
-import { useRoute } from "vue-router";
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from "vue-router";
 import useBrowseManager from "src/utils/useBrowseManager";
 import DaliWait from 'src/utils/DaliWait.vue'
 import { real_url } from "src/utils/useAPI";

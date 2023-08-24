@@ -5,12 +5,12 @@ import alltree from 'src/pages/alltree.vue';
 import useAPI from 'src/utils/useAPI';
 import useBrowseManager from '../../utils/useBrowseManager';
 import { ref } from "vue";
-import DaliWait from 'src/utils/DaliWait.vue'
 
 const api = useAPI()
 const browseManager = useBrowseManager()
 
 const ready = ref(false)
+
 api.post_json('tasks/tasks_table_data/',{purpose: "tasks_table"}).then(res=>{
     ready.value = true
     browseManager.openTasks.classes = res.classes_list.map(cls=>{

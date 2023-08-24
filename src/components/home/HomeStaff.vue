@@ -21,17 +21,6 @@ async function click(btn){
     console.log(btn) 
     let url = real_url + CALLS_PER_BUTTON[btn]
     window.open(url,'_target')
-    /*
-
-    if (btn == 'school report') htmlToShow.value = await api.post('statistics/schools_stat/', {})
-    if (btn == 'choose school') htmlToShow.value = await api.post('statistics/schools_stat/', {purpose:'list'})
-    if (btn == 'school map') window.open('/static/pages/schools.htm','_blank')
-    if (btn == 'question report') htmlToShow.value = await api.post('statistics/questionstat/', {})
-    if (btn == 'question success') htmlToShow.value = await api.post('statistics/staff_quest_success/', {purpose:'success'})
-    if (btn == 'email teachers') htmlToShow.value = await api.post('review/select_autoemail/', {})
-    if (btn == 'signed teachers') htmlToShow.value = await api.post('statistics/schools_stat/', {purpose:'CRM'})
-    if (btn == 'purchased no teachers') htmlToShow.value = await api.post('statistics/schools_stat/', {purpose:'CRM_no_teachers'})
-    */
 }
 </script>
 
