@@ -112,23 +112,25 @@ function closeDescription(){
     <TreeTable v-if="browseManager.alltree.length > 0" v-model:expandedKeys="browseManager.allkeys" :value="current_tree" :filters="filters" :filterMode="'lenient'">
       <template #header>
         <div class="text-right">
-          <div class="p-input-icon-right searchDiv">
-            <i class="pi pi-search eyeSearch"></i>
-            <InputText class="searchInputText" v-model="filters['global']" placeholder="רישמו מילת חיפוש" autofocus="autofocus"/>
-            <action-button :border="true" :center="true" @click="filters['global']=''">ניקוי חיפוש</action-button>
-            <!--<ActionButton :center='false' :border="true" @click="switchFilterAction">{{ action_labels[current_action] }}</ActionButton>-->
-            <div v-if="auth.isStudent" style="display:flex;">
+          <div style="width:70%;float:right;">
+            <div v-if="auth.isStudent" class="listSelectDiv">
               <ActionButton :center='false' :border="true" :inactive="current_action=='1'" @click="switchFilterAction">המשימות שלי</ActionButton>
               <ActionButton :center='false' :border="true" :inactive="current_action=='0'" @click="switchFilterAction">מאגר מלא</ActionButton>
             </div>
+            <div class="p-input-icon-right searchDiv">
+              <br/>
+              <i class="pi pi-search eyeSearch"></i>
+              <InputText class="searchInputText" v-model="filters['global']" placeholder="רישמו מילת חיפוש" autofocus="autofocus"/>
+              <action-button :border="true" :center="true" @click="filters['global']=''">ניקוי חיפוש</action-button>
+            </div>
           </div>
-            <div class="legendDiv">
-              <div style="text-decoration:underline;">מקרא</div>
-              <img :src="getImgbyName('lesson')" style="height:20px;"/> שיעור<br/>
-              <img :src="getImgbyName('game')" style="height:20px;"/> תרגול<br/>
-              <img :src="getImgbyName('summary')" style="height:20px;"/> תרגול מסכם<br/>
-              <div v-if="auth.isStudent"><img  :src="getImgbyName('exam')" style="height:20px;"/> בוחן<br/></div>
-          </div>
+          <div class="legendDiv">
+            <div style="text-decoration:underline;">מקרא</div>
+            <img :src="getImgbyName('lesson')" style="height:20px;"/> שיעור<br/>
+            <img :src="getImgbyName('game')" style="height:20px;"/> תרגול<br/>
+            <img :src="getImgbyName('summary')" style="height:20px;"/> תרגול מסכם<br/>
+            <div v-if="auth.isStudent"><img  :src="getImgbyName('exam')" style="height:20px;"/> בוחן<br/></div>
+        </div>
         </div>
       </template>
       <Column field="name" header="שם" expander>
@@ -195,7 +197,7 @@ export default {
 </script>
 
 <style>
-div.p-treetable-wrapper{max-height: 700px;overflow-y: auto;}
+div.p-treetable-wrapper{max-height: 1000px;overflow-y: auto;}
 div.p-treetable-header{display:grid;}
 .p-treetable-wrapper{text-align: right !important;}
 .p-treetable .p-treetable-tbody > tr > td {border:none;padding: 0px;text-align:right;vertical-align: top;}/*padding:0.5rem 0 0.5rem 0;*/
@@ -209,12 +211,13 @@ div.p-treetable-header{display:grid;}
 
 div.stat_div{width:15px;}
 .top, .level1{font-size:24px;font-weight: bold;}
-.level2{font-size: 24px;margin-right: 20px;}
+.level2{font-size: 20px;margin-right: 20px;font-weight:500}
 .game, .summary, .lesson, .exam{cursor: pointer;margin-right: 40px;}
 .lessn_noclick{cursor:unset;}
 .selected{background-color: #92c7d5;}
-.searchInputText{margin-right:2em; margin-left: 1em;}
-div.searchDiv{display:flex;float:right;}
+.searchInputText{margin-left: 1em;border-radius:1em;}
+div.searchDiv{display:flex;float:right;clear:right;margin-top:3em;}
+div.listSelectDiv{display:flex;width:80%;margin: 0 auto;}
 div.legendDiv{float:left;}
 .eyeSearch{left:unset !important;}
 div.gameDescriptionDiv{padding-bottom:1em;}
