@@ -8,25 +8,17 @@ import Classes from '../../pages/manage/Classes.vue';
 const api = useAPI()
 const auth = useAuth()
 const data = ref(null)
+const totals = ref(null)
 const router = useRouter()
 
 api.post('teachers/update_classes_dashboard/', {}).then(res => {
     const newData = []
     if (res.classes_list) {
-        res.classes_list.forEach(cls=>{
-            const row = []
-            row.className = cls.class_name
-            row.classId = cls.class_id
-            row.teachers_1 = cls.teachers2
-            row.teachers_2 = cls.teachers3
-            row.games = cls.cl_games
-            row.students = cls.students_count
-            row.plays = cls.last_week_games_count
-            row.publish = cls.last_week_publish_count
-            newData.push(row)
-        })
+        data.value = res.classes_list
+        totals.value  = res.totals
     }
-    data.value = newData
+
+   
 })
 
 function rowClick(event) {
@@ -72,13 +64,52 @@ function rowClick(event) {
     </div>
     <div class="home-teacher" v-else-if="data">
         <DataTable :value="data" stripedRows showGridlines class="p-datatable-sm cursor-pointer" autoLayout rowHover @row-click="rowClick($event)">
-            <Column field="className" header="כיתה" bodyClass="text-right p-2" style="font-weight:700;"> </Column>
-            <Column field="teachers_1" header="מורה 2" bodyClass="text-right p-2"> </Column>
-            <Column field="teachers_2" header="מורה 3" bodyClass="text-right p-2"> </Column>
-            <Column field="games" header="משימות" bodyClass="text-right p-2"> </Column>
-            <Column field="students" header="תלמידים" bodyClass="text-right p-2"> </Column>
-            <Column field="plays" header="משחקים" bodyClass="text-right p-2"> </Column>
-            <Column field="publish" header="פורסמו" bodyClass="text-right p-2"> </Column>
+            <ColumnGroup type="header">
+                <Row>
+                    <Column header="כיתה" :rowspan="3" headerClass="text-center"/>
+                    <Column header="מספר תלמידים" :rowspan="3" headerClass="text-center"/>
+                    <Column header="משימות" :colspan="5" headerClass="text-center"/>
+                    <Column header="בחנים" :colspan="3" headerClass="text-center"/>
+                </Row>
+                <Row bodyClass="text-center">
+                    <Column header="מספר משימות" :rowspan="2" headerClass="text-center"/>
+                    <Column header="7 ימים" :colspan="2" headerClass="text-center"/>
+                    <Column header="30 יום" :colspan="2" headerClass="text-center"/>
+                    <Column header="מספר בחנים" :rowspan="2" headerClass="text-center"/>
+                    <Column header="7 ימים" :colspan="1" :rowspan="2" headerClass="text-center"/>
+                    <Column header="30 יום" :colspan="1" :rowspan="2" headerClass="text-center"/>
+                </Row>
+                <Row headerStyle="text-align:center;">
+                    <Column header="תרגולים" headerClass="text-center"/>
+                    <Column header="פרסומים" headerClass="text-center"/>
+                    <Column header="תרגולים" headerClass="text-center"/>
+                    <Column header="פרסומים" headerClass="text-center"/>
+                </Row>
+            </ColumnGroup>
+            <Column field="class_name" header="כיתה" bodyClass="text-right p-2" style="font-weight:600;"> </Column>
+            <Column field="students_count" header="מספר תלמידים" bodyClass="text-center p-2"> </Column>
+            <Column field="cl_tasks" header="מספר משימות" bodyClass="text-center p-2"> </Column>
+            <Column field="last_week_games_count" header="משחקים" bodyClass="text-center p-2"> </Column>
+            <Column field="last_week_publish_count" header="פורסמו" bodyClass="text-center p-2"> </Column>
+            <Column field="last_month_games_count" header=" - 30 יום משחקים" bodyClass="text-center p-2"> </Column>
+            <Column field="last_month_publish_count" header=" - 30 יום פורסמו" bodyClass="text-center p-2"> </Column>
+            <Column field="cl_exams" header="מספר בחנים" bodyClass="text-center p-2"> </Column>
+            <Column field="last_week_exams_count" header="בחנים בשבוע האחרון" bodyClass="text-center p-2"> </Column>
+            <Column field="last_month_exams_count" header="בחנים בחודש אחרון" bodyClass="text-center p-2"> </Column>
+            <ColumnGroup type="footer">
+            <Row>
+                <Column footer="סך הכל:" footerClass="text-center"/>
+                <Column :footer="totals.students_count" footerClass="text-center"/>
+                <Column :footer="totals.cl_tasks" footerClass="text-center"/>
+                <Column :footer="totals.last_week_games_count" footerClass="text-center"/>
+                <Column :footer="totals.last_week_publish_count" footerClass="text-center"/>
+                <Column :footer="totals.last_month_games_count" footerClass="text-center"/>
+                <Column :footer="totals.last_month_publish_count" footerClass="text-center"/>
+                <Column :footer="totals.cl_exams" footerClass="text-center"/>
+                <Column :footer="totals.last_week_exams_count" footerClass="text-center"/>
+                <Column :footer="totals.last_month_exams_count" footerClass="text-center"/>
+            </Row>
+        </ColumnGroup>
         </DataTable>
         <div><br/>לחצו על שורה של כיתה על מנת לראות את הדוחות של אותה כיתה.</div>
     </div>
@@ -91,5 +122,6 @@ export default {
 </script>
 
 <style>
-p-datatable-table > thead > tr > th {font-weight: 700;}
+.p-datatable-thead > tr > th {font-weight: 650 !important;}
+
 </style>

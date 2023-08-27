@@ -77,7 +77,7 @@ async function newClass(event){
 				</div>						
 			</div>
 			<div class="newclass_action" >
-				<button-small :border="true" @click='newClass'>הוסף</button-small>
+				<button-small :border="true" @click='newClass'>הוספה</button-small>
 			</div>
 		</div>
 	</div>
