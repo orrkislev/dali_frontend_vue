@@ -56,7 +56,7 @@ function getGamesData(subjectID) {
       :target="task.target"
       :action="action"
     />
-    <div v-if="browseManager.game_list.list.length == 0">אין משימות פתוחות</div>
+    <div v-if="browseManager.game_list?.list.length == 0">אין משימות פתוחות</div>
   </div>
 </template>
 
