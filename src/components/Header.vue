@@ -4,23 +4,28 @@ import { storeToRefs } from "pinia";
 import useAuth from 'src/utils/useAuth';
 import { ref, watch } from 'vue-demi';
 import { useRouter } from 'vue-router';
-import { real_url } from "src/utils/useAPI";
 import useEmitter from 'src/utils/useEmmiter';
 import Help from 'src/pages/help.vue';
 import useBrowseManager from 'src/utils/useBrowseManager';
+import useAPI from "src/utils/useAPI";
 
 const browseManager = useBrowseManager();
 const auth = useAuth()
 const router = useRouter()
 const emitter = useEmitter()
+const api = useAPI();
+
 
 
 const options = ref([
-  { key: "1", label: "פרופיל", disabled: false},
-  { key: "2", label: "הדרכה", disabled: false},
-  { key: "3", label: "הדרכה בסיסית", disabled: false},
+  { key: "1", label: "החשבון שלי", disabled: false},
   { key: "9", label: "יציאה מהחשבון", disabled: false},
 ]);
+
+const help_options = ref([
+  { key: "2", label: "הדרכה", disabled: false},
+  { key: "3", label: "הדרכה בסיסית", disabled: false},
+])
 
 const { username } = storeToRefs(auth)
 watch(username, newVal => options.value[0].disabled = newVal==null)
@@ -31,6 +36,7 @@ function showHelp(type){
 }
 
 function SelectUserOption(key) {
+console.log('key=' + key)
     switch (key){
       case "1":
         router.push({path: '/profile'})
@@ -85,21 +91,16 @@ function badgeURL(url){
       </div>
       <div id="header_left">
         
-        <NButton v-if="!browseManager.isMobile" round secondary color="#ffffff" @click="showHelp">
-          עזרה
-        </NButton>
+        <n-dropdown v-if="!browseManager.isMobile" trigger="hover" @select="SelectUserOption" :options="help_options">
+          <NButton round secondary color="#ffffff">עזרה</NButton>
+        </n-dropdown>
         <n-dropdown trigger="hover" @select="SelectUserOption" :options="options">
           <NButton round secondary color="#ffffff">
-            <img :src="badgeURL(auth.userData.avatar_icon)" class="h-2rem " /> &nbsp; 
+            <img :src="api.staticUrl(auth.userData.avatar_icon)" class="h-2rem " /> &nbsp; 
             <div v-if="auth.username" > 
               <span>{{ auth.username }}</span>          
             </div>
-            <router-link v-else to="/login">{{ 'LOGIN' }}</router-link>
-            <!--
-
-            <router-link v-if="auth.username" >{{ auth.username }}</router-link>
-            
-            -->
+            <router-link v-else to="/login">כניסה</router-link>
           </NButton>
         </n-dropdown>
       </div>

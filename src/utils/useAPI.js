@@ -16,6 +16,9 @@ function getCookie(name) {
 
 const useAPI = defineStore('api', {
     state: () => ({}),
+    getters: {
+        staticUrl: (state) => (url) => { return real_url + "static/" + url}
+    },
     actions: {
         async getCSRF() {
             const res = await fetch(base_url + 'students/get_csrf_token/', {

@@ -1,5 +1,6 @@
 <script setup>
 import SideBarUser from "./SideBarUser.vue";
+import SideBarLinks from "./SideBarLinks.vue";
 import Survey from "./Survey.vue";
 import SendComment from "./SendComment.vue";
 import SideBarBest from "./SideBarBest.vue";
@@ -19,6 +20,10 @@ function sidebar_view_show(){
   $("#sidebar").show(300)
 }
 
+function add2Favories(){
+
+}
+
 </script>
 
 
@@ -28,6 +33,7 @@ function sidebar_view_show(){
     <send-comment />
     <survey />
     <side-bar-best />
+    <side-bar-links />
   </div>
 </template>
 
@@ -59,4 +65,5 @@ export default {
   background:#396672;
   color:white;
 }
+
 </style>

@@ -130,16 +130,16 @@ function closeDescription(){
           </div>
           <div class="legendDiv">
             <div style="text-decoration:underline;">מקרא</div>
-            <img :src="getImgbyName('lesson')" style="height:20px;"/> שיעור<br/>
-            <img :src="getImgbyName('game')" style="height:20px;"/> תרגול<br/>
-            <img :src="getImgbyName('summary')" style="height:20px;"/> תרגול מסכם<br/>
-            <div v-if="auth.isStudent"><img  :src="getImgbyName('exam')" style="height:20px;"/> בוחן<br/></div>
+            <img :src="api.staticUrl('images/task_lesson.jpg')" style="height:20px;"/> שיעור<br/>
+            <img :src="api.staticUrl('images/task_game.jpg')" style="height:20px;"/> תרגול<br/>
+            <img :src="api.staticUrl('images/task_summary.jpg')" style="height:20px;"/> תרגול מסכם<br/>
+            <div v-if="auth.isStudent"><img  :src="api.staticUrl('images/task_exam.jpg')" style="height:20px;"/> בוחן<br/></div>
         </div>
         </div>
       </template>
       <Column field="name" :header="auth.isStudent ? 'שם' : ''" expander class="nameCol">   
         <template #body="slotProps">
-            <img v-if="isGame(slotProps)" :src="getImgName(slotProps)" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
+            <img v-if="isGame(slotProps)" :src="api.staticUrl('images/task_' + slotProps.node.type + '.jpg')" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
             <span v-if="isGame(slotProps)" :class="['name_game', slotProps.node.type, slotProps.node.selected ? 'selected' :'', getItemClass(slotProps) ]" @click="clickAction(slotProps.node)">{{  slotProps.node.data.name }}</span>
             <span v-else :class="'name_'+slotProps.node.type">{{  slotProps.node.data.name }} </span>
             <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span>          
@@ -189,12 +189,6 @@ export default {
       if ((obj.node.type=='lesson') && (route.path.indexOf('/manage/') > -1)) 
         return 'lessn_noclick'
       return obj.node.type
-    },
-    getImgName:function(obj){
-     return real_url + "static/images/task_" + obj.node.type + ".jpg"
-    },
-    getImgbyName:function(name){
-      return real_url + "static/images/task_" + name + ".jpg"
     },
   },
 };
