@@ -3,9 +3,11 @@ import { ref } from 'vue';
 import useAPI from '../../utils/useAPI';
 import useGameManager from '../../utils/useGameManager';
 import ButtonSmall from '../ButtonSmall.vue';
+import ActionButton from 'src/components/ActionButton.vue';
 
 const props = defineProps({
     showIcon: {type:Boolean, default: false},
+    origin:{type:String, default: "sidebar"},
 })
 
 const displayDialog = ref(false);
@@ -49,7 +51,11 @@ async function send_comment(){
     </Dialog>
     <br/>
     <span v-if="showIcon" @click="()=>displayDialog=true">&#9872; הערה</span>
-    <ButtonSmall :border="true" v-else @click="()=>displayDialog=true"> הערה למנהלי האתר </ButtonSmall>
+    <ButtonSmall v-else-if="origin=='question'" :border="true"  @click="()=>displayDialog=true"> הערה למנהלי האתר </ButtonSmall>
+    <div v-else>
+        <action-button :border="true" :center="true" :main="true" :full="true" @click="()=>displayDialog=true">הערה למנהלי האתר </action-button>
+    </div>
+    
 </template>
 
 
