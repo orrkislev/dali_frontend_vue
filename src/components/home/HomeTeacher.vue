@@ -72,7 +72,7 @@ function rowClick(event) {
     </div>
     <div class="home-teacher" v-else-if="data">
         <DataTable :value="data" stripedRows showGridlines class="p-datatable-sm cursor-pointer" autoLayout rowHover @row-click="rowClick($event)">
-            <Column field="className" header="כיתה" bodyClass="text-right p-2" style="font-weight:bold;"> </Column>
+            <Column field="className" header="כיתה" bodyClass="text-right p-2" style="font-weight:700;"> </Column>
             <Column field="teachers_1" header="מורה 2" bodyClass="text-right p-2"> </Column>
             <Column field="teachers_2" header="מורה 3" bodyClass="text-right p-2"> </Column>
             <Column field="games" header="משימות" bodyClass="text-right p-2"> </Column>
@@ -91,4 +91,5 @@ export default {
 </script>
 
 <style>
+p-datatable-table > thead > tr > th {font-weight: 700;}
 </style>

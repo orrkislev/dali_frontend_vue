@@ -50,7 +50,7 @@ name:'ButtonSmall'
     border: 1px solid #DDD;
 }
 .btnSmall:hover{
-    background: slategray;
+    background: #d5d5d5;
 }
 .btnFull-narrow {
     max-width: 10em;

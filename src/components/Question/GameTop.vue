@@ -10,13 +10,15 @@ const gameManager = useGameManager()
 <template>
   <div id='game_top'>
         <div id='game_title'>{{ gameManager.game.game.name }}</div>
-        <div id='score'>
+        <div id='score' style="text-align:center;">
             <!-- <ProgressBar :value="gameManager.progress?.score" class='w-5'>
                 {{ gameManager.progress?.score }} נקודות
             </ProgressBar> -->
-            <span v-if='gameManager.progress?.bonus' style="color:orange;"><i class="fa fa-sm fa-gift"></i>10+</span>
-            {{ gameManager.progress?.score }} נקודות
-            <send-comment/>
+            <div>
+                <span v-if='gameManager.progress?.bonus' style="color:orange;"><i class="fa fa-sm fa-gift"></i>10+</span>
+                {{ gameManager.progress?.score }} נקודות
+            </div>
+            <send-comment :origin="'question'"/>
         </div>
     </div>
 </template>

@@ -21,8 +21,10 @@ function badgeURL(url){
         </div>
         <div class="col-6 flex flex-column align-items-center justify-content-center">
           <div class="text-4xl">{{ auth.userData.badge_points }}</div>
-          <div style="margin-top:-1em;">נקודות</div>
+          <div style="margin-top:-1em;">כוכבים</div>
         </div>
+        <img id='avatar_series_img' class='avatar_series_img' :src="badgeURL(auth.userData.series_bar_image)" style="max-width:100%;"/>
+        <div :value="auth.userData.progress_bar_value" class="myprogressbar" :style="{'background':auth.userData.seriesbar_color}"></div>
         <div v-if="auth.userData.user_monthly_badged">
           <Divider />
           <div v-for="badge in auth.userData.user_monthly_badged">
@@ -43,6 +45,6 @@ export default {
 };
 </script>
 
-
 <style>
+.myprogressbar{width:91%;height:4px;top:-23px;right:9px;position:relative}
 </style>

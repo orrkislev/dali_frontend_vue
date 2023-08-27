@@ -29,15 +29,18 @@ const current_tree = ref(null)
 let clickAction = goToGamePage
 let current_table = null
 let obj2map = null
+let explanation_text = ref("")
 if (route.path == '/manage/tasks') {
   clickAction = addtoTable
   current_table = browseManager.openTasks.tasks
   obj2map = browseManager.openTasks
+  explanation_text.value = "לחצו על שמות התרגילים שתרצו לפתוח לכיתה. התרגילים שבחרתם יתווספו לטבלה למעלה ותוכלו לסמן לאילו כיתות תרצו לפתוח אותם."
   }
 else if (route.path == '/manage/exams'){
   clickAction = addtoTable
   current_table = browseManager.openExams.exams
   obj2map = browseManager.openExams
+  explanation_text.value = "לחצו על שמות התרגילים שתרצו לפתוח כבוחן לכיתה. התרגילים שבחרתם יתווספו לטבלה למעלה ותוכלו לסמן לאילו כיתות תרצו לפתוח אותם."
 } 
 
 console.log('rerewr')
@@ -117,6 +120,7 @@ function closeDescription(){
               <ActionButton :center='false' :border="true" :inactive="current_action=='1'" @click="switchFilterAction">המשימות שלי</ActionButton>
               <ActionButton :center='false' :border="true" :inactive="current_action=='0'" @click="switchFilterAction">מאגר מלא</ActionButton>
             </div>
+            <div v-else>{{explanation_text}}</div>
             <div class="p-input-icon-right searchDiv">
               <br/>
               <i class="pi pi-search eyeSearch"></i>

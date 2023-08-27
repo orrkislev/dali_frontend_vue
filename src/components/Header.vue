@@ -57,10 +57,12 @@ function badgeURL(url){
 
 <template>
   <div id="header">
-    <img id="header_logo" src="@/assets/home_top_logo.png" @click="startAuth" />
+    <router-link to="/">
+      <img id="header_logo" src="@/assets/home_top_logo.png" /> 
+    </router-link>
     <div id="header_content">
       <div id="header_right">
-        <NButton round quaternary color="#ffffff">
+        <NButton v-if="!auth.isStudent" round quaternary color="#ffffff">
           <router-link to="/">בית</router-link>
         </NButton>
         <NButton round secondary color="#ffffff">

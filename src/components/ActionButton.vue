@@ -7,6 +7,7 @@ const props = defineProps({
     inactive: {type:Boolean, default: false},
     selected: {type:Boolean, default: false},
     center: {type:Boolean, default: false},
+    full: {type:Boolean, default: false},
     indicator: {type:String, default: ""},
     icon: {type:String, default: null},
     style: {type:Object, default: null},
@@ -25,6 +26,7 @@ function click() {
             'btnFull-border': border, 
             'btnFull-center' : center,
             'btnFull-main':main,
+            'btnFull-full': full,
             'btnFull-selected': selected,
             'btnFull-inactive': inactive, 
             'btnFull-correct': indicator=='success',
@@ -70,6 +72,7 @@ export default {
 
 .btnFull-border { border: 1px solid gray; }
 .btnFull-center { justify-content: center; }
+.btnFull-full {max-inline-size:unset;}
 .btnFull-main {
   border: none;
   background: #3a7fce;
