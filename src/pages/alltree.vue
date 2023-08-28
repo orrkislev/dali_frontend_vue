@@ -139,9 +139,9 @@ function closeDescription(){
       </template>
       <Column field="name" :header="auth.isStudent ? 'שם' : ''" expander class="nameCol">   
         <template #body="slotProps">
-            <img v-if="isGame(slotProps)" :src="api.staticUrl('images/task_' + slotProps.node.type + '.jpg')" style="height:20px;" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
+            <img v-if="isGame(slotProps)" :src="api.staticUrl('images/task_' + slotProps.node.type + '.jpg')" class="gameImg" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
             <span v-if="isGame(slotProps)" :class="['name_game', slotProps.node.type, slotProps.node.selected ? 'selected' :'', getItemClass(slotProps) ]" @click="clickAction(slotProps.node)">{{  slotProps.node.data.name }}</span>
-            <span v-else :class="'name_'+slotProps.node.type">{{  slotProps.node.data.name }} </span>
+            <span v-else :class="['name_'+slotProps.node.type, slotProps.node.type]">{{  slotProps.node.data.name }}</span>
             <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span>          
             <div v-if="viewDescription==slotProps.node.data.id" class="gameDescriptionArea">
               <div class="gameDescriptionDiv" v-html="gameDescription"></div>
@@ -200,6 +200,7 @@ div.p-treetable-header{display:grid;}
 .p-treetable-wrapper{text-align: right !important;}
 .p-treetable .p-treetable-tbody > tr > td {border:none;padding: 0px;text-align:right;vertical-align: top;}/*padding:0.5rem 0 0.5rem 0;*/
 .p-treetable .p-treetable-thead > tr > th {text-align:right;padding:0px}
+.p-treetable-tbody > tr > td .p-treetable-toggler {height:1.5em !important;}
 th.nameCol{padding-right:2.5em !important;} /* This is the width of the expand arrow */
 
 .success{color:green;}
@@ -214,10 +215,13 @@ div.stat_div{width:15px;}
 .top, .level1{font-size:24px;font-weight: bold;}
 .level2{font-size: 20px;font-weight:500}
 .name_level2{margin-right: 20px;}
-.game, .summary, .lesson, .exam{cursor: pointer;}
+.game, .summary, .lesson, .exam{cursor: pointer;font-size:16px;}
 .name_game{cursor: pointer;margin-right: 40px;}
 .lessn_noclick{cursor:unset;}
 .selected{background-color: #92c7d5;}
+
+.gameImg{height:20px;vertical-align: middle;}
+
 .searchInputText{margin-left: 1em;border-radius:1em;}
 div.searchDiv{display:flex;float:right;clear:right;margin-top:3em;}
 div.listSelectDiv{display:flex;width:80%;margin: 0 auto;}
