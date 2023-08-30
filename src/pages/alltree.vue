@@ -222,7 +222,7 @@ div.stat_div{width:15px;}
 
 .gameImg{height:20px;vertical-align: middle;}
 
-.searchInputText{margin-left: 1em;border-radius:1em;}
+.searchInputText{margin-left: 1em;border-radius:1em;caret-color: auto;}
 div.searchDiv{display:flex;float:right;clear:right;margin-top:3em;}
 div.listSelectDiv{display:flex;width:80%;margin: 0 auto;}
 div.legendDiv{float:left;}
@@ -233,4 +233,5 @@ div.gameDescriptionArea{
   background-color:var(--surface-100);
   padding: 2em;
 }
+.nameCol{width:70%;}
 </style>
