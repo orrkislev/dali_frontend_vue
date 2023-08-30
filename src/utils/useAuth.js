@@ -10,10 +10,10 @@ const useAuth = defineStore('auth', {
         locale:'science',
     }),
     getters: {
-        isTeacherOrStaff: (state) => ['teacher','stuff'].includes(state.userData.role),
-        isStaff: (state) => ['stuff'].includes(state.userData.role),
-        isStudent: (state) => ['student','independant'].includes(state.userData.role),
-        showIntro: (state) => state.userData.welcome_message,
+        isTeacherOrStaff: (state) =>  ['teacher','stuff'].includes(state.userData?.role),
+        isStaff: (state) => ['stuff'].includes(state.userData?.role),
+        isStudent: (state) => ['student','independant'].includes(state.userData?.role),
+        showIntro: (state) => state.userData?.welcome_message,
         getlocale: (state) => state.locale
     },
     actions: {
@@ -46,15 +46,16 @@ const useAuth = defineStore('auth', {
         },
         async logout() {
             const api = useAPI()
+            console.log('dd')
             let response = await api.post('students/logout/', { onlyData: true })
             if (response.status == 'success') {
                 this.username = null
                 this.userData = null
                 this.state = null
+                window.open("/","_self")
             }
         },
         async updateUser(entity, field, value) {
-            console.log('eeee')
             const api = useAPI()
             let response = await api.post('students/profile/user/', { udpate_entity: entity, udpate_param_name: field, update_new_value: value, onlyData: true })
             if (response.status == 'success') {
