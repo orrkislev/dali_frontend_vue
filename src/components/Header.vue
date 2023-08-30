@@ -8,6 +8,7 @@ import useEmitter from 'src/utils/useEmmiter';
 import Help from 'src/pages/help.vue';
 import useBrowseManager from 'src/utils/useBrowseManager';
 import useAPI from "src/utils/useAPI";
+import ProfileClass from 'src/components/profile/ProfileClass.vue';
 
 const browseManager = useBrowseManager();
 const auth = useAuth()
@@ -15,7 +16,7 @@ const router = useRouter()
 const emitter = useEmitter()
 const api = useAPI();
 
-
+const class_select_visibile = true
 
 const options = ref([
   { key: "1", label: "החשבון שלי", disabled: false},
@@ -55,9 +56,6 @@ console.log('key=' + key)
         console.log('SelectUserOption not found')
     }
 }
-function badgeURL(url){
-  return real_url + "static/" + url
-}
 </script>
 
 
@@ -90,7 +88,6 @@ function badgeURL(url){
         </template>
       </div>
       <div id="header_left">
-        
         <n-dropdown v-if="!browseManager.isMobile" trigger="hover" @select="SelectUserOption" :options="help_options">
           <NButton round secondary color="#ffffff">עזרה</NButton>
         </n-dropdown>
@@ -105,6 +102,11 @@ function badgeURL(url){
         </n-dropdown>
       </div>
     </div>
+    <Dialog  v-if="auth.userData.check_class_update_force" v-model:visible="class_select_visibile" header="עדכון כיתה" >
+      <ProfileClass :button=true :autoStart=true :inedit=true :edit=true :reason="auth.userData.check_class_update_force" 
+                    @change='(val)=>auth.updateUser("quser","myclass",val)'
+                    @leave="auth.userData.check_class_update_force=''"></ProfileClass>
+    </Dialog>
     <Help :title="'guide'"/>
   </div>
 </template>
