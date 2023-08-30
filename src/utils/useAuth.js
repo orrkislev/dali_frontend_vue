@@ -39,8 +39,7 @@ const useAuth = defineStore('auth', {
                 'password': password,
                 'next': '/',
             })
-            if (response.status == 'success')
-            {
+            if (response.status == 'success') {
                 this.getUserdata()
             }
             return response
@@ -48,12 +47,24 @@ const useAuth = defineStore('auth', {
         async logout() {
             const api = useAPI()
             let response = await api.post('students/logout/', { onlyData: true })
-            if (response.status == 'success')
-            {
+            if (response.status == 'success') {
                 this.username = null
                 this.userData = null
                 this.state = null
             }
+        },
+        async updateUser(entity, field, value) {
+            console.log('eeee')
+            const api = useAPI()
+            let response = await api.post('students/profile/user/', { udpate_entity: entity, udpate_param_name: field, update_new_value: value, onlyData: true })
+            if (response.status == 'success') {
+                this.getUserdata()
+                return ''
+            }
+            else {
+                console.log (response.error)
+                return response.error
+            }            
         },
         register() {
 
