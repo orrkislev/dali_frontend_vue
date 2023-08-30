@@ -120,7 +120,7 @@ function closeDescription(){
               <ActionButton :center='false' :border="true" :inactive="current_action=='1'" @click="switchFilterAction">המשימות שלי</ActionButton>
               <ActionButton :center='false' :border="true" :inactive="current_action=='0'" @click="switchFilterAction">מאגר מלא</ActionButton>
             </div>
-            <div v-else>{{explanation_text}}</div>
+            <div v-else class="instructionText">{{explanation_text}}</div>
             <div class="p-input-icon-right searchDiv">
               <br/>
               <i class="pi pi-search eyeSearch"></i>

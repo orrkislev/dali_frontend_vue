@@ -67,7 +67,7 @@ async function newClass(event){
 			<ClassInClassesVue v-for="cls in data" :key="cls.cl_id" :id="cls.cl_id" :is-open="cls.isopen" :name="cls.name" @reload="loadData"/>
 		</div>
 		<Divider />
-		<div>הוספת כיתה או קבוצת לימוד</div>
+		<div class="instructionText">על מנת להוסיף כיתה שלא נמצאת ברשימה - רישמו שם כיתה או קבוצת לימוד, בחרו את השכבה ולחצו "הוספה" .</div>
 		<div id='newClassContainer'>
 			<div class="newclass_title">
 				<input v-model="newClassName" type="text" />

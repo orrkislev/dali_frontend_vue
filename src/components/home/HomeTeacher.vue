@@ -111,7 +111,7 @@ function rowClick(event) {
             </Row>
         </ColumnGroup>
         </DataTable>
-        <div><br/>לחצו על שורה של כיתה על מנת לראות את הדוחות של אותה כיתה.</div>
+        <div class="instructionText"><br/>לחצו על שורה של כיתה על מנת לראות את הדוחות של אותה כיתה.</div>
     </div>
 </template>
 

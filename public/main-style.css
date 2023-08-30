@@ -1,6 +1,8 @@
 input{border-color:unset !important;} /* override webkit black border */
 a:hover{cursor:pointer;}
-     
+    
+.instructionText{color:#3a7fce;font-size:14px;}
+
 .footer_menu{color:var(--text_color_light);font-size:16px;TEXT-DECORATION:NONE;text-align:center;display:inline-block;}
 img.footer_img{vertical-align:sub;}
 /*.left_border_footer_menu{border-left:1px solid var(--text_color_light);text-align:center;width:55px;display:inline-block;}*/
