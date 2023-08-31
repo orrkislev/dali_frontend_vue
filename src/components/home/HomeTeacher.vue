@@ -63,27 +63,26 @@ function rowClick(event) {
         </div>
     </div>
     <div class="home-teacher" v-else-if="data">
-        <DataTable :value="data" stripedRows showGridlines class="p-datatable-sm cursor-pointer" autoLayout rowHover @row-click="rowClick($event)">
+        סיכום מצב הכיתות שלך: <br/><br/>
+        <DataTable :value="data" stripedRows showGridlines class="p-datatable-sm cursor-pointer home-teacher" autoLayout rowHover @row-click="rowClick($event)">
             <ColumnGroup type="header">
                 <Row>
-                    <Column header="כיתה" :rowspan="3" headerClass="text-center"/>
-                    <Column header="מספר תלמידים" :rowspan="3" headerClass="text-center"/>
-                    <Column header="משימות" :colspan="5" headerClass="text-center"/>
-                    <Column header="בחנים" :colspan="3" headerClass="text-center"/>
+                    <Column header="כיתה" :rowspan="1" headerClass="text-center headLine"/>
+                    <Column header="מספר תלמידים" :rowspan="1" headerClass="text-center headLine"/>
+                    <Column header="מעקב משימות" :colspan="5" headerClass="text-center headLine"/>
+                    <Column header="מעקב בחנים" :colspan="3" headerClass="text-center headLine"/>
                 </Row>
                 <Row bodyClass="text-center">
-                    <Column header="מספר משימות" :rowspan="2" headerClass="text-center"/>
-                    <Column header="7 ימים" :colspan="2" headerClass="text-center"/>
-                    <Column header="30 יום" :colspan="2" headerClass="text-center"/>
-                    <Column header="מספר בחנים" :rowspan="2" headerClass="text-center"/>
-                    <Column header="7 ימים" :colspan="1" :rowspan="2" headerClass="text-center"/>
-                    <Column header="30 יום" :colspan="1" :rowspan="2" headerClass="text-center"/>
-                </Row>
-                <Row headerStyle="text-align:center;">
-                    <Column header="תרגולים" headerClass="text-center"/>
-                    <Column header="פרסומים" headerClass="text-center"/>
-                    <Column header="תרגולים" headerClass="text-center"/>
-                    <Column header="פרסומים" headerClass="text-center"/>
+                    <Column header=""  headerClass="text-center secondHead"/>
+                    <Column header=""  headerClass="text-center secondHead"/>
+                    <Column header="מספר משימות"  headerClass="text-center secondHead"/>
+                    <Column header="מספר תרגולים (7 ימים)" headerClass="text-center secondHead"/>
+                    <Column header="מספר פרסומים (7 ימים)" headerClass="text-center secondHead"/>
+                    <Column header="מספר תרגולים (30 ימים)" headerClass="text-center secondHead"/>
+                    <Column header="מספר פרסומים (30 ימים)" headerClass="text-center secondHead"/>
+                    <Column header="מספר בחנים" headerClass="text-center secondHead"/>
+                    <Column header="בצעו (7 ימים)"  headerClass="text-center secondHead"/>
+                    <Column header="בצעו (30 ימים)" headerClass="text-center secondHead"/>
                 </Row>
             </ColumnGroup>
             <Column field="class_name" header="כיתה" bodyClass="text-right p-2" style="font-weight:600;"> </Column>
@@ -122,6 +121,9 @@ export default {
 </script>
 
 <style>
-.p-datatable-thead > tr > th {font-weight: 650 !important;}
-
+/*.p-datatable-thead > tr > th {font-weight: 650 !important;}*/
+.headLine{background-color: #3a7fce !important; color:white !important;}
+th.headLine > div {display:block !important;}
+.secondHead{background-color: #f4fafe !important;}
+.home-teacher{font-size:14px;}
 </style>
