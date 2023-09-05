@@ -22,7 +22,7 @@ api.post('teachers/update_classes_dashboard/', {}).then(res => {
 })
 
 function rowClick(event) {
-    router.push('/manage/classes/' + data.value[event.index].classId)
+    router.push('/manage/classes/' + data.value[event.index].class_id)
 }
 
 </script>
