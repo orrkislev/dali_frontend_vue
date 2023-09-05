@@ -27,14 +27,19 @@ function add2Favories() {
 
 </script>
 <template>
-  <div class="sideBarElement sideBarElement-dark footer_images_div">
-      <img class='footer_img' :src="api.staticUrl('images/links/addthis.png')" title='הוספה למועדפים' alt='הוספה למועדפים' role='button' tabindex='0' @click="add2Favories"/>
-      <a class='home_top_links_a' href='mailto:dali.k12.co.il@gmail.com' target='_blank' title='שליחת מייל' alt='שליחת מייל'>
-        <img class='footer_img' :src="api.staticUrl('images/links/email.png')">
-      </a>
-      <a  href='https://chat.whatsapp.com/KpuUXrbol1CHngHkso4S9Q' target='_blank'  title='רישום לקבוצת הוואטסאפ למורים' alt='רישום לקבוצת וואטסאפ למורים'>
-        <img v-if="auth.isTeacherOrStaff" class='footer_img' :src="api.staticUrl('images/links/whatsapp.png')"/>
-      </a>
+  <div v-if="auth.isTeacherOrStaff"  class="sideBarElement sideBarElement-dark footer_images_div">
+    <a class='home_top_links_a'  title='הוספה למועדפים' alt='הוספה למועדפים'>
+      <img class='footer_img' :src="api.staticUrl('images/links/addthis.png')" role='button' tabindex='0' @click="add2Favories"/>
+    </a>
+    <a class='home_top_links_a' href='mailto:dali.k12.co.il@gmail.com' target='_blank' title='שליחת מייל' alt='שליחת מייל'>
+      <img class='footer_img' :src="api.staticUrl('images/links/email.png')">
+    </a>
+    <a  href='https://chat.whatsapp.com/KpuUXrbol1CHngHkso4S9Q' target='_blank'  title='רישום לקבוצת הוואטסאפ למורים' alt='רישום לקבוצת וואטסאפ למורים'>
+      <img class='footer_img' :src="api.staticUrl('images/links/whatsapp.png')"/>
+    </a>
+    <a href='https://www.facebook.com/dali.co.il' target='_blank' title="פייסבוק" alt="פייסבוק">
+      <img class='footer_img' :src="api.staticUrl('images/links/facebook.png')">
+    </a>
   </div>
 
 </template>

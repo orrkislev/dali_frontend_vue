@@ -49,11 +49,10 @@ async function send_comment(){
         </div>
         <div>אפשר לפנות אלינו גם בטלפון: 054-4453400 או במייל: <a href="mailTo:dali.k12.co.il@gmail.com" >dali.k12.co.il@gmail.com</a> </div>
     </Dialog>
-    <br/>
     <span v-if="showIcon" @click="()=>displayDialog=true">&#9872; הערה</span>
-    <ButtonSmall v-else-if="origin=='question'" :border="true"  @click="()=>displayDialog=true"> הערה למנהלי האתר </ButtonSmall>
-    <div v-else>
-        <action-button :border="true" :center="true" :main="true" :full="true" @click="()=>displayDialog=true">הערה למנהלי האתר </action-button>
+    <ButtonSmall v-else-if="origin=='question'" :border="true" class="p-button-secondary" @click="()=>displayDialog=true"> הערה למנהלי האתר </ButtonSmall>
+    <div v-else class="sideBarElement sideBarComment" @click="()=>displayDialog=true">
+        <span class="text-white" >הערה למנהלי האתר </span>
     </div>
     
 </template>
@@ -67,4 +66,5 @@ name:'SendComment'
 
 
 <style>
+div.sideBarComment{background-color: rgb(57, 102, 114);cursor: pointer;text-align: center; font-size:16px;}
 </style>

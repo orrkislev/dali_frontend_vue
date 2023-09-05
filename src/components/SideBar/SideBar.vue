@@ -32,7 +32,7 @@ function add2Favories(){
     <side-bar-user />
     <send-comment />
     <survey />
-    <side-bar-best />
+<!--    <side-bar-best />-->
     <side-bar-links />
   </div>
 </template>
