@@ -25,6 +25,7 @@
     "primevue": "3.12.5",
     "vue": "^3.0.0",
     "vue-append": "^2.2.0",
+    "vue-i18n": "^9.2.2",
     "vue-router": "4",
     "vue3-smooth-dnd": "^0.0.2",
     "vuex": "^4.0.2"
