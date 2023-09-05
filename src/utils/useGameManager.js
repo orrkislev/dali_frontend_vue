@@ -14,10 +14,12 @@ const useGameManager = defineStore('game', {
         extra:{},
         sel: false,
         unauthorized_types: [],
+        exam: 0,
     }),
     getters: {
         isLesson: (state) => state.game.game.gameType == 'lesson',
         isLashon: (state) => state.game.domain == 'לשון',
+        isExam: (state) => state.exam > 0,
         getPostDataForSubmitAndNext: state => {
 
             if (!state.questionResult) return false
@@ -76,10 +78,10 @@ const useGameManager = defineStore('game', {
                 onlyData: true
             }
             // START AN EXAM
-            if (this.game.extra.exam) {
+            if (this.isExam) {
+                console.log('exam')
                 postdata.purpose = 'exam'
-                postdata.game_id = this.game.extra.exam
-                postdata.game = this.game.extra.exam
+                postdata.exam_id = this.exam
             }
 
             // START A LEVEL
