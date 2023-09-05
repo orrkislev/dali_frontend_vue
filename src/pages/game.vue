@@ -11,10 +11,17 @@ import DaliWait from 'src/utils/DaliWait.vue'
 const route = useRoute()
 const gameManager = useGameManager()
 
-if (route.params.taskid) 
+if (route.params.taskid)
     if (gameManager.game?.id != route.params.taskid)
         gameManager.loadGameData({taskID: route.params.taskid, extra:''})
 
+if (route.path.includes('/exam')){
+    //gameManager.extra = {'exam':route.params.examid} 
+    gameManager.exam = route.params.examid
+}
+else 
+    gameManager.exam = null
+    
 function resetGame(){
     gameManager.question = null
     gameManager.view = 'title'
