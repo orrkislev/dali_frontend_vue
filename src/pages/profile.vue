@@ -32,17 +32,15 @@ function showPassAlert(){
         
         <div class='ErrorMessages'>{{  error }}</div>
 
-        <ProfileAvatar @change='(val) => updateUser("quser","avatar_series",val)'/>
         <ProfileSection name='שם משתמש' :val='auth.userData.username'></ProfileSection>
         <ProfileSection name='מצב רישום' :val='auth.userData.registration'></ProfileSection>
-
+        <ProfileAvatar @change='(val) => updateUser("quser","avatar_series",val)'/>
         <ProfileSection name='שם פרטי' :val='auth.userData.first_name' :button="auth.userData.saml_login!='True'" @change='(val)=>updateUser("user","first_name",val)'></ProfileSection>
         <ProfileSection name='שם משפחה' :val='auth.userData.last_name' :button="auth.userData.saml_login!='True'" @change='(val)=>updateUser("user","last_name",val)'></ProfileSection>
         <ProfileSection name='אימייל' :val='auth.userData.email' :button=true @change='(val)=>updateUser("user","email",val)'></ProfileSection>
         <!--<ProfileSection v-if="auth.userData.saml_login!='True'" name='סיסמא' :button=true val='*********' @click='showPassAlert'></ProfileSection>-->
 
         <div v-if="auth.userData.role == 'student'">
-            
             <ProfileClass name='כיתה' :button=true :val="auth.userData.class" @change='(val)=>updateUser("quser","myclass",val)'></ProfileClass>
         </div>
         <div>
