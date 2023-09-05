@@ -24,7 +24,7 @@ const gameManager = useGameManager();
             <slot></slot>
           </div>
       </div>
-    </div>
+    </div>   
   </div>
 </template>
 

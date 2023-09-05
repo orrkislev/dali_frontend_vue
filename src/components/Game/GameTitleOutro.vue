@@ -81,8 +81,8 @@ function backToGamePage() {
   <div id="task-main">
     <GameTitleTop >
         <Knob :modelValue="gameManager.progress.score" :min="0" :max="gameManager.question.target" disabled :size="200" />
-        <div class="flex flex-column gap05">
-          <Button v-if="!gameManager.game.extra.exam && !gameManager.extra.teacher" class="btnFull p-button-rounded px-6 btnFull-center"  style="minWidth:100%"
+        <div v-if="!gameManager.isExam" class="flex flex-column gap05">
+          <Button v-if="!gameManager.isExam && !gameManager.extra.teacher" class="btnFull p-button-rounded px-6 btnFull-center"  style="minWidth:100%"
             :disabled="isPublished" @click="publish(true)"
             :class="{'p-button-warning': isPublished}">
             {{ isPublished ? 'פורסם' : 'פרסום' }}
@@ -90,9 +90,15 @@ function backToGamePage() {
           <div><ActionButton :border="true" :center="true" @click="restartGame" class="p-button-rounded" style="minWidth:100%">לשחק שוב</ActionButton></div>
           <div v-if="!gameManager.isLesson"><ActionButton :border="true" :center="true" @click="backToGamePage" style="minWidth:100%">חזרה לדף המשימה</ActionButton></div>
           <div><ActionButton v-if="gameManager.game.next_game_id > 0" :border="true" :center="true" @click="gameManager.NextGamePage" style="minWidth:100%">למשימה הבאה</ActionButton></div>
-         <div><Button v-if="gameManager.sel" @click="publish('endgame')" style="minWidth:100%" class="btnFull p-button-warning p-button-rounded btnFull-center">סיום</Button></div>
+          <div><Button v-if="gameManager.sel" @click="publish('endgame')" style="minWidth:100%" class="btnFull p-button-warning p-button-rounded btnFull-center">סיום</Button></div>
         </div>
-        
+        <div v-else>
+          <div v-if="!gameManager.isLesson">
+            <ActionButton :border="true" :center="true" style="minWidth:100%">
+              <router-link to="/alltree">סיום</router-link>
+            </ActionButton>
+          </div>
+        </div>
         <Dialog header="פרסום קבוצתי" v-model:visible="displayDialog" modal>
           .כל אחד מחברי הקבוצה ילחצו על "פרסום קבוצתי" במחשב שלהם<br/>
           בהודעה שתעלה - יש להכניס את המספר הבא:<br/><br/>

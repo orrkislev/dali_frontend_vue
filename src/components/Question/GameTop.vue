@@ -20,6 +20,8 @@ const gameManager = useGameManager()
             </div>
             <send-comment :origin="'question'"/>
         </div>
+        <div v-if="gameManager.isExam" class="examWarning">יש לסיים את כל השאלות. <br/>
+            לא ניתן יהיה לחזור לבוחן אם תצאו לפני תום כל השאלות!</div>
     </div>
 </template>
 
@@ -39,4 +41,5 @@ export default {
 #game_title{
     font-size: x-large;
 }
+.examWarning {color:red;}
 </style>

@@ -19,8 +19,12 @@ const confirm = useConfirm();
 const api = useAPI();
 const emitter = useEmitter()
 
-const exit_message = "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהמשחק?"
-const exit_header = "יציאה מהמשחק"
+let exit_message = "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהמשחק?"
+let exit_header = "יציאה מהמשחק" 
+if (gameManager.isExam) {
+  exit_message = "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהבוחן? לא ניתן יהיה לחזור לבוחן לאחר מכן."
+  exit_header = "יציאה מהבוחן" 
+}
 const exit_icon = "pi pi-exclamation-triangle"
 const exit_acceptLabel = 'כן, לצאת'
 const exit_rejectLabel = 'ביטול'
@@ -109,15 +113,16 @@ async function end_game() {
     <game-top v-if="gameManager.progress.progress[0]!='admin'"/>
     <game-progress v-if="gameManager.progress.progress[0]!='admin'"/>
     <Divider align='right'>
-      <game-lifelines/>
+      <game-lifelines v-if="!gameManager.isExam"/>
     </Divider>
+
     <div class='flex flex-column gap1 px-5'>
       <question-content :key="gameManager.question.question_num"/>
       <question-part :key="gameManager.question.question_num" />
       <game-buttons :key="gameManager.question.question_num"/>
       <question-feedback :key="gameManager.question.question_num"/>
     </div>
-    <Divider align='right'>
+    <Divider v-if="!gameManager.isExam" align='right'>
       <div v-if="gameManager.progress.progress[0]!='admin'">
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="התחלת משחק חדש" />
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="ask_end_game" label="סיום משחק" />  

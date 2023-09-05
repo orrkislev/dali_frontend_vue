@@ -101,7 +101,7 @@ function publishDialogStatus(mode)
 <template>
 	<div id="task-main" v-if="gameManager.game">
 		<game-title-top>
-			<h3 v-if="gameManager.game?.extra.exam">בוחן</h3>
+			<h3 v-if="gameManager.isExam">בוחן</h3>
 			<div v-if="gameManager.game?.game.description" v-html="gameManager.game?.game.description"></div>
 			<div v-else v-html="gameManager.game?.subj.description"></div>
 			<div v-if="gameManager.game.sub_games.length > 0">
@@ -122,7 +122,7 @@ function publishDialogStatus(mode)
 				<div v-else-if="auth.isTeacherOrStaff && !isSEL" class="p-buttonset">
 					<template v-if="!gameManager.game.classData?.filtered_game">
 						<Button class="p-button-rounded px-6" @click="()=>startGame()">
-							התחלת משחק <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
+							התחלת משחק
 						</Button>
 					</template>
 					<template v-else>
@@ -164,10 +164,15 @@ function publishDialogStatus(mode)
 							</div>
 						</Dialog>
 					</template>
-					<Button v-if="!gameManager.unauthorized_types.includes(gameManager?.game?.game.authorization_type)" class="p-button-rounded px-8" @click="()=>startGame()">
-						התחלת משחק <span v-if="gameManager.game?.extra.exam">&nbsp; בוחן</span>
-					</Button>
-					<h3 v-else>לא ניתן לשחק - סיימת את מכסת משחקי הנסיון מסוג זה</h3>
+					<div v-if="!gameManager.unauthorized_types.includes(gameManager?.game?.game.authorization_type)">
+						<Button  class="p-button-rounded px-8" @click="()=>startGame()">
+							התחלת <span v-if="gameManager.isExam">&nbsp; בוחן</span><span v-else>&nbsp;  משחק </span>
+						</Button>
+						<div v-if="gameManager.isExam" class="examWarning">יש לסיים את כל השאלות. <br/>
+        	    לא ניתן יהיה לחזור לבוחן אם תצאו לפני תום כל השאלות!
+							</div>
+					</div>
+					<h3 v-else>לא ניתן להתחיל - סיימת את מכסת משחקי הנסיון מסוג זה</h3>
 				</div>
 			</div>
 			<div v-else>
