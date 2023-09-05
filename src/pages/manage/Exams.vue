@@ -57,7 +57,7 @@ function updateClassTask(class_id,game_id){
     <div>
         <PageTitle title="בחנים לכיתות" subtitle="המשימות שבחרת לתת לכיתות כבוחן מקוון" />
         <div v-if="ready">
-            <div v-if="browseManager.openTasks.classes.length == 0" class="normalred">
+            <div v-if="browseManager.openExams.classes.length == 0" class="normalred">
                 עדיין אין לך כיתות בשנת הלימודים הנוכחית.<br/>
                 על מנת להוסיף כיתות, יש ללחוץ על כפתור "ניהול כיתות" בתפריט הראשי.<br/>
             </div>
