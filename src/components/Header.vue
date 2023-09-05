@@ -70,10 +70,10 @@ console.log('key=' + key)
           <router-link to="/">בית</router-link>
         </NButton>
         <NButton round secondary color="#ffffff">
-          <router-link to="/alltree">עץ משימות</router-link>
+          <router-link to="/alltree">מאגר משימות</router-link>
         </NButton>
         <NButton round secondary color="#ffffff">
-          <router-link to="/allgames">מאגר משימות</router-link>
+          <router-link to="/allgames">מאגר ישן</router-link>
         </NButton>
         <template v-if="auth.isTeacherOrStaff && !browseManager.isMobile">
         <NButton round secondary color="#ffffff">
