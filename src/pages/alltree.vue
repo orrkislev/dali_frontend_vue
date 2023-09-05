@@ -43,7 +43,6 @@ else if (route.path == '/manage/exams'){
   explanation_text.value = "לחצו על שמות התרגילים שתרצו לפתוח כבוחן לכיתה. התרגילים שבחרתם יתווספו לטבלה למעלה ותוכלו לסמן לאילו כיתות תרצו לפתוח אותם."
 } 
 
-console.log('rerewr')
 browseManager.alltree = []
 api.post("tasks/full_task_tree/", {}).then(res=> {
   browseManager.allkeys = res['trees_all_keys']
@@ -59,7 +58,12 @@ api.post("tasks/full_task_tree/", {}).then(res=> {
 });
 
 function goToGamePage(node) {
-  router.push({path: '/game/' + node.data.id})
+  let route2push = ''
+  if (node.type == 'exam')
+    route2push = '/exam/' + node.data.id + '/' + node.data.exam_id
+  else
+    route2push = '/game/' + node.data.id
+  router.push({path: route2push})
 }
 
 /*
@@ -116,9 +120,9 @@ function closeDescription(){
       <template #header>
         <div class="text-right">
           <div style="width:70%;float:right;">
-            <div v-if="auth.isStudent" class="listSelectDiv">
-              <ActionButton :center='false' :border="true" :inactive="current_action=='1'" @click="switchFilterAction">המשימות שלי</ActionButton>
-              <ActionButton :center='false' :border="true" :inactive="current_action=='0'" @click="switchFilterAction">מאגר מלא</ActionButton>
+            <div v-if="auth.isStudent" class="p-buttonset">
+              <Button class="p-button-rounded px-6" :class="[current_action == 0  ? 'p-button-secondary' : '']" @click="switchFilterAction">המשימות שלי</Button>
+              <Button class="p-button-rounded" :class="[current_action == 1  ? 'p-button-secondary' : '']" @click="switchFilterAction">מאגר מלא</Button>
             </div>
             <div v-else class="instructionText">{{explanation_text}}</div>
             <div class="p-input-icon-right searchDiv">
@@ -220,11 +224,10 @@ div.stat_div{width:15px;}
 .lessn_noclick{cursor:unset;}
 .selected{background-color: #92c7d5;}
 
-.gameImg{height:20px;vertical-align: middle;}
+.gameImg{height:20px;vertical-align: middle;cursor: pointer;}
 
 .searchInputText{margin-left: 1em;border-radius:1em;caret-color: auto;}
 div.searchDiv{display:flex;float:right;clear:right;margin-top:3em;}
-div.listSelectDiv{display:flex;width:80%;margin: 0 auto;}
 div.legendDiv{float:left;}
 .eyeSearch{left:unset !important;}
 div.gameDescriptionDiv{padding-bottom:1em;}
