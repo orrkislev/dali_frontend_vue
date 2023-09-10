@@ -48,7 +48,7 @@ function open_question(id) {
               <Column header="כלל המשתמשים" :colspan="1" class='text-right' />
             </Row>
             <Row>
-              <Column header="שאלה" field="quest"/>
+              <Column header="שאלה"/>
               <Column header="רמת קושי"/>
               <Column header="מספר פעמים"/>
               <Column header="תשוובת נכונות"/>
@@ -62,7 +62,7 @@ function open_question(id) {
                 <span :class="{
                     quest_success : slotProps.data.total_class > 0 && slotProps.data.perc_class > 60,
                     quest_failure : slotProps.data.total_class > 0 && slotProps.data.perc_class < 40,
-                    }">{{ slotProps.data.quest }}</span>
+                    }" v-html="slotProps.data.quest"></span>
             </template>
         </Column> 
         <Column field="level" />
@@ -86,20 +86,42 @@ function open_question(id) {
             </template>
         </Column>
     </DataTable>
-    <Dialog v-if="displayQuestDialog" v-model:visible="displayQuestDialog" @hide="closeSingleQuestReport" :title="'דוח לשאלה בודדת'">
-      <h2>{{ quest_data.quest[0].text }}</h2>
-      <DataTable :value="quest_data.q_array">
-        <Column v-for="col of quest_data.q_array" :key="col.field" :field="col.field" :header="col"></Column>
+    <Dialog v-if="displayQuestDialog" v-model:visible="displayQuestDialog" @hide="closeSingleQuestReport" :title="'דוח לשאלה בודדת'" style="max-width:50%;">
+      <h2 v-html="quest_data.quest[0].text"></h2>
+      <DataTable v-if="quest_data.q_array.length > 0" :value="quest_data.q_array">
+        <Column field="a_text" header="משפט" class='text-right'>
+          <template #body="slotProps">
+            <span :class="{quest_success : slotProps.data.option_correct == 1}">{{ slotProps.data.a_text }}</span>
+          </template>
+        </Column> 
+        <Column field="count" header="סה/כ"/>
+        <Column field="percent" header="% הצלחה"/>
+        <Column v-for="col in quest_data.columns_list" :field=col.val :header=col.name> 
+          <template #body="slotProps">
+            <span :class="{quest_success : col.val ==slotProps.data.correct || col.val == slotProps.data.correct_text}">{{ slotProps.data[col.val] }}</span>
+          </template>  
+        </Column>
+        <ColumnGroup type="footer">
+            <Row>
+                <Column footer="סך הכל:" footerClass="text-center"/>
+                <Column :footer="quest_data.total"/>
+                <Column :footer="quest_data.perc_success"/>
+                <column :colspan="quest_data.columns_list.length"/>
+            </Row>
+        </ColumnGroup>
       </DataTable>
-        <span v-if="quest_data.q_array.length > 0">  
-      {{  quest_data.q_array }}</span>
-      <span v-else>
+      <span v-else-if="quest_data.total == 0">
         תלמידים בכיתה עדיין לא ענו על השאלה<br/>
         ולכן אין עדיין מידע עבורה
       </span>
+      <span v-else>
+        בשלב זה, אין פרוט לשאלה מסוג זה<br/><br/>
+      </span>
+      
       <br/>
       <div class="centerdiv" style="display:flex;margin-top:30px;">
         <action-button  :main="true" :border="true" :center="true" @click="open_question(quest_id)">צפיה בשאלה המלאה</action-button>
+        <action-button  :border="true" :center="true" @click="displayQuestDialog=false">סגירה</action-button>
       </div>
     </Dialog >
 </div>
@@ -110,3 +132,4 @@ export default {
     name: 'questReport',
 }
 </script>
+
