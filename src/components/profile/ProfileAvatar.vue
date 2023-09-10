@@ -19,10 +19,7 @@ function showAllBadges(){
             allAvatars.value = res
         })
     }
-    else {
-      showAllAvatars.value = !showAllAvatars.value
-    }
-    
+    showAllAvatars.value = !showAllAvatars.value
 }
 
 </script>
