@@ -38,8 +38,7 @@ onBeforeRouteLeave(async (to, from) => {
       acceptLabel: exit_acceptLabel,
       rejectLabel: exit_rejectLabel,
       accept: () => {
-        //gameManager.$reset() // TODO - are we sure? No need. And reset will reset the unauthorized list. not a big deal but better to keep it
-        api.post_json("quest/action/", {action: "endgame"}).then(res => {
+        api.post("quest/action/", {action: "endgame"}).then(res => {
           emitter.emit('GAME_ENDED') // Sidebar back to normal
           resolve(true)
         })
@@ -102,9 +101,12 @@ async function ask_end_game(){
 }
 
 async function end_game() {
-  await api.post("quest/action/", {action: "endgame"})
-  gameManager.view = 'title' 
-  gameManager.question.action = 'game ended'      
+  console.log('fdd')
+  api.post("quest/action/", {action: "endgame"}).then(res => {
+    gameManager.view = 'title' 
+    gameManager.question.action = 'game ended'      
+    gameManager.question.publishID = res.publishID
+  })
 }
 </script>
 
