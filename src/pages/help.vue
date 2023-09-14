@@ -11,7 +11,7 @@ const emitter = useEmitter()
 
 emitter.subscribe('SHOW_HELP', get_help_pages)
 
-const base_img_url = base_url + "static/"
+const base_img_url = real_url + "static/"
 let data = ref(null)
 
 function startHelp(params)
