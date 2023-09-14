@@ -5,7 +5,7 @@
 export const real_url =  'https://da-li.co.il/'
 //export const real_url =  'http://localhost:8200/'
 
-export const base_url =  real_url 
+export const base_url =  real_url + 'lashon/'
 export const dali_internal_url = base_url + 'static/new_site/index.html'
 
 function getCookie(name) {
@@ -17,7 +17,8 @@ function getCookie(name) {
 const useAPI = defineStore('api', {
     state: () => ({}),
     getters: {
-        staticUrl: (state) => (url) => { return real_url + "static/" + url}
+        staticUrl: (state) => (url) => { return real_url + "static/" + url},
+        newSiteImages: (state) => (name) => { return real_url + "static/images/new_site/" + name},
     },
     actions: {
         async getCSRF() {
