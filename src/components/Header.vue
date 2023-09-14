@@ -62,7 +62,7 @@ console.log('key=' + key)
 <template>
   <div id="header">
     <router-link to="/">
-      <img id="header_logo" src="@/assets/home_top_logo.png" /> 
+      <img id="header_logo" :src="api.newSiteImages('home_top_logo.png')" /> 
     </router-link>
     <div id="header_content">
       <div id="header_right">

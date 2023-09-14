@@ -12,8 +12,8 @@ const gameManager = useGameManager()
   <div id="mimshak_outer">
     <div id="mimshak_top">
       <div id="mimshak_top_right">
-        <img class="mimshak_logo" src="@/assets/home_top_logo.png" @click="startAuth" />
-        <img class="mimshak_logo" src="@/assets/mimshak_logo.png" @click="startAuth" />
+        <img class="mimshak_logo" :src="api.newSiteImages('home_top_logo.png')" @click="startAuth" />
+        <img class="mimshak_logo" :src="api.newSiteImages('mimshak_logo.png')" @click="startAuth" />
       </div>
       <div id="mimshak_top_left">
         כלים שלובים

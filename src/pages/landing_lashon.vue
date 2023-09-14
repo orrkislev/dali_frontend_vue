@@ -35,7 +35,7 @@ const route = useRoute()
             </div>
         </div>
         <div class="col-6 pl-5 relative" >
-            <img src="@/assets/images/v401_8065.png" alt="" class="w-full">
+            <img :src="api.newSiteImages('landing_bg_top.png')" alt="" class="w-full">
             <div id="background-element-1" />
         </div>
 
@@ -49,7 +49,7 @@ const route = useRoute()
         <div class="col-8 grid mt-6 gap-row-3">
             <div class="col-6 flex justify-content-center">
                 <div class="w-4 relative">
-                    <img src="@/assets/images/v401_8066.png" alt="" class="w-full">
+                    <img :src="api.newSiteImages('counts_1.png')" alt="" class="w-full">
                     <div class="circle_background" />
                 </div>
                 <div class="flex flex-column justify-content-center mx-2">
@@ -59,7 +59,7 @@ const route = useRoute()
             </div>
             <div class="col-6 flex justify-content-center">
                 <div class="w-4 relative">
-                    <img src="@/assets/images/v401_8066.png" alt="" class="w-full">
+                    <img :src="api.newSiteImages('counts_2.png')" alt="" class="w-full">
                     <div class="circle_background" />
                 </div>
                 <div class="flex flex-column justify-content-center mx-2">
@@ -69,7 +69,7 @@ const route = useRoute()
             </div>
             <div class="col-6 flex justify-content-center">
                 <div class="w-4 relative">
-                    <img src="@/assets/images/v401_8066.png" alt="" class="w-full">
+                    <img :src="api.newSiteImages('counts_3.png')" alt="" class="w-full">
                     <div class="circle_background" />
                 </div>
                 <div class="flex flex-column justify-content-center mx-2">
@@ -79,7 +79,7 @@ const route = useRoute()
             </div>
             <div class="col-6 flex justify-content-center">
                 <div class="w-4 relative">
-                    <img src="@/assets/images/v401_8066.png" alt="" class="w-full">
+                    <img s:src="api.newSiteImages('counts_4.png')" alt="" class="w-full">
                     <div class="circle_background" />
                 </div>
                 <div class="flex flex-column justify-content-center mx-2">
@@ -100,7 +100,7 @@ const route = useRoute()
         </div>
         <div class="col-8 mt-8 flex gap-1 overflow-visible">
             <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0">
-                <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
+                <img :src="api.newSiteImages('science_site_logo.png')" alt="" class="w-full">
                 <div class="p-3">
                     <div class="text-600">מדעים ח</div>
                     <div class="font-bold">משפחות כימיות</div>
@@ -114,7 +114,7 @@ const route = useRoute()
                 </div>
             </div>
             <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0">
-                <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
+                <img :src="api.newSiteImages('science_site_logo.png')" alt="" class="w-full">
                 <div class="p-3">
                     <div class="text-600">מדעים ח</div>
                     <div class="font-bold">משפחות כימיות</div>
@@ -128,7 +128,7 @@ const route = useRoute()
                 </div>
             </div>
             <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0">
-                <img src="@/assets/images/v502_1647.png" alt="" class="w-full">
+                <img :src="api.newSiteImages('science_site_logo.png')" alt="" class="w-full">
                 <div class="p-3">
                     <div class="text-600">מדעים ח</div>
                     <div class="font-bold">משפחות כימיות</div>
@@ -152,7 +152,7 @@ const route = useRoute()
             <div id="background-element-3" />
         </div>
         <div class="col-6 pl-5 relative" >
-            <img src="@/assets/images/v401_8065.png" alt="" class="w-full">
+            <img :src="api.newSiteImages('landing_bg_bottom.png')" alt="" class="w-full">
         </div>
 
         <div class="col-12 h-8rem"></div>
