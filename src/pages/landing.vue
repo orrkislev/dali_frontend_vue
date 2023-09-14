@@ -82,7 +82,7 @@ function gotoGame(id){
                     <div class="areaSelect">
                         לשון
                     </div>
-                    <idm site_prefix="lashon/" :key="2"/>
+                    <idm site_prefix="lashon" :key="2"/>
                 </div>
             </div>
             <div class="col-12 mt-8"></div>

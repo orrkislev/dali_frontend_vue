@@ -9,10 +9,16 @@ const props = defineProps({
   site_prefix: {type:String, default:''}
 })
 
+function prepare_id_url(){
+  let url = real_url + props.site_prefix + IDM_url
+  if (props.site_prefix != "")
+    url += "?next=/" + props.site_prefix
+  return url
+}
 </script>
 
 <template>
-  <a id='home_menu_idm_login'  :href="real_url + site_prefix + IDM_url"><img :src="api.staticUrl('images/idm_owl.png')" style='width:50px;'/>כניסה בהזדהות אחידה</a>
+  <a id='home_menu_idm_login'  :href="prepare_id_url()"><img :src="api.staticUrl('images/idm_owl.png')" style='width:50px;'/>כניסה בהזדהות אחידה</a>
 </template>
 
 <script>
