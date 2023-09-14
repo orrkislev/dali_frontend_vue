@@ -7,7 +7,7 @@ import { real_url } from "../../utils/useAPI";
 const api = useAPI()
 const htmlToShow = ref(null)
 
-const CALLS_PER_BUTTON={
+const URL_PER_BUTTON={
     'school report': 'statistics/schools_stat/',
     'choose school': 'statistics/schools_stat/?purpose=list',
     'school map' : 'static/pages/schools.htm',
@@ -19,7 +19,7 @@ const CALLS_PER_BUTTON={
 }
 async function click(btn){
     console.log(btn) 
-    let url = real_url + CALLS_PER_BUTTON[btn]
+    let url = real_url + URL_PER_BUTTON[btn]
     window.open(url,'_target')
 }
 </script>
