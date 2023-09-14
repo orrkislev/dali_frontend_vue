@@ -46,16 +46,14 @@ function gotoGame(id){
         <div class="col-6 p-5 flex flex-column justify-content-center align-items-end text-left">
             <div class="text-6xl font-bold w-7">חווית הוראה ולמידה חדשנית</div>
             <div class="text-2xl py-2 text-800 w-7">משימות ומשחקים ללימוד מדעים בחטיבת ביניים</div>
-            <div class="text-2xl py-2 text-800 w-7">וללימוד לשון לקראת הבגרות</div>
-            
-            <div class="flex gap-3" style="margin-top:1em;">
-                <Button class="p-button-warning" @click="startlogin">כניסה</Button>
-                <idm/>
-            </div>
+            <div class="text-2xl py-2 text-800 w-7">וללימוד לשון לקראת הבגרות</div>            
         </div>
         <div class="col-6 pl-5 relative" >
             <img :src="api.newSiteImages('landing_bg_top.png')" alt="" class="w-full">
             <div id="background-element-1" />
+            <div class="centerdiv flex gap-3" style="margin-top:1em;">
+                <Button class="p-button-warning" @click="startlogin">כניסה עם שם משתמש וסיסמה</Button>
+            </div>
         </div>
 
         <div class="col-12 text-center mt-5">
@@ -77,12 +75,14 @@ function gotoGame(id){
                     <div class="areaSelect">
                         מדעים
                     </div>
+                    <idm site_prefix="" :key="1"/>
                 </div>
                 <div class="col-3 bg-white border-round-1 overflow-hidden shadow p-0" style="cursor: pointer;" @click="switchmode('lashon')">
                     <img :src="api.newSiteImages('lashon_site_logo.png')" alt="" class="w-full">
                     <div class="areaSelect">
                         לשון
                     </div>
+                    <idm site_prefix="lashon/" :key="2"/>
                 </div>
             </div>
             <div class="col-12 mt-8"></div>

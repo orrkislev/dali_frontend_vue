@@ -17,7 +17,6 @@ import idm from 'src/pages/idm.vue';
                     <br/>
                     <Button label="כניסה" type="submit"/>
                     <br/>
-                    <idm/>
                 </div>
             </form>
             <div v-if="error">{{ error }}</div>
