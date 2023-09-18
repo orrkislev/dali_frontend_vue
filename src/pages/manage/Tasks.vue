@@ -75,7 +75,7 @@ function updateClassTask(class_id,game_id){
                                 </router-link>
                             </template>
                         </Column>
-                        <Column v-for="header in browseManager.openTasks.classes" :key="header.id" :field="header.id" bodyClass="text-center p-0" headerClass="text-center">
+                        <Column v-for="header in browseManager.openTasks.classes" :key="header.id" :field="header.id" bodyClass="text-center p-0">
                             <template #header="column">
                                 <router-link :to="'/manage/classes/'+column.column.key">
                                     {{ browseManager.openTasks.classes.find(cls => cls.id == column.column.key).name }} 
@@ -107,6 +107,6 @@ name:'Tasks'
 };
 </script>
 
-
 <style>
+div.p-column-header-content{display:block !important;text-align:center;} /* Make sure the title is centered */
 </style>

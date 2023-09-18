@@ -17,7 +17,7 @@ api.post("students/profile_badges/", {}).then(res=> {
 <template>
 <div>
   <h2>פירוט כוכבים</h2>
-  <DataTable :value="stars_list">
+  <DataTable :value="stars_list" class="profileStartsTable">
       <Column field="title" header="פעולה" class='text-right w-4'> </Column>
       <Column field="start_per_instance" header="כוכבים לכל פעולה" class='text-center'> </Column>
       <Column field="stars" header="מספר כוכבים מצטבר" class='text-center'> </Column>
@@ -39,6 +39,6 @@ name:'profileStars'
 </script>
 
 <style>
-
+.profileStartsTable{line-height: 0.5em;}
 </style>
 
