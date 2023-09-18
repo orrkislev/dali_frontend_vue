@@ -1,6 +1,6 @@
 <script setup>
 import Carousel from 'primevue/carousel';
-import { base_url } from "../utils/useAPI";
+import { real_url } from "../utils/useAPI";
 import Dialog from 'primevue/dialog';
 import { ref } from "vue";
 import useAPI from '../utils/useAPI';
