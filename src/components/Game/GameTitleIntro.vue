@@ -166,7 +166,7 @@ function publishDialogStatus(mode)
 					</template>
 					<div v-if="!gameManager.unauthorized_types.includes(gameManager?.game?.game.authorization_type)">
 						<Button  class="p-button-rounded px-8" @click="()=>startGame()">
-							התחלת <span v-if="gameManager.isExam">&nbsp; בוחן</span><span v-else>&nbsp;  משחק </span>
+							התחלת <span v-if="gameManager.isExam">&nbsp;בוחן</span><span v-else>&nbsp;משחק</span>
 						</Button>
 						<div v-if="gameManager.isExam" class="examWarning">יש לסיים את כל השאלות. <br/>
         	    לא ניתן יהיה לחזור לבוחן אם תצאו לפני תום כל השאלות!

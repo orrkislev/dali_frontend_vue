@@ -94,8 +94,6 @@ const useGameManager = defineStore('game', {
                     onlyData: true
                 }
             }
-            console.log('postdata='+postdata)
-
             const api = useAPI()
             let res = await api.post('quest/start/', postdata)
            // SHOULD SHOW LEVELS?

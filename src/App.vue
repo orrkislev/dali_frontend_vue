@@ -76,13 +76,14 @@ body {
   direction: rtl;
 }
 
-#allApp {
+#allApp { 
   max-width: 84em;
   min-height: 100vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow-x: hidden;
 }
 
 #allAppTop {

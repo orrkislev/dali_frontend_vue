@@ -7,7 +7,9 @@ import ButtonSmall from '../ButtonSmall.vue';
 const auth = useAuth()
 const api = useAPI()
 
-
+const props = defineProps({
+    mystyle: {type:String, default: ''},
+})
 const showAllAvatars = ref(false)
 const allAvatars = ref([])
 const emit = defineEmits(['change'])
@@ -26,7 +28,7 @@ function showAllBadges(){
 
 <template>
   <div class="flex p-2">
-    <div class="titleValueDiv">
+    <div class="titleValueDiv" :style="mystyle">
       <div class="w-4 mybold">האווטאר שלי:</div>
       <img :src="api.staticUrl(auth.userData.avatar_icon)" class="h-4rem avatarImg" />
     </div>

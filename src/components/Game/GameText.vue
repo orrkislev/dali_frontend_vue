@@ -12,7 +12,6 @@ function nextQuestion() {
 }
 
 function showTree() {
-    console.log('fdf')
     router.push({path: '/alltree'})
 }
 
@@ -32,9 +31,9 @@ function showTree() {
             </div>
         </div>
         <div class='flex gap05'>
-            <action-button v-if="gameManager.isLashon" :center="true" :main="true" @click="gameManager.NextGamePage"> המשך לתרגול </action-button>
+            <action-button v-if="gameManager.isLashon" :center="true" :main="true" :style="'min-width:45%;'" @click="gameManager.NextGamePage"> המשך לתרגול </action-button>
             <action-button v-else :center="true" :main="true" @click="nextQuestion"> המשך לשאלות </action-button>
-            <action-button v-if="gameManager.isLesson" :center="true" :main="true" @click="showTree"> חזרה למאגר הנושאים </action-button>
+            <action-button v-if="gameManager.isLesson" :center="true" :main="true" :style="'min-width:45%;'" @click="showTree"> חזרה למאגר הנושאים </action-button>
         </div>
     </div>
 </template>

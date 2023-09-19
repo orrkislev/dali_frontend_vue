@@ -2,13 +2,13 @@
 import { ref } from 'vue';
 import ButtonSmall from '../ButtonSmall.vue';
 
-
 const props = defineProps({
     name: {type:String, default: ''},
     val: {type:String, default: ''},
     edit: {type:Boolean, default: false},
     button: {type:Boolean, default: false},
     inedit: {type:Boolean, default: false},
+    mystyle: {type:String, default: ''},
 })
 
 const newVal = ref(props.val)
@@ -19,7 +19,7 @@ const emit = defineEmits(['change', 'click'])
 
 <template>
     <div class="flex p-2">
-        <div class="titleValueDiv">
+        <div :style="mystyle" class="titleValueDiv">
             <div class="w-4 mybold">{{ name }}:</div>
             <div v-if="edit">
                 <input type="text" v-model="newVal" />
@@ -41,7 +41,7 @@ name:'ProfileSection'
 </script>
 
 <style>
-.titleValueDiv{width:40%;display:flex;}
+.titleValueDiv{display:flex;}
 .buttonsDiv{display:flex;}
 .mybold {font-weight:500;}
 

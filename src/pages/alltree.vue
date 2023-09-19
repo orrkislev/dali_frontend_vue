@@ -112,6 +112,16 @@ function closeDescription(){
   gameDescription.value = ""
 }
 
+function buttonsWidth() {
+  if (browseManager.isMobile) return '100%'
+  return '70%'
+}
+
+function legendDivClass() {
+  if (browseManager.isMobile) return 'legendDivMobile'
+  return 'legendDiv'
+}
+
 </script>
 
 <template>
@@ -119,7 +129,7 @@ function closeDescription(){
     <TreeTable v-if="browseManager.alltree.length > 0" v-model:expandedKeys="browseManager.allkeys" :value="current_tree" :filters="filters" :filterMode="'lenient'">
       <template #header>
         <div class="text-right">
-          <div style="width:70%;float:right;">
+          <div :width="buttonsWidth()" style="float:right;">
             <div v-if="auth.isStudent" class="p-buttonset">
               <Button class="p-button-rounded px-6" :class="[current_action == 0  ? 'p-button-secondary' : '']" @click="switchFilterAction">המשימות שלי</Button>
               <Button class="p-button-rounded" :class="[current_action == 1  ? 'p-button-secondary' : '']" @click="switchFilterAction">מאגר מלא</Button>
@@ -132,7 +142,7 @@ function closeDescription(){
               <action-button :border="true" :center="true" @click="filters['global']=''">ניקוי חיפוש</action-button>
             </div>
           </div>
-          <div class="legendDiv">
+          <div :class="legendDivClass()">
             <div style="text-decoration:underline;">מקרא</div>
             <img :src="api.staticUrl('images/task_lesson.jpg')" style="height:20px;"/> שיעור<br/>
             <img :src="api.staticUrl('images/task_game.jpg')" style="height:20px;"/> תרגול<br/>
@@ -229,6 +239,7 @@ div.stat_div{width:15px;}
 .searchInputText{margin-left: 1em;border-radius:1em;caret-color: auto;}
 div.searchDiv{display:flex;float:right;clear:right;margin-top:3em;}
 div.legendDiv{float:left;}
+div.legendDivMobile{float:right;margin-top:0.2em;}
 .eyeSearch{left:unset !important;}
 div.gameDescriptionDiv{padding-bottom:1em;}
 div.gameDescriptionArea{
