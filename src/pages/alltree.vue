@@ -236,7 +236,13 @@ div.stat_div{width:15px;}
 
 .gameImg{height:20px;vertical-align: middle;cursor: pointer;}
 
-.searchInputText{margin-left: 1em;border-radius:1em;caret-color: auto;}
+.searchInputText{
+  margin-left: 1em;
+  border-radius:1em;
+  caret-color: auto;
+  max-width: 50%;
+}
+
 div.searchDiv{display:flex;float:right;clear:right;margin-top:3em;}
 div.legendDiv{float:left;}
 div.legendDivMobile{float:right;margin-top:0.2em;}
