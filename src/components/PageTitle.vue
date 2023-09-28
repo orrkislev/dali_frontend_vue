@@ -1,14 +1,14 @@
 <script setup>
+import useAPI from "src/utils/useAPI";
+const api = useAPI();
+
 const props = defineProps({
   title: String,
   subtitle: String,
   img: String,
 });
 
-function getImgUrl(pet) {
-  var images = require.context("../assets/images/", false, /\.svg$/);
-  return images("./" + pet + ".svg");
-}
+
 </script>
 
 
@@ -18,7 +18,7 @@ function getImgUrl(pet) {
       <div class="page_title">{{ title }}</div>
       <div class="page_subtitle">{{ subtitle }}</div>
     </div>
-    <img v-if="img" class="page_title_image" :src="getImgUrl(img)" />
+    <img v-if="img" class="page_title_image" :src="api.newSiteImages(img)" />
   </div>
 </template>
 

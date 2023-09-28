@@ -62,7 +62,7 @@ async function newClass(event){
 <template>
 	<ConfirmPopup group="classesPage"></ConfirmPopup>
 	<div>
-		<page-title title="כל הכיתות" subtitle="כל הכיתות בבית הספר" img="Teaching" />
+		<pageTitle title="כל הכיתות" subtitle="כל הכיתות בבית הספר" img="Teaching.svg" />
 		<div v-if="data" class="flex-column gap1 classlist">
 			<ClassInClassesVue v-for="cls in data" :key="cls.cl_id" :id="cls.cl_id" :is-open="cls.isopen" :name="cls.name" @reload="loadData"/>
 		</div>
