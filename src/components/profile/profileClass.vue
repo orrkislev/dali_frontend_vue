@@ -14,6 +14,7 @@ const props = defineProps({
     inedit: {type:Boolean, default: false},
     autoStart: {type:Boolean, default: false},
     reason : {type:String, default: ''},
+    mystyle: {type:String, default: ''},
 })
 
 
@@ -37,7 +38,7 @@ if (props.autoStart) {
 </script>
 <template>
     <div class="flex p-2">
-      <div v-if="!autoStart" class="titleValueDiv">
+      <div v-if="!autoStart" class="titleValueDiv" :style="mystyle">
         <div class="w-4 mybold">{{ name }}:</div>
         <span style="margin-left:1em;">{{ val }}</span>
       </div>
