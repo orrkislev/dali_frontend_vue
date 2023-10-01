@@ -96,9 +96,9 @@ function rowClick(event) {
             <Column field="class_name" header="כיתה" bodyClass="text-right p-2" style="font-weight:600;"> </Column>
             <Column field="students_count" header="מספר תלמידים" bodyClass="text-center p-2"> </Column>
             <Column field="cl_tasks" header="מספר משימות" bodyClass="text-center p-2"> </Column>
-            <Column field="last_week_games_count" header="משחקים" bodyClass="text-center p-2"> </Column>
+            <Column field="last_week_games_count" header="תרגולים" bodyClass="text-center p-2"> </Column>
             <Column field="last_week_publish_count" header="פורסמו" bodyClass="text-center p-2"> </Column>
-            <Column field="last_month_games_count" header=" - 30 יום משחקים" bodyClass="text-center p-2"> </Column>
+            <Column field="last_month_games_count" header=" - 30 יום תרגולים" bodyClass="text-center p-2"> </Column>
             <Column field="last_month_publish_count" header=" - 30 יום פורסמו" bodyClass="text-center p-2"> </Column>
             <Column field="cl_exams" header="מספר בחנים" bodyClass="text-center p-2"> </Column>
             <Column field="last_week_exams_count" header="בחנים בשבוע האחרון" bodyClass="text-center p-2"> </Column>

@@ -33,7 +33,7 @@ async function click(clsIndex, val) {
     <div v-if="gameManager.game.classData.filtered_game">
         בחרת להסיר שאלות מהמשימה. תלמידים יראו את המשימה המעודכנת בשם <strong>{{gameManager.game.classData.filtered_game.name}}</strong>.
         גם בדו"חות המשימה תופיע בשם זה.
-        תלמידים יקבלו בכל משחק {{ gameManager.game.classData.filtered_game.NumQuestions }} שאלות. תשובה נכונה מזכה ב- {{ gameManager.game.classData.filtered_game.scoreValue }} נקודות ובמקרה של תשובה שגויה יורדות {{  gameManager.game.classData.filtered_game.scoreError}} נקודות.
+        תלמידים יקבלו בכל תרגול {{ gameManager.game.classData.filtered_game.NumQuestions }} שאלות. תשובה נכונה מזכה ב- {{ gameManager.game.classData.filtered_game.scoreValue }} נקודות ובמקרה של תשובה שגויה יורדות {{  gameManager.game.classData.filtered_game.scoreError}} נקודות.
     </div>
     <div class="flex">
       <div v-for="(cls, cldIndex) in Object.entries(gameManager.game.classData.classes_table)[0][1].list" :key="cls.cl_id" class="w-3">

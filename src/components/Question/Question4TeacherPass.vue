@@ -43,17 +43,17 @@ function getNextQuestionText(){
         <div v-if="gameManager.question && gameManager.view=='question'">
             <div v-if="gameManager.extra.teacher">
                 <h4 style="margin-bottom: 0;">התאמה אישית</h4>
-                <p style="margin-top:0;">ניתן להסיר/להחזיר שאלות ממשחקי התלמידים
+                <p style="margin-top:0;">ניתן להסיר/להחזיר שאלות מתרגולי התלמידים
                 <Button class="btnFull filterQuest" @click="filterQuestion">
                     {{ gameManager.question.filterQuest ? 'החזרת' : 'הסרת'}} שאלה
                 </Button>
                 </p>
                 <div v-if="gameManager.question.too_few">{{ "סיננתם הרבה שאלות. לא ניתן לסנן שאלות נוספות" }}</div>
-                <div class='filteralert pulsing' v-if="gameManager.question.filterQuest">שימו לב: בחרתם להסיר שאלה זו. השאלה לא תופיע במשחקי תלמידים.</div>
+                <div class='filteralert pulsing' v-if="gameManager.question.filterQuest">שימו לב: בחרתם להסיר שאלה זו. השאלה לא תופיע בתרגולי תלמידים.</div>
                 <Divider />
                 <div class="flex">
                     <Button @click="skipQuestion" class="btnFull p-button-outlined p-button-sm">{{ getNextQuestionText() }}</Button>
-                    <Button @click="endGame" class="btnFull p-button-outlined p-button-sm">דילוג לסוף המשחק</Button>
+                    <Button @click="endGame" class="btnFull p-button-outlined p-button-sm">דילוג לסוף התרגול</Button>
                 </div>
             </div>    
             <div v-if="auth.isStaff">

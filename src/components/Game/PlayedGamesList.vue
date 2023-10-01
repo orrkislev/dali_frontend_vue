@@ -46,7 +46,7 @@ function publish(id) {
 
 <template>
     <Divider v-if="data" />
-    <Fieldset legend="המשחקים הקודמים שלי" :toggleable="true" v-if="data">
+    <Fieldset legend="התרגולים הקודמים שלי" :toggleable="true" v-if="data">
         <div class="flex justify-content-center">
             <DataTable :value="data" class="w-6">
                 <Column field="date" header="תאריך" bodyClass="text-right p-2"> </Column>

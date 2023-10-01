@@ -19,8 +19,8 @@ const confirm = useConfirm();
 const api = useAPI();
 const emitter = useEmitter()
 
-let exit_message = "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהמשחק?"
-let exit_header = "יציאה מהמשחק" 
+let exit_message = "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהתרגול?"
+let exit_header = "יציאה מהתרגול" 
 if (gameManager.isExam) {
   exit_message = "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהבוחן? לא ניתן יהיה לחזור לבוחן לאחר מכן."
   exit_header = "יציאה מהבוחן" 
@@ -56,7 +56,7 @@ async function restartGame(){
       message: exit_message,
       header: exit_header,
       icon: exit_icon,
-      acceptLabel: 'כן,משחק חדש',
+      acceptLabel: 'כן,תרגול חדש',
       rejectLabel: exit_rejectLabel,
       accept: () => {
         gameManager.view = 'wait'
@@ -126,8 +126,8 @@ async function end_game() {
     </div>
     <Divider v-if="!gameManager.isExam" align='right'>
       <div v-if="gameManager.progress.progress[0]!='admin'">
-      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="משחק חדש" />
-      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="ask_end_game" label="סיום משחק" />  
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="תרגול חדש" />
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="ask_end_game" label="סיום תרגול" />  
       <Button v-if="!gameManager.isLesson" class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="gotoTaskPage" label="לדף המשימה" /> 
     </div>
     </Divider>

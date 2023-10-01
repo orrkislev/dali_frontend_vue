@@ -109,12 +109,12 @@ function publishDialogStatus(mode)
 			<div v-if="gameManager.game?.game.description" v-html="gameManager.game?.game.description"></div>
 			<div v-else v-html="gameManager.game?.subj.description"></div>
 			<div v-if="gameManager.game.sub_games.length > 0">
-				במשחק {{ gameManager.game.sub_games.length }} שלבים:
+				בתרגול {{ gameManager.game.sub_games.length }} שלבים:
 				<div v-for="(subgame, i) in gameManager.game.sub_games" :key="i">
 					שלב {{ i + 1 }} עם {{ subgame.game.NumQuestions }} שאלות
 				</div>
 			</div>
-			<div v-else> במשחק {{ gameManager.game?.game.NumQuestions }} שאלות</div>
+			<div v-else> בתרגול {{ gameManager.game?.game.NumQuestions }} שאלות</div>
 
 			<div v-if="auth.username" style="margin-top:1em;">
 				<div v-if="gameManager.game?.levels" class="flex flex-column gap-2">
@@ -123,15 +123,15 @@ function publishDialogStatus(mode)
 						{{ level.title }}
 					</Button>
 				</div>
-				<div v-else-if="auth.isTeacherOrStaff && !isSEL" class="p-buttonset">
+				<div v-else-if="auth.isTeacherOrStaff && !isSEL" class="p-buttonset" style="display:flex;">
 					<template v-if="!gameManager.game.classData?.filtered_game">
 						<Button class="p-button-rounded px-6" @click="()=>startGame()">
-							התחלת משחק
+							התחלת תרגול
 						</Button>
 					</template>
 					<template v-else>
-						<Button class="p-button-rounded p-button-secondary" @click="()=>startGame('filtered')">משחק מסונן</Button>
-						<Button class="p-button-rounded" @click="()=>startGame('normal')">משחק מלא</Button>
+						<Button class="p-button-rounded p-button-secondary" @click="()=>startGame('filtered')">תרגול מסונן</Button>
+						<Button class="p-button-rounded" @click="()=>startGame('normal')">תרגול מלא</Button>
 					</template>
 					<Button v-if="gameManager.game.allow_teacher_test" class="p-button-rounded p-button-secondary" @click="startTeacherWalkthrough"> מעבר מורה </Button>
 				</div>
@@ -152,7 +152,7 @@ function publishDialogStatus(mode)
 						<br/>
 						בהצלחה.<br/></div>
 						<div class="p-buttonset" style="display:flex;">
-						<Button class="p-button-rounded px-6" @click="()=>startGame()">התחלת משחק</Button>
+						<Button class="p-button-rounded px-6" @click="()=>startGame()">התחלת תרגול</Button>
 						<Button class="p-button-rounded p-button-secondary" @click="publishDialogStatus(true)">פרסום קבוצתי</Button>
 						<Button @click="endTask()" class="btnFull p-button-warning p-button-rounded btnFull-center">סיום</Button>
 						</div>
@@ -170,13 +170,13 @@ function publishDialogStatus(mode)
 					</template>
 					<div v-if="!gameManager.unauthorized_types.includes(gameManager?.game?.game.authorization_type)">
 						<Button  class="p-button-rounded px-8" @click="()=>startGame()">
-							התחלת <span v-if="gameManager.isExam">&nbsp;בוחן</span><span v-else>&nbsp;משחק</span>
+							התחלת <span v-if="gameManager.isExam">&nbsp;בוחן</span><span v-else>&nbsp;תרגול</span>
 						</Button>
 						<div v-if="gameManager.isExam" class="examWarning">יש לסיים את כל השאלות. <br/>
         	    לא ניתן יהיה לחזור לבוחן אם תצאו לפני תום כל השאלות!
 							</div>
 					</div>
-					<h3 v-else>לא ניתן להתחיל - סיימת את מכסת משחקי הנסיון מסוג זה</h3>
+					<h3 v-else>לא ניתן להתחיל - סיימת את מכסת תרגולי הנסיון מסוג זה</h3>
 				</div>
 			</div>
 			<div v-else>

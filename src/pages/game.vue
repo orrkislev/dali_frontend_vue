@@ -37,7 +37,7 @@ function resetGame(){
         <game-title-outro v-else-if="gameManager.view=='title' && gameManager.question.action=='game ended'"></game-title-outro>
         <game-text v-else-if="gameManager.view=='media-start'"></game-text>
         <game-survey v-else-if="gameManager.view=='survey'"></game-survey>
-        <DaliWait v-else-if="gameManager.view=='wait'" :title="'המשחק יתחיל מייד'"></DaliWait>
+        <DaliWait v-else-if="gameManager.view=='wait'" :title="'התרגול יתחיל מייד'"></DaliWait>
         <div v-else>{{ resetGame() }}</div>
     </div>
 </template>
