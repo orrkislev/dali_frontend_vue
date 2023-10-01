@@ -8,13 +8,15 @@ const useAuth = defineStore('auth', {
         role:null,
         userData:null,
         locale:'science',
+        showMobileWarning: null,
     }),
     getters: {
         isTeacherOrStaff: (state) =>  ['teacher','stuff'].includes(state.userData?.role),
         isStaff: (state) => ['stuff'].includes(state.userData?.role),
         isStudent: (state) => ['student','independant'].includes(state.userData?.role),
         showIntro: (state) => state.userData?.welcome_message,
-        getlocale: (state) => state.locale
+        getlocale: (state) => state.locale,
+        isMobileWarning: (state) => state.showMobileWarning
     },
     actions: {
         startLogin(){
@@ -40,9 +42,14 @@ const useAuth = defineStore('auth', {
                 'next': '/',
             })
             if (response.status == 'success') {
-                this.getUserdata()
+                await this.getUserdata()
+                if (this.userData.role == 'teacher')
+                    this.showMobileWarning = true
             }
             return response
+        },
+        mobileWarningAck() {
+            this.showMobileWarning = false
         },
         async logout() {
             const api = useAPI()

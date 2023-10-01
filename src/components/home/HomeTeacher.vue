@@ -4,12 +4,15 @@ import { useRouter } from 'vue-router';
 import useAPI from '../../utils/useAPI';
 import useAuth from '../../utils/useAuth';
 import Classes from '../../pages/manage/Classes.vue';
+import useBrowseManager from 'src/utils/useBrowseManager';
+import ActionButton from 'src/components/ActionButton.vue';
 
 const api = useAPI()
 const auth = useAuth()
 const data = ref(null)
 const totals = ref(null)
 const router = useRouter()
+const browseManager = useBrowseManager();
 
 api.post('teachers/update_classes_dashboard/', {}).then(res => {
     const newData = []
@@ -18,7 +21,6 @@ api.post('teachers/update_classes_dashboard/', {}).then(res => {
         totals.value  = res.totals
     }
 
-   
 })
 
 function rowClick(event) {
@@ -28,7 +30,13 @@ function rowClick(event) {
 </script>
 
 <template>
-    <div v-if="auth.userData.status == 'no_class' || data?.length==0">
+    <div v-if="auth.isMobileWarning && browseManager.isMobile" class="notifyDiv">
+        שימו לב<br/>
+        בכניסה למערכת מהמובייל ניתן לבצע רק פעולות של תלמידים - לראות שיעורים ולתרגל.<br/>
+        על מנת לבצע פעולות מורה, יש להכנס במחשב.<br/><br/>
+        <ActionButton :center='true' :border="true" :main="true" @click="auth.mobileWarningAck" :inactive="disabled">הבנתי</ActionButton>
+    </div>
+    <div v-else-if="auth.userData.status == 'no_class' || data?.length==0">
         <div class="text-center">
             <div class="text-2xl">  עדיין אין לך כיתות בשנת הלימודים הנוכחית.<br/></div>
             <div class="text-1xl"> מומלץ להגדיר כיתות / קבוצות לימוד לפני כניסה ראשונה של תלמידים למערכת<br/>
@@ -40,7 +48,7 @@ function rowClick(event) {
         <div class="text-center">
             <div class="text-2xl">עדיין אין לך תלמידים רשומים.</div>
             <br/><br/>
-            <div style="margin-top:-1em;"> מומלץ לתת לתלמידים משימה של כניסה ראשונית לאתר - על מנת לא להשקיע בכך זמן בשיעור.<br/>
+            <div style="margin-top:-1em;">עדיין אין תלמידים המשוייכים לכיתות שלכם. עליכם להנחות תלמידים להיכנס למערכת ולשייך את עצמם לכיתות שלהם.<br/>
                 <br/>
                 לכניסה דרך הזדהות אחידה - שילחו לתלמידים את הקישור לסרטון ההדרכה  
                 <button class="p-button-sm p-button-outlined p-button-rounded" value='העתקת קישור' onclick="copy_text_2clipboard('https://www.youtube.com/embed/bDAEJO7VDMI')">העתקת קישור</button><br/><br/>
@@ -126,4 +134,9 @@ export default {
 th.headLine > div {display:block !important;}
 .secondHead{background-color: #f4fafe !important;}
 .home-teacher{font-size:14px;}
+div.notifyDiv{
+    background-color: rgb(225, 235, 237); 
+    border-radius: 1em;
+    padding: 1em;
+    }
 </style>

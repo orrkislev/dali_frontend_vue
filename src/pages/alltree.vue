@@ -214,7 +214,7 @@ div.p-treetable-header{display:grid;}
 .p-treetable-wrapper{text-align: right !important;}
 .p-treetable .p-treetable-tbody > tr > td {border:none;padding: 0px;text-align:right;vertical-align: top;}/*padding:0.5rem 0 0.5rem 0;*/
 .p-treetable .p-treetable-thead > tr > th {text-align:right;padding:0px}
-.p-treetable-tbody > tr > td .p-treetable-toggler {height:1.5em !important;}
+.p-treetable-tbody > tr > td .p-treetable-toggler {height:1.5em !important;margin-left:1em !important; }
 th.nameCol{padding-right:2.5em !important;} /* This is the width of the expand arrow */
 
 .success{color:green;}
@@ -228,9 +228,9 @@ div.stat_div{width:15px;}
 
 .top, .level1{font-size:24px;font-weight: bold;}
 .level2{font-size: 20px;font-weight:500}
-.name_level2{margin-right: 20px;}
+/*.name_level2{margin-right: 1em;}*/
 .game, .summary, .lesson, .exam{cursor: pointer;font-size:16px;}
-.name_game{cursor: pointer;margin-right: 40px;}
+.name_game{cursor: pointer;margin-right: 1em;}
 .lessn_noclick{cursor:unset;}
 .selected{background-color: #92c7d5;}
 

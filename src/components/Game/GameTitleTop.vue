@@ -17,7 +17,7 @@ const gameManager = useGameManager();
       />
     </div>
     
-    <div class="flex justify-content-center w-8">
+    <div class="flex justify-content-center">
       <div class="flex flex-column px-4">
           <h1>{{ gameManager.game?.game.name }}</h1>
           <div class="flex flex-column justify-content-between h-full">

@@ -78,7 +78,7 @@ export default {
   background: #3a7fce;
   color: white;
   font-weight: bold;
-  min-width: 20em;
+  min-width: 100%;
 }
 .btnFull-selected { background: #c2deff; }
 .btnFull-inactive {

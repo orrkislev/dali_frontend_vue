@@ -7,6 +7,8 @@ import GameLeaderboard from "./GameLeaderboard.vue";
 import useAuth from "src/utils/useAuth";
 import useEmitter from 'src/utils/useEmmiter';
 import useAPI from '../../utils/useAPI';
+import useBrowseManager from 'src/utils/useBrowseManager';
+
 import GameTitleTop from './GameTitleTop.vue';
 import { ref } from "vue";
 import { useRoute } from "vue-router";
@@ -18,6 +20,8 @@ const route = useRoute();
 const isSEL = route.path.includes('/game_sel')
 const api = useAPI()
 const emitter = useEmitter()
+const browseManager = useBrowseManager();
+
 
 var chooseTeacherGameType = ref(false)
 const displayPublishDialog = ref(false)
@@ -100,7 +104,7 @@ function publishDialogStatus(mode)
 
 <template>
 	<div id="task-main" v-if="gameManager.game">
-		<game-title-top>
+		<GameTitleTop>
 			<h3 v-if="gameManager.isExam">בוחן</h3>
 			<div v-if="gameManager.game?.game.description" v-html="gameManager.game?.game.description"></div>
 			<div v-else v-html="gameManager.game?.subj.description"></div>
@@ -178,9 +182,9 @@ function publishDialogStatus(mode)
 			<div v-else>
 				היכנס או הירשם כדי לשחק
 			</div>
-		</game-title-top>
+		</GameTitleTop>
 
-		<game-intro-teacher v-if="auth.isTeacherOrStaff && !route.path.includes('/game_sel')"/>
+		<game-intro-teacher v-if="auth.isTeacherOrStaff && !route.path.includes('/game_sel') && !browseManager.isMobile"/>
 		<PlayedGamesList v-if="auth.username"/>
 		<game-leaderboard v-if="auth.username"/>
 	</div>

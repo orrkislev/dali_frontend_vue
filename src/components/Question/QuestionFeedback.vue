@@ -3,9 +3,11 @@ import useEmitter from 'src/utils/useEmmiter';
 import useGameManager from 'src/utils/useGameManager';
 import ActionButton from '../ActionButton.vue';
 import AjaxViewer from '../AjaxViewer.vue';
+import useBrowseManager from 'src/utils/useBrowseManager';
 
 const gameManager = useGameManager()
 const emitter = useEmitter()
+const browseManager = useBrowseManager();
 
 function getHead() {
   let html = ''
@@ -45,7 +47,7 @@ function showMedia() {
 <template>
   <div>
     <div v-if="gameManager.questionResult?.result != null" >
-      <div class="flex justify-content-between">
+      <div class="justify-content-between" :class="[!browseManager.isMobile ? 'flex' : '']">
           <div>
               <div v-html="getHead()"></div>
               <div v-html="gameManager.question.q.feedback_general.text"></div>

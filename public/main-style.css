@@ -114,7 +114,7 @@ div.task_mng_div_teacher_True{border:2px solid var(--dali_correct_color);max-wid
 .student_subject_title{font-weight:bold;font-size:15pt;}
 .subject_leaf_w_game_inprogress{color:var(--subject_leaf_w_game_inprogress);}
 
-.intable_menu{;background-color:var(--intable_menu_bg);z-index:10;padding:10px;padding:10px;border-radius:3px;text-align:right;border:1px solid var(--white_color);}
+.intable_menu{background-color:var(--intable_menu_bg);z-index:10;padding:10px;padding:10px;border-radius:3px;text-align:right;border:1px solid var(--white_color);}
 .intable_href{color:var(--intable_menu_text);font-size:12pt;text-decoration:none;}
 .intable_href:hover{cursor:pointer;}
 .intabe_dashbaord_menu{width:120px;}
@@ -164,6 +164,12 @@ img.large_media_img{max-width:640px;max-height:540px;padding:10px;}
 .localimg_3images{max-width:240px;max-height:310px;}
 .pdf{width:710px;height:450px;}
 
+@media screen and (min-width: 0px) and (max-width: 799px) {
+  .giphyimg{width:150px;max-height:200px;}
+}
+@media screen and (min-width: 800px)  {
+  .giphyimg{width:300px;height:200px;}
+}
 
 img.leader_board_avatar{width:20px;} 
 span.leader_board_avatar{width:20px !important;}

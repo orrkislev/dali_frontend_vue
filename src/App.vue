@@ -8,9 +8,12 @@ import { real_url } from "./utils/useAPI";
 import { useRoute } from "vue-router";
 import { watch } from "vue";
 import Mimshak from "./components/Mimshak.vue";
+import useBrowseManager from "src/utils/useBrowseManager";
+
 
 const route = useRoute()
 const auth = useAuth()
+const browseManager = useBrowseManager();
 
 // create tag to add favicon to the page
 const favicon = document.createElement('link');
@@ -43,7 +46,7 @@ document.head.appendChild(favicon);
     </template>
     <template v-else>
       <ConfirmDialog></ConfirmDialog>
-      <div id="allApp">
+      <div id="allApp" :class="[ browseManager.isMobile  ? 'allAppMobile' : '']">
         <div id="allAppTop">
           <Header />
           <div id="mainLayout">
@@ -84,6 +87,10 @@ body {
   flex-direction: column;
   justify-content: space-between;
   overflow-x: hidden;
+}
+
+div.allAppMobile {
+  overflow-x: scroll !important;
 }
 
 #allAppTop {
