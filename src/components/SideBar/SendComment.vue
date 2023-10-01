@@ -29,7 +29,7 @@ async function send_comment(){
 
 
 <template>
-    <Dialog header="הערה למנהלי האתר" v-model:visible="displayDialog" :style="{width: '50vw'}" modal>
+    <Dialog header="הערה למנהלי האתר" v-model:visible="displayDialog" :style="{'max-width': '80%'}" modal>
         <!-- form to send a comment to developers, only large textbox and send button -->
         <h3>תודה, נשמח לכל הערה והארה,
             הן כלליות והן הנוגעות לשאלה מסוימת.</h3>
@@ -37,7 +37,7 @@ async function send_comment(){
 
         <form @submit.prevent="send_comment">
             <div class="form-group">
-                <textarea class="form-control" id="comment" v-model="comment" rows="10" cols="60"></textarea>
+                <textarea class="form-control" id="comment" v-model="comment" rows="10" cols="60" style="width:100%"></textarea>
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-primary">שלח</button>

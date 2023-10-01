@@ -12,12 +12,14 @@ import { onBeforeRouteLeave } from "vue-router";
 import { useConfirm } from "primevue/useconfirm"; 
 import useGameManager from 'src/utils/useGameManager';
 import useAPI from "../../utils/useAPI";
+import useBrowseManager from 'src/utils/useBrowseManager';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 const gameManager = useGameManager()
 const confirm = useConfirm();
 const api = useAPI();
 const emitter = useEmitter()
+const browseManager = useBrowseManager();
 
 let exit_message = "האם את/ה בטוח/ה שאת/ה רוצה לצאת מהתרגול?"
 let exit_header = "יציאה מהתרגול" 
@@ -126,9 +128,9 @@ async function end_game() {
     </div>
     <Divider v-if="!gameManager.isExam" align='right'>
       <div v-if="gameManager.progress.progress[0]!='admin'">
-      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="restartGame" label="תרגול חדש" />
-      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="ask_end_game" label="סיום תרגול" />  
-      <Button v-if="!gameManager.isLesson" class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" @click="gotoTaskPage" label="לדף המשימה" /> 
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" :class="[ browseManager.isMobile ? 'w3' : '']" @click="restartGame" label="תרגול חדש" />
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" :class="[ browseManager.isMobile ? 'w3' : '']" label="סיום תרגול" />  
+      <Button v-if="!gameManager.isLesson" class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" :class="[ browseManager.isMobile ? 'w3' : '']" @click="gotoTaskPage" label="לדף המשימה" /> 
     </div>
     </Divider>
     <game-media />
@@ -152,6 +154,6 @@ export default {
 };
 </script>
 
-
 <style>
+Button.w3{max-width: 30%;}
 </style>

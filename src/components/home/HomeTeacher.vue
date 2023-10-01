@@ -70,7 +70,7 @@ function rowClick(event) {
                 </div>
         </div>
     </div>
-    <div class="home-teacher" v-else-if="data">
+    <div class="home-teacher" v-else-if="data && !browseManager.isMobile">
         סיכום מצב הכיתות שלך: <br/><br/>
         <DataTable :value="data" stripedRows showGridlines class="p-datatable-sm cursor-pointer home-teacher" autoLayout rowHover @row-click="rowClick($event)">
             <ColumnGroup type="header">

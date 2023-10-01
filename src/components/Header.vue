@@ -64,7 +64,7 @@ console.log('key=' + key)
     <router-link to="/">
       <img id="header_logo" :src="api.newSiteImages('home_top_logo.png')" /> 
     </router-link>
-    <div id="header_content">
+    <div id="header_content" :class="[browseManager.isMobile ? 'headerMobile' : 'headerNormal']">
       <div id="header_right">
         <NButton v-if="!auth.isStudent" round quaternary color="#ffffff">
           <router-link to="/">בית</router-link>
@@ -129,7 +129,7 @@ export default {
   width: 80px;
 }
 #header_content {
-  margin-right: 120px;
+  
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -137,6 +137,15 @@ export default {
   min-height: 3em;
   font-size: 110%;
 }
+
+.headerNormal {
+  margin-right: 120px;
+}
+
+.headerMobile {
+  margin-right: 80px;
+}
+
 #header_right {
   gap: 1.5em;
   flex: 1;

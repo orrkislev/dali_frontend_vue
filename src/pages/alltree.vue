@@ -151,18 +151,22 @@ function legendDivClass() {
         </div>
         </div>
       </template>
-      <Column field="name" :header="auth.isStudent ? 'שם' : ''" expander class="nameCol">   
+      <Column field="name" :header="auth.isStudent ? 'סוג' : ''" expander class="typeCol">   
         <template #body="slotProps">
             <img v-if="isGame(slotProps)" :src="api.staticUrl('images/task_' + slotProps.node.type + '.jpg')" class="gameImg" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
-            <span v-if="isGame(slotProps)" :class="['name_game', slotProps.node.type, slotProps.node.selected ? 'selected' :'', getItemClass(slotProps) ]" @click="clickAction(slotProps.node)">{{  slotProps.node.data.name }}</span>
-            <span v-else :class="['name_'+slotProps.node.type, slotProps.node.type]">{{  slotProps.node.data.name }}</span>
-            <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span>          
-            <div v-if="viewDescription==slotProps.node.data.id" class="gameDescriptionArea">
-              <div class="gameDescriptionDiv" v-html="gameDescription"></div>
-              <div>
-                <action-button :border="true" :center="true" @click="closeDescription" icon="align-right">סגירה</action-button>
-              </div>
+        </template>
+      </Column>
+      <Column field="name" :header="auth.isStudent ? 'שם' : ''" class="nameCol">   
+        <template #body="slotProps">
+          <span v-if="isGame(slotProps)" :class="['name_game', slotProps.node.type, slotProps.node.selected ? 'selected' :'', getItemClass(slotProps) ]" @click="clickAction(slotProps.node)">{{  slotProps.node.data.name }}</span>
+          <span v-else :class="['name_'+slotProps.node.type, slotProps.node.type]">{{  slotProps.node.data.name }}</span>
+          <span v-if="auth.isStaff"> ({{slotProps.node.data.id}}) </span>          
+          <div v-if="viewDescription==slotProps.node.data.id" class="gameDescriptionArea">
+            <div class="gameDescriptionDiv" v-html="gameDescription"></div>
+            <div>
+              <action-button :border="true" :center="true" @click="closeDescription" icon="align-right">סגירה</action-button>
             </div>
+          </div>
         </template>
       </Column>
       <Column  v-if="auth.isStudent" header="הצלחה">
@@ -214,7 +218,7 @@ div.p-treetable-header{display:grid;}
 .p-treetable-wrapper{text-align: right !important;}
 .p-treetable .p-treetable-tbody > tr > td {border:none;padding: 0px;text-align:right;vertical-align: top;}/*padding:0.5rem 0 0.5rem 0;*/
 .p-treetable .p-treetable-thead > tr > th {text-align:right;padding:0px}
-.p-treetable-tbody > tr > td .p-treetable-toggler {height:1.5em !important;margin-left:1em !important; }
+.p-treetable-tbody > tr > td .p-treetable-toggler {height:1.5em !important;}
 th.nameCol{padding-right:2.5em !important;} /* This is the width of the expand arrow */
 
 .success{color:green;}
@@ -230,7 +234,7 @@ div.stat_div{width:15px;}
 .level2{font-size: 20px;font-weight:500}
 /*.name_level2{margin-right: 1em;}*/
 .game, .summary, .lesson, .exam{cursor: pointer;font-size:16px;}
-.name_game{cursor: pointer;margin-right: 1em;}
+.name_game{cursor: pointer;}
 .lessn_noclick{cursor:unset;}
 .selected{background-color: #92c7d5;}
 
@@ -253,5 +257,6 @@ div.gameDescriptionArea{
   background-color:var(--surface-100);
   padding: 2em;
 }
-.nameCol{width:70%;}
+.nameCol{width:60%;}
+.typeCol{width:25%;display:flex;}
 </style>
