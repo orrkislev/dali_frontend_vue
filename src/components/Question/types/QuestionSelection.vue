@@ -85,6 +85,13 @@ function getOptions(anserIndex){
   }
 }
 
+function selectionText(option,answer) {
+  console.log('ddddddd')
+  let text = option.text
+  if (answer.stats)
+    text += "&nbsp; (" + answer.stats[option.num-1] + ")"
+  return text
+}
 </script>
 
 
@@ -97,10 +104,7 @@ function getOptions(anserIndex){
             <action-button v-for="(option, index) in getOptions(answerIndex)" :key="index" :border="true"
             :indicator="answer.selected == option.num ? answer.result : null"
             :inactive="answer.inactive ? answer.inactive[option.num] : null" :selected="answer.selected == option.num"
-            class="flex1" @click="select(answerIndex, option.num, option.id)">
-            {{ option.text }}
-            <small v-if="answer.stats">&nbsp; ({{ answer.stats[option.num] }})</small>
-          </action-button>
+            class="flex1" @click="select(answerIndex, option.num, option.id)" v-html="selectionText(option,answer)"></action-button>
         </div>
         <div v-if="answer.result" v-bind:style="{ color: answer.result == 'success' ? 'green' : 'red' }"
           v-html="answer.feedback_text.text"></div>
