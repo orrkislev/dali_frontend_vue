@@ -55,8 +55,10 @@ const useGameManager = defineStore('game', {
                 if (router.currentRoute._value.path.search('sel') > 0) this.sel = true
             this.game = res
             console.log('game type = ' + res.game.gameType)
-            if (res.game.gameType == 'lesson')
+            if (res.game.gameType == 'lesson') {
+                await new Promise(resolve => setTimeout(resolve, 1000)); // we had cases that the media was the incorrect one due to timing.
                 await this.startGame()
+            }
             else
                 this.view = 'title'
         },
