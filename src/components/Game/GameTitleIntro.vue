@@ -4,6 +4,7 @@ import ActionButton from "../ActionButton.vue";
 import GameIntroTeacher from "./teachers/GameIntro-Teacher.vue";
 import PlayedGamesList from "./PlayedGamesList.vue";
 import GameLeaderboard from "./GameLeaderboard.vue";
+import DaliWait from 'src/utils/DaliWait.vue'
 import useAuth from "src/utils/useAuth";
 import useEmitter from 'src/utils/useEmmiter';
 import useAPI from '../../utils/useAPI';
@@ -103,7 +104,10 @@ function publishDialogStatus(mode)
 </script>
 
 <template>
-	<div id="task-main" v-if="gameManager.game">
+	<div v-if="gameManager.isLesson">
+		<DaliWait :title="'השיעור יתחיל מייד'"></DaliWait>
+	</div>
+	<div v-else id="task-main" v-if="gameManager.game">
 		<GameTitleTop>
 			<h3 v-if="gameManager.isExam">בוחן</h3>
 			<div v-if="gameManager.game?.game.description" v-html="gameManager.game?.game.description"></div>
