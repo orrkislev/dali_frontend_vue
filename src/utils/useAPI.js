@@ -2,6 +2,9 @@
 
 //export const real_url = process.env.NODE_ENV=='development' ? 'http://localhost:8200/' : 'https://da-li.co.il/'  
 
+export const site_full_url = 'https://da-li.co.il/'
+//export const site_full_url = 'http://localhost:8200/'
+
 //export const real_url =  'https://da-li.co.il/'
 //export const real_url =  'http://localhost:8200/'
 export const real_url =  '/'
