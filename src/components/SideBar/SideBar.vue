@@ -6,7 +6,7 @@ import SendComment from "./SendComment.vue";
 import SideBarBest from "./SideBarBest.vue";
 import useBrowseManager from 'src/utils/useBrowseManager';
 import useEmitter from "../../utils/useEmmiter";
-import { real_url } from "../../utils/useAPI";
+import { real_url, site_full_url } from "../../utils/useAPI";
 import { useConfirm } from "primevue/useconfirm"; 
 
 const browseManager = useBrowseManager();
@@ -32,7 +32,7 @@ async function gotoScience(){
       acceptLabel: 'כן, לעבור למדעים',
       rejectLabel: 'ביטול',
       accept: () => {
-        window.open(real_url,"_self")
+        window.open(site_full_url + "mada","_self")
         },
       reject: () => {
         resolve(false)
