@@ -57,7 +57,7 @@ function gotoGame(id){
         <idm site_prefix="mada/" :title="'מדעים'" :mystyle="'right:22%;'" :key="1"/>
         <idm site_prefix="lashon/" :title="'לשון'" :mystyle="'right:35.8%'" :key="2"/>
         <div class="loginButtonDiv">
-            <Button class="p-button loginButton" @click="startlogin">כניסה עם שם משתמש וסיסמה</Button>
+            <div v-on:click="startlogin" class="btnFull loginButton">כניסה עם שם משתמש וסיסמה</div>
         </div>
     </div>
     <Dialog v-model:visible="$data.loginvisible">
@@ -144,7 +144,10 @@ div.loginButtonDiv{
 }
 
 .loginButton{
-    background-color: rgb(56,86,94);
+    background-color:white;
+    border: 1px solid black;
+    padding-left: 1em;
+    padding-right: 1em;
 }
 
 .loginButton:hover{
