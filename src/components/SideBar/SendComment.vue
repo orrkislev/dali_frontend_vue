@@ -50,7 +50,7 @@ async function send_comment(){
         <div>אפשר לפנות אלינו גם בטלפון: 054-4453400 או במייל: <a href="mailTo:dali.k12.co.il@gmail.com" >dali.k12.co.il@gmail.com</a> </div>
     </Dialog>
     <span v-if="showIcon" @click="()=>displayDialog=true">&#9872; הערה</span>
-    <ButtonSmall v-else-if="origin=='question'" :border="true" class="p-button-secondary" @click="()=>displayDialog=true"> הערה למנהלי האתר </ButtonSmall>
+    <ButtonSmall v-else-if="origin=='question'" :border="true" class="p-button-secondary" style='display:table-cell;' @click="()=>displayDialog=true"> הערה למנהלי האתר </ButtonSmall>
     <div v-else class="sideBarElement sideBarComment" @click="()=>displayDialog=true">
         <span class="text-white" >הערה למנהלי האתר </span>
     </div>

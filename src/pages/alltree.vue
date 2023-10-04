@@ -258,5 +258,7 @@ div.gameDescriptionArea{
   padding: 2em;
 }
 .nameCol{width:60%;}
-.typeCol{width:25%;display:flex;}
+.typeCol{display:flex;}
+td.typeCol{width:25%;}
+th.typeCol{padding-right:20px !important;}
 </style>

@@ -59,7 +59,7 @@ const useAuth = defineStore('auth', {
                 this.username = null
                 this.userData = null
                 this.state = null
-                window.open("/","_self")
+                window.open("/lashon","_self")
             }
         },
         async updateUser(entity, field, value) {

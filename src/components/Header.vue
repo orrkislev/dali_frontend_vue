@@ -24,8 +24,8 @@ const options = ref([
 ]);
 
 const help_options = ref([
-  { key: "2", label: "הדרכה", disabled: false},
-  { key: "3", label: "הדרכה בסיסית", disabled: false},
+  { key: "2", label: "הדרכה בסיסית", disabled: false},
+  { key: "3", label: "הכרות", disabled: false},
 ])
 
 const { username } = storeToRefs(auth)
