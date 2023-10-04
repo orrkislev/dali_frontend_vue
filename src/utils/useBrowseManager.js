@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-// import useAPI from './useAPI';
 
 const useBrowseManager = defineStore('browser', {
     state: () => ({
