@@ -54,7 +54,7 @@ function gotoGame(id){
             <br/>
             חברת דע-לי פועלת בהצלחה במספר רב של בתי ספר מזה כ-6 שנים. למעלה מ-1000 מורים מיותר מ-250 בתי ספר כבר רשומים במערכת, ותלמידים מתרגלים יותר מ-500 משימות מידי יום.
         </div>
-        <idm site_prefix="" :title="'מדעים'" :mystyle="'right:22%;'" :key="1"/>
+        <idm site_prefix="mada/" :title="'מדעים'" :mystyle="'right:22%;'" :key="1"/>
         <idm site_prefix="lashon/" :title="'לשון'" :mystyle="'right:35.8%'" :key="2"/>
         <div class="loginButtonDiv">
             <Button class="p-button loginButton" @click="startlogin">כניסה עם שם משתמש וסיסמה</Button>
