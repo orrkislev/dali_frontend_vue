@@ -2,12 +2,11 @@
 
 //export const real_url = process.env.NODE_ENV=='development' ? 'http://localhost:8200/' : 'https://da-li.co.il/'  
 
-export const site_full_url = 'https://da-li.co.il/'
-//export const site_full_url = 'http://localhost:8200/'
+export const site_full_url = 'https://da-li.co.il/'     // Live
+//export const site_full_url = 'http://localhost:8200/' // Tests - required only for switch to Mada
 
-//export const real_url =  'https://da-li.co.il/'
-//export const real_url =  'http://localhost:8200/'
-export const real_url =  '/'
+//export const real_url =  'http://localhost:8200/' // Tests
+export const real_url =  '/'                    // Live
 
 export const base_url =  real_url + 'lashon/'
 export const dali_internal_url = base_url + 'static/new_site/index.html'
