@@ -41,10 +41,12 @@ const useGameManager = defineStore('game', {
     },
     actions: {
         // Use the value in game.next_game_id to open the task page of the next game
-        NextGamePage: function() { 
+        async NextGamePage() { 
             this.view = 'wait'
-            this.question=null
-            this.loadGameData({taskID: this.game.next_game_id, extra:''})
+            const router = useRouter()
+            await router.push({path: '/game/' + this.game.next_game_id})
+            await this.loadGameData({taskID: this.game.next_game_id, extra:''})
+            this.question=null     // To ensure that we show the task page     
         },
           async loadGameData({ taskID, extra }) {
             const api = useAPI()
