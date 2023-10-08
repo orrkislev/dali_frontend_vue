@@ -129,7 +129,7 @@ async function end_game() {
     <Divider v-if="!gameManager.isExam" align='right'>
       <div v-if="gameManager.progress.progress[0]!='admin'">
       <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" :class="[ browseManager.isMobile ? 'w3' : '']" @click="restartGame" label="תרגול חדש" />
-      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" :class="[ browseManager.isMobile ? 'w3' : '']" label="סיום תרגול" />  
+      <Button class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" :class="[ browseManager.isMobile ? 'w3' : '']" @click="ask_end_game" label="סיום תרגול" />  
       <Button v-if="!gameManager.isLesson" class="p-button-sm p-button-outlined p-button-rounded p-button-secondary" :class="[ browseManager.isMobile ? 'w3' : '']" @click="gotoTaskPage" label="לדף המשימה" /> 
     </div>
     </Divider>
