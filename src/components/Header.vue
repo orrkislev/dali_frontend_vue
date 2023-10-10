@@ -2,7 +2,7 @@
 import { NButton, NDropdown } from "naive-ui";
 import { storeToRefs } from "pinia";
 import useAuth from 'src/utils/useAuth';
-import { ref, watch } from 'vue-demi';
+import { onMounted, ref, watch } from 'vue-demi';
 import { useRouter } from 'vue-router';
 import useEmitter from 'src/utils/useEmmiter';
 import Help from 'src/pages/help.vue';
@@ -19,45 +19,52 @@ const api = useAPI();
 const class_select_visibile = true
 
 const options = ref([
-  { key: "1", label: "החשבון שלי", disabled: false},
-  { key: "9", label: "יציאה מהחשבון", disabled: false},
+  { key: "-1", label: "החשבון שלי", disabled: false},
+  { key: "-2", label: "יציאה מהחשבון", disabled: false},
 ]);
 
-const help_options = ref([
-  { key: "2", label: "הדרכה בסיסית", disabled: false},
-  { key: "3", label: "הכרות", disabled: false},
-])
+let hList = ref(null)
+
+onMounted(() => { getHelpList() })
+
+function getHelpList() {
+  let client = 'pc'
+  if (browseManager.isMobile) 
+    client = 'mobile'
+  api.post(`review/help_types/`, {'role':auth.userRole,'client':client}).then((res) => {
+    hList.value = res.help_types
+    if (browseManager.isMobile) { // Add the help pages to the options menu
+      for (let h in hList.value) {
+        let op = hList.value[h]
+        options.value[options.value.length]={ key: op.id, label: "עזרה - " + op.title, disable: false}
+      }
+    }
+  })
+}
 
 const { username } = storeToRefs(auth)
 watch(username, newVal => options.value[0].disabled = newVal==null)
 
-function showHelp(type){
-  emitter.emit('SHOW_HELP',{'type':type})
-      
-}
 
 function SelectUserOption(key) {
 console.log('key=' + key)
     switch (key){
-      case "1":
+      case "-1":
         router.push({path: '/profile'})
         break;
-      case "2":
-        showHelp('guide')
-        break;
-      case "3":
-        showHelp('intro')
-        break;
-      
-      case "9":
+      case "-2":
         auth.logout()
         break;
       default: 
-        console.log('SelectUserOption not found')
+        if (key > 0) showSelectedHelp(key)
+        //console.log('SelectUserOption not found')
     }
 }
-</script>
 
+function showSelectedHelp(id){
+  emitter.emit('SHOW_HELP',{'id':id})
+}
+</script>
 
 <template>
   <div id="header">
@@ -85,7 +92,7 @@ console.log('key=' + key)
         </template>
       </div>
       <div id="header_left">
-        <n-dropdown v-if="!browseManager.isMobile" trigger="hover" @select="SelectUserOption" :options="help_options">
+        <n-dropdown v-if="!browseManager.isMobile && hList" trigger="hover" @select="showSelectedHelp" label-field="title" key-field="id"  :options="hList">
           <NButton round secondary color="#ffffff">עזרה</NButton>
         </n-dropdown>
         <n-dropdown trigger="hover" @select="SelectUserOption" :options="options">

@@ -16,7 +16,8 @@ const useAuth = defineStore('auth', {
         isStudent: (state) => ['student','independant'].includes(state.userData?.role),
         showIntro: (state) => state.userData?.welcome_message,
         getlocale: (state) => state.locale,
-        isMobileWarning: (state) => state.showMobileWarning
+        isMobileWarning: (state) => state.showMobileWarning,
+        userRole: (state) => state.userData?.role,
     },
     actions: {
         startLogin(){
