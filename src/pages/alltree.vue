@@ -144,10 +144,10 @@ function legendDivClass() {
           </div>
           <div :class="legendDivClass()">
             <div style="text-decoration:underline;">מקרא</div>
-            <img :src="api.staticUrl('images/task_lesson.jpg')" style="height:20px;"/> שיעור<br/>
-            <img :src="api.staticUrl('images/task_game.jpg')" style="height:20px;"/> תרגול<br/>
-            <img :src="api.staticUrl('images/task_summary.jpg')" style="height:20px;"/> תרגול מסכם<br/>
-            <div v-if="auth.isStudent"><img  :src="api.staticUrl('images/task_exam.jpg')" style="height:20px;"/> בוחן<br/></div>
+            <img :src="api.staticUrl('images/task_lesson.jpg')" style="height:20px;"/> שיעור &nbsp;&nbsp;<br v-if="!browseManager.isMobile"/>
+            <img :src="api.staticUrl('images/task_game.jpg')" style="height:20px;"/> תרגול <br/>
+            <img :src="api.staticUrl('images/task_summary.jpg')" style="height:20px;"/> תרגול מסכם &nbsp;&nbsp;<br v-if="!browseManager.isMobile"/>
+            <img v-if="auth.isStudent" :src="api.staticUrl('images/task_exam.jpg')" style="height:20px;"/> בוחן <br/>
         </div>
         </div>
       </template>
