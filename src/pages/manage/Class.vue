@@ -105,20 +105,26 @@ onMounted (() => { report_tasks_init(); })
             </div>
             <questReport v-else :game_name="game_name" :questions_list="questions_list" :class-id="classid" :game_id="game_id" />
         </Dialog>
-        <TeacherActionSection title="דוח משימות" subtitle="דוח של משימות"
-            text="לכל תלמיד/ה מוצגת התוצאה הטובה ביותר שפרסם/פרסמה בכל משימה." action_label="פתיחה"
+        <TeacherActionSection title="דוח משימות" 
+            text='הדו\"ח מציג עבור כל תלמיד/ה אילו מהמשימות הפתוחות לכיתה ביצע/ה, ומהו הניקוד הטוב ביותר שפרסם/ה בכל משימה'
+            action_label="פתיחה"
             @click="show_report('class','דוח משימות')" />
-        <TeacherActionSection title="דוח בחנים" subtitle="דוח של בחנים" text="בטבלה מוצגים כל הבחנים שניתנו לכיתה."
+        <TeacherActionSection title="דוח בחנים" 
+        text='הדו"ח מציג עבור כל תלמיד/ה אילו מהבחנים הפתוחים לכיתה ביצע/ה, ומהו הניקוד שקיבל/ה בבוחן.'
             action_label="פתיחה" @click="show_report('exams','דוח בחנים')" />
-        <TeacherActionSection title="דוח מצב" subtitle="דוח של המצב" text="מה המצב וכל זה" action_label="פתיחה"
+        <TeacherActionSection title="דוח מצב" subtitle="דוח המצב" 
+            text='הדו"ח מציג בצורה ויזואלית על פי מפת צבעים (ירוק, צהוב, אדום) את מצב הכיתה אל מול המשימות הפתוחות בהתאם לאחוזי ההצלחה של כל תלמיד בכל משימה'
+            action_label="פתיחה"
             @click="show_report('full_diagnostics','דוח מצב')" />
-        <TeacherActionSection title="פירוט משימות" subtitle="פירוט של המשימות" text="איזה משימות יש וכל זה" />
+        <TeacherActionSection title="פירוט משימות" subtitle="" 
+            text='לאחר בחירה של משימה ניתן לראות את אחוזי ההצלחה של הכיתה בכל אחת מהשאלות בתרגול. שאלות המסומנות באדום הן שאלות בהן רוב הכיתה התקשתה וכדאי לחזור על החומר (ניתן לפתוח את השאלה ולהציגה מתוך הדו"ח).'/>
             <div class="taskListDiv">
                 <!--<SingleTask v-for="task in tasks_list" @click="show_question_report(task.game)" class="SingleTasklist"-->
                 <SingleTask v-for="task in data?.games_list" @click="show_question_report(task.game)" class="SingleTasklist"
                     :key="task.game.id" :task="task.game" :category="null" :purpose="'REPORT'"/>
             </div>    
-        <TeacherActionSection title="רשימת תלמידים" subtitle="רשימה של התלמידים" text="איזה תלמידים יש וכל זה"
+        <TeacherActionSection title="רשימת תלמידים"
+            text='רשימת התלמידים המשוייכים לכיתה במערכת.'
             action_label="פתיחה" @click="show_report('students','תלמידים')" />
     </div>
 </template>
