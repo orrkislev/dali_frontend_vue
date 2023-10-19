@@ -18,6 +18,7 @@ const useAuth = defineStore('auth', {
         getlocale: (state) => state.locale,
         isMobileWarning: (state) => state.showMobileWarning,
         userRole: (state) => state.userData?.role,
+        termsNotSigned: (state) => state.userData?.terms_signuup_date == null,
     },
     actions: {
         startLogin(){
