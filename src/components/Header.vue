@@ -6,6 +6,7 @@ import { onMounted, ref, watch } from 'vue-demi';
 import { useRouter } from 'vue-router';
 import useEmitter from 'src/utils/useEmmiter';
 import Help from 'src/pages/help.vue';
+import dataUpdate from 'src/pages/dataupdate.vue';
 import useBrowseManager from 'src/utils/useBrowseManager';
 import useAPI from "src/utils/useAPI";
 import ProfileClass from 'src/components/profile/ProfileClass.vue';
@@ -112,6 +113,7 @@ function showSelectedHelp(id){
                     @leave="auth.userData.check_class_update_force=''"></ProfileClass>
     </Dialog>
     <Help :title="'guide'"/>
+    <dataUpdate v-if="auth.termsNotSigned"/>
   </div>
 </template>
 
