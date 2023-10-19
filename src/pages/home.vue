@@ -8,7 +8,6 @@ import {onMounted, ref } from 'vue';
 import useAPI from "src/utils/useAPI";
 import Help from 'src/pages/help.vue';
 
-
 const auth = useAuth();
 const router = useRouter();
 const emitter = useEmitter();
@@ -19,7 +18,6 @@ let allMobileHList = ref(null)
 onMounted(() => { getStaffHelpList() })
 
 function getStaffHelpList(){
-  console.log('sdsfdsfd')
   if (auth.isStaff) {
       api.post(`review/help_types/`, {'role':'all','client':'pc'}).then((res) => {
         allPcHList.value = res.help_types
@@ -30,11 +28,9 @@ function getStaffHelpList(){
     }
 }
 
-auth.getUserdata() // Get updated data 
-if (auth.showIntro)
-{
-  emitter.emit('SHOW_HELP',{'type':'automatic'})
-}
+auth.getUserdata() // Get updated data
+
+if (auth.showIntro){ emitter.emit('SHOW_HELP',{'type':'automatic'}) }
 
 //if (auth.isStudent) router.push('/allgames');
 if (auth.isStudent) router.push('/alltree');

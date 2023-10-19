@@ -24,10 +24,10 @@ function startHelp(params)
 
 function get_help_pages(params)
 {
-  if (params['automatic']) {
-    params['clinet']='pc'
+  if (params.hasOwnProperty('type')) {
+    params['client']='pc'
     if (browseManager.isMobile) 
-    params['clinet']='mobile'
+    params['client']='mobile'
   }
   api.post("review/help/", params).then((res) => {
         if (res.pages.length > 0) {
@@ -36,7 +36,8 @@ function get_help_pages(params)
           data.value['visible'] = ref(true);
         }
         else {
-          data.value = {'pages':[{'title':'לא קיימת הדרכה כזו'}],'visible':ref(true)}
+          if (!params.hasOwnProperty('type'))
+            data.value = {'pages':[{'title':'לא קיימת הדרכה כזו'}],'visible':ref(true)}
       }
     })
 }
