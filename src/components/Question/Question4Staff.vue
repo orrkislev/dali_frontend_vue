@@ -27,9 +27,10 @@ function skipQuestion(){
             סטטוס: {{ gameManager.question.q.status }}<br/>
             נושאים: {{ gameManager.question.q.subject }}, {{ gameManager.question.q.subject2 }}<br/>
             <span style="font-weight: bold;">משוב כללי:</span><span v-html="gameManager.question.q.feedback_general.text"></span><br/>
-            <span v-for="a in gameManager.question.answers">
-                <span style="font-weight: bold;">{{a.text}}:</span><span v-html="a.feedback_text.text"></span><br/>
-            </span>
+            <div v-for="a in gameManager.question.answers">
+                <span style="font-weight: bold;" v-html="a.text + ':'"></span>
+                <span v-html="a.feedback_text.text"></span><br/>
+            </div>
             <br/>
             <div class="flex">
                 <Button @click="editQuestion" class="btnFull p-button-outlined p-button-sm" >עריכת השאלה</Button>
