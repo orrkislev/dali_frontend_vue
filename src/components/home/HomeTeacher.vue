@@ -131,8 +131,10 @@ export default {
 <style>
 /*.p-datatable-thead > tr > th {font-weight: 650 !important;}*/
 .headLine{background-color: #3a7fce !important; color:white !important;}
+.headLine > div > span.p-column-title { font-size:18px;}
 th.headLine > div {display:block !important;}
 .secondHead{background-color: #f4fafe !important;}
+.secondHead > div > span.p-column-title { font-size:16px;}
 .home-teacher{font-size:14px;}
 div.notifyDiv{
     background-color: rgb(225, 235, 237); 
