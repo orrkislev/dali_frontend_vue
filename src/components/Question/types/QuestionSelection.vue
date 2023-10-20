@@ -86,7 +86,6 @@ function getOptions(anserIndex){
 }
 
 function selectionText(option,answer) {
-  console.log('ddddddd')
   let text = option.text
   if (answer.stats)
     text += "&nbsp; (" + answer.stats[option.num-1] + ")"
