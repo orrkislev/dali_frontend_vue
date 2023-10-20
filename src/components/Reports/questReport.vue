@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import useAPI from 'src/utils/useAPI';
-import { dali_internal_url } from "src/utils/useAPI";
+import { base_url } from "src/utils/useAPI";
 
 import ActionButton from '../ActionButton.vue';
 
@@ -31,7 +31,7 @@ function closeSingleQuestReport(){
 }
 
 function open_question(id) {
-  let url = dali_internal_url + "#/qadmin/" + id;
+  let url = base_url + "#/qadmin/" + id;
   window.open(url,'_target')
 }
 
