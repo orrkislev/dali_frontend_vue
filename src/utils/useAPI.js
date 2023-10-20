@@ -9,7 +9,7 @@ export const site_full_url = 'https://da-li.co.il/'     // Live
 export const real_url =  '/'                    // Live
 
 export const base_url =  real_url + 'lashon/'
-export const dali_internal_url = base_url + 'static/new_site/index.html'
+//export const dali_internal_url = base_url + 'static/new_site/index.html'
 
 function getCookie(name) {
     var value = "; " + document.cookie;
