@@ -117,11 +117,6 @@ function buttonsWidth() {
   return '70%'
 }
 
-function legendDivClass() {
-  if (browseManager.isMobile) return 'legendDivMobile'
-  return 'legendDiv'
-}
-
 </script>
 
 <template>
@@ -129,6 +124,14 @@ function legendDivClass() {
     <TreeTable v-if="browseManager.alltree.length > 0" v-model:expandedKeys="browseManager.allkeys" :value="current_tree" :filters="filters" :filterMode="'lenient'">
       <template #header>
         <div class="text-right">
+          <div :class="[browseManager.isMobile ? 'legendDivMobile' : 'legendDiv']">
+            <div style="text-decoration:underline;">מקרא</div>
+            <img :src="api.staticUrl('images/task_lesson.jpg')" style="height:20px;"/> שיעור &nbsp;&nbsp;<br v-if="!browseManager.isMobile"/>
+            <img :src="api.staticUrl('images/task_game.jpg')" style="height:20px;"/> תרגול <br/>
+            <img :src="api.staticUrl('images/task_summary.jpg')" style="height:20px;"/> תרגול מסכם &nbsp;&nbsp;<br v-if="!browseManager.isMobile"/>
+            <img v-if="auth.isStudent" :src="api.staticUrl('images/task_exam.jpg')" style="height:20px;"/> <span v-if="auth.isStudent"> בוחן </span>
+            <br/>
+        </div>
           <div :width="buttonsWidth()" style="float:right;">
             <div v-if="auth.isStudent" class="p-buttonset">
               <Button class="p-button-rounded px-6" :class="[current_action == 0  ? 'p-button-secondary' : '']" @click="switchFilterAction">המשימות שלי</Button>
@@ -142,21 +145,14 @@ function legendDivClass() {
               <action-button :border="true" :center="true" @click="filters['global']=''">ניקוי חיפוש</action-button>
             </div>
           </div>
-          <div :class="legendDivClass()">
-            <div style="text-decoration:underline;">מקרא</div>
-            <img :src="api.staticUrl('images/task_lesson.jpg')" style="height:20px;"/> שיעור &nbsp;&nbsp;<br v-if="!browseManager.isMobile"/>
-            <img :src="api.staticUrl('images/task_game.jpg')" style="height:20px;"/> תרגול <br/>
-            <img :src="api.staticUrl('images/task_summary.jpg')" style="height:20px;"/> תרגול מסכם &nbsp;&nbsp;<br v-if="!browseManager.isMobile"/>
-            <img v-if="auth.isStudent" :src="api.staticUrl('images/task_exam.jpg')" style="height:20px;"/> בוחן <br/>
-        </div>
         </div>
       </template>
-      <Column field="name" :header="auth.isStudent ? 'סוג' : ''" expander class="typeCol">   
+      <Column field="name" :header="auth.isStudent ? 'סוג' : ''" expander :class="[browseManager.isMobile ? 'typeColMobile' : 'typeColPc','typeCol']">   
         <template #body="slotProps">
-            <img v-if="isGame(slotProps)" :src="api.staticUrl('images/task_' + slotProps.node.type + '.jpg')" class="gameImg" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
+            <img v-if="isGame(slotProps)" :src="api.staticUrl('images/task_' + slotProps.node.type + '.jpg')" :class="[browseManager.isMobile && current_action == 0 ? 'gameImgMobile' : '','gameImg']" @click="ShowDesrciption(slotProps.node.data.id,slotProps.node.type)"/>
         </template>
       </Column>
-      <Column field="name" :header="auth.isStudent ? 'שם' : ''" class="nameCol">   
+      <Column field="name" :header="auth.isStudent ? 'שם' : ''" :class="[browseManager.isMobile ? 'nameColMobile' : 'nameColPc','nameCol']">   
         <template #body="slotProps">
           <span v-if="isGame(slotProps)" :class="['name_game', slotProps.node.type, slotProps.node.selected ? 'selected' :'', getItemClass(slotProps) ]" @click="clickAction(slotProps.node)">{{  slotProps.node.data.name }}</span>
           <span v-else :class="['name_'+slotProps.node.type, slotProps.node.type]">{{  slotProps.node.data.name }}</span>
@@ -216,6 +212,7 @@ export default {
 div.p-treetable-wrapper{max-height: 1000px;overflow-y: auto;}
 div.p-treetable-header{display:grid;}
 .p-treetable-wrapper{text-align: right !important;}
+.p-treetable-wrapper > table {display:table-cell;}
 .p-treetable .p-treetable-tbody > tr > td {border:none;padding: 0px;text-align:right;vertical-align: top;}/*padding:0.5rem 0 0.5rem 0;*/
 .p-treetable .p-treetable-thead > tr > th {text-align:right;padding:0px}
 .p-treetable-tbody > tr > td .p-treetable-toggler {height:1.5em !important;}
@@ -230,7 +227,9 @@ th.nameCol{padding-right:2.5em !important;} /* This is the width of the expand a
 
 div.stat_div{width:15px;}
 
-.top, .level1{font-size:24px;font-weight: bold;}
+ .top{font-size:24px;font-weight: bold;}
+ .level1{font-size:22px;font-weight: bold;}
+ .p-column-title{font-size:24px;}
 .level2{font-size: 20px;font-weight:500}
 /*.name_level2{margin-right: 1em;}*/
 .game, .summary, .lesson, .exam{cursor: pointer;font-size:16px;}
@@ -239,6 +238,7 @@ div.stat_div{width:15px;}
 .selected{background-color: #92c7d5;}
 
 .gameImg{height:20px;vertical-align: middle;cursor: pointer;}
+.gameImgMobile{margin-right:-1em;}
 
 .searchInputText{
   margin-left: 1em;
@@ -257,8 +257,14 @@ div.gameDescriptionArea{
   background-color:var(--surface-100);
   padding: 2em;
 }
-.nameCol{width:60%;}
+
 .typeCol{display:flex;}
-td.typeCol{width:25%;}
 th.typeCol{padding-right:20px !important;}
+
+td.typeColPc, th.typeColPc{width:40%;}
+td.nameColPc, th.nameColPc{width:60%;}
+
+td.typeColMobile, th.typeColMobile{width:25%;}
+td.nameColMobile, th.nameColMobile{width:60%;}
+
 </style>
