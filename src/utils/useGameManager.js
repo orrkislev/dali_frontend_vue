@@ -15,6 +15,7 @@ const useGameManager = defineStore('game', {
         sel: false,
         unauthorized_types: [],
         exam: 0,
+        router: useRouter(),
     }),
     getters: {
         isLesson: (state) => state.game.game.gameType == 'lesson',
@@ -43,18 +44,16 @@ const useGameManager = defineStore('game', {
         // Use the value in game.next_game_id to open the task page of the next game
         async NextGamePage() { 
             this.view = 'wait'
-            const router = useRouter()
-            await router.push({path: '/game/' + this.game.next_game_id})
+            await this.router.push({path: '/game/' + this.game.next_game_id})
             await this.loadGameData({taskID: this.game.next_game_id, extra:''})
             this.question=null     // To ensure that we show the task page     
         },
           async loadGameData({ taskID, extra }) {
             const api = useAPI()
-            const router = useRouter()
             let res = await api.post_json('tasks/task_page/', { 'game_id': taskID })
             res.extra = extra
-            if (router)
-                if (router.currentRoute._value.path.search('sel') > 0) this.sel = true
+            if (this.router)
+                if (this.router.currentRoute._value.path.search('sel') > 0) this.sel = true
             this.game = res
             console.log('game type = ' + res.game.gameType)
             if (res.game.gameType == 'lesson') {
