@@ -32,9 +32,12 @@ async function lifeline_stats(){
 }
 
 function lifeline_5050() {
-  let answerNumbers = Array(gameManager.question.answers.length).fill(0).map((_,i)=>i);
-  answerNumbers = answerNumbers.sort(() => Math.random() - 0.5).slice(0, Math.floor(newAnswers.length / 2))
-  answerNumbers.forEach(i => gameManager.question.answers[i].selected = gameManager.question.answers[i].correct);
+    const newAnswers = [...gameManager.question.answers]
+    newAnswers.forEach((a,i) => a.answerIndex = i)
+    newAnswers.sort(() => Math.random() - 0.5)
+    for (let i = 0; i < newAnswers.length/2; i++) {
+        select(newAnswers[i].answerIndex,newAnswers[i].correct)
+  }
 }
 
 function check(){
