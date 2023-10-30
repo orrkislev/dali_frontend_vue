@@ -50,7 +50,7 @@ function initAnswers() {
 
 
 function getMouseSelectImageSrc(){
-    return real_url + '/static/' + gameManager.question.mouseselectmedia; //.join('')
+    return real_url + 'static/' + gameManager.question.mouseselectmedia; 
 }
 function select(answerIndex, val) {
     let newAnswers = [...gameManager.question.answers]
