@@ -53,7 +53,7 @@ const useGameManager = defineStore('game', {
             let res = await api.post_json('tasks/task_page/', { 'game_id': taskID })
             res.extra = extra
             if (this.router)
-                if (this.router.currentRoute._value.path.search('sel') > 0) this.sel = true
+                if (this.router.currentRoute.path.search('sel') > 0) this.sel = true
             this.game = res
             console.log('game type = ' + res.game.gameType)
             if (res.game.gameType == 'lesson') {
