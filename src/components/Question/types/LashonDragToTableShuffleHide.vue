@@ -1,4 +1,8 @@
 <script setup>
+/*********************************************************
+THIS FILE IS NOT USED
+The questions are managed in LashonDragToTableShuffle
+*********************************************************/
 import { ref } from "vue-demi";
 import { Container, Draggable } from "vue3-smooth-dnd";
 import useEmitter from "../../../utils/useEmmiter";
@@ -47,7 +51,6 @@ function check(){
   let answerlist = [];
   for (let i=0;i<lists.value.length;i++){
     const listOption = gameManager.question.options.find(option => option.text == lists.value[i].title)?.num ?? 1000
-   // console.log(listOption)
     for (const item of lists.value[i].list){
         const answer = gameManager.question.answers.find(answer=>answer.text==item.text)
         if (!answer) continue;

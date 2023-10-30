@@ -53,29 +53,34 @@ function showAnswer(){
 
 function check(){
   let result = 0;
+  let required_answers = 0;
   let answerlist = [];
   for (let i=0;i<lists.value.length;i++){
     for (const item of lists.value[i].list){
         const answer = gameManager.question.answers.find(answer=>answer.text==item.text)
         if (!answer) continue;
         const answerListData = { id: answer.id, res: false, val: i}
-        if (answer.correct <= 0) // 0 or lower means that the item should not be draggeed at all. If it was, we add 1 to the total required_answers
-            if (i == 0) 
-                result++ // not dragged - this is good
-            else 
+        if (answer.correct <= 0){ // 0 or lower means that the item should not be draggeed at all. If it was, we add 1 to the total required_answers
+            if (i !== 0) {
                 item.result = "fail" // dragged - failure
-        else if (lists.value[answer.correct].title == lists.value[i].userTitle){ // we make sure that the text are identical. if this is a "hide", then the title comes from the user. If not - it is a copy of title
-            item.result = "success"
-            answerListData.res = true
-            result++
-            } 
-        else 
-            item.result = "fail"
+                result--
+            }
+        }
+        else{
+            required_answers++
+            if (lists.value[answer.correct].title == lists.value[i].userTitle){ // we make sure that the text are identical. if this is a "hide", then the title comes from the user. If not - it is a copy of title
+                item.result = "success"
+                answerListData.res = true
+                result++
+                } 
+            else if (i !== 0) // Do not mark words that were not dragged
+                item.result = "fail"
+            }
         answerlist.push(answerListData)
     }
   }
-  console.log('rsult=' + result + ", required_answers=" + gameManager.question.answers.length)
-  result = result / gameManager.question.answers.length 
+  console.log('rsult=' + result + ", required_answers=" + required_answers)
+  result = result / required_answers 
   gameManager.submitQuestion({ result, answerlist });
 }
 
