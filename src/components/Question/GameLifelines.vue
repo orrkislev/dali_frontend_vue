@@ -16,7 +16,7 @@ const lifelines = ref({
   skip: { text:'', name:'דלג',icon: "forward", active: true, default: true, afterQ: false, qadmin:false,dbname:'skip'},
   retry: { text:'', name:'נסה שוב',icon: "undo",active: true, default: false, afterQ: true ,dbname:'retry'},
   replace: { text:'', name:'החלף שאלה',icon: "random", active: true, default: true, afterQ: false, qadmin:false,dbname:'replace'},
-  stats: { text:'', name:'סטטיסטיקה', icon: "chart-bar", active: true, default: true, afterQ: false,shortopen:false,dbname:'statistics' },
+  stats: { text:'', name:'סטטיסטיקה', icon: "chart-bar", active: true, default: true, afterQ: false,shortopen:false, wordselect:false, dbname:'statistics' },
   5050: { text:'', name:'50:50', icon: "balance-scale", active: true, default: true, afterQ: false, dbname:'fifty'}, // there was an error here
 });
 
