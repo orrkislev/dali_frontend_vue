@@ -1,9 +1,10 @@
 <script setup>
 import useGameManager from '../utils/useGameManager';
 import SendComment from "../components/SideBar/SendComment.vue";
-
+import useAPI from "src/utils/useAPI";
 
 const gameManager = useGameManager()
+const api = useAPI();
 
 </script>
 
