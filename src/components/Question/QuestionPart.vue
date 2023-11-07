@@ -8,6 +8,7 @@ import Question_shortopen from './types/QuestionShortopen.vue';
 import Question_wordselect from './types/QuestionWordSelect.vue';
 import Question_yesno from './types/QuestionYesNo.vue';
 import Question_linesselect from './types/QuestionLinesselect.vue';
+import Question_NotSupported from './types/QuestionNotSupported.vue';
 //import lashon_drag_2table_shuffle_hide from './types/LashonDragToTableShuffle.vue';
 
 const gameManager = useGameManager()
@@ -18,7 +19,9 @@ const SUPPOTED_Q_TYPES = ['options','yesno','selection','wordselect','shortopen'
 function determine_current_q_component() {
   let current_q_component = ''
   if (SUPPORTED_TEMPLATES.includes(gameManager.question?.q?.display_template))
-      current_q_component = lashon_drag_2table_shuffle
+    current_q_component = lashon_drag_2table_shuffle
+  else if (gameManager.question?.q?.display_template !== null)
+    current_q_component = 'Question_NotSupported';
   else if (SUPPOTED_Q_TYPES.includes(gameManager.question?.q?.type)) current_q_component = "Question_" + gameManager.question?.q?.type
   else current_q_component = '';
   console.log('current_q_component=' + current_q_component)
@@ -33,7 +36,7 @@ function determine_current_q_component() {
 
 <script>
 export default {
-  components: { lashon_drag_2table_shuffle, Question_options, Question_wordselect, Question_shortopen, Question_mouseselect, Question_yesno, Question_selection, Question_linesselect },
+  components: { lashon_drag_2table_shuffle, Question_options, Question_wordselect, Question_shortopen, Question_mouseselect, Question_yesno, Question_selection, Question_linesselect, Question_NotSupported },
   name:'QuestionPart'
 };
 </script>

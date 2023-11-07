@@ -23,7 +23,6 @@ function showAnswer() {
 }
 
 async function lifeline_stats() {
-  console.log('f*****')
   let newAnswers = [...gameManager.question.answers]
   const res = await api.post("quest/action/", { 'action': 'statistics', 'question_id': gameManager.question.q.id, })
   newAnswers.forEach(a => a.stats = Array(gameManager.question.options.length).fill(''))
