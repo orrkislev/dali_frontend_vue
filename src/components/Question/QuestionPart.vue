@@ -20,8 +20,8 @@ function determine_current_q_component() {
   let current_q_component = ''
   if (SUPPORTED_TEMPLATES.includes(gameManager.question?.q?.display_template))
     current_q_component = lashon_drag_2table_shuffle
-  else if (gameManager.question?.q?.display_template !== null)
-    current_q_component = 'Question_NotSupported';
+  //else if (gameManager.question?.q?.display_template !== null)
+  //  current_q_component = 'Question_NotSupported';
   else if (SUPPOTED_Q_TYPES.includes(gameManager.question?.q?.type)) current_q_component = "Question_" + gameManager.question?.q?.type
   else current_q_component = '';
   console.log('current_q_component=' + current_q_component)
