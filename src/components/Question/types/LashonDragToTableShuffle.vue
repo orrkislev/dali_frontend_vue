@@ -46,10 +46,33 @@ function lifeline_5050(){
     // TODO
 }
 
-function showAnswer(){
-    // TODO
+async function showAnswer(){   
+    // Move each item to its correct location
+    for (let item of lists.value) {
+        item.userTitle = item.title
+    }
+    let delayres = await delay(250);
+    let list_length = lists.value[0].list.length // This is the length of the loop. We are going to remove items from lists[0] so we need to set the length beforehand
+    let current_item=0  // We keep working on that item which is the first in lists[0]. But - if the item is not removed, we will skip to the next one in the list
+    for (let i = 0; i<list_length;i++){
+        let item = lists.value[0].list[current_item]
+        const answer = gameManager.question.answers.find(answer=>answer.text==item.text)
+        if (answer.correct > 0 && answer.correct < lists.value.length){ 
+            // If the question is not built correctly, we may have words with unknown answer or with 0. 
+            // The condition overxomes this case 
+            lists.value[answer.correct].list.splice(1, 0, item) // Insert an item at position 1
+            lists.value[0].list.splice(current_item,1)          // remove the item in position current_item
+            let delayres = await delay(250);
+        }
+        else 
+            current_item+= 1 // We did not remove the first item, so in next iteration, work on the next one
+        //console.log('item= ' + item.text)
+    }
 }
 
+const delay = (delayInms) => {
+  return new Promise(resolve => setTimeout(resolve, delayInms));
+};
 
 function check(){
   let result = 0;
@@ -60,7 +83,7 @@ function check(){
         const answer = gameManager.question.answers.find(answer=>answer.text==item.text)
         if (!answer) continue;
         const answerListData = { id: answer.id, res: false, val: i}
-        if (answer.correct <= 0){ // 0 or lower means that the item should not be draggeed at all. If it was, we add 1 to the total required_answers
+        if (answer.correct <= 0 || answer.correct >= lists.value.length){ // 0 or lower means that the item should not be draggeed at all. Same goes to an answer which does not exists. If it was, we add 1 to the total required_answers
             if (i !== 0) {
                 item.result = "fail" // dragged - failure
                 result--
