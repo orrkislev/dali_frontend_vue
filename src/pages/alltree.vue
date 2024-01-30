@@ -245,6 +245,7 @@ div.stat_div{width:15px;}
   border-radius:1em;
   caret-color: auto;
   max-width: 50%;
+  border: 4px solid orange !important;
 }
 
 div.searchDiv{display:flex;float:right;clear:right;margin-top:3em;}
