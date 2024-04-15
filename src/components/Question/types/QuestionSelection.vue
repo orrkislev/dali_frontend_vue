@@ -14,12 +14,12 @@ emitter.subscribe('LIFELINE_5050', lifeline_5050)
 emitter.subscribe('CHECK_QUESTION', check)
 emitter.subscribe('SHOW_ANSWER', showAnswer)
 
-function showAnswer() {
+function showAnswer(params) {
   console.log('showAnswer at selection')
   gameManager.question.answers.forEach((a, i) => {
     select(i, a.correct);
   })
-  check()
+  if (params['check']) check()
 }
 
 async function lifeline_stats() {

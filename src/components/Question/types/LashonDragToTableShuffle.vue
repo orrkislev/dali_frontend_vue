@@ -46,7 +46,7 @@ function lifeline_5050(){
     // TODO
 }
 
-async function showAnswer(){   
+async function showAnswer(params){   
     // Move each item to its correct location
     for (let item of lists.value) {
         item.userTitle = item.title
@@ -62,12 +62,14 @@ async function showAnswer(){
             // The condition overxomes this case 
             lists.value[answer.correct].list.splice(1, 0, item) // Insert an item at position 1
             lists.value[0].list.splice(current_item,1)          // remove the item in position current_item
-            let delayres = await delay(250);
+            //let delayres = await delay(250);
         }
         else 
             current_item+= 1 // We did not remove the first item, so in next iteration, work on the next one
         //console.log('item= ' + item.text)
     }
+    //if (params['check']) 
+    check()
 }
 
 const delay = (delayInms) => {

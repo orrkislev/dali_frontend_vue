@@ -3,6 +3,9 @@ import useEmitter from "src/utils/useEmmiter";
 import useGameManager from "src/utils/useGameManager";
 import $ from "jquery";
 
+import useAPI from 'src/utils/useAPI';
+const api = useAPI()
+
 const gameManager = useGameManager();
 const emitter = useEmitter()
 
@@ -11,12 +14,12 @@ emitter.subscribe('LIFELINE_5050', lifeline_5050)
 emitter.subscribe("CHECK_QUESTION", check);
 emitter.subscribe('SHOW_ANSWER', showAnswer)
 
-function showAnswer() {
+function showAnswer(params) {
   console.log('showAnswer at word select')
   gameManager.question.wordSelect[1].forEach((a, i) => {
     fillCorrectAnswer(a, i);
   });
-  check()
+  if (params['check']) check()
 }
 
 function lifeline_5050() {
@@ -32,8 +35,26 @@ function lifeline_5050() {
   }
 }
 
+async function lifeline_stats_old() {
+  // The stat is incorrect as we do not keep statistics for each option in the word select. For now - do not support it
+  let newOptions = [...gameManager.question.options]
+  const res = await api.post("quest/action/", { 'action': 'statistics', 'question_id': gameManager.question.q.id, })
+  res.forEach(stat => {
+    const optionIndex = gameManager.question.options.findIndex((o, i) => o.id == stat.selectid)
+    newOptions[optionIndex].count = stat.count
+    /*
+      This really stincks.. but.. 
+      Since we get the question html from the server, we have to manipulate it directly and canot use the vue model
+    */
+    let myid = gameManager.question.options[optionIndex].id
+    let org_text = $("option#option_select__" + myid).html()
+    $("option#option_select__" + myid).html(org_text + " (" + stat.count + ")" )
+  })
+  gameManager.question.options = newOptions
+}
+
 function lifeline_stats() {
-  // TODO - implement stats lifeline  
+  // TODO - implement stats lifeline
 }
 
 function fillCorrectAnswer(a, i) {
@@ -106,6 +127,7 @@ function check() {
   result = result / answers_num;
   gameManager.submitQuestion({ result, answerlist });
 }
+
 </script>
 
 

@@ -7,6 +7,7 @@ const props = defineProps({
     inactive: {type:Boolean, default: false},
     selected: {type:Boolean, default: false},
     center: {type:Boolean, default: false},
+    single: {type:Boolean, default: false},
     full: {type:Boolean, default: false},
     indicator: {type:String, default: ""},
     icon: {type:String, default: null},
@@ -25,12 +26,14 @@ function click() {
        v-bind:class="{ 
             'btnFull-border': border, 
             'btnFull-center' : center,
+            'btnFull-single' : single,
             'btnFull-main':main,
             'btnFull-full': full,
             'btnFull-selected': selected,
             'btnFull-inactive': inactive, 
             'btnFull-correct': indicator=='success',
             'btnFull-wrong': indicator=='fail',
+            'btnFull-show': indicator=='show',
         }" v-bind:style="style">
         <i v-if="icon" :class="'btnFullIcon pi pi-' + icon"></i>
         <slot></slot>
@@ -59,6 +62,10 @@ export default {
   background-color: red;
 }
 
+.btnFull-single{
+  border-radius: 1em !important; /* override last/first of type */
+}
+
 .btnFull {
   cursor: pointer;
   border-radius: 0.3em;
@@ -78,7 +85,7 @@ export default {
   background: #3a7fce;
   color: white;
   font-weight: bold;
-  min-width: 100%;
+  /*min-width: 100%;*/
 }
 .btnFull-selected { background: #c2deff; }
 .btnFull-inactive {
@@ -89,6 +96,7 @@ export default {
 }
 .btnFull-correct { background: #ccff91;  }
 .btnFull-wrong { background: #ff6161; color: black; }
+.btnFull-show {background: #6c874c; color: white}
 .word_select_selection_right { background: #ccff91 !important; }
 .word_select_selection_wrong { background: #ff6161 !important; color: black; }
 .draggableItem-success { background: #ccff91 !important; }

@@ -14,11 +14,12 @@ const answers = ref(Array(gameManager.question.q.num_correct_a).fill(""))
 const inputColors = ref(Array(gameManager.question.q.num_correct_a).fill(null))
 
 
-function showAnswer(){
+function showAnswer(params){
     const correctAnswers = gameManager.question.answers.map(a => a.text.trim()).sort((a,b)=>Math.random()-0.5)
     for (let i=0;i<gameManager.question.q.num_correct_a;i++){
         answers.value[i] = correctAnswers[i]
     }
+    if (params['check']) check()
 }
 
 function lifeline_5050(){
@@ -29,7 +30,7 @@ function lifeline_5050(){
 }
 
 function check() {
-    const availableAnswers = gameManager.question.answers.map(a => a.text.trim())
+    const availableAnswers = gameManager.question.answers.map(a => a.text.split(',')).flat().map(a=>a.trim())
     const inputAnswers = answers.value.map(a => a.trim())
     let result = 0
     const answerlist = []

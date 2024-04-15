@@ -11,11 +11,11 @@ emitter.subscribe("LIFELINE_5050", lifeline_5050)
 emitter.subscribe("CHECK_QUESTION", check);
 emitter.subscribe('SHOW_ANSWER', showAnswer)
 
-function showAnswer() {
+function showAnswer(params) {
   gameManager.question.answers.forEach((answer, i) => {
     if (answer.correct) select(i, answer.correct);
   })
-  check()
+  if (params['check']) check(show=true)
 }
 
 function lifeline_stats() {
@@ -35,7 +35,8 @@ function lifeline_5050() {
   gameManager.question.answers = newAnswers;
 }
 
-function check() {
+function check(show) {
+  if (show === undefined) show = false
   let newAnswers = [...gameManager.question.answers];
   let result = 0;
   newAnswers.every((a, i) => { // Every allows us to break when a correct answer is found. Useful when there re multiple correct answers.
@@ -47,6 +48,7 @@ function check() {
       a.result = "fail";
       return true;
     }
+    if (show) a.result = "show"
     a.inactive = true;
   });
   gameManager.question.answers = newAnswers;

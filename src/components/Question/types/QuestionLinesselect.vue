@@ -10,12 +10,12 @@ const emitter = useEmitter()
 emitter.subscribe("CHECK_QUESTION", check);
 emitter.subscribe('SHOW_ANSWER', showAnswer);
 
-function showAnswer() {
+function showAnswer(params) {
   console.log('showAnswer at word select')
   gameManager.question.linesSelect[1].forEach((a, i) => {
     fillCorrectAnswer(a, i);
   });
-  check()
+  if (params['check']) check()
 }
 
 function fillCorrectAnswer(a, i) {

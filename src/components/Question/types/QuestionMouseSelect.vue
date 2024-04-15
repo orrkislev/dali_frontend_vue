@@ -16,11 +16,11 @@ emitter.subscribe('SHOW_ANSWER', showAnswer)
 //const answers = ref([])
 initAnswers()
 
-function showAnswer() {
+function showAnswer(params) {
   gameManager.question.answers.forEach((answer, i) => {
     if (answer.correct) select(i, answer.correct);
   })
-  check()
+  if (params['check']) check()
 }
 
 function initAnswers() {

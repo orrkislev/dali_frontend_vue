@@ -30,7 +30,7 @@ function nextQuestion(){
     gameManager.nextQuestion()
 }
 function showAnswer(){
-    emitter.emit('SHOW_ANSWER')
+    emitter.emit('SHOW_ANSWER',{'check':true})
 }
 function skipQuestion(){
     gameManager.lifeline_skip()
